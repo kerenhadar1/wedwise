@@ -1,4 +1,4 @@
-const CACHE = "wedwise-v16";
+const CACHE = "wedwise-v19-bridal-ui";
 const ASSETS = ["./", "./index.html", "./manifest.webmanifest", "./icon-192.png", "./icon-512.png"];
 
 self.addEventListener("install", event => {
