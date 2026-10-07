@@ -1,0 +1,4413 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>WedWise Mobile v1.6.1 - Venue Decision Workspace</title>
+<style>
+
+:root{
+  --bg:#f9f5ef;
+  --card:#fffdf9;
+  --text:#413633;
+  --muted:#7b6d67;
+  --accent:#c9ab95;
+  --accent-strong:#ab8673;
+  --accent-soft:#f4ebe2;
+  --line:#eadfd4;
+  --shadow:0 22px 50px rgba(106,82,68,.10);
+  --shadow-soft:0 10px 24px rgba(106,82,68,.07);
+  --radius:24px;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;direction:rtl;font-family:Arial,Helvetica,sans-serif;color:var(--text);line-height:1.55;background:radial-gradient(circle at right top, rgba(255,255,255,.82), transparent 18%),radial-gradient(circle at 8% 12%, rgba(243,232,223,.80), transparent 14%),linear-gradient(180deg,#fefbf8 0%, #f7f1ea 100%)}
+body::before,body::after{content:"";position:fixed;width:240px;height:240px;pointer-events:none;z-index:0;opacity:.22;background:radial-gradient(circle at 50% 50%, rgba(255,255,255,.95) 0 14px, transparent 15px),radial-gradient(circle at 35% 28%, rgba(243,233,223,.95) 0 18px, transparent 19px),radial-gradient(circle at 72% 30%, rgba(243,233,223,.95) 0 16px, transparent 17px),radial-gradient(circle at 31% 68%, rgba(243,233,223,.95) 0 15px, transparent 16px),radial-gradient(circle at 68% 70%, rgba(243,233,223,.95) 0 20px, transparent 21px),radial-gradient(circle at 52% 48%, rgba(229,211,197,.85) 0 3px, transparent 4px),radial-gradient(circle at 40% 24%, rgba(229,211,197,.85) 0 3px, transparent 4px),radial-gradient(circle at 72% 28%, rgba(229,211,197,.85) 0 3px, transparent 4px),radial-gradient(circle at 34% 70%, rgba(229,211,197,.85) 0 3px, transparent 4px),radial-gradient(circle at 70% 73%, rgba(229,211,197,.85) 0 3px, transparent 4px);filter:blur(.2px)}
+body::before{top:-40px;right:-30px;transform:rotate(18deg)}
+body::after{bottom:-45px;left:-28px;transform:rotate(198deg)}
+button,input,select,textarea{font:inherit}a{color:var(--accent-strong)}
+.app{display:grid;grid-template-columns:280px 1fr;min-height:100vh;position:relative;z-index:1}
+aside{background:linear-gradient(180deg, rgba(74,57,52,.97), rgba(53,40,36,.98));color:#fff;padding:28px 18px;position:sticky;top:0;height:100vh;box-shadow:18px 0 40px rgba(56,39,33,.12);overflow:hidden}
+aside::before,aside::after{content:"";position:absolute;border-radius:50%;background:radial-gradient(circle, rgba(255,255,255,.16), rgba(255,255,255,0))}
+aside::before{width:180px;height:180px;top:-50px;left:-40px}aside::after{width:240px;height:240px;bottom:-70px;right:-60px}
+.brand{font-family:Georgia,"Times New Roman",serif;font-size:36px;font-weight:700;letter-spacing:.3px;margin-top:6px}.brand small{display:block;font-size:13px;font-weight:400;color:#e6dbd4;margin-top:6px}
+nav{margin-top:34px;display:grid;gap:10px;position:relative;z-index:1}nav button{background:transparent;color:#f7f1ec;border:1px solid transparent;padding:13px 15px;text-align:right;border-radius:16px;cursor:pointer;transition:.2s ease}nav button.active,nav button:hover{background:rgba(255,255,255,.10);border-color:rgba(255,255,255,.12);transform:translateX(-2px)}
+main{padding:34px;max-width:1320px;width:100%}
+h1,h2,h3{margin-top:0;color:#3f3431}h1{display:flex;align-items:center;gap:12px;margin-bottom:10px;font-family:Georgia,"Times New Roman",serif;font-size:38px;font-weight:700}h1::before{content:"❀";font-size:24px;color:#d5baa7}h2{font-family:Georgia,"Times New Roman",serif;font-size:28px}h3{font-size:20px}.subtitle{color:var(--muted);font-size:17px;margin-bottom:22px;max-width:900px}
+.hero-banner{display:grid;grid-template-columns:1.35fr .95fr;gap:18px;margin-bottom:18px;padding:26px;position:relative;overflow:hidden;background:linear-gradient(135deg, rgba(255,255,255,.94), rgba(249,242,236,.96)),linear-gradient(135deg,#fff,#faf4ed)}
+.hero-banner::before,.card::before,.live-box::before,.detail-panel::before{content:"";position:absolute;inset:10px;border:1px solid rgba(219,201,188,.45);border-radius:calc(var(--radius) - 8px);pointer-events:none}.hero-banner::after{content:"";position:absolute;width:170px;height:170px;inset:auto -34px -34px auto;border-radius:50%;background:radial-gradient(circle, rgba(255,255,255,.92) 0 25%, rgba(244,233,223,.82) 26% 52%, transparent 53%);opacity:.75}
+.hero-copy,.hero-side{position:relative;z-index:1}.eyebrow{display:inline-block;margin-bottom:12px;padding:7px 12px;border-radius:999px;background:#f7eee7;color:#9c7f71;font-size:12px;font-weight:700;letter-spacing:.5px}.hero-copy p{color:#6e625d;margin:12px 0 18px;max-width:650px}.hero-side{display:grid;gap:12px;align-content:start}.hero-mini{background:rgba(255,255,255,.72);border:1px solid #eee1d5;border-radius:20px;padding:16px}.hero-mini span{display:block;color:#9e8475;font-size:12px;margin-bottom:6px}.hero-mini strong{color:#463734;font-size:14px}
+.grid{display:grid;gap:16px}.two{grid-template-columns:repeat(2,minmax(0,1fr))}.three{grid-template-columns:repeat(3,minmax(0,1fr))}
+.card,.smart-card,.venue-card,.impression-card,.detail-panel,.live-box{position:relative;background:linear-gradient(180deg, rgba(255,255,255,.98), rgba(255,251,247,.98));border:1px solid var(--line);border-radius:var(--radius);padding:22px;box-shadow:var(--shadow)}
+.card,.smart-card,.venue-card,.impression-card{overflow:hidden}
+.card::after,.smart-card::after,.venue-card::after,.impression-card::after{content:"";position:absolute;width:82px;height:82px;top:-8px;left:-8px;background:radial-gradient(circle at 26% 25%, rgba(255,255,255,.98) 0 9px, transparent 10px),radial-gradient(circle at 58% 18%, rgba(248,239,231,.97) 0 11px, transparent 12px),radial-gradient(circle at 22% 57%, rgba(248,239,231,.97) 0 10px, transparent 11px),radial-gradient(circle at 53% 52%, rgba(248,239,231,.97) 0 13px, transparent 14px),radial-gradient(circle at 77% 59%, rgba(248,239,231,.97) 0 9px, transparent 10px),radial-gradient(circle at 50% 50%, rgba(216,198,184,.90) 0 2px, transparent 3px),radial-gradient(circle at 22% 24%, rgba(216,198,184,.90) 0 2px, transparent 3px),radial-gradient(circle at 58% 18%, rgba(216,198,184,.90) 0 2px, transparent 3px),radial-gradient(circle at 23% 57%, rgba(216,198,184,.90) 0 2px, transparent 3px),radial-gradient(circle at 53% 52%, rgba(216,198,184,.90) 0 2px, transparent 3px),radial-gradient(circle at 77% 59%, rgba(216,198,184,.90) 0 2px, transparent 3px);opacity:.6;pointer-events:none}
+.field{margin-bottom:14px}label{display:block;font-weight:700;margin-bottom:7px;color:#695c56}
+input,select,textarea{width:100%;padding:12px 13px;border:1px solid #dfd2c6;border-radius:14px;background:rgba(255,255,255,.92);color:var(--text);transition:.2s ease}input:focus,select:focus,textarea:focus{outline:none;border-color:#cba992;box-shadow:0 0 0 4px rgba(203,169,146,.12);background:#fff}textarea{min-height:90px}
+.btn{border:0;border-radius:14px;padding:12px 16px;cursor:pointer;font-weight:700;transition:.2s ease;box-shadow:var(--shadow-soft)}.btn:hover{transform:translateY(-1px)}.primary{background:linear-gradient(135deg,#d5b49d,#ba9078);color:#fff}.primary:hover{background:linear-gradient(135deg,#cca88f,#ae856e)}.secondary{background:#f6eee7;color:var(--text);border:1px solid #ead8ca}.ghost{background:transparent;border:1px solid var(--line)}.danger{background:#fceeee;color:#8d4a4a}
+.section{display:none}.section.active{display:block}.between{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}.row{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.badge{display:inline-flex;align-items:center;gap:6px;padding:6px 11px;border-radius:999px;background:#f8efe8;color:#8d7262;font-size:12px;font-weight:700}.small{font-size:12px}.muted{color:var(--muted)}
+.region-pills,.source-tags,.rec-meta{display:flex;gap:8px;flex-wrap:wrap}.region-pill{display:inline-flex;align-items:center;background:#fbf7f2;border:1px solid var(--line);padding:9px 12px;border-radius:999px;cursor:pointer;gap:8px}.region-pill input{width:auto}
+.progress{height:9px;background:#eee6e0;border-radius:999px;overflow:hidden}.progress>div{height:100%;background:linear-gradient(90deg,#d3b197,#b98b73)}
+.status{padding:12px 14px;border-radius:14px;background:#f7f1eb;margin:10px 0;border:1px solid #efe1d6}.good{background:#edf7f0;color:#3d6d4d;border-color:#d6e7db}.error{background:#fbeaea;color:#843d3d;border-color:#f0d1d1}
+.live-box{background:linear-gradient(135deg,#fffefb,#f8efeb);border:1px solid #e7d2c7}.spinner{width:18px;height:18px;border:3px solid #ead7d3;border-top-color:var(--accent-strong);border-radius:50%;display:inline-block;animation:spin .8s linear infinite}@keyframes spin{to{transform:rotate(360deg)}}
+.reco-results{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;margin:16px 0 22px}.smart-card.top{border-color:#d6b3a5;box-shadow:0 18px 36px rgba(183,124,120,.15)}.smart-rank{position:absolute;left:16px;top:16px;width:34px;height:34px;border-radius:50%;display:grid;place-items:center;background:var(--accent-soft);font-weight:800;color:var(--accent-strong)}.score-row{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;margin:14px 0}.score-box{background:#faf6f1;border-radius:15px;padding:11px;text-align:center;border:1px solid #efe2d7}.score-box strong{display:block;font-size:22px;color:var(--accent-strong)}.score-box span{font-size:11px;color:var(--muted)}
+.evidence-list{margin:8px 0 0;padding-right:18px}.evidence-list li{margin:5px 0}.check-list{margin:8px 0 0;padding-right:18px;color:#7a5c30}.check-list li{margin:5px 0}.search-loading{display:flex;gap:10px;align-items:center}.rec-meta span,.source-tags span{font-size:12px;background:#f8f3ee;padding:5px 8px;border-radius:999px;border:1px solid #efe2d7}.saved-mark{background:#edf7f0!important;color:#3d6d4d}
+.check-group{border:1px solid var(--line);border-radius:18px;background:#fff;margin-bottom:12px;overflow:hidden;box-shadow:var(--shadow-soft)}.check-head{display:flex;justify-content:space-between;align-items:center;padding:15px 16px;cursor:pointer}.check-head:hover{background:#fbf8f6}.check-title{font-weight:800}.check-progress{font-size:12px;color:var(--muted)}.subtasks{padding:0 16px 12px}.subtask{display:flex;gap:10px;align-items:center;padding:9px 0;border-top:1px solid var(--line)}.subtask input{width:auto}
+.venue-card.selected-card{border-color:#cf9b96;box-shadow:0 12px 32px rgba(183,124,120,.16)}.venue-card h3{margin-bottom:4px}.venue-meta{color:var(--muted);font-size:13px;margin-bottom:10px}.status-badge{display:inline-flex;align-items:center;padding:6px 10px;border-radius:999px;font-size:11px;font-weight:700;background:#f3eee9;color:#5e554f}.status-interested{background:#f4efe9}.status-meeting{background:#fff4dc;color:#7b5a1e}.status-visited{background:#eef4ff;color:#415d86}.status-finalist{background:#f5eafb;color:#704d7d}.status-rejected{background:#fbeaea;color:#843d3d}.status-chosen{background:#e7f5eb;color:#356745}
+.detail-panel{margin:18px 0;border:1px solid #dfc4b7;background:linear-gradient(135deg,#fff,#fbf4f1)}.detail-head{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;flex-wrap:wrap}.detail-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}.detail-grid.two{grid-template-columns:repeat(2,minmax(0,1fr))}.metric-card{background:#fff;border:1px solid var(--line);border-radius:18px;padding:14px;box-shadow:var(--shadow-soft)}.metric-card strong{font-size:22px;color:var(--accent-strong);display:block;margin-top:4px}.detail-tabs{display:flex;gap:8px;flex-wrap:wrap;margin:16px 0}.detail-tabs button{border:1px solid var(--line);background:#fff;padding:8px 11px;border-radius:999px;cursor:pointer}.detail-tabs button.active{background:linear-gradient(135deg,#d3b097,#bf9279);color:#fff;border-color:#c3967d}.detail-subsection{border-top:1px solid var(--line);padding-top:16px;margin-top:16px}
+.question-list{display:grid;gap:8px}.question-item{display:flex;align-items:flex-start;gap:9px;background:#fff;border:1px solid var(--line);padding:10px 12px;border-radius:13px}.question-item input{width:auto;margin-top:3px}.question-item.done span{text-decoration:line-through;color:#999}.cost-highlight{background:#edf7f0;border:1px solid #cfe5d6;color:#355e43;border-radius:14px;padding:12px 14px}.warning-highlight{background:#fff7e8;border:1px solid #ecd4aa;color:#765724;border-radius:14px;padding:12px 14px}.mini-note{font-size:11px;color:var(--muted);margin-top:4px}.compare-pill{display:inline-block;padding:4px 7px;border-radius:999px;background:#f5f1ed;font-size:11px}
+.weight-total{font-weight:800;padding:7px 11px;border-radius:999px;background:#eef6ef;color:#356345}.weight-total.bad{background:#fff0ee;color:#9a4e49}.weight-help{margin-top:10px;padding:10px 12px;border-radius:14px;background:#f8f5f2;color:var(--muted);font-size:12px}.compare-score{font-weight:800;font-size:16px}.compare-score.low-data{color:#9a7655}.coverage-badge{display:inline-block;padding:4px 7px;border-radius:999px;background:#f4f1ed;font-size:11px;white-space:nowrap}.coverage-badge.good{background:#edf7f0;color:#356345}.coverage-badge.warn{background:#fff5e9;color:#8a6534}
+.impression-editor{margin-bottom:16px}.impression-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;margin-top:14px}.impression-card h3{margin:0 0 4px}.impression-fields{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin-top:12px}.impression-fields .field{margin:0}.impression-fields input,.impression-fields select{padding:10px 11px}.impression-note{margin-top:10px;padding:9px 11px;border-radius:12px;background:#f8f5f2;font-size:12px;color:var(--muted)}
+table{width:100%;border-collapse:collapse;background:#fff;border-radius:16px;overflow:hidden}th,td{padding:11px;border-bottom:1px solid var(--line);text-align:right}th{font-size:13px;color:var(--muted);background:#fcf8f4}
+@media(max-width:1050px){.impression-fields{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:950px){.detail-grid,.detail-grid.two{grid-template-columns:1fr 1fr}}
+@media(max-width:850px){.app{grid-template-columns:1fr}aside{position:relative;height:auto}nav{display:flex;overflow:auto;padding-bottom:4px}.hero-banner{grid-template-columns:1fr}.reco-results{grid-template-columns:1fr}.score-row{grid-template-columns:repeat(2,minmax(0,1fr))}.impression-grid{grid-template-columns:1fr}.two,.three{grid-template-columns:1fr}}
+@media(max-width:650px){.detail-grid,.detail-grid.two,.impression-fields{grid-template-columns:1fr}main{padding:18px}h1{font-size:32px}}
+
+
+/* v1.1 - calmer planning flow */
+.card::after,
+.smart-card::after,
+.venue-card::after,
+.impression-card::after{
+  display:none;
+}
+
+.setup-header{
+  display:flex;
+  justify-content:space-between;
+  align-items:flex-end;
+  gap:18px;
+  flex-wrap:wrap;
+  margin-bottom:20px;
+}
+
+.setup-kicker{
+  color:var(--accent-strong);
+  font-size:12px;
+  font-weight:800;
+  letter-spacing:.35px;
+  margin-bottom:5px;
+}
+
+.setup-steps{
+  display:flex;
+  align-items:center;
+  gap:8px;
+  flex-wrap:wrap;
+}
+
+.setup-steps span{
+  display:inline-flex;
+  align-items:center;
+  gap:7px;
+  padding:8px 11px;
+  border:1px solid var(--line);
+  background:rgba(255,255,255,.72);
+  border-radius:999px;
+  color:var(--muted);
+  font-size:12px;
+}
+
+.setup-steps b{
+  display:grid;
+  place-items:center;
+  width:22px;
+  height:22px;
+  border-radius:50%;
+  background:var(--accent-soft);
+  color:var(--accent-strong);
+}
+
+.setup-flow{
+  display:grid;
+  gap:16px;
+  max-width:1050px;
+}
+
+.setup-card,
+.setup-final-card,
+.advanced-prefs{
+  overflow:hidden;
+}
+
+.setup-card::after,
+.setup-final-card::after{
+  content:"";
+  display:block;
+  position:absolute;
+  width:115px;
+  height:115px;
+  top:-34px;
+  left:-28px;
+  opacity:.42;
+  pointer-events:none;
+  background:
+    radial-gradient(circle at 35% 35%, #fff 0 10px, transparent 11px),
+    radial-gradient(circle at 57% 31%, #f3e9df 0 14px, transparent 15px),
+    radial-gradient(circle at 31% 58%, #f5ece4 0 13px, transparent 14px),
+    radial-gradient(circle at 58% 58%, #fff 0 16px, transparent 17px),
+    radial-gradient(circle at 47% 46%, #cdb5a5 0 2px, transparent 3px);
+}
+
+.setup-card-title{
+  display:flex;
+  align-items:flex-start;
+  gap:12px;
+  margin-bottom:18px;
+  position:relative;
+  z-index:1;
+}
+
+.setup-card-title h2{
+  margin:0 0 4px;
+  font-size:23px;
+}
+
+.setup-number{
+  flex:0 0 auto;
+  display:grid;
+  place-items:center;
+  width:34px;
+  height:34px;
+  border-radius:50%;
+  background:linear-gradient(135deg,#ead8cb,#d8bba7);
+  color:#6e5144;
+  font-weight:800;
+  box-shadow:0 7px 16px rgba(157,119,94,.14);
+}
+
+.optional-label{
+  font-weight:500;
+  color:var(--muted);
+  font-size:11px;
+}
+
+.setup-select-grid{
+  margin-top:4px;
+}
+
+.advanced-prefs{
+  padding:0;
+}
+
+.advanced-prefs summary{
+  list-style:none;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:12px;
+  cursor:pointer;
+  padding:20px 22px;
+  user-select:none;
+}
+
+.advanced-prefs summary::-webkit-details-marker{
+  display:none;
+}
+
+.advanced-summary-main{
+  display:flex;
+  align-items:center;
+  gap:12px;
+}
+
+.advanced-summary-main strong{
+  display:block;
+  font-family:Georgia,"Times New Roman",serif;
+  font-size:22px;
+  color:#443733;
+}
+
+.advanced-summary-main small{
+  display:block;
+  margin-top:3px;
+  color:var(--muted);
+}
+
+.advanced-open-label{
+  padding:7px 11px;
+  border-radius:999px;
+  background:#f7efe8;
+  color:#846a5c;
+  font-size:12px;
+  font-weight:700;
+}
+
+.advanced-prefs[open] .advanced-open-label::after{
+  content:" ✓";
+}
+
+.advanced-content{
+  border-top:1px solid var(--line);
+  padding:20px 22px 22px;
+  background:linear-gradient(180deg,rgba(255,255,255,.65),rgba(251,246,241,.7));
+}
+
+.input-with-suffix{
+  position:relative;
+}
+
+.input-with-suffix input{
+  padding-left:48px;
+}
+
+.input-with-suffix span{
+  position:absolute;
+  left:14px;
+  top:50%;
+  transform:translateY(-50%);
+  color:var(--muted);
+  font-weight:700;
+}
+
+.must-have-grid{
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:12px;
+  margin-top:5px;
+}
+
+.must-have-card{
+  display:flex;
+  align-items:center;
+  gap:12px;
+  padding:14px;
+  margin:0;
+  border:1px solid var(--line);
+  border-radius:18px;
+  background:#fff;
+  cursor:pointer;
+  transition:.18s ease;
+}
+
+.must-have-card:hover{
+  border-color:#d7bdac;
+  transform:translateY(-1px);
+}
+
+.must-have-card input{
+  position:absolute;
+  opacity:0;
+  pointer-events:none;
+}
+
+.must-have-check{
+  display:grid;
+  place-items:center;
+  width:30px;
+  height:30px;
+  flex:0 0 30px;
+  border-radius:10px;
+  border:1px solid #dbcabb;
+  color:transparent;
+  background:#fbf7f3;
+  font-weight:900;
+  transition:.18s ease;
+}
+
+.must-have-card input:checked + .must-have-check{
+  color:white;
+  background:linear-gradient(135deg,#cfad96,#b98e76);
+  border-color:#b98e76;
+}
+
+.must-have-card strong{
+  display:block;
+  margin-bottom:2px;
+}
+
+.must-have-card small{
+  display:block;
+  color:var(--muted);
+  font-weight:400;
+}
+
+.setup-final-card{
+  background:linear-gradient(135deg,#fff,#fbf5ef);
+}
+
+.field-hint{
+  margin-top:6px;
+  color:var(--muted);
+  font-size:11px;
+}
+
+.setup-actions{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:14px;
+  margin-top:18px;
+  padding-top:16px;
+  border-top:1px solid var(--line);
+}
+
+.setup-save-note{
+  color:var(--muted);
+  font-size:12px;
+}
+
+.setup-save-btn{
+  min-width:210px;
+}
+
+.region-pill{
+  transition:.16s ease;
+}
+
+.region-pill:has(input:checked){
+  background:#f3e7de;
+  border-color:#d7bca9;
+  color:#684f43;
+}
+
+.venue-card,
+.smart-card,
+.impression-card,
+.check-group{
+  transition:transform .18s ease, box-shadow .18s ease, border-color .18s ease;
+}
+
+.venue-card:hover,
+.smart-card:hover,
+.impression-card:hover{
+  transform:translateY(-2px);
+  box-shadow:0 18px 42px rgba(106,82,68,.11);
+}
+
+.btn{
+  min-height:44px;
+}
+
+input,
+select,
+textarea{
+  min-height:45px;
+}
+
+nav button{
+  min-height:46px;
+}
+
+@media(max-width:850px){
+  .setup-header{
+    align-items:flex-start;
+  }
+  .setup-steps{
+    width:100%;
+  }
+  .setup-steps span{
+    flex:1;
+    justify-content:center;
+    min-width:130px;
+  }
+  .must-have-grid{
+    grid-template-columns:1fr;
+  }
+  .setup-actions{
+    align-items:stretch;
+    flex-direction:column;
+  }
+  .setup-save-btn{
+    width:100%;
+  }
+}
+
+
+.vendor-category-tabs{
+  display:flex;
+  gap:9px;
+  overflow:auto;
+  padding:2px 0 12px;
+  margin-bottom:4px;
+  scrollbar-width:thin;
+}
+.vendor-category-btn{
+  flex:0 0 auto;
+  border:1px solid var(--line);
+  background:rgba(255,255,255,.82);
+  color:var(--text);
+  padding:10px 14px;
+  border-radius:999px;
+  cursor:pointer;
+  font-weight:700;
+  transition:.18s ease;
+}
+.vendor-category-btn:hover{transform:translateY(-1px);border-color:#d5b7a3}
+.vendor-category-btn.active{
+  background:linear-gradient(135deg,#d8baa5,#bc9078);
+  color:white;
+  border-color:#bc9078;
+  box-shadow:0 8px 18px rgba(171,134,115,.18);
+}
+.vendor-search-card{margin-bottom:20px}
+.vendor-search-fields .field{margin-bottom:4px}
+.saved-vendors-title{margin:22px 0 12px}
+.vendor-saved-grid{
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:14px;
+}
+.vendor-card{
+  border:1px solid var(--line);
+  border-radius:22px;
+  padding:18px;
+  background:linear-gradient(180deg,#fff,#fdf9f5);
+  box-shadow:var(--shadow-soft);
+}
+.vendor-card-head{display:flex;justify-content:space-between;gap:12px;align-items:flex-start}
+.vendor-card h3{margin:0 0 3px}
+.vendor-online-meta{display:flex;gap:7px;flex-wrap:wrap;margin:10px 0}
+.vendor-online-meta span{padding:5px 8px;background:#f8f2ed;border-radius:999px;font-size:11px;color:var(--muted)}
+.vendor-recommendation-card .vendor-online-meta{margin-top:8px}
+.vendor-category-icon{font-size:20px}
+.vendor-compare-category-field{min-width:220px;margin:0}
+.vendor-impression-wrap{margin-bottom:16px}
+.vendor-impression-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;margin-top:14px}
+.vendor-impression-card{border:1px solid var(--line);border-radius:20px;padding:16px;background:#fff}
+.vendor-impression-card h3{margin:0}
+.vendor-rating-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:9px;margin-top:12px}
+.vendor-rating-grid .field{margin:0}
+.vendor-rating-grid select,.vendor-rating-grid input{padding:10px 11px}
+.vendor-category-subtitle{color:var(--muted);font-size:12px}
+@media(max-width:950px){.vendor-rating-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:850px){.vendor-saved-grid,.vendor-impression-grid{grid-template-columns:1fr}.vendor-compare-category-field{width:100%}}
+@media(max-width:600px){.vendor-rating-grid{grid-template-columns:1fr}}
+
+
+aside{
+  background:
+    radial-gradient(circle at 12% 7%, rgba(255,255,255,.96), transparent 24%),
+    linear-gradient(180deg,#fbf7f2 0%,#f3e8de 100%);
+  color:var(--text);
+  border-left:1px solid #eadfd4;
+  box-shadow:10px 0 32px rgba(111,86,70,.08);
+  height:100dvh;
+  min-height:100vh;
+  overflow-y:auto;
+  overflow-x:hidden;
+  padding:28px 18px calc(34px + env(safe-area-inset-bottom));
+  scrollbar-width:thin;
+  scrollbar-color:#d6bdac transparent;
+}
+aside::-webkit-scrollbar{width:7px}
+aside::-webkit-scrollbar-track{background:transparent}
+aside::-webkit-scrollbar-thumb{background:#d6bdac;border-radius:999px}
+aside::before{
+  width:190px;height:190px;top:-62px;left:-55px;
+  background:
+    radial-gradient(circle at 48% 48%,rgba(255,255,255,.96) 0 14px,transparent 15px),
+    radial-gradient(circle at 28% 36%,rgba(244,234,225,.94) 0 18px,transparent 19px),
+    radial-gradient(circle at 68% 34%,rgba(244,234,225,.94) 0 16px,transparent 17px),
+    radial-gradient(circle at 38% 70%,rgba(244,234,225,.94) 0 17px,transparent 18px),
+    radial-gradient(circle at 71% 68%,rgba(244,234,225,.94) 0 15px,transparent 16px);
+  opacity:.55;
+}
+aside::after{
+  width:220px;height:220px;bottom:-70px;right:-72px;
+  background:
+    radial-gradient(circle at 50% 50%,rgba(255,255,255,.9) 0 12px,transparent 13px),
+    radial-gradient(circle at 30% 38%,rgba(239,225,214,.9) 0 17px,transparent 18px),
+    radial-gradient(circle at 68% 34%,rgba(239,225,214,.9) 0 18px,transparent 19px),
+    radial-gradient(circle at 39% 70%,rgba(239,225,214,.9) 0 15px,transparent 16px),
+    radial-gradient(circle at 71% 69%,rgba(239,225,214,.9) 0 19px,transparent 20px);
+  opacity:.42;
+}
+.brand{color:#4d3f3a;position:relative;z-index:1}
+.brand small{color:#8b786f}
+nav{position:relative;z-index:1;padding-bottom:8px}
+nav button{
+  color:#5f514c;
+  background:rgba(255,255,255,.34);
+  border:1px solid transparent;
+  box-shadow:none;
+}
+nav button:hover{
+  color:#4b3c37;
+  background:#fffaf6;
+  border-color:#e8d9cd;
+}
+nav button.active{
+  color:#634c42;
+  background:linear-gradient(135deg,#f7ebe2,#ead5c6);
+  border-color:#dfc5b3;
+  box-shadow:0 8px 18px rgba(160,120,95,.11);
+}
+@media(max-width:850px){
+  aside{
+    height:auto;
+    min-height:0;
+    overflow:visible;
+    border-left:0;
+    border-bottom:1px solid #eadfd4;
+    padding-bottom:18px;
+  }
+  nav{
+    overflow-x:auto;
+    overflow-y:hidden;
+    padding-bottom:7px;
+  }
+}
+
+
+/* WedWise Mobile v1.6 visual system */
+:root{
+  --canvas:#f8f4ef;
+  --surface:#fffdfb;
+  --surface-soft:#fbf6f1;
+  --surface-tint:#f6ece4;
+  --ink:#403532;
+  --ink-soft:#756864;
+  --rose:#b98d78;
+  --rose-dark:#956c5b;
+  --rose-soft:#ead7ca;
+  --sand:#d9c2b0;
+  --border:#e8ddd4;
+  --border-strong:#dcc9bc;
+  --success:#587061;
+  --shadow-card:0 10px 30px rgba(87,65,54,.07);
+  --shadow-hover:0 18px 42px rgba(87,65,54,.11);
+}
+
+body{
+  background:
+    linear-gradient(rgba(248,244,239,.95),rgba(248,244,239,.95)),
+    radial-gradient(circle at 12% 8%,rgba(234,215,202,.45),transparent 18%);
+  color:var(--ink);
+}
+
+body::before,
+body::after{
+  opacity:.10;
+}
+
+.app{
+  grid-template-columns:264px minmax(0,1fr);
+}
+
+aside{
+  background:linear-gradient(180deg,#fcf9f5 0%,#f4e9e0 100%);
+  border-left:1px solid var(--border);
+  box-shadow:6px 0 28px rgba(84,62,51,.05);
+  padding:26px 16px calc(28px + env(safe-area-inset-bottom));
+}
+
+.brand-lockup{
+  display:flex;
+  align-items:center;
+  gap:12px;
+  padding:0 6px 22px;
+  position:relative;
+  z-index:1;
+}
+
+.brand-mark{
+  width:42px;
+  height:42px;
+  display:grid;
+  place-items:center;
+  border-radius:14px;
+  background:linear-gradient(145deg,#f4e5dc,#ddc2b0);
+  color:#674d41;
+  font-family:Georgia,"Times New Roman",serif;
+  font-size:22px;
+  font-weight:700;
+  box-shadow:0 8px 18px rgba(142,105,83,.10);
+  border:1px solid rgba(205,177,157,.55);
+}
+
+.brand{
+  font-size:28px;
+  line-height:1;
+  color:#403431;
+}
+
+.brand small{
+  margin-top:6px;
+  color:#8b7a72;
+  font-family:Arial,Helvetica,sans-serif;
+  font-size:11px;
+}
+
+.sidebar-event-chip{
+  display:flex;
+  align-items:center;
+  gap:9px;
+  margin:0 6px 22px;
+  padding:9px 11px;
+  border-radius:12px;
+  background:rgba(255,255,255,.58);
+  border:1px solid rgba(224,208,196,.8);
+  color:#6d5c55;
+  font-size:12px;
+  font-weight:700;
+  position:relative;
+  z-index:1;
+}
+
+.sidebar-event-dot,
+.autosave-dot{
+  width:7px;
+  height:7px;
+  border-radius:50%;
+  background:#8da08f;
+  box-shadow:0 0 0 4px rgba(141,160,143,.12);
+}
+
+.nav-group{
+  margin-bottom:20px;
+}
+
+.nav-label{
+  padding:0 10px 7px;
+  color:#a28f84;
+  font-size:10px;
+  font-weight:800;
+  letter-spacing:.7px;
+  text-transform:uppercase;
+}
+
+nav{
+  gap:0;
+  margin-top:0;
+}
+
+nav button{
+  width:100%;
+  display:flex;
+  align-items:center;
+  gap:11px;
+  margin:3px 0;
+  padding:10px 11px;
+  min-height:43px;
+  border-radius:12px;
+  color:#655751;
+  background:transparent;
+  font-size:13px;
+  font-weight:650;
+}
+
+nav button:hover{
+  background:rgba(255,255,255,.62);
+  border-color:transparent;
+  transform:none;
+}
+
+nav button.active{
+  color:#5c4338;
+  background:#fffaf6;
+  border-color:#dfccbe;
+  box-shadow:0 5px 14px rgba(109,79,62,.07);
+  transform:none;
+}
+
+.nav-icon{
+  width:28px;
+  height:28px;
+  display:grid;
+  place-items:center;
+  border-radius:9px;
+  background:rgba(241,228,218,.68);
+  color:#9a7562;
+  font-size:15px;
+  line-height:1;
+}
+
+nav button.active .nav-icon{
+  background:#ead5c7;
+  color:#795646;
+}
+
+.sidebar-footer{
+  display:flex;
+  align-items:center;
+  gap:9px;
+  margin:8px 6px 0;
+  padding:12px 4px 4px;
+  color:#938078;
+  font-size:10px;
+  border-top:1px solid rgba(222,205,193,.75);
+  position:relative;
+  z-index:1;
+}
+
+main{
+  max-width:1400px;
+  padding:36px 42px 56px;
+}
+
+.section{
+  max-width:1160px;
+  margin:0 auto;
+}
+
+h1::before{
+  display:none;
+}
+
+.page-kicker,
+.section-mini-label{
+  color:#a07b69;
+  font-size:10px;
+  font-weight:800;
+  letter-spacing:.75px;
+  text-transform:uppercase;
+  margin-bottom:6px;
+}
+
+.page-heading{
+  display:flex;
+  align-items:flex-end;
+  justify-content:space-between;
+  gap:18px;
+  margin-bottom:22px;
+}
+
+.page-heading h1{
+  font-size:38px;
+  margin-bottom:6px;
+}
+
+.compact-btn{
+  min-height:40px;
+  padding:9px 14px;
+  box-shadow:none;
+}
+
+.card,
+.smart-card,
+.venue-card,
+.impression-card,
+.detail-panel,
+.live-box,
+.vendor-card,
+.vendor-impression-card{
+  background:var(--surface);
+  border:1px solid var(--border);
+  box-shadow:var(--shadow-card);
+}
+
+.card::before,
+.live-box::before,
+.detail-panel::before,
+.hero-banner::before{
+  display:none;
+}
+
+.card:hover{
+  box-shadow:var(--shadow-card);
+}
+
+.dashboard-hero{
+  display:grid;
+  grid-template-columns:minmax(0,1.5fr) minmax(240px,.7fr);
+  gap:16px;
+  margin-bottom:16px;
+}
+
+.dashboard-hero-content{
+  min-height:264px;
+  padding:30px;
+  border-radius:26px;
+  position:relative;
+  overflow:hidden;
+  background:
+    radial-gradient(circle at 12% 18%,rgba(255,255,255,.95) 0 18px,transparent 19px),
+    radial-gradient(circle at 5% 5%,rgba(255,255,255,.9) 0 10px,transparent 11px),
+    linear-gradient(135deg,#fffdfa 0%,#f4e6dc 100%);
+  border:1px solid var(--border-strong);
+  box-shadow:var(--shadow-card);
+}
+
+.dashboard-hero-content::after{
+  content:"";
+  position:absolute;
+  width:220px;
+  height:220px;
+  left:-68px;
+  bottom:-84px;
+  opacity:.28;
+  background:
+    radial-gradient(circle at 48% 48%,#fff 0 18px,transparent 19px),
+    radial-gradient(circle at 26% 32%,#f0ded2 0 24px,transparent 25px),
+    radial-gradient(circle at 71% 34%,#f0ded2 0 20px,transparent 21px),
+    radial-gradient(circle at 38% 70%,#f0ded2 0 22px,transparent 23px),
+    radial-gradient(circle at 74% 69%,#f0ded2 0 27px,transparent 28px);
+}
+
+.dashboard-hero-content > *{
+  position:relative;
+  z-index:1;
+}
+
+.dashboard-hero-content h2{
+  font-size:34px;
+  line-height:1.15;
+  margin-bottom:12px;
+}
+
+.dashboard-hero-content p{
+  max-width:650px;
+  color:#6f615c;
+  font-size:15px;
+  margin-bottom:24px;
+}
+
+.dashboard-actions{
+  display:flex;
+  gap:10px;
+  flex-wrap:wrap;
+}
+
+.soft-action{
+  background:rgba(255,255,255,.72);
+  color:#6a5247;
+  border:1px solid #dfcbbd;
+  box-shadow:none;
+}
+
+.countdown-panel{
+  min-height:264px;
+  border-radius:26px;
+  border:1px solid var(--border);
+  background:linear-gradient(180deg,#fffdfb,#f9f2ec);
+  box-shadow:var(--shadow-card);
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+  position:relative;
+  overflow:hidden;
+}
+
+.countdown-label{
+  color:#9b7e70;
+  font-size:11px;
+  font-weight:800;
+  letter-spacing:.6px;
+}
+
+.countdown-number{
+  font-family:Georgia,"Times New Roman",serif;
+  font-size:74px;
+  line-height:1;
+  color:#5a443a;
+  margin:10px 0 2px;
+}
+
+.countdown-caption{
+  color:#88766d;
+  font-size:12px;
+}
+
+.countdown-flourish{
+  position:absolute;
+  left:16px;
+  bottom:12px;
+  color:#d6b9a7;
+  font-size:38px;
+  opacity:.52;
+}
+
+.dashboard-metrics{
+  display:grid;
+  grid-template-columns:repeat(4,minmax(0,1fr));
+  gap:12px;
+  margin-bottom:16px;
+}
+
+.dashboard-metric-card{
+  appearance:none;
+  text-align:right;
+  border:1px solid var(--border);
+  background:var(--surface);
+  border-radius:18px;
+  padding:16px;
+  display:grid;
+  grid-template-columns:40px minmax(0,1fr) 16px;
+  gap:11px;
+  align-items:center;
+  cursor:pointer;
+  box-shadow:var(--shadow-card);
+  color:inherit;
+  transition:.18s ease;
+}
+
+.dashboard-metric-card:hover{
+  transform:translateY(-2px);
+  box-shadow:var(--shadow-hover);
+  border-color:#dcc6b7;
+}
+
+.metric-icon{
+  width:40px;
+  height:40px;
+  display:grid;
+  place-items:center;
+  border-radius:12px;
+  background:#f5ebe4;
+  color:#98715e;
+  font-size:18px;
+}
+
+.metric-copy{
+  min-width:0;
+}
+
+.metric-copy strong{
+  display:block;
+  margin-top:3px;
+  font-size:22px;
+  color:#463833;
+}
+
+.metric-label{
+  display:block;
+  color:#85756e;
+  font-size:11px;
+}
+
+.metric-arrow{
+  color:#c0aaa0;
+  font-size:14px;
+}
+
+.dashboard-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:16px;
+  margin-bottom:16px;
+}
+
+.dashboard-next-card,
+.dashboard-budget-card{
+  min-height:235px;
+}
+
+.card-header-line{
+  display:flex;
+  justify-content:space-between;
+  gap:14px;
+  align-items:flex-start;
+  margin-bottom:18px;
+}
+
+.card-header-line h2{
+  margin:0;
+  font-size:23px;
+}
+
+.header-icon{
+  width:36px;
+  height:36px;
+  display:grid;
+  place-items:center;
+  border-radius:11px;
+  background:#f6ece5;
+  color:#96705e;
+}
+
+.dashboard-next-card p{
+  min-height:52px;
+  color:#6f625d;
+}
+
+.text-link{
+  appearance:none;
+  border:0;
+  background:transparent;
+  color:#9a715f;
+  padding:4px;
+  cursor:pointer;
+  font-size:11px;
+  font-weight:700;
+}
+
+.budget-summary-row{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:12px;
+  margin-bottom:18px;
+}
+
+.budget-summary-row > div{
+  padding:13px 14px;
+  border-radius:14px;
+  background:#faf6f2;
+  border:1px solid #eee2d8;
+}
+
+.budget-summary-row span{
+  display:block;
+  color:#8a7971;
+  font-size:10px;
+  margin-bottom:5px;
+}
+
+.budget-summary-row strong{
+  color:#4b3b35;
+  font-size:16px;
+}
+
+.progress-pro{
+  height:8px;
+}
+
+.progress-caption{
+  margin-top:8px;
+  color:#918077;
+  font-size:10px;
+}
+
+.quick-links-card{
+  background:var(--surface);
+  border:1px solid var(--border);
+  border-radius:22px;
+  padding:20px;
+  box-shadow:var(--shadow-card);
+}
+
+.quick-link-grid{
+  display:grid;
+  grid-template-columns:repeat(4,minmax(0,1fr));
+  gap:10px;
+  margin-top:16px;
+}
+
+.quick-link-grid button{
+  appearance:none;
+  text-align:right;
+  border:1px solid #eee1d7;
+  background:#fcf9f6;
+  color:inherit;
+  border-radius:15px;
+  padding:14px;
+  display:flex;
+  gap:11px;
+  align-items:flex-start;
+  cursor:pointer;
+  transition:.18s ease;
+}
+
+.quick-link-grid button:hover{
+  background:#fff;
+  border-color:#dcc7b9;
+  transform:translateY(-1px);
+}
+
+.quick-link-grid button > span{
+  width:31px;
+  height:31px;
+  flex:0 0 31px;
+  display:grid;
+  place-items:center;
+  border-radius:10px;
+  background:#f1e3d9;
+  color:#94705e;
+}
+
+.quick-link-grid strong{
+  display:block;
+  font-size:12px;
+  margin-bottom:3px;
+}
+
+.quick-link-grid small{
+  display:block;
+  color:#8b7b73;
+  font-size:9.5px;
+  line-height:1.4;
+}
+
+.btn{
+  border-radius:12px;
+  padding:11px 16px;
+  font-size:12px;
+  box-shadow:none;
+}
+
+.btn.primary{
+  background:linear-gradient(135deg,#bb9078,#a97d67);
+  box-shadow:0 8px 18px rgba(158,111,87,.16);
+}
+
+.btn.primary:hover{
+  background:linear-gradient(135deg,#b38670,#9c705c);
+}
+
+.btn.secondary{
+  background:#fbf7f3;
+  border-color:#e4d5ca;
+}
+
+input,
+select,
+textarea{
+  border-radius:12px;
+  border-color:#e2d6cd;
+  background:#fff;
+  font-size:12px;
+}
+
+input:hover,
+select:hover,
+textarea:hover{
+  border-color:#d8c5b8;
+}
+
+input:focus,
+select:focus,
+textarea:focus{
+  border-color:#be9a84;
+  box-shadow:0 0 0 3px rgba(190,154,132,.11);
+}
+
+label{
+  font-size:11px;
+}
+
+.card{
+  border-radius:20px;
+}
+
+.setup-card,
+.advanced-prefs,
+.setup-final-card{
+  max-width:1000px;
+}
+
+.smart-card,
+.venue-card,
+.vendor-card,
+.impression-card,
+.vendor-impression-card{
+  border-radius:18px;
+}
+
+.smart-card.top{
+  border-color:#cfac98;
+  box-shadow:0 14px 34px rgba(126,91,74,.09);
+}
+
+.score-box{
+  background:#faf7f4;
+  border-color:#eee3da;
+  border-radius:13px;
+}
+
+.score-box strong{
+  font-size:19px;
+  color:#7d5c4d;
+}
+
+table{
+  font-size:11px;
+}
+
+th{
+  color:#806f68;
+  font-weight:800;
+  background:#faf7f4;
+}
+
+tbody tr{
+  transition:background .15s ease;
+}
+
+tbody tr:hover{
+  background:#fdf9f6;
+}
+
+.status-badge,
+.badge,
+.coverage-badge,
+.compare-pill,
+.weight-total{
+  box-shadow:none;
+}
+
+.status{
+  border-radius:13px;
+  font-size:11px;
+}
+
+.field-hint,
+.mini-note,
+.muted.small{
+  line-height:1.45;
+}
+
+@media (prefers-reduced-motion: reduce){
+  *,
+  *::before,
+  *::after{
+    scroll-behavior:auto!important;
+    transition:none!important;
+    animation:none!important;
+  }
+}
+
+@media(max-width:1100px){
+  .dashboard-metrics{
+    grid-template-columns:repeat(2,minmax(0,1fr));
+  }
+  .quick-link-grid{
+    grid-template-columns:repeat(2,minmax(0,1fr));
+  }
+}
+
+@media(max-width:850px){
+  .app{
+    grid-template-columns:1fr;
+  }
+
+  aside{
+    height:auto;
+    min-height:0;
+    padding:16px;
+    border-left:0;
+    border-bottom:1px solid var(--border);
+  }
+
+  .brand-lockup{
+    padding-bottom:12px;
+  }
+
+  .sidebar-event-chip,
+  .sidebar-footer,
+  .nav-label{
+    display:none;
+  }
+
+  nav{
+    display:flex;
+    gap:6px;
+    overflow-x:auto;
+    padding-bottom:4px;
+  }
+
+  .nav-group{
+    display:flex;
+    gap:6px;
+    margin:0;
+  }
+
+  nav button{
+    flex:0 0 auto;
+    width:auto;
+    padding:8px 11px;
+  }
+
+  .nav-icon{
+    width:25px;
+    height:25px;
+  }
+
+  main{
+    padding:22px 16px 40px;
+  }
+
+  .dashboard-hero{
+    grid-template-columns:1fr;
+  }
+
+  .countdown-panel{
+    min-height:190px;
+  }
+
+  .dashboard-grid{
+    grid-template-columns:1fr;
+  }
+
+  .page-heading{
+    align-items:flex-start;
+  }
+}
+
+@media(max-width:560px){
+  .dashboard-metrics{
+    grid-template-columns:1fr 1fr;
+  }
+
+  .dashboard-metric-card{
+    grid-template-columns:34px minmax(0,1fr);
+  }
+
+  .metric-arrow{
+    display:none;
+  }
+
+  .metric-icon{
+    width:34px;
+    height:34px;
+  }
+
+  .quick-link-grid{
+    grid-template-columns:1fr;
+  }
+
+  .page-heading h1{
+    font-size:31px;
+  }
+
+  .dashboard-hero-content{
+    min-height:230px;
+    padding:22px;
+  }
+
+  .dashboard-hero-content h2{
+    font-size:29px;
+  }
+}
+
+
+.vendor-question-details{margin-top:12px;border-top:1px solid var(--line);padding-top:10px}.vendor-question-details summary{cursor:pointer;font-weight:700;color:#69574f;display:flex;justify-content:space-between;gap:10px;list-style:none}.vendor-question-details summary::-webkit-details-marker{display:none}.vendor-question-details summary span{color:var(--muted);font-size:11px}.vendor-question-list{display:grid;gap:6px;margin-top:10px}.vendor-question-item{display:flex;gap:8px;align-items:flex-start;padding:8px 9px;border-radius:10px;background:#faf7f4;font-weight:400;font-size:11px}.vendor-question-item input{width:auto;min-height:0;margin-top:2px}.vendor-question-item.done span{text-decoration:line-through;color:#9c918b}
+
+.guest-tabs{
+  display:flex;
+  gap:8px;
+  margin-bottom:16px;
+  padding:5px;
+  width:max-content;
+  max-width:100%;
+  background:#f3e9e1;
+  border:1px solid var(--line);
+  border-radius:14px;
+}
+.guest-tab{
+  border:0;
+  background:transparent;
+  color:var(--muted);
+  padding:9px 14px;
+  border-radius:10px;
+  cursor:pointer;
+  font-weight:700;
+}
+.guest-tab.active{
+  background:#fff;
+  color:#624b40;
+  box-shadow:0 4px 12px rgba(92,65,52,.08);
+}
+.guest-entry-card{margin-bottom:16px}
+.guest-summary-card .stat{font-size:30px}
+.table-mini-input{width:70px;min-height:36px;padding:7px}
+.table-mini-select,.table-seat-select{min-width:130px;min-height:36px;padding:7px 9px}
+.seating-summary{
+  display:grid;
+  grid-template-columns:repeat(4,minmax(0,1fr));
+  gap:12px;
+  margin-bottom:16px;
+}
+.seating-stat-card span{display:block;color:var(--muted);font-size:11px}
+.seating-stat-card strong{display:inline-block;font-size:30px;margin-top:3px;color:#59433a}
+.seating-stat-card small{margin-right:5px;color:var(--muted)}
+.seating-actions-row{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:16px;
+  margin-bottom:16px;
+}
+.seating-helper-card p{color:var(--muted);font-size:12px;max-width:520px}
+.seating-table-grid{
+  display:grid;
+  grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:14px;
+}
+.seating-table-card{
+  background:#fff;
+  border:1px solid var(--line);
+  border-radius:18px;
+  padding:16px;
+  box-shadow:var(--shadow-card);
+}
+.seating-table-card h3{margin:0}
+.table-capacity-line{display:flex;gap:6px;align-items:baseline;margin:13px 0 7px}
+.table-capacity-line strong{font-size:22px;color:#60483d}
+.table-capacity-line span{color:var(--muted);font-size:10px}
+.seated-names{display:flex;gap:6px;flex-wrap:wrap;margin-top:12px}
+.seated-names span{padding:5px 8px;border-radius:999px;background:#f7f0ea;font-size:10px}
+.seating-warnings{margin-bottom:16px}
+.gift-summary-grid{
+  display:grid;
+  grid-template-columns:repeat(4,minmax(0,1fr));
+  gap:12px;
+  margin-bottom:16px;
+}
+.gift-summary-card span{display:block;color:var(--muted);font-size:11px;margin-bottom:5px}
+.gift-summary-card strong{font-size:24px;color:#543f36}
+.gift-entry-card,.gift-aftercare-card{margin-bottom:16px}
+.gift-aftercare-chips{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}
+.gift-aftercare-chips span{padding:7px 10px;border-radius:999px;background:#f7f0ea;color:#69574e;font-size:10px}
+.inline-check{display:inline-flex;align-items:center;gap:6px;font-weight:600;font-size:10px;margin:0}
+.inline-check input{width:auto;min-height:0}
+@media(max-width:1000px){
+  .seating-summary,.gift-summary-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .seating-table-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+@media(max-width:760px){
+  .seating-actions-row{grid-template-columns:1fr}
+  .seating-table-grid{grid-template-columns:1fr}
+}
+@media(max-width:520px){
+  .seating-summary,.gift-summary-grid{grid-template-columns:1fr 1fr}
+  .guest-tabs{width:100%}
+  .guest-tab{flex:1}
+}
+
+
+.mobile-topbar,.mobile-bottom-nav,.mobile-more-backdrop,.mobile-more-sheet{display:none}
+@media(max-width:850px){
+  body{background:#f8f4ef;padding-bottom:calc(86px + env(safe-area-inset-bottom))}
+  .app{display:block;min-height:100vh}
+  aside{display:none!important}
+  main{width:100%;max-width:none;padding:78px 14px calc(108px + env(safe-area-inset-bottom))}
+  .section{max-width:none;width:100%}
+  .mobile-topbar{position:fixed;top:0;left:0;right:0;z-index:90;display:flex;align-items:center;justify-content:space-between;padding:calc(10px + env(safe-area-inset-top)) 14px 10px;min-height:62px;background:rgba(253,249,245,.95);border-bottom:1px solid #e8ddd4;backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px)}
+  .mobile-brand-wrap{display:flex;align-items:center;gap:10px;min-width:0}
+  .mobile-brand-mark{width:36px;height:36px;display:grid;place-items:center;border-radius:12px;background:linear-gradient(145deg,#f1dfd3,#d9baa6);color:#63483b;font-family:Georgia,serif;font-weight:700;border:1px solid #dcc5b5}
+  .mobile-brand-wrap strong{display:block;color:#463833;font-size:15px}
+  .mobile-brand-wrap span{display:block;max-width:210px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:#8a7971;font-size:10px;margin-top:3px}
+  .mobile-icon-btn{width:38px;height:38px;display:grid;place-items:center;border:1px solid #e6d8ce;border-radius:12px;background:#fffaf6;color:#654d42;font-size:18px}
+  .mobile-bottom-nav{position:fixed;left:0;right:0;bottom:0;z-index:95;display:grid;grid-template-columns:repeat(5,1fr);padding:7px 8px calc(7px + env(safe-area-inset-bottom));background:rgba(255,252,249,.98);border-top:1px solid #e6dad1;box-shadow:0 -10px 30px rgba(72,52,42,.07);backdrop-filter:blur(14px)}
+  .mobile-bottom-nav button{border:0;background:transparent;color:#897970;padding:6px 2px;min-height:52px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;border-radius:12px}
+  .mobile-bottom-nav button span{font-size:19px}.mobile-bottom-nav button small{font-size:9px;font-weight:700}
+  .mobile-bottom-nav button.active{color:#7f5b49;background:#f5e9e1}
+  .mobile-more-backdrop{position:fixed;inset:0;z-index:109;background:rgba(39,28,24,.24);opacity:0;pointer-events:none;transition:.2s;display:block}
+  .mobile-more-backdrop.open{opacity:1;pointer-events:auto}
+  .mobile-more-sheet{position:fixed;left:0;right:0;bottom:0;z-index:110;display:block;padding:9px 14px calc(20px + env(safe-area-inset-bottom));max-height:76vh;overflow:auto;background:#fffdfb;border-radius:24px 24px 0 0;box-shadow:0 -22px 60px rgba(54,39,32,.18);transform:translateY(105%);transition:transform .24s}
+  .mobile-more-sheet.open{transform:translateY(0)}
+  .mobile-sheet-handle{width:42px;height:4px;margin:1px auto 13px;border-radius:999px;background:#d9c9be}
+  .mobile-sheet-header{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;margin-bottom:14px}.mobile-sheet-header h2{margin:0;font-size:23px}
+  .mobile-more-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+  .mobile-more-grid button{min-height:94px;padding:13px;text-align:right;display:flex;gap:10px;border:1px solid #eadfd6;border-radius:16px;background:#fcf8f4;color:#4f403a}
+  .mobile-more-grid button>span{width:31px;height:31px;display:grid;place-items:center;flex:0 0 31px;border-radius:10px;background:#f1e2d8;color:#906b59}
+  .mobile-more-grid strong{display:block;font-size:11px;margin-bottom:4px}.mobile-more-grid small{display:block;color:#8d7d75;font-size:9px;line-height:1.4}
+  .page-heading,h1{font-size:30px;line-height:1.1}.subtitle{font-size:13px;line-height:1.5;margin-bottom:16px}h2{font-size:22px}
+  .card,.smart-card,.venue-card,.vendor-card,.impression-card,.detail-panel,.live-box,.vendor-impression-card{border-radius:18px;padding:16px}
+  .dashboard-hero{display:block}.dashboard-hero-content{min-height:0;padding:21px 18px;border-radius:20px;margin-bottom:11px}.dashboard-hero-content h2{font-size:28px}.dashboard-hero-content p{font-size:12px;margin-bottom:17px}
+  .dashboard-actions{display:grid;grid-template-columns:1fr 1fr;gap:8px}.dashboard-actions .btn{width:100%}.countdown-panel{min-height:150px;border-radius:20px}.countdown-number{font-size:58px}
+  .dashboard-metrics{grid-template-columns:1fr 1fr;gap:9px}.dashboard-metric-card{grid-template-columns:35px minmax(0,1fr);padding:12px;gap:8px}.metric-arrow{display:none}.metric-icon{width:35px;height:35px}.metric-copy strong{font-size:19px}
+  .dashboard-grid{display:block}.dashboard-next-card,.dashboard-budget-card{min-height:0;margin-bottom:11px}.quick-link-grid{grid-template-columns:1fr 1fr}.quick-link-grid small{display:none}
+  .grid.two,.grid.three,.detail-grid,.detail-grid.two,.vendor-rating-grid,.impression-fields{grid-template-columns:1fr!important}
+  .setup-steps{display:none}.advanced-prefs summary{padding:16px}.advanced-content{padding:15px}.must-have-grid{grid-template-columns:1fr}.setup-actions{flex-direction:column;align-items:stretch}.setup-save-btn{width:100%;position:sticky;bottom:86px;z-index:20}
+  .reco-results{grid-template-columns:1fr;gap:11px}.score-row{grid-template-columns:1fr 1fr;gap:7px}.source-tags{flex-wrap:nowrap;overflow-x:auto;padding-bottom:3px}.source-tags span{flex:0 0 auto}
+  .vendor-category-tabs{position:sticky;top:67px;z-index:25;margin-left:-14px;margin-right:-14px;padding:8px 14px 10px;background:rgba(248,244,239,.95);backdrop-filter:blur(10px)}
+  .card[style*="overflow:auto"],.card:has(table){overflow-x:auto!important;-webkit-overflow-scrolling:touch}table{min-width:670px}
+  .guest-tabs{width:100%}.guest-tab{flex:1}.seating-summary,.gift-summary-grid{grid-template-columns:1fr 1fr;gap:9px}.seating-actions-row{grid-template-columns:1fr}.seating-table-grid{grid-template-columns:1fr}
+  .check-head{padding:13px}.check-title{font-size:12px}.subtasks{padding:0 13px 10px}.subtask{align-items:flex-start;font-size:11px}
+  .btn{min-height:44px}input,select,textarea{min-height:46px;font-size:16px}textarea{min-height:88px}
+  .vendor-impression-grid,.impression-grid{grid-template-columns:1fr}
+}
+@media(max-width:390px){
+  main{padding-left:11px;padding-right:11px}.dashboard-metrics{grid-template-columns:1fr}.quick-link-grid,.mobile-more-grid{grid-template-columns:1fr}.seating-summary,.gift-summary-grid{grid-template-columns:1fr}.dashboard-actions{grid-template-columns:1fr}
+}
+
+
+@media(max-width:850px){
+  .mobile-storage-notice{
+    position:fixed;
+    left:12px;
+    right:12px;
+    top:calc(68px + env(safe-area-inset-top));
+    z-index:89;
+    padding:9px 11px;
+    border:1px solid #ead4c6;
+    border-radius:12px;
+    background:#fff9f4;
+    color:#785f53;
+    font-size:10px;
+    line-height:1.4;
+    box-shadow:0 8px 22px rgba(83,59,48,.08);
+  }
+}
+
+</style>
+
+<meta name="theme-color" content="#f8f4ef">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="WedWise">
+<link rel="manifest" href="./manifest.webmanifest">
+<link rel="apple-touch-icon" href="./icon-192.png">
+
+
+<style>
+button, a, input, select, textarea, label, summary {
+  touch-action: manipulation;
+}
+html {
+  -webkit-text-size-adjust: 100%;
+}
+</style>
+
+</head>
+<body>
+
+<div id="mobileStorageNotice" class="mobile-storage-notice" style="display:none">הגרסה פתוחה בתצוגה מוגבלת. אפשר להשתמש בה, אבל לשמירה קבועה של הנתונים כדאי לפתוח אותה כאתר בדפדפן.</div>
+<div class="mobile-topbar">
+  <div class="mobile-brand-wrap">
+    <div class="mobile-brand-mark">W</div>
+    <div><strong>WedWise</strong><span id="mobileWeddingName">החתונה שלנו</span></div>
+  </div>
+  <button class="mobile-icon-btn" onclick="toggleMobileMore(true)" aria-label="פתיחת תפריט">☰</button>
+</div>
+<div id="mobileMoreBackdrop" class="mobile-more-backdrop" onclick="toggleMobileMore(false)"></div>
+<div id="mobileMoreSheet" class="mobile-more-sheet" aria-hidden="true">
+  <div class="mobile-sheet-handle"></div>
+  <div class="mobile-sheet-header">
+    <div><div class="section-mini-label">ניווט</div><h2>עוד כלים</h2></div>
+    <button class="mobile-icon-btn" onclick="toggleMobileMore(false)" aria-label="סגירה">×</button>
+  </div>
+  <div class="mobile-more-grid">
+    <button onclick="mobileGo('compare')"><span>⇄</span><div><strong>השוואת מקומות</strong><small>להחליט בין המקומות</small></div></button>
+    <button onclick="mobileGo('vendorCompare')"><span>≋</span><div><strong>השוואת ספקים</strong><small>להשוות לפי מה שחשוב</small></div></button>
+    <button onclick="mobileGo('checklist')"><span>✓</span><div><strong>צ'ק ליסט</strong><small>כל המשימות</small></div></button>
+    <button onclick="mobileGo('budget')"><span>₪</span><div><strong>תקציב</strong><small>הוצאות ותשלומים</small></div></button>
+    <button onclick="mobileGo('guests')"><span>♙</span><div><strong>מוזמנים והושבה</strong><small>אישורים ושולחנות</small></div></button>
+    <button onclick="mobileGo('gifts')"><span>▣</span><div><strong>מתנות</strong><small>מעטפות ותודות</small></div></button>
+  </div>
+</div>
+<div class="mobile-bottom-nav" aria-label="ניווט מהיר">
+  <button data-mobile-target="dashboard" class="active" onclick="mobileGo('dashboard')"><span>⌂</span><small>בית</small></button>
+  <button data-mobile-target="setup" onclick="mobileGo('setup')"><span>✦</span><small>פרטים</small></button>
+  <button data-mobile-target="venues" onclick="mobileGo('venues')"><span>⌖</span><small>מקומות</small></button>
+  <button data-mobile-target="vendors" onclick="mobileGo('vendors')"><span>◇</span><small>ספקים</small></button>
+  <button data-mobile-target="more" onclick="toggleMobileMore(true)"><span>•••</span><small>עוד</small></button>
+</div>
+
+<div class="app">
+<aside>
+  <div class="brand-lockup">
+    <div class="brand-mark" aria-hidden="true">W</div>
+    <div class="brand">WedWise<small>תכנון חתונה חכם</small></div>
+  </div>
+
+  <div class="sidebar-event-chip">
+    <span class="sidebar-event-dot"></span>
+    <span id="sidebarWeddingName">החתונה שלנו</span>
+  </div>
+
+  <nav aria-label="ניווט ראשי">
+    <div class="nav-group">
+      <div class="nav-label">סקירה</div>
+      <button data-target="dashboard" class="active">
+        <span class="nav-icon" aria-hidden="true">⌂</span>
+        <span>דשבורד</span>
+      </button>
+      <button data-target="setup">
+        <span class="nav-icon" aria-hidden="true">✦</span>
+        <span>פרטי החתונה</span>
+      </button>
+    </div>
+
+    <div class="nav-group">
+      <div class="nav-label">בחירות</div>
+      <button data-target="venues">
+        <span class="nav-icon" aria-hidden="true">⌖</span>
+        <span>מקומות</span>
+      </button>
+      <button data-target="compare">
+        <span class="nav-icon" aria-hidden="true">⇄</span>
+        <span>השוואת מקומות</span>
+      </button>
+      <button data-target="vendors">
+        <span class="nav-icon" aria-hidden="true">◇</span>
+        <span>ספקים</span>
+      </button>
+      <button data-target="vendorCompare">
+        <span class="nav-icon" aria-hidden="true">≋</span>
+        <span>השוואת ספקים</span>
+      </button>
+    </div>
+
+    <div class="nav-group">
+      <div class="nav-label">ניהול</div>
+      <button data-target="checklist">
+        <span class="nav-icon" aria-hidden="true">✓</span>
+        <span>צ'ק ליסט</span>
+      </button>
+      <button data-target="budget">
+        <span class="nav-icon" aria-hidden="true">₪</span>
+        <span>תקציב</span>
+      </button>
+      <button data-target="guests">
+        <span class="nav-icon" aria-hidden="true">♙</span>
+        <span>מוזמנים והושבה</span>
+      </button>
+      <button data-target="gifts">
+        <span class="nav-icon" aria-hidden="true">▣</span>
+        <span>מתנות</span>
+      </button>
+    </div>
+  </nav>
+
+  <div class="sidebar-footer">
+    <span class="autosave-dot"></span>
+    הנתונים נשמרים אוטומטית
+  </div>
+</aside>
+<main>
+
+<section id="dashboard" class="section active">
+  <div class="page-heading dashboard-heading">
+    <div>
+      <div class="page-kicker">מרכז התכנון</div>
+      <h1 id="dashCoupleTitle">החתונה שלנו</h1>
+      <div id="dashDateLine" class="subtitle">כל התכנון, ההחלטות והמעקב במקום אחד</div>
+    </div>
+    <button class="btn secondary compact-btn" onclick="go('setup')">עריכת פרטים</button>
+  </div>
+
+  <div class="dashboard-hero">
+    <div class="dashboard-hero-content">
+      <div class="eyebrow">WedWise Planner</div>
+      <h2>כל מה שצריך, במקום אחד.</h2>
+      <p>חיפוש מקומות וספקים, השוואות, תקציב, משימות ומוזמנים, בצורה מסודרת שמקלה על קבלת ההחלטות.</p>
+
+      <div class="dashboard-actions">
+        <button class="btn primary" onclick="go('venues')">חיפוש מקומות</button>
+        <button class="btn soft-action" onclick="go('vendors')">חיפוש ספקים</button>
+      </div>
+    </div>
+
+    <div class="countdown-panel">
+      <div class="countdown-label">ספירה לאחור</div>
+      <div id="dashCountdownDays" class="countdown-number">—</div>
+      <div id="dashCountdownCaption" class="countdown-caption">עד יום החתונה</div>
+      <div class="countdown-flourish" aria-hidden="true">❀</div>
+    </div>
+  </div>
+
+  <div class="dashboard-metrics">
+    <button class="dashboard-metric-card" onclick="go('guests')">
+      <span class="metric-icon">♙</span>
+      <span class="metric-copy">
+        <span class="metric-label">אורחים משוערים</span>
+        <strong id="dashGuests">-</strong>
+      </span>
+      <span class="metric-arrow">←</span>
+    </button>
+
+    <button class="dashboard-metric-card" onclick="go('venues')">
+      <span class="metric-icon">⌖</span>
+      <span class="metric-copy">
+        <span class="metric-label">מקומות שנשמרו</span>
+        <strong id="dashVenues">0</strong>
+      </span>
+      <span class="metric-arrow">←</span>
+    </button>
+
+    <button class="dashboard-metric-card" onclick="go('vendors')">
+      <span class="metric-icon">◇</span>
+      <span class="metric-copy">
+        <span class="metric-label">ספקים שנשמרו</span>
+        <strong id="dashVendors">0</strong>
+      </span>
+      <span class="metric-arrow">←</span>
+    </button>
+
+    <button class="dashboard-metric-card" onclick="go('checklist')">
+      <span class="metric-icon">✓</span>
+      <span class="metric-copy">
+        <span class="metric-label">התקדמות משימות</span>
+        <strong id="dashProgress">0%</strong>
+      </span>
+      <span class="metric-arrow">←</span>
+    </button>
+  </div>
+
+  <div class="dashboard-grid">
+    <div class="card dashboard-next-card">
+      <div class="card-header-line">
+        <div>
+          <div class="section-mini-label">הצעד הבא</div>
+          <h2>מה כדאי לעשות עכשיו?</h2>
+        </div>
+        <span class="header-icon">→</span>
+      </div>
+      <p id="nextStepText">מלאי את פרטי החתונה כדי להתחיל.</p>
+      <button class="btn primary" onclick="go('setup')">המשך לתכנון</button>
+    </div>
+
+    <div class="card dashboard-budget-card">
+      <div class="card-header-line">
+        <div>
+          <div class="section-mini-label">תמונה פיננסית</div>
+          <h2>תקציב</h2>
+        </div>
+        <button class="text-link" onclick="go('budget')">לניהול התקציב</button>
+      </div>
+
+      <div class="budget-summary-row">
+        <div>
+          <span>תקציב שהוגדר</span>
+          <strong id="dashBudget">לא הוגדר</strong>
+        </div>
+        <div>
+          <span>הוצאות שנרשמו</span>
+          <strong id="dashSpent">0 ₪</strong>
+        </div>
+      </div>
+
+      <div class="progress progress-pro">
+        <div id="budgetProgress" style="width:0%"></div>
+      </div>
+      <div id="dashBudgetCaption" class="progress-caption">הגדירי תקציב כדי להתחיל לעקוב.</div>
+    </div>
+  </div>
+
+  <div class="quick-links-card">
+    <div class="between">
+      <div>
+        <div class="section-mini-label">גישה מהירה</div>
+        <h2 style="margin-bottom:0">מה תרצו לנהל?</h2>
+      </div>
+    </div>
+
+    <div class="quick-link-grid">
+      <button onclick="go('compare')"><span>⇄</span><div><strong>השוואת מקומות</strong><small>להחליט בין המועמדים</small></div></button>
+      <button onclick="go('vendorCompare')"><span>≋</span><div><strong>השוואת ספקים</strong><small>להשוות מחיר והתרשמות</small></div></button>
+      <button onclick="go('checklist')"><span>✓</span><div><strong>צ'ק ליסט</strong><small>לראות מה הושלם ומה נשאר</small></div></button>
+      <button onclick="go('guests')"><span>♙</span><div><strong>מוזמנים והושבה</strong><small>אישורי הגעה וסידור שולחנות</small></div></button>
+      <button onclick="go('gifts')"><span>▣</span><div><strong>מתנות</strong><small>מעטפות, הפקדות והודעות תודה</small></div></button>
+    </div>
+  </div>
+</section>
+
+<section id="setup" class="section">
+  <div class="setup-header">
+    <div>
+      <div class="setup-kicker">מתחילים מהדברים החשובים</div>
+      <h1>פרטי החתונה</h1>
+      <div class="subtitle">ממלאים את מה שכבר ידוע, ואת השאר אפשר להשלים בכל שלב.</div>
+    </div>
+    <div class="setup-steps" aria-label="שלבי הגדרת החיפוש">
+      <span><b>1</b> פרטי האירוע</span>
+      <span><b>2</b> העדפות מקום</span>
+      <span><b>3</b> העדפות נוספות</span>
+    </div>
+  </div>
+
+  <div class="setup-flow">
+    <div class="card setup-card">
+      <div class="setup-card-title">
+        <span class="setup-number">1</span>
+        <div>
+          <h2>פרטי האירוע</h2>
+          <div class="muted small">המידע הבסיסי שיעזור להתאים את החיפוש אליכם.</div>
+        </div>
+      </div>
+
+      <div class="grid two">
+        <div class="field">
+          <label>שמות בני הזוג</label>
+          <input id="coupleNames" placeholder="למשל: קרן ודן">
+        </div>
+
+        <div class="field">
+          <label>מספר אורחים משוער</label>
+          <input id="estimatedGuests" type="number" min="0" placeholder="250">
+        </div>
+
+        <div class="field">
+          <label>תאריך משוער</label>
+          <input id="weddingDate" type="date">
+        </div>
+
+        <div class="field">
+          <label>תקציב כולל משוער <span class="optional-label">אופציונלי</span></label>
+          <input id="weddingBudgetInput" type="number" min="0" placeholder="אפשר להשאיר ריק">
+        </div>
+      </div>
+    </div>
+
+    <div class="card setup-card">
+      <div class="setup-card-title">
+        <span class="setup-number">2</span>
+        <div>
+          <h2>איזה מקום אתם מחפשים?</h2>
+          <div class="muted small">אפשר לבחור כמה אזורים ולהשאיר פרטים שעדיין לא החלטתם עליהם.</div>
+        </div>
+      </div>
+
+      <div class="field">
+        <label>אזורים מועדפים <span class="optional-label">אפשר לבחור כמה</span></label>
+        <div class="region-pills" id="regionPills">
+          <label class="region-pill"><input type="checkbox" value="תל אביב והמרכז"><span>תל אביב והמרכז</span></label>
+          <label class="region-pill"><input type="checkbox" value="השרון"><span>השרון</span></label>
+          <label class="region-pill"><input type="checkbox" value="השפלה"><span>השפלה</span></label>
+          <label class="region-pill"><input type="checkbox" value="ירושלים והסביבה"><span>ירושלים והסביבה</span></label>
+          <label class="region-pill"><input type="checkbox" value="צפון"><span>צפון</span></label>
+          <label class="region-pill"><input type="checkbox" value="דרום"><span>דרום</span></label>
+        </div>
+      </div>
+
+      <div class="grid three setup-select-grid">
+        <div class="field">
+          <label>סגנון</label>
+          <select id="style">
+            <option value="">לא החלטנו</option>
+            <option>מודרני</option>
+            <option>אורבני</option>
+            <option>טבע</option>
+            <option>קלאסי</option>
+            <option>כפרי</option>
+            <option>יוקרתי</option>
+          </select>
+        </div>
+
+        <div class="field">
+          <label>פנים / חוץ</label>
+          <select id="indoorOutdoor">
+            <option value="">לא משנה</option>
+            <option value="inside">פנים</option>
+            <option value="outside">חוץ</option>
+            <option value="combined">שילוב</option>
+          </select>
+        </div>
+
+        <div class="field">
+          <label>כשרות המקום</label>
+          <select id="kosherPreference">
+            <option value="">לא משנה</option>
+            <option value="kosher">כשר</option>
+            <option value="mehadrin">כשר למהדרין</option>
+            <option value="not_kosher">לא כשר</option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <details id="advancedPrefs" class="card advanced-prefs">
+      <summary>
+        <span class="advanced-summary-main">
+          <span class="setup-number">3</span>
+          <span>
+            <strong>העדפות נוספות</strong>
+            <small>לפרטים שיכולים לצמצם ולדייק את החיפוש</small>
+          </span>
+        </span>
+        <span class="advanced-open-label">פתיחה</span>
+      </summary>
+
+      <div class="advanced-content">
+        <div class="grid two">
+          <div class="field">
+            <label>מחיר מקסימלי למנה <span class="optional-label">אופציונלי</span></label>
+            <div class="input-with-suffix">
+              <input id="maxPricePerGuest" type="number" min="0" placeholder="למשל 380">
+              <span>₪</span>
+            </div>
+          </div>
+
+          <div class="field">
+            <label>יום מועדף</label>
+            <select id="preferredDay">
+              <option value="">לא משנה</option>
+              <option value="midweek">אמצע שבוע</option>
+              <option value="thursday">חמישי</option>
+              <option value="friday">שישי</option>
+            </select>
+          </div>
+
+          <div class="field">
+            <label>שעת אירוע</label>
+            <select id="eventTime">
+              <option value="">לא משנה</option>
+              <option value="evening">ערב</option>
+              <option value="afternoon">צהריים</option>
+              <option value="friday_noon">שישי צהריים</option>
+            </select>
+          </div>
+
+          <div class="field">
+            <label>גמישות בתאריך</label>
+            <select id="dateFlexibility" onchange="updateDateFlexibilityUI()">
+              <option value="">לא משנה</option>
+              <option value="fixed">תאריך קבוע</option>
+              <option value="month">חודש מסוים</option>
+              <option value="flexible">גמישים</option>
+            </select>
+          </div>
+
+          <div class="field" id="preferredMonthField" style="display:none">
+            <label>חודש מועדף</label>
+            <input id="preferredMonth" type="month">
+          </div>
+        </div>
+
+        <div class="must-have-grid">
+          <label class="must-have-card">
+            <input id="accessibilityRequired" type="checkbox">
+            <span class="must-have-check">✓</span>
+            <span>
+              <strong>נגישות היא חובה</strong>
+              <small>נעדיף מקומות עם אינדיקציה ברורה לנגישות.</small>
+            </span>
+          </label>
+
+          <label class="must-have-card">
+            <input id="parkingRequired" type="checkbox">
+            <span class="must-have-check">✓</span>
+            <span>
+              <strong>חניה היא חובה</strong>
+              <small>נעדיף מקומות שבהם נמצאה חניה נוחה או צמודה.</small>
+            </span>
+          </label>
+        </div>
+      </div>
+    </details>
+
+    <div class="card setup-final-card">
+      <div class="field" style="margin-bottom:0">
+        <label>מה הכי חשוב לכם?</label>
+        <input id="priorities" placeholder="למשל: אוכל, אווירה, שירות, חופה יפה">
+        <div class="field-hint">אפשר לכתוב במילים חופשיות. WedWise תשתמש בזה כדי לדייק את ההמלצות.</div>
+      </div>
+
+      <div class="setup-actions">
+        <div class="setup-save-note">אפשר לחזור ולעדכן את הפרטים בכל שלב.</div>
+        <button class="btn primary setup-save-btn" onclick="saveSetup()">שמור והמשך למקומות</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="venues" class="section">
+  <div class="between">
+    <div><h1>מקומות</h1><div class="subtitle">WedWise מחפשת מקומות אמיתיים ברשת, מצליבה מקורות ומציגה התאמה לפי מה שחשוב לכם.</div></div>
+    <div class="row">
+      <button id="smartSearchBtn" class="btn primary" onclick="searchRecommendedVenues()">✨ מצאי מקומות מתאימים</button>
+      <button class="btn secondary" onclick="toggleVenueForm()">+ הוספה ידנית</button>
+    </div>
+  </div>
+
+  <div id="liveSearchPanel" class="card live-box" style="margin-bottom:16px">
+    <div class="between">
+      <div>
+        <h2 style="margin-bottom:5px">המלצות חכמות</h2>
+        <div class="muted small">החיפוש משתמש בפרטי החתונה שלכם, אוסף מידע ממספר מקורות ומציג התאמה, איכות ורמת ביטחון לכל מקום.</div>
+      </div>
+      <span class="badge">חיפוש אינטרנטי אמיתי</span>
+    </div>
+
+    <div id="smartSearchStatus" class="status" style="margin-top:14px">
+      לחצי על ״מצאי מקומות מתאימים״ כדי להתחיל.
+    </div>
+
+    <div id="recommendationResults" class="reco-results"></div>
+  </div>
+
+  <div id="venueForm" class="card" style="display:none;margin-bottom:16px">
+    <h2>הוספת מקום</h2>
+    <div class="grid two">
+      <div class="field"><label>שם המקום</label><input id="vName"></div>
+      <div class="field"><label>אזור</label><input id="vRegion"></div>
+      <div class="field"><label>קישור למקום / אתר (אופציונלי)</label><input id="vWebsite" placeholder="אפשר להדביק קישור שמצאת"></div>
+      <div class="field"><label>מחיר למנה</label><input id="vPrice" type="number"></div>
+      <div class="field"><label>מינימום אורחים</label><input id="vMinGuests" type="number"></div>
+      <div class="field"><label>אוכל 1-10</label><input id="vFood" type="number" min="1" max="10"></div>
+      <div class="field"><label>מיקום 1-10</label><input id="vLocation" type="number" min="1" max="10"></div>
+      <div class="field"><label>עיצוב 1-10</label><input id="vDesign" type="number" min="1" max="10"></div>
+      <div class="field"><label>שירות 1-10</label><input id="vService" type="number" min="1" max="10"></div>
+      <div class="field"><label>חניה</label><select id="vParking"><option value="">לא ידוע</option><option value="yes">יש</option><option value="no">אין / מוגבלת</option></select></div>
+      <div class="field"><label>התרשמות כללית 1-10</label><input id="vOverall" type="number" min="1" max="10"></div>
+    </div>
+    <div class="field"><label>מה אהבתם?</label><textarea id="vPros"></textarea></div>
+    <div class="field"><label>מה פחות?</label><textarea id="vCons"></textarea></div>
+    <div class="field"><label>הערות</label><textarea id="vNotes"></textarea></div>
+    <div class="row"><button class="btn primary" onclick="addVenue()">שמור</button><button class="btn secondary" onclick="toggleVenueForm()">ביטול</button></div>
+  </div>
+
+  <div id="venueDetailPanel" class="card detail-panel" style="display:none"></div>
+
+  <div class="between" style="margin-top:22px">
+    <h2 style="margin:0">המקומות ששמרת</h2>
+    <span class="muted small">פתחי כרטיס מקום אחרי שיחה או ביקור כדי להשלים את הנתונים האמיתיים.</span>
+  </div>
+  <div id="venueList" class="grid three" style="margin-top:12px"></div>
+</section>
+
+<section id="compare" class="section">
+  <h1>השוואת מקומות</h1>
+  <div class="subtitle">אחרי ביקורים ושיחות, מלאו כאן את ההתרשמות שלכם מכל מקום. WedWise מחשבת את ההשוואה לפי הציונים שלכם ואחוזי החשיבות שהגדרתם.</div>
+
+  <div class="card" style="margin-bottom:16px">
+    <div class="between">
+      <div>
+        <h2 style="margin:0">מה חשוב לכם בהחלטה?</h2>
+        <div class="muted small" style="margin-top:5px">כל מספר הוא אחוז החשיבות של הקריטריון. סך כל האחוזים צריך להיות 100%.</div>
+      </div>
+      <span id="weightTotal" class="weight-total">סה"כ: 100%</span>
+    </div>
+
+    <div class="grid three" style="margin-top:14px">
+      <div class="field"><label>עלות כוללת (%)</label><input id="wPrice" type="number" min="0" max="100" step="5" value="20" oninput="onWeightChange()"></div>
+      <div class="field"><label>אוכל (%)</label><input id="wFood" type="number" min="0" max="100" step="5" value="20" oninput="onWeightChange()"></div>
+      <div class="field"><label>אווירה (%)</label><input id="wAtmosphere" type="number" min="0" max="100" step="5" value="15" oninput="onWeightChange()"></div>
+      <div class="field"><label>מיקום (%)</label><input id="wLocation" type="number" min="0" max="100" step="5" value="15" oninput="onWeightChange()"></div>
+      <div class="field"><label>עיצוב (%)</label><input id="wDesign" type="number" min="0" max="100" step="5" value="10" oninput="onWeightChange()"></div>
+      <div class="field"><label>שירות (%)</label><input id="wService" type="number" min="0" max="100" step="5" value="10" oninput="onWeightChange()"></div>
+      <div class="field"><label>חניה (%)</label><input id="wParking" type="number" min="0" max="100" step="5" value="5" oninput="onWeightChange()"></div>
+      <div class="field"><label>התרשמות זוגית כללית (%)</label><input id="wCouple" type="number" min="0" max="100" step="5" value="5" oninput="onWeightChange()"></div>
+    </div>
+
+    <div class="row">
+      <button id="compareCalcBtn" class="btn primary" onclick="renderComparison()">חשב מחדש</button>
+      <button class="btn secondary" onclick="resetComparisonWeights()">איפוס ל-100% ברירת מחדל</button>
+    </div>
+
+    <div class="weight-help">
+      מקום לא יקבל יתרון רק בגלל שחסרים בו נתונים. WedWise מציגה בנפרד את <strong>שלמות המידע</strong>, ורק מקום שלפחות 60% מהחשיבות שהגדרתם כבר מולאה יכול להופיע כ"מוביל".
+      עלות מחושבת באופן יחסי בין המקומות שבהם הוזן מחיר; אם יש מחיר רק למקום אחד, העלות מקבלת ציון ניטרלי ולא 10/10 אוטומטי.
+    </div>
+  </div>
+
+  <div class="card impression-editor">
+    <div class="between">
+      <div>
+        <h2 style="margin:0">ההתרשמות שלנו מהמקומות</h2>
+        <div class="muted small" style="margin-top:5px">כאן ממלאים את הציונים שמשמשים בפועל להשוואה. אפשר להשאיר נתון ריק אם עדיין לא בדקתם אותו.</div>
+      </div>
+      <span class="badge">1-10</span>
+    </div>
+    <div id="comparisonImpressionEditor" class="impression-grid"></div>
+  </div>
+
+  <div id="bestMatch" class="card" style="display:none;margin-bottom:16px"></div>
+
+  <div class="card" style="overflow:auto">
+    <table>
+      <thead>
+        <tr>
+          <th>מקום</th>
+          <th>סטטוס</th>
+          <th>עלות משוערת</th>
+          <th>אוכל</th>
+          <th>אווירה</th>
+          <th>מיקום</th>
+          <th>עיצוב</th>
+          <th>שירות</th>
+          <th>חניה</th>
+          <th>ציון זוגי</th>
+          <th>שלמות מידע</th>
+          <th>ציון השוואה</th>
+        </tr>
+      </thead>
+      <tbody id="compareBody"></tbody>
+    </table>
+  </div>
+</section>
+
+
+<section id="vendors" class="section">
+  <div class="between vendor-page-head">
+    <div>
+      <h1>ספקים</h1>
+      <div class="subtitle">חיפוש חכם, שמירה והשוואה של הספקים המרכזיים לחתונה.</div>
+    </div>
+    <button class="btn secondary" onclick="toggleVendorForm()">+ הוספה ידנית</button>
+  </div>
+
+  <div class="vendor-category-tabs" id="vendorCategoryTabs"></div>
+
+  <div class="card vendor-search-card">
+    <div class="between">
+      <div>
+        <div class="muted small">מחפשים עכשיו</div>
+        <h2 id="vendorSearchTitle" style="margin:3px 0 0">צלמים</h2>
+      </div>
+      <span class="badge">חיפוש אינטרנטי אמיתי</span>
+    </div>
+
+    <div class="grid two vendor-search-fields" style="margin-top:16px">
+      <div class="field">
+        <label>תקציב מקסימלי לספק <span class="optional-label">אופציונלי</span></label>
+        <div class="input-with-suffix">
+          <input id="vendorMaxBudget" type="number" min="0" placeholder="אפשר להשאיר ריק">
+          <span>₪</span>
+        </div>
+      </div>
+      <div class="field">
+        <label>סגנון / דברים שחשובים לכם <span class="optional-label">אופציונלי</span></label>
+        <input id="vendorPreferences" placeholder="למשל: טבעי, דוקומנטרי, אנרגטי, עדין">
+      </div>
+    </div>
+
+    <div class="row">
+      <button id="vendorSearchBtn" class="btn primary" onclick="searchRecommendedVendors()">✨ מצאי ספקים מתאימים</button>
+      <button class="btn ghost" onclick="go('vendorCompare')">להשוואת הספקים</button>
+    </div>
+
+    <div id="vendorSearchStatus" class="status" style="margin-top:14px">בחרי קטגוריה ולחצי על החיפוש החכם.</div>
+    <div id="vendorRecommendationResults" class="reco-results"></div>
+  </div>
+
+  <div id="vendorForm" class="card" style="display:none;margin:16px 0">
+    <div class="between">
+      <div>
+        <div class="muted small">הוספה ידנית לקטגוריה</div>
+        <h2 id="vendorFormCategory" style="margin:3px 0 0"></h2>
+      </div>
+      <button class="btn ghost small" onclick="toggleVendorForm()">סגירה</button>
+    </div>
+    <div class="grid two" style="margin-top:14px">
+      <div class="field"><label>שם הספק</label><input id="vendorManualName"></div>
+      <div class="field"><label>אזור</label><input id="vendorManualRegion"></div>
+      <div class="field"><label>אתר / Instagram</label><input id="vendorManualWebsite"></div>
+      <div class="field"><label>מחיר / הצעת מחיר</label><input id="vendorManualPrice" type="number" min="0"></div>
+    </div>
+    <div class="field"><label>הערות</label><textarea id="vendorManualNotes"></textarea></div>
+    <button class="btn primary" onclick="addVendorManually()">שמרי ספק</button>
+  </div>
+
+  <div class="between saved-vendors-title">
+    <h2 style="margin:0">הספקים ששמרתם</h2>
+    <span id="savedVendorCount" class="badge">0</span>
+  </div>
+  <div id="savedVendorList" class="vendor-saved-grid"></div>
+</section>
+
+<section id="vendorCompare" class="section">
+  <div class="between">
+    <div>
+      <h1>השוואת ספקים</h1>
+      <div class="subtitle">ההשוואה משתנה לפי סוג הספק, כדי שתדרגו כל קטגוריה לפי הפרמטרים שבאמת רלוונטיים לה.</div>
+    </div>
+    <div class="field vendor-compare-category-field">
+      <label>קטגוריה להשוואה</label>
+      <select id="vendorCompareCategory" onchange="changeVendorCompareCategory(this.value)"></select>
+    </div>
+  </div>
+
+  <div class="card" style="margin-bottom:16px">
+    <div class="between">
+      <div>
+        <h2 style="margin:0">מה חשוב לכם בהחלטה?</h2>
+        <div class="muted small" style="margin-top:5px">האחוזים חייבים להסתכם ל-100%.</div>
+      </div>
+      <span id="vendorWeightTotal" class="weight-total">סה״כ: 100%</span>
+    </div>
+
+    <div class="grid three" style="margin-top:14px">
+      <div class="field"><label>מחיר (%)</label><input id="vwPrice" type="number" min="0" max="100" step="5" value="20" oninput="onVendorWeightChange()"></div>
+      <div class="field"><label><span id="vwLabel1">סגנון</span> (%)</label><input id="vwC1" type="number" min="0" max="100" step="5" value="20" oninput="onVendorWeightChange()"></div>
+      <div class="field"><label><span id="vwLabel2">איכות</span> (%)</label><input id="vwC2" type="number" min="0" max="100" step="5" value="20" oninput="onVendorWeightChange()"></div>
+      <div class="field"><label><span id="vwLabel3">כימיה</span> (%)</label><input id="vwC3" type="number" min="0" max="100" step="5" value="20" oninput="onVendorWeightChange()"></div>
+      <div class="field"><label><span id="vwLabel4">שירות</span> (%)</label><input id="vwC4" type="number" min="0" max="100" step="5" value="20" oninput="onVendorWeightChange()"></div>
+    </div>
+    <button class="btn secondary" onclick="resetVendorWeights()">איפוס ל-100% ברירת מחדל</button>
+  </div>
+
+  <div class="card vendor-impression-wrap">
+    <div>
+      <h2 style="margin-bottom:4px">ההתרשמות שלנו</h2>
+      <div class="muted small">מלאו רק נתונים שכבר בדקתם. נתון חסר לא יקבל ציון 0.</div>
+    </div>
+    <div id="vendorImpressionEditor" class="vendor-impression-grid"></div>
+  </div>
+
+  <div id="vendorBestMatch" class="card" style="display:none;margin:16px 0"></div>
+
+  <div class="card" style="overflow:auto">
+    <table>
+      <thead>
+        <tr>
+          <th>ספק</th>
+          <th>מחיר</th>
+          <th id="vcHead1">סגנון</th>
+          <th id="vcHead2">איכות</th>
+          <th id="vcHead3">כימיה</th>
+          <th id="vcHead4">שירות</th>
+          <th>שלמות מידע</th>
+          <th>ציון</th>
+        </tr>
+      </thead>
+      <tbody id="vendorCompareBody"></tbody>
+    </table>
+  </div>
+</section>
+
+<section id="checklist" class="section">
+  <div class="between"><div><h1>צ'ק ליסט</h1><div class="subtitle">שלבים ראשיים ותתי-משימות.</div></div><button class="btn primary" onclick="addChecklistSection()">+ שלב חדש</button></div>
+  <div id="checklistGroups"></div>
+</section>
+
+<section id="budget" class="section">
+  <div class="between"><div><h1>תקציב</h1><div class="subtitle">מעקב אחרי התחייבויות והוצאות.</div></div><button class="btn primary" onclick="addExpensePrompt()">+ הוצאה</button></div>
+  <div class="grid three" style="margin-bottom:16px"><div class="card"><div class="muted small">תקציב</div><div id="budgetTotal" class="stat">לא הוגדר</div></div><div class="card"><div class="muted small">הוצאות</div><div id="spentTotal" class="stat">0 ₪</div></div><div class="card"><div class="muted small">נותר</div><div id="remainingTotal" class="stat">-</div></div></div>
+  <div class="card" style="overflow:auto"><table><thead><tr><th>קטגוריה</th><th>תיאור</th><th>סכום</th><th></th></tr></thead><tbody id="expenseTable"></tbody></table></div>
+</section>
+
+<section id="guests" class="section">
+  <div class="between">
+    <div>
+      <div class="page-kicker">מוזמנים והושבה</div>
+      <h1>ניהול מוזמנים</h1>
+      <div class="subtitle">אישורי הגעה וסידורי הושבה באותו מקום, כדי שתמיד יהיה ברור מי מגיע ואיפה הוא יושב.</div>
+    </div>
+    <button class="btn primary" onclick="openGuestForm()">+ הוספת אורח</button>
+  </div>
+
+  <div class="guest-tabs">
+    <button id="guestTabRsvp" class="guest-tab active" onclick="showGuestWorkspace('rsvp')">אישורי הגעה</button>
+    <button id="guestTabSeating" class="guest-tab" onclick="showGuestWorkspace('seating')">סידורי הושבה</button>
+  </div>
+
+  <div id="guestForm" class="card guest-entry-card" style="display:none">
+    <div class="between">
+      <div>
+        <div class="section-mini-label">אורח חדש</div>
+        <h2 style="margin-bottom:0">הוספה לרשימה</h2>
+      </div>
+      <button class="btn ghost" onclick="closeGuestForm()">סגירה</button>
+    </div>
+    <div class="grid three" style="margin-top:16px">
+      <div class="field">
+        <label>שם</label>
+        <input id="guestNameInput" placeholder="שם מלא">
+      </div>
+      <div class="field">
+        <label>קבוצה</label>
+        <input id="guestGroupInput" placeholder="למשל: משפחת הכלה, עבודה, חברים">
+      </div>
+      <div class="field">
+        <label>סטטוס</label>
+        <select id="guestStatusInput">
+          <option value="pending">טרם ענה/תה</option>
+          <option value="confirmed">אישר/ה</option>
+          <option value="declined">לא מגיע/ה</option>
+        </select>
+      </div>
+    </div>
+    <div class="grid two">
+      <div class="field">
+        <label>מספר מקומות</label>
+        <input id="guestSeatsInput" type="number" min="1" max="20" value="1">
+        <div class="field-hint">אם זו משפחה/זוג שנשמרים בשורה אחת, אפשר להגדיר כמה כיסאות הם תופסים.</div>
+      </div>
+      <div class="field">
+        <label>הערת הושבה <span class="optional-label">אופציונלי</span></label>
+        <input id="guestSeatingNoteInput" placeholder="למשל: ליד ההורים, כיסא תינוק, נגישות">
+      </div>
+    </div>
+    <button class="btn primary" onclick="saveGuestFromForm()">שמרי אורח</button>
+  </div>
+
+  <div id="guestRsvpWorkspace">
+    <div class="grid three guest-summary-grid" style="margin-bottom:16px">
+      <div class="card guest-summary-card"><div class="muted small">ברשימה</div><div id="guestCount" class="stat">0</div></div>
+      <div class="card guest-summary-card"><div class="muted small">אישרו</div><div id="confirmedCount" class="stat">0</div></div>
+      <div class="card guest-summary-card"><div class="muted small">טרם ענו</div><div id="pendingCount" class="stat">0</div></div>
+    </div>
+
+    <div class="card" style="overflow:auto">
+      <table>
+        <thead>
+          <tr>
+            <th>שם</th>
+            <th>קבוצה</th>
+            <th>מקומות</th>
+            <th>סטטוס</th>
+            <th>הושבה</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody id="guestTable"></tbody>
+      </table>
+    </div>
+  </div>
+
+  <div id="guestSeatingWorkspace" style="display:none">
+    <div class="seating-summary">
+      <div class="card seating-stat-card">
+        <span>אישרו הגעה</span>
+        <strong id="seatingConfirmedSeats">0</strong>
+        <small>מקומות</small>
+      </div>
+      <div class="card seating-stat-card">
+        <span>הושבו</span>
+        <strong id="seatingAssignedSeats">0</strong>
+        <small>מקומות</small>
+      </div>
+      <div class="card seating-stat-card">
+        <span>עדיין ללא שולחן</span>
+        <strong id="seatingUnassignedSeats">0</strong>
+        <small>מקומות</small>
+      </div>
+      <div class="card seating-stat-card">
+        <span>שולחנות</span>
+        <strong id="seatingTableCount">0</strong>
+        <small>שולחנות פעילים</small>
+      </div>
+    </div>
+
+    <div class="seating-actions-row">
+      <div class="card seating-create-card">
+        <div>
+          <div class="section-mini-label">שולחן חדש</div>
+          <h2>הוספת שולחן</h2>
+        </div>
+        <div class="grid two">
+          <div class="field">
+            <label>שם / מספר שולחן</label>
+            <input id="newTableName" placeholder="למשל: שולחן 1">
+          </div>
+          <div class="field">
+            <label>מספר מקומות</label>
+            <input id="newTableCapacity" type="number" min="1" max="50" value="12">
+          </div>
+        </div>
+        <button class="btn primary" onclick="addSeatingTable()">הוסיפי שולחן</button>
+      </div>
+
+      <div class="card seating-helper-card">
+        <div class="section-mini-label">עזרה אוטומטית</div>
+        <h2>סידור ראשוני לפי קבוצות</h2>
+        <p>WedWise תנסה לשמור אנשים מאותה קבוצה יחד ולמלא שולחנות בלי לעבור את הקיבולת שלהם. אחר כך אפשר לשנות ידנית.</p>
+        <button class="btn secondary" onclick="autoArrangeSeating()">✨ הציעי סידור ראשוני</button>
+      </div>
+    </div>
+
+    <div id="seatingWarnings" class="seating-warnings"></div>
+
+    <div class="card" style="overflow:auto;margin-bottom:16px">
+      <div class="between" style="margin-bottom:14px">
+        <div>
+          <div class="section-mini-label">הקצאה ידנית</div>
+          <h2 style="margin-bottom:0">מי יושב איפה?</h2>
+        </div>
+      </div>
+      <table>
+        <thead>
+          <tr>
+            <th>אורח / משפחה</th>
+            <th>קבוצה</th>
+            <th>מקומות</th>
+            <th>הערה</th>
+            <th>שולחן</th>
+          </tr>
+        </thead>
+        <tbody id="seatingGuestTable"></tbody>
+      </table>
+    </div>
+
+    <div>
+      <div class="between" style="margin-bottom:12px">
+        <div>
+          <div class="section-mini-label">מפת שולחנות</div>
+          <h2 style="margin-bottom:0">השולחנות שלכם</h2>
+        </div>
+      </div>
+      <div id="seatingTableCards" class="seating-table-grid"></div>
+    </div>
+  </div>
+</section>
+
+
+<section id="gifts" class="section">
+  <div class="between">
+    <div>
+      <div class="page-kicker">אחרי האירוע</div>
+      <h1>ניהול מתנות</h1>
+      <div class="subtitle">ריכוז מעטפות ומתנות, בדיקת הפקדות ומעקב אחרי הודעות תודה.</div>
+    </div>
+    <button class="btn primary" onclick="openGiftForm()">+ הוספת מתנה</button>
+  </div>
+
+  <div class="gift-summary-grid">
+    <div class="card gift-summary-card">
+      <span>סה״כ מתנות כספיות</span>
+      <strong id="giftTotalAmount">0 ₪</strong>
+    </div>
+    <div class="card gift-summary-card">
+      <span>מספר רשומות</span>
+      <strong id="giftEntryCount">0</strong>
+    </div>
+    <div class="card gift-summary-card">
+      <span>ממוצע מתנה כספית</span>
+      <strong id="giftAverageAmount">0 ₪</strong>
+    </div>
+    <div class="card gift-summary-card">
+      <span>תודות שעדיין לא נשלחו</span>
+      <strong id="giftThanksPending">0</strong>
+    </div>
+  </div>
+
+  <div id="giftForm" class="card gift-entry-card" style="display:none">
+    <div class="between">
+      <div>
+        <div class="section-mini-label">רישום מתנה</div>
+        <h2 style="margin-bottom:0">מי נתן ומה התקבל?</h2>
+      </div>
+      <button class="btn ghost" onclick="closeGiftForm()">סגירה</button>
+    </div>
+
+    <div class="grid three" style="margin-top:16px">
+      <div class="field">
+        <label>שם נותן/ת המתנה</label>
+        <input id="giftGiverInput" list="giftGuestSuggestions" placeholder="שם / משפחה">
+        <datalist id="giftGuestSuggestions"></datalist>
+      </div>
+      <div class="field">
+        <label>סוג המתנה</label>
+        <select id="giftTypeInput" onchange="updateGiftAmountVisibility()">
+          <option value="cash">מזומן</option>
+          <option value="check">צ'ק</option>
+          <option value="transfer">העברה / Bit / PayBox</option>
+          <option value="physical">מתנה פיזית</option>
+          <option value="other">אחר</option>
+        </select>
+      </div>
+      <div class="field" id="giftAmountField">
+        <label>סכום</label>
+        <div class="input-with-suffix">
+          <input id="giftAmountInput" type="number" min="0" placeholder="0">
+          <span>₪</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="grid two">
+      <div class="field">
+        <label>מה התקבל / הערה <span class="optional-label">אופציונלי</span></label>
+        <input id="giftNoteInput" placeholder="למשל: כלי בית, צ'ק לתאריך..., מתנה משותפת">
+      </div>
+      <div class="field">
+        <label>סטטוס טיפול</label>
+        <select id="giftDepositStatusInput">
+          <option value="pending">טרם טופל</option>
+          <option value="secured">נשמר / הופקד</option>
+        </select>
+      </div>
+    </div>
+
+    <button class="btn primary" onclick="saveGiftFromForm()">שמרי מתנה</button>
+  </div>
+
+  <div class="card gift-aftercare-card">
+    <div class="between">
+      <div>
+        <div class="section-mini-label">אחרי האירוע</div>
+        <h2 style="margin-bottom:4px">בקרת מתנות ותודות</h2>
+        <div class="muted small">השתמשו ברשימה גם כדי לוודא שכל המזומן והצ'קים טופלו ושאף אחד לא נשכח בהודעת תודה.</div>
+      </div>
+    </div>
+    <div class="gift-aftercare-chips">
+      <span>✓ לרשום כל מעטפה לפני שמפקידים</span>
+      <span>✓ לסמן צ'קים ומזומן שטופלו</span>
+      <span>✓ לציין מתנות פיזיות כדי לזכור מי נתן</span>
+      <span>✓ לסמן אחרי שנשלחה הודעת תודה</span>
+    </div>
+  </div>
+
+  <div class="card" style="overflow:auto">
+    <table>
+      <thead>
+        <tr>
+          <th>נותן/ת</th>
+          <th>סוג</th>
+          <th>סכום</th>
+          <th>הערה</th>
+          <th>טיפול</th>
+          <th>תודה</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody id="giftTable"></tbody>
+    </table>
+  </div>
+</section>
+
+</main>
+</div>
+
+<script>
+const defaultChecklist=[
+ {title:"תכנון ראשוני והחלטות יסוד",open:true,items:[
+  {text:"להגדיר תקציב ראשוני ומי משתתף במימון",done:false},
+  {text:"להעריך מספר אורחים",done:false},
+  {text:"להחליט על עונה / חודש / טווח תאריכים",done:false},
+  {text:"להחליט אם חשוב יום מסוים בשבוע",done:false},
+  {text:"להגדיר אזורים מועדפים",done:false},
+  {text:"להגדיר 3-5 דברים שהכי חשובים לכם באירוע",done:false},
+  {text:"לפתוח תיקייה משותפת לכל החוזים, ההצעות והקבלות",done:false},
+  {text:"לפתוח רשימת אנשי קשר מרכזית",done:false}
+ ]},
+
+ {title:"מקום, קייטרינג ובר",open:true,items:[
+  {text:"לחפש מקומות לפי מספר אורחים, אזור, סגנון ותקציב",done:false},
+  {text:"לבדוק דירוגים ומספר ביקורות ממספר מקורות",done:false},
+  {text:"ליצור רשימה קצרה של 3-5 מקומות",done:false},
+  {text:"לקבוע סיורים במקומות המובילים",done:false},
+  {text:"לבדוק רישיון עסק בתוקף",done:false},
+  {text:"לבדוק כשרות / סוג הכשרות אם רלוונטי",done:false},
+  {text:"לבדוק נגישות מלאה לחופה, רחבה, שירותים וחניה",done:false},
+  {text:"לבדוק חניה, הסדרי חניה ושאטלים במידת הצורך",done:false},
+  {text:"לבדוק פתרון לגשם, חום, רוח ומזג אוויר קיצוני",done:false},
+  {text:"לבדוק קיבולת נוחה ולא רק קיבולת מקסימלית",done:false},
+  {text:"לבדוק מה בדיוק כלול במחיר למנה",done:false},
+  {text:"לבדוק מינימום התחייבות ומועד מסירת כמות אורחים סופית",done:false},
+  {text:"לקבוע טעימות",done:false},
+  {text:"לבחור תפריט",done:false},
+  {text:"להחליט על מנות ילדים",done:false},
+  {text:"לרכז אלרגיות ורגישויות מזון",done:false},
+  {text:"לבדוק מנות טבעוניות / צמחוניות / ללא גלוטן",done:false},
+  {text:"לסגור תפריט אלכוהול",done:false},
+  {text:"לבדוק אם אפשר להביא אלכוהול מבחוץ ומה העלויות",done:false},
+  {text:"להחליט על קוקטיילים / קינוחים מיוחדים אם רוצים",done:false},
+  {text:"לבדוק עלות תאורה, הגברה, אבטחה, ניקיון ועיצוב בסיסי",done:false},
+  {text:"לבדוק שעות סיום ועלות שעה נוספת",done:false},
+  {text:"לבדוק ספקים חיצוניים ודמי ספק חיצוני",done:false},
+  {text:"לבדוק אם מתקיימים אירועים נוספים במקביל",done:false},
+  {text:"לקבל הצעה מלאה בכתב",done:false},
+  {text:"להשוות את המקומות שנשארו",done:false},
+  {text:"לבחור מקום ולסגור תאריך",done:false}
+ ]},
+
+ {title:"צילום",open:false,items:[
+  {text:"להחליט על סגנון צילום אהוב",done:false},
+  {text:"לחפש צלמים מומלצים ולבדוק גלריות מלאות",done:false},
+  {text:"להחליט אם רוצים סטילס בלבד או גם וידאו",done:false},
+  {text:"לבדוק מי הצלם שמגיע בפועל ביום האירוע",done:false},
+  {text:"לבדוק כמה שעות צילום כלולות",done:false},
+  {text:"להחליט אם צריך צלם נוסף",done:false},
+  {text:"לבדוק וידאו / רחפן אם רוצים",done:false},
+  {text:"לבדוק ציוד גיבוי וגיבוי קבצים",done:false},
+  {text:"לבדוק זמן אספקת תמונות וסרטים",done:false},
+  {text:"לבדוק כמה תמונות ערוכות מקבלים",done:false},
+  {text:"לבדוק אלבומים, הגדלות ועלויות נוספות",done:false},
+  {text:"לבדוק נסיעות ושעות נוספות",done:false},
+  {text:"להכין רשימת תמונות משפחתיות חובה",done:false},
+  {text:"לתאם לוקיישנים וזמני צילום",done:false},
+  {text:"לתאם מי מרכז את בני המשפחה לצילומים",done:false}
+ ]},
+
+ {title:"DJ ומוזיקה",open:false,items:[
+  {text:"לחפש DJ מומלצים ולבדוק ביקורות בכמות משמעותית",done:false},
+  {text:"לקבוע פגישות ולבדוק כימיה",done:false},
+  {text:"לדבר על סגנונות מוזיקה וקהל",done:false},
+  {text:"להכין שירי חובה ושירים שלא רוצים",done:false},
+  {text:"לבחור שיר כניסה לחופה",done:false},
+  {text:"לבחור שיר שבירת כוס / יציאה מהחופה",done:false},
+  {text:"לבחור שיר ריקוד ראשון אם יש",done:false},
+  {text:"לבדוק ציוד גיבוי",done:false},
+  {text:"לבדוק אם הגברה ומיקרופונים לחופה כלולים",done:false},
+  {text:"לבדוק אם ה-DJ גם מנחה במיקרופון ומה הסגנון שלו",done:false},
+  {text:"לבדוק שעות עבודה ועלות הארכה",done:false},
+  {text:"לעשות פגישת מוזיקה סופית",done:false}
+ ]},
+
+ {title:"שמלה, חליפה ואביזרים",open:false,items:[
+  {text:"להגדיר תקציב לשמלה, תיקונים ואביזרים",done:false},
+  {text:"לקבוע פגישות בסטודיואים לשמלות",done:false},
+  {text:"לבחור שמלה",done:false},
+  {text:"לתאם מדידות ותיקונים",done:false},
+  {text:"להחליט אם יש לוק / שמלה שנייה",done:false},
+  {text:"לבחור הינומה / עליונית / תכשיטים / אקססוריז",done:false},
+  {text:"לקנות נעליים ראשונות ונעליים להחלפה",done:false},
+  {text:"להתאים הלבשה תחתונה / מחטב / מדבקות",done:false},
+  {text:"לבחור חליפת חתן",done:false},
+  {text:"לקנות חולצות, חגורה, נעליים, גרביים ואקססוריז לחתן",done:false},
+  {text:"לתאם מדידה אחרונה לשמלה",done:false},
+  {text:"לתאם מדידה אחרונה לחליפה",done:false},
+  {text:"להכין קולבים יפים לצילומי התארגנות אם רוצים",done:false}
+ ]},
+
+ {title:"איפור, שיער וטיפוח",open:false,items:[
+  {text:"לחפש מאפרת ולבדוק עבודות על כלות אמיתיות",done:false},
+  {text:"לחפש מעצב/ת שיער ולבדוק עבודות",done:false},
+  {text:"לבדוק הגעה למקום ההתארגנות ועלות נסיעה",done:false},
+  {text:"לבדוק כמה מלוות אפשר לצרף",done:false},
+  {text:"לקבוע ניסיון במידת הצורך",done:false},
+  {text:"לבנות לוז התארגנות לפי שעת היציאה לצילומים",done:false},
+  {text:"לקבוע טיפולי פנים / גבות / ציפורניים בזמן מתאים",done:false},
+  {text:"לתאם תספורת / זקן לחתן",done:false},
+  {text:"להכין ערכת טאצ'אפ לאיפור",done:false}
+ ]},
+
+ {title:"טקס, רבנות וחופה",open:false,items:[
+  {text:"להחליט על אופי הטקס",done:false},
+  {text:"לפתוח תיק נישואין / לבדוק דרישות רלוונטיות",done:false},
+  {text:"לתאם רב / עורך טקס",done:false},
+  {text:"להכין מסמכים נדרשים",done:false},
+  {text:"לתאם הדרכת כלה / מקווה אם רלוונטי",done:false},
+  {text:"לבחור טבעות נישואין",done:false},
+  {text:"לוודא מידה וחריטה בטבעות",done:false},
+  {text:"לבדוק מי מספק כתובה",done:false},
+  {text:"להחליט מי מקריא שבע ברכות",done:false},
+  {text:"לבדוק מי מביא כוס לשבירה",done:false},
+  {text:"לבדוק יין וכוס לקידוש",done:false},
+  {text:"להכין כיפות וסיכות אם רוצים",done:false},
+  {text:"להחליט מי מחזיק את הטבעות והכתובה ביום האירוע",done:false}
+ ]},
+
+ {title:"עיצוב, פרחים ושילוט",open:false,items:[
+  {text:"להגדיר קונספט וצבעים",done:false},
+  {text:"לבדוק מה המקום כבר כולל בעיצוב",done:false},
+  {text:"לבקש הצעות מעיצוב / פרחים",done:false},
+  {text:"להחליט על עיצוב חופה",done:false},
+  {text:"להחליט על מרכזי שולחן",done:false},
+  {text:"להחליט על זר כלה / דש חתן / פרחים למלוות",done:false},
+  {text:"להחליט על שלט כניסה",done:false},
+  {text:"להכין מספרי שולחן / שמות שולחן",done:false},
+  {text:"להכין שלט הושבה / כרטיסי הושבה",done:false},
+  {text:"להחליט על ספר אורחים / עמדת ברכות",done:false},
+  {text:"לבדוק נרות / אש גלויה / קונפטי מול המקום",done:false},
+  {text:"לתאם הקמה ופירוק",done:false},
+  {text:"לתאם החזרת כלי עיצוב והשכרות",done:false}
+ ]},
+
+ {title:"מוזמנים, הזמנות והושבה",open:false,items:[
+  {text:"להכין רשימת מוזמנים מלאה",done:false},
+  {text:"לאסוף טלפונים ופרטי קשר",done:false},
+  {text:"לסמן משפחות / קבוצות / צדדים",done:false},
+  {text:"להכין Save the Date אם רוצים",done:false},
+  {text:"לעצב הזמנה",done:false},
+  {text:"לאשר נוסח ושמות",done:false},
+  {text:"לשלוח הזמנות",done:false},
+  {text:"להחליט מי מטפל באישורי הגעה",done:false},
+  {text:"לעקוב אחרי אישורי הגעה",done:false},
+  {text:"לעשות סבב תזכורת למי שלא ענה",done:false},
+  {text:"לרכז העדפות אוכל מיוחדות",done:false},
+  {text:"לסגור רשימה סופית",done:false},
+  {text:"לעדכן כמות סופית מול המקום",done:false},
+  {text:"לבנות סידורי הושבה",done:false},
+  {text:"למקם מבוגרים, ילדים, כיסאות גלגלים ועגלות בצורה נוחה",done:false},
+  {text:"להכין רשימת הושבה סופית גם כקובץ גיבוי",done:false}
+ ]},
+
+ {title:"הסעות, לינה ונגישות אורחים",open:false,items:[
+  {text:"לבדוק אם צריך הסעות",done:false},
+  {text:"לאסוף נקודות איסוף וכמות נוסעים",done:false},
+  {text:"לסגור חברת הסעות ושעות",done:false},
+  {text:"להודיע לאורחים על הסעות",done:false},
+  {text:"לבדוק מלונות קרובים לאורחים שמגיעים מרחוק",done:false},
+  {text:"לבדוק חדר התארגנות / חדר לזוג אחרי האירוע",done:false},
+  {text:"לבדוק פתרון לאורחים מבוגרים בסיום האירוע",done:false},
+  {text:"לרכז צרכי נגישות מיוחדים של אורחים",done:false}
+ ]},
+
+ {title:"אטרקציות, תוכן ואביזרי רחבה",open:false,items:[
+  {text:"להחליט אם רוצים מגנטים / פולארויד / פוטובות'",done:false},
+  {text:"להחליט אם רוצים עמדת קעקועים / נצנצים / תוכן נוסף",done:false},
+  {text:"להחליט אם רוצים ספר אורחים / הודעות קוליות / מצלמות חד פעמיות",done:false},
+  {text:"להחליט על מתנות לאורחים אם רוצים",done:false},
+  {text:"להחליט אם רוצים משקפי LED / צמידים / סטיקים זוהרים",done:false},
+  {text:"להחליט אם רוצים כתרים / כובעים / אביזרי צילום",done:false},
+  {text:"לרכוש מניפות לאירוע קיץ אם צריך",done:false},
+  {text:"לרכוש כפכפים / נעלי ריקוד לאורחים אם רוצים",done:false},
+  {text:"להכין סלסלות / כלי הגשה לאביזרי הרחבה",done:false},
+  {text:"לבדוק סוללות לאביזרי LED",done:false},
+  {text:"לבדוק מגבלות המקום על זיקוקים / עשן / קונפטי / בועות",done:false},
+  {text:"לתאם חשמל ומיקום לכל אטרקציה",done:false},
+  {text:"לתאם מי מוציא את האביזרים ומתי",done:false},
+  {text:"לתאם איסוף וניקיון בסוף",done:false}
+ ]},
+
+ {title:"סלסלות שירותים",open:false,items:[
+  {text:"נשים: טמפונים, תחבושות ומגני תחתון",done:false},
+  {text:"נשים: סיכות שיער וגומיות שקופות",done:false},
+  {text:"נשים: ספריי שיער קטן ו-Fashion Tape",done:false},
+  {text:"גברים: מסרק קטן ומוצר לשיער",done:false},
+  {text:"לשתי הסלסלות: דאודורנט",done:false},
+  {text:"לשתי הסלסלות: מגבונים וטישו",done:false},
+  {text:"לשתי הסלסלות: פלסטרים ופלסטרים לשלפוחיות",done:false},
+  {text:"לשתי הסלסלות: סיכות ביטחון וערכת תפירה",done:false},
+  {text:"לשתי הסלסלות: מסיר כתמים וגליל להסרת מוך",done:false},
+  {text:"לשתי הסלסלות: חוט דנטלי / קיסמים דנטליים",done:false},
+  {text:"לשתי הסלסלות: סוכריות מנטה / מסטיקים",done:false},
+  {text:"לשתי הסלסלות: קרם ידיים",done:false},
+  {text:"לבדוק מול המקום מה כבר קיים כדי לא לקנות כפול",done:false}
+ ]},
+
+ {title:"ערכות אישיות ליום החתונה",open:false,items:[
+  {text:"כלה: שמלה, הינומה, נעליים ונעליים להחלפה",done:false},
+  {text:"כלה: הלבשה תחתונה / מחטב / מדבקות",done:false},
+  {text:"כלה: תכשיטים ובושם",done:false},
+  {text:"כלה: שפתון וערכת טאצ'אפ",done:false},
+  {text:"כלה: סיכות שיער, Fashion Tape וערכת תפירה",done:false},
+  {text:"כלה: מסיר כתמים ופלסטרים לשלפוחיות",done:false},
+  {text:"חתן: חליפה, חולצה נוספת ונעליים",done:false},
+  {text:"חתן: גרביים נוספות, חגורה ועניבה / פפיון",done:false},
+  {text:"חתן: כיפה, דאודורנט, בושם ומוצר לשיער",done:false},
+  {text:"לשניכם: מטענים / סוללה ניידת",done:false},
+  {text:"לשניכם: מים וחטיפים להתארגנות",done:false}
+ ]},
+
+ {title:"תקציב, חוזים ותשלומים",open:false,items:[
+  {text:"להכניס את כל ההצעות לתקציב",done:false},
+  {text:"לרשום כל מקדמה ותאריך תשלום",done:false},
+  {text:"לשמור כל חוזה חתום במקום אחד",done:false},
+  {text:"לשמור קבלות / אסמכתאות העברה",done:false},
+  {text:"לבדוק שבכל חוזה מופיעים השירותים והתוספות שהובטחו",done:false},
+  {text:"לבדוק תנאי ביטול, דחייה וכוח עליון בכל חוזה",done:false},
+  {text:"לעבור על יתרות תשלום חודש לפני",done:false},
+  {text:"להכין רשימת תשלומים ליום האירוע",done:false},
+  {text:"להחליט מי אחראי לתשלומים ביום האירוע",done:false},
+  {text:"להכין מעטפות מסומנות אם משלמים במקום",done:false}
+ ]},
+
+ {title:"תיאום ספקים ולוח זמנים",open:false,items:[
+  {text:"לרכז את כל הספקים ופרטי הקשר במקום אחד",done:false},
+  {text:"לוודא שלכל ספק יש חוזה, מקדמה ותאריך מאושר",done:false},
+  {text:"לבנות לוז מפורט ליום החתונה",done:false},
+  {text:"להכניס זמני התארגנות",done:false},
+  {text:"להכניס זמני צילום ונסיעות",done:false},
+  {text:"להכניס זמני הגעת ספקים והקמות",done:false},
+  {text:"להכניס זמן קבלת פנים וחופה",done:false},
+  {text:"להכניס ארוחה / ריקודים / הפתעות",done:false},
+  {text:"לשתף לוז עם כל הספקים הרלוונטיים",done:false},
+  {text:"למנות איש קשר אחד מטעם הזוג",done:false},
+  {text:"לוודא שכל ספק יודע למי לפנות ביום האירוע",done:false},
+  {text:"לאשר נקודת פריקה / חניה לספקים",done:false}
+ ]},
+
+ {title:"השבוע האחרון",open:false,items:[
+  {text:"לאשר כמות אורחים סופית",done:false},
+  {text:"להעביר סידור הושבה סופי",done:false},
+  {text:"לאשר שעה, מקום וכתובת עם כל הספקים",done:false},
+  {text:"לבדוק תחזית מזג אוויר",done:false},
+  {text:"להפעיל תוכנית גיבוי אם צריך",done:false},
+  {text:"לארוז ציוד לפי שקיות / ארגזים מסומנים",done:false},
+  {text:"לכתוב על כל ארגז לאן הוא הולך ומי אחראי עליו",done:false},
+  {text:"להטעין אביזרי LED / סוללות",done:false},
+  {text:"להכין רשימת פריטים שצריכים לחזור הביתה אחרי האירוע",done:false},
+  {text:"להכין תיק ללילה אם ישנים מחוץ לבית",done:false},
+  {text:"לוודא מי לוקח מתנות / מעטפות / ציוד בסוף",done:false}
+ ]},
+
+ {title:"יום החתונה",open:false,items:[
+  {text:"טבעות נישואין",done:false},
+  {text:"כתובה",done:false},
+  {text:"תעודות זהות ומסמכים נדרשים",done:false},
+  {text:"אישורים דתיים / טבילה אם רלוונטי",done:false},
+  {text:"מעטפות / תשלומים לספקים",done:false},
+  {text:"רשימת ספקים עם טלפונים",done:false},
+  {text:"לוז זמין גם אופליין",done:false},
+  {text:"רשימת הושבה גיבוי",done:false},
+  {text:"כוס לשבירה",done:false},
+  {text:"יין וכוס לחופה אם צריך",done:false},
+  {text:"כיפות / סיכות",done:false},
+  {text:"לוודא שאיש הקשר מטעם הזוג קיבל את כל האחריות",done:false},
+  {text:"לוודא שמישהו אחראי על מעטפות ומתנות",done:false},
+  {text:"לוודא שמישהו אחראי על החזרת ציוד אישי בסוף",done:false}
+ ]},
+
+ {title:"אחרי החתונה",open:false,items:[
+  {text:"לרכז ולרשום את כל המעטפות והמתנות",done:false},
+  {text:"להצליב בין מעטפות / צ'קים / העברות לבין רשימת המתנות",done:false},
+  {text:"להפקיד צ'קים ומזומן ולסמן מה טופל",done:false},
+  {text:"לרשום מתנות פיזיות ומי נתן אותן",done:false},
+  {text:"לשלוח הודעות תודה ולסמן למי כבר נשלח",done:false},
+  {text:"לוודא שכל הספקים קיבלו תשלום",done:false},
+  {text:"להחזיר ציוד / השכרות / בגדים",done:false},
+  {text:"לשמור ולגבות תמונות וסרטים כשמתקבלים",done:false},
+  {text:"לבחור תמונות לאלבום",done:false},
+  {text:"לשלוח תודות למשפחה / חברים / ספקים",done:false},
+  {text:"לכתוב ביקורות לספקים שרוצים לפרגן להם",done:false},
+  {text:"לסגור הוצאות סופיות ולבדוק מול התקציב",done:false},
+  {text:"לטפל בניקוי / שימור שמלה אם רוצים",done:false},
+  {text:"לטפל בשינויי שם / מסמכים אם רלוונטי",done:false}
+ ]}
+];
+
+const CHECKLIST_GROUP_ALIASES={
+ "יסודות ותכנון ראשוני":"תכנון ראשוני והחלטות יסוד",
+ "תכנון ראשוני והחלטות יסוד":"תכנון ראשוני והחלטות יסוד",
+ "בחירת מקום":"מקום, קייטרינג ובר",
+ "אוכל, בר וקינוחים":"מקום, קייטרינג ובר",
+ "מקום, קייטרינג ובר":"מקום, קייטרינג ובר",
+ "צלם":"צילום",
+ "צילום סטילס ווידאו":"צילום",
+ "צילום":"צילום",
+ "DJ ומוזיקה":"DJ ומוזיקה",
+ "שמלה ולבוש":"שמלה, חליפה ואביזרים",
+ "שמלה, חליפה ולבוש":"שמלה, חליפה ואביזרים",
+ "שמלה, חליפה ואביזרים":"שמלה, חליפה ואביזרים",
+ "איפור ושיער":"איפור, שיער וטיפוח",
+ "איפור, שיער וטיפוח":"איפור, שיער וטיפוח",
+ "טקס, רבנות וחופה":"טקס, רבנות וחופה",
+ "עיצוב, פרחים ושילוט":"עיצוב, פרחים ושילוט",
+ "מוזמנים והושבה":"מוזמנים, הזמנות והושבה",
+ "מוזמנים, הזמנות ואישורי הגעה":"מוזמנים, הזמנות והושבה",
+ "מוזמנים, הזמנות והושבה":"מוזמנים, הזמנות והושבה",
+ "הסעות, לינה ולוגיסטיקת אורחים":"הסעות, לינה ונגישות אורחים",
+ "הסעות, לינה ונגישות אורחים":"הסעות, לינה ונגישות אורחים",
+ "אטרקציות ותוכן לאורחים":"אטרקציות, תוכן ואביזרי רחבה",
+ "מרצ'נדייז ואביזרים לרחבה":"אטרקציות, תוכן ואביזרי רחבה",
+ "אטרקציות, תוכן ואביזרי רחבה":"אטרקציות, תוכן ואביזרי רחבה",
+ "סלסלת שירותים - נשים":"סלסלות שירותים",
+ "סלסלת שירותים - גברים":"סלסלות שירותים",
+ "סלסלות שירותים":"סלסלות שירותים",
+ "ערכת חירום והתארגנות - כלה":"ערכות אישיות ליום החתונה",
+ "ערכת חירום והתארגנות - חתן":"ערכות אישיות ליום החתונה",
+ "ערכות אישיות ליום החתונה":"ערכות אישיות ליום החתונה",
+ "תקציב ותשלומים":"תקציב, חוזים ותשלומים",
+ "תקציב, חוזים ותשלומים":"תקציב, חוזים ותשלומים",
+ "לוח זמנים ותיאום ספקים":"תיאום ספקים ולוח זמנים",
+ "תיאום ספקים ולוח זמנים":"תיאום ספקים ולוח זמנים",
+ "השבוע האחרון":"השבוע האחרון",
+ "יום החתונה":"יום החתונה",
+ "אחרי החתונה":"אחרי החתונה"
+};
+
+const KNOWN_BUILTIN_CHECKLIST_TITLES=new Set(Object.keys(CHECKLIST_GROUP_ALIASES));
+
+function mergeChecklistWithDefaults(saved){
+ const existing=Array.isArray(saved)?saved:[];
+ const savedByText=new Map();
+
+ existing.forEach(group=>{
+   (group.items||[]).forEach(item=>{
+     const previous=savedByText.get(item.text);
+     if(!previous || item.done){
+       savedByText.set(item.text,item);
+     }
+   });
+ });
+
+ const groupedCustomItems=new Map();
+ existing.forEach(group=>{
+   const canonical=CHECKLIST_GROUP_ALIASES[group.title];
+   if(!canonical)return;
+   (group.items||[]).filter(item=>item.custom===true).forEach(item=>{
+     if(!groupedCustomItems.has(canonical))groupedCustomItems.set(canonical,[]);
+     groupedCustomItems.get(canonical).push(item);
+   });
+ });
+
+ const cleaned=defaultChecklist.map(defGroup=>{
+   const matchingExisting=existing.filter(g=>CHECKLIST_GROUP_ALIASES[g.title]===defGroup.title);
+   const open=matchingExisting.some(g=>g.open===true) || defGroup.open;
+   const mergedItems=defGroup.items.map(item=>{
+     const old=savedByText.get(item.text);
+     return old?{...item,done:!!old.done}:{...item};
+   });
+
+   const custom=(groupedCustomItems.get(defGroup.title)||[])
+     .filter(customItem=>!mergedItems.some(item=>item.text===customItem.text));
+
+   return {title:defGroup.title,open,items:[...mergedItems,...custom]};
+ });
+
+ const customGroups=existing.filter(group=>!KNOWN_BUILTIN_CHECKLIST_TITLES.has(group.title));
+ return [...cleaned,...customGroups];
+}
+
+
+
+const FUNCTION_URL="https://fmcfhhdctqydvypclppj.supabase.co/functions/v1/recommend-venues";
+
+const __wwMemoryStorage={};
+function storageGet(key,fallback=null){
+  try{
+    const value=window.localStorage.getItem(key);
+    return value===null?fallback:value;
+  }catch(e){
+    return Object.prototype.hasOwnProperty.call(__wwMemoryStorage,key)?__wwMemoryStorage[key]:fallback;
+  }
+}
+function storageSet(key,value){
+  try{
+    window.storageSet(key,value);
+  }catch(e){
+    __wwMemoryStorage[key]=String(value);
+  }
+}
+
+function storageIsPersistent(){
+  try{
+    const key='__ww_probe__';
+    window.localStorage.setItem(key,'1');
+    window.localStorage.removeItem(key);
+    return true;
+  }catch(e){
+    return false;
+  }
+}
+function showStorageNoticeIfNeeded(){
+  const notice=document.getElementById('mobileStorageNotice');
+  if(notice && !storageIsPersistent())notice.style.display='block';
+}
+
+function storageJSON(key,fallback){
+  const raw=storageGet(key,null);
+  if(raw===null)return fallback;
+  try{return JSON.parse(raw)}catch(e){return fallback}
+}
+
+const state={
+ setup:storageJSON("ww3_setup",{}),
+ venues:storageJSON("ww3_venues",[]),
+ checklist:mergeChecklistWithDefaults(storageJSON("ww3_checklist",null)),
+ expenses:storageJSON("ww3_expenses",[]),
+ guests:storageJSON("ww3_guests",[]),
+ seatingTables:storageJSON("ww15_seating_tables",[]),
+ gifts:storageJSON("ww15_gifts",[]),
+ recommendations:storageJSON("ww5_recommendations",[]),
+ compareWeights:storageJSON("ww7_compare_weights",null)||{price:20,food:20,atmosphere:15,location:15,design:10,service:10,parking:5,couple:5},
+ vendors:storageJSON("ww11_vendors",[]),
+ vendorRecommendations:storageJSON("ww11_vendor_recommendations",{}),
+ activeVendorCategory:storageGet("ww11_vendor_category",null)||"photographer",
+ vendorCompareWeights:storageJSON("ww11_vendor_weights",{}),
+ activeVenueId:null
+};
+function persist(){storageSet("ww3_setup",JSON.stringify(state.setup));storageSet("ww3_venues",JSON.stringify(state.venues));storageSet("ww3_checklist",JSON.stringify(state.checklist));storageSet("ww3_expenses",JSON.stringify(state.expenses));storageSet("ww3_guests",JSON.stringify(state.guests));storageSet("ww15_seating_tables",JSON.stringify(state.seatingTables));storageSet("ww15_gifts",JSON.stringify(state.gifts));storageSet("ww5_recommendations",JSON.stringify(state.recommendations));storageSet("ww7_compare_weights",JSON.stringify(state.compareWeights));storageSet("ww11_vendors",JSON.stringify(state.vendors));storageSet("ww11_vendor_recommendations",JSON.stringify(state.vendorRecommendations));storageSet("ww11_vendor_category",state.activeVendorCategory);storageSet("ww11_vendor_weights",JSON.stringify(state.vendorCompareWeights))}
+function esc(s){return String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[c]))}
+function syncMobileNavigation(id){
+ const primary=["dashboard","setup","venues","vendors"];
+ document.querySelectorAll(".mobile-bottom-nav button").forEach(btn=>{
+   const target=btn.dataset.mobileTarget;
+   btn.classList.toggle("active",target===id || (target==="more" && !primary.includes(id)));
+ });
+ const name=document.getElementById("mobileWeddingName");
+ if(name)name.textContent=state.setup.coupleNames||"החתונה שלנו";
+}
+function toggleMobileMore(open){
+ const sheet=document.getElementById("mobileMoreSheet"),backdrop=document.getElementById("mobileMoreBackdrop");
+ if(!sheet||!backdrop)return;
+ sheet.classList.toggle("open",!!open);backdrop.classList.toggle("open",!!open);
+ sheet.setAttribute("aria-hidden",open?"false":"true");
+ document.body.style.overflow=open?"hidden":"";
+}
+function mobileGo(id){toggleMobileMore(false);go(id)}
+function go(id){
+ document.querySelectorAll(".section").forEach(x=>x.classList.remove("active"));
+ const target=document.querySelector("section#"+id);
+ if(!target){console.warn("WedWise: section not found",id);return;}
+ target.classList.add("active");
+ document.querySelectorAll("nav button").forEach(b=>b.classList.toggle("active",b.dataset.target===id));
+ if(id==="compare"){renderComparisonImpressionEditor();renderComparison();}
+ if(id==="vendors")renderVendorSection();
+ if(id==="vendorCompare")renderVendorCompare();
+ if(id==="checklist")renderChecklist();
+ if(id==="budget")renderBudget();
+ if(id==="guests")renderGuests();
+ if(id==="gifts")renderGifts();
+ syncMobileNavigation(id);
+ window.scrollTo({top:0,behavior:"smooth"});
+}
+document.querySelectorAll("nav button").forEach(b=>b.onclick=()=>go(b.dataset.target));
+
+function selectedRegions(){return [...document.querySelectorAll("#regionPills input:checked")].map(x=>x.value)}
+function saveSetup(){
+ state.setup={
+   coupleNames:coupleNames.value.trim(),
+   estimatedGuests:+estimatedGuests.value||0,
+   weddingDate:weddingDate.value,
+   regions:selectedRegions(),
+   style:style.value,
+   indoorOutdoor:indoorOutdoor.value,
+   kosherPreference:kosherPreference.value,
+   budget:+weddingBudgetInput.value||0,
+   maxPricePerGuest:+maxPricePerGuest.value||0,
+   preferredDay:preferredDay.value,
+   eventTime:eventTime.value,
+   dateFlexibility:dateFlexibility.value,
+   preferredMonth:preferredMonth.value,
+   accessibilityRequired:accessibilityRequired.checked,
+   parkingRequired:parkingRequired.checked,
+   priorities:priorities.value.trim()
+ };
+ persist();
+ updateDashboard();
+ go("venues");
+}
+function loadSetup(){
+ coupleNames.value=state.setup.coupleNames||"";
+ estimatedGuests.value=state.setup.estimatedGuests||"";
+ weddingDate.value=state.setup.weddingDate||"";
+ style.value=state.setup.style||"";
+ indoorOutdoor.value=state.setup.indoorOutdoor||"";
+ kosherPreference.value=state.setup.kosherPreference||"";
+ weddingBudgetInput.value=state.setup.budget||"";
+ maxPricePerGuest.value=state.setup.maxPricePerGuest||"";
+ preferredDay.value=state.setup.preferredDay||"";
+ eventTime.value=state.setup.eventTime||"";
+ dateFlexibility.value=state.setup.dateFlexibility||"";
+ preferredMonth.value=state.setup.preferredMonth||"";
+ accessibilityRequired.checked=!!state.setup.accessibilityRequired;
+ parkingRequired.checked=!!state.setup.parkingRequired;
+ priorities.value=state.setup.priorities||"";
+ document.querySelectorAll("#regionPills input").forEach(x=>x.checked=(state.setup.regions||[]).includes(x.value));
+ updateDateFlexibilityUI();
+
+ const hasAdvanced=
+   !!state.setup.maxPricePerGuest ||
+   !!state.setup.preferredDay ||
+   !!state.setup.eventTime ||
+   !!state.setup.dateFlexibility ||
+   !!state.setup.preferredMonth ||
+   !!state.setup.accessibilityRequired ||
+   !!state.setup.parkingRequired;
+
+ const details=document.getElementById("advancedPrefs");
+ if(details)details.open=hasAdvanced;
+}
+
+function updateDateFlexibilityUI(){
+ const field=document.getElementById("preferredMonthField");
+ if(!field)return;
+ field.style.display=dateFlexibility.value==="month"?"block":"none";
+ if(dateFlexibility.value!=="month")preferredMonth.value="";
+}
+
+
+
+
+function kosherPreferenceLabel(value){
+ if(value==="mehadrin")return "כשר למהדרין";
+ if(value==="kosher")return "כשר";
+ if(value==="not_kosher")return "לא כשר";
+ return "";
+}
+
+function preferredDayLabel(value){
+ if(value==="midweek")return "אמצע שבוע";
+ if(value==="thursday")return "חמישי";
+ if(value==="friday")return "שישי";
+ return "";
+}
+
+function eventTimeLabel(value){
+ if(value==="evening")return "ערב";
+ if(value==="afternoon")return "צהריים";
+ if(value==="friday_noon")return "שישי צהריים";
+ return "";
+}
+
+function setupSummaryText(){
+ const regions=(state.setup.regions||[]).join(", ");
+ const parts=[
+   regions?("אזורים: "+regions):"",
+   state.setup.estimatedGuests?("אורחים: "+state.setup.estimatedGuests):"",
+   state.setup.style?("סגנון: "+state.setup.style):"",
+   state.setup.kosherPreference?("כשרות: "+kosherPreferenceLabel(state.setup.kosherPreference)):"",
+   state.setup.maxPricePerGuest?("עד "+state.setup.maxPricePerGuest+" ₪ למנה"):"",
+   state.setup.preferredDay?("יום: "+preferredDayLabel(state.setup.preferredDay)):"",
+   state.setup.eventTime?("זמן: "+eventTimeLabel(state.setup.eventTime)):"",
+   state.setup.parkingRequired?"חניה חובה":"",
+   state.setup.accessibilityRequired?"נגישות חובה":"",
+   state.setup.priorities?("חשוב במיוחד: "+state.setup.priorities):""
+ ].filter(Boolean);
+ return parts.join(" · ");
+}
+
+function isSavedVenue(name){
+ const n=String(name||"").trim().toLowerCase();
+ return state.venues.some(v=>String(v.name||"").trim().toLowerCase()===n);
+}
+
+function sourceLabel(domain){
+ const map={
+  "mit4mit.co.il":"Mit4Mit",
+  "mitchatnim.co.il":"מתחתנים",
+  "iplan.co.il":"iPlan",
+  "instagram.com":"Instagram",
+  "facebook.com":"Facebook",
+  "easy.co.il":"Easy",
+  "urbanbridesmag.co.il":"Urban Brides"
+ };
+ return map[domain]||domain;
+}
+
+function renderRecommendations(){
+ const box=document.getElementById("recommendationResults");
+ if(!box)return;
+
+ if(!state.recommendations.length){
+   box.innerHTML="";
+   return;
+ }
+
+ box.innerHTML=state.recommendations.map((v,i)=>{
+   const saved=isSavedVenue(v.name);
+   const sources=(v.sourceDomains||[]).slice(0,6);
+   const reasons=(v.reasons||[]).slice(0,6);
+   const checks=(v.thingsToCheck||[]).slice(0,5);
+   const region=(v.discoveredRegions||[]).join(", ")||"אזור לא ידוע";
+   const cap=v.detectedCapacity?`${Number(v.detectedCapacity).toLocaleString()} אורחים`:"קיבולת לא אומתה";
+   const rating=v.rating?`${v.rating}/5 · ${Number(v.reviewCount||0).toLocaleString()} ביקורות`:"דירוג לא נמצא";
+   const webPrice=v.detectedPricePerGuest?` · כ-${Number(v.detectedPricePerGuest).toLocaleString()} ₪ למנה`:"";
+   const site=v.website?`<a class="btn ghost small" href="${esc(v.website)}" target="_blank" rel="noopener">אתר המקום</a>`:"";
+
+   return `
+   <div class="smart-card ${i===0?"top":""}">
+     <div class="smart-rank">${i+1}</div>
+     <div style="padding-left:38px">
+       <h3 style="margin-bottom:4px">${esc(v.name)}</h3>
+       <div class="muted small">${esc(region)} · ${esc(rating)} · ${esc(cap)}${webPrice}</div>${(v.trustedSourceCount||v.weddingReviewCount)?`<div class="rec-meta"><span>${v.trustedSourceCount||0} מקורות המלצה אמינים</span>${v.weddingReviewCount?`<span>${Number(v.weddingReviewCount).toLocaleString()} מדרגים באתרי חתונות</span>`:""}</div>`:""}
+     </div>
+
+     <div class="score-row">
+       <div class="score-box"><strong>${v.overallScore??"-"}%</strong><span>ציון כולל</span></div>
+       <div class="score-box"><strong>${v.matchScore??"-"}%</strong><span>התאמה אלייך</span></div>
+       <div class="score-box"><strong>${v.qualityScore??"-"}%</strong><span>איכות</span></div>
+       <div class="score-box"><strong>${v.confidenceScore??"-"}%</strong><span>ביטחון במידע</span></div>
+     </div>
+
+     ${reasons.length?`
+       <div class="small"><strong>למה הוא מתאים:</strong></div>
+       <ul class="evidence-list small">${reasons.map(x=>`<li>${esc(x)}</li>`).join("")}</ul>
+     `:""}
+
+     ${checks.length?`
+       <div class="small" style="margin-top:10px"><strong>כדאי לבדוק:</strong></div>
+       <ul class="check-list small">${checks.map(x=>`<li>${esc(x)}</li>`).join("")}</ul>
+     `:""}
+
+     ${sources.length?`
+       <div class="source-tags">${sources.map(d=>`<span>${esc(sourceLabel(d))}</span>`).join("")}</div>
+     `:""}
+
+     <div class="row" style="margin-top:12px">
+       <button class="btn ${saved?"secondary":"primary"}" ${saved?"disabled":""} onclick="saveRecommendation(${i})">
+         ${saved?"✓ נשמר ברשימה":"שמרי לרשימה"}
+       </button>
+       ${site}
+     </div>
+   </div>`;
+ }).join("");
+}
+
+async function searchRecommendedVenues(){
+ const btn=document.getElementById("smartSearchBtn");
+ const status=document.getElementById("smartSearchStatus");
+
+ if(!(state.setup.regions||[]).length){
+   status.className="status error";
+   status.innerHTML='כדי שהחיפוש יהיה שימושי, בחרי לפחות אזור אחד ב״פרטי החתונה״.';
+   return;
+ }
+
+ btn.disabled=true;
+ btn.textContent="מחפשת...";
+ status.className="status";
+ status.innerHTML=`<span class="search-loading"><span class="spinner"></span><span>מחפשת מקומות, בודקת ביקורות ומצליבה מקורות. זה יכול לקחת כמה שניות.</span></span>`;
+ recommendationResults.innerHTML="";
+
+ try{
+   const response=await fetch(FUNCTION_URL,{
+     method:"POST",
+     headers:{"Content-Type":"application/json"},
+     body:JSON.stringify({
+       regions:state.setup.regions||[],
+       guestCount:+state.setup.estimatedGuests||0,
+       style:state.setup.style||"",
+       indoorOutdoor:state.setup.indoorOutdoor||"",
+       kosherPreference:state.setup.kosherPreference||"",
+       maxPricePerGuest:+state.setup.maxPricePerGuest||0,
+       preferredDay:state.setup.preferredDay||"",
+       eventTime:state.setup.eventTime||"",
+       dateFlexibility:state.setup.dateFlexibility||"",
+       preferredMonth:state.setup.preferredMonth||"",
+       accessibilityRequired:!!state.setup.accessibilityRequired,
+       parkingRequired:!!state.setup.parkingRequired,
+       priorities:state.setup.priorities||""
+     })
+   });
+
+   let data={};
+   try{data=await response.json()}catch(e){}
+
+   if(!response.ok||!data.success){
+     throw new Error(data.error||`החיפוש נכשל (${response.status})`);
+   }
+
+   state.recommendations=Array.isArray(data.venues)?data.venues:[];
+   persist();
+   renderRecommendations();
+
+   const summary=setupSummaryText();
+   status.className="status good";
+   status.textContent=state.recommendations.length
+     ? `נמצאו ${state.recommendations.length} מקומות מדורגים${summary?" · "+summary:""}`
+     : "החיפוש הסתיים, אבל לא נמצאו כרגע מקומות מתאימים. נסי להרחיב אזור או לשנות סגנון.";
+
+ }catch(err){
+   console.error(err);
+   status.className="status error";
+   status.textContent="לא הצלחתי להשלים את החיפוש: "+(err?.message||"שגיאה לא ידועה");
+ }finally{
+   btn.disabled=false;
+   btn.textContent="✨ מצאי מקומות מתאימים";
+ }
+}
+
+function saveRecommendation(index){
+ const r=state.recommendations[index];
+ if(!r||isSavedVenue(r.name))return;
+
+ state.venues.push({
+   id:Date.now(),
+   name:r.name||"",
+   region:(r.discoveredRegions||[]).join(", "),
+   website:r.website||"",
+   price:0,
+   minGuests:0,
+   food:0,
+   location:0,
+   design:0,
+   service:0,
+   parking:null,
+   overall:0,
+   pros:(r.reasons||[]).join(" · "),
+   cons:(r.thingsToCheck||[]).join(" · "),
+   notes:`הומלץ על ידי WedWise · ציון כולל ${r.overallScore??"-"}% · התאמה ${r.matchScore??"-"}% · איכות ${r.qualityScore??"-"}%`,
+   status:"interested",
+   detectedCapacity:r.detectedCapacity||0,
+   recommendation:{
+     overallScore:r.overallScore??null,
+     matchScore:r.matchScore??null,
+     qualityScore:r.qualityScore??null,
+     confidenceScore:r.confidenceScore??null,
+     rating:r.rating??null,
+     reviewCount:r.reviewCount??null,
+     detectedCapacity:r.detectedCapacity??null,
+     sources:r.sourceDomains||[]
+   }
+ });
+
+ persist();
+ renderVenues();
+ renderRecommendations();
+ updateDashboard();
+}
+
+
+const venueStatusOptions=[
+ ["interested","מעניין אותנו"],
+ ["meeting","קבענו פגישה"],
+ ["visited","ביקרנו"],
+ ["finalist","מועמד מוביל"],
+ ["rejected","ירד מהפרק"],
+ ["chosen","בחרנו בו"]
+];
+
+function defaultVenueQuestions(){return [
+ {text:"האם יש רישיון עסק בתוקף ואפשר לראות אותו?",done:false},{text:"מה המחיר למנה והאם הוא כולל מע״מ?",done:false},{text:"מה מינימום האורחים ומה קורה אם הכמות הסופית נמוכה יותר?",done:false},
+ {text:"מתי צריך למסור כמות אורחים סופית?",done:false},{text:"מה בדיוק כלול במחיר ומה נחשב תוספת?",done:false},{text:"האם תאורה והגברה כלולות ומה בדיוק מקבלים?",done:false},
+ {text:"מה כולל הבר והאם אפשר להביא אלכוהול מבחוץ?",done:false},{text:"האם יש דמי חליצה / דמי ספק חיצוני?",done:false},{text:"מה כולל עיצוב הבסיס ומה עלות שדרוגים?",done:false},
+ {text:"מה סידור החניה, כמה מקומות יש והאם היא ללא עלות?",done:false},{text:"האם קיימת נגישות מלאה לחופה, שירותים, רחבה וחניה?",done:false},{text:"מה פתרון הגיבוי במקרה של גשם, חום, רוח או מזג אוויר קיצוני?",done:false},
+ {text:"מה שעות האירוע ומה העלות של חריגה בשעות?",done:false},{text:"האם מתקיימים אירועים נוספים במקביל?",done:false},{text:"מתי אפשר לספקים להיכנס להקמות ומתי חייבים לפנות?",done:false},
+ {text:"האם יש מגבלות על ספקים חיצוניים?",done:false},{text:"האם יש איש טכני מטעם המקום בזמן האירוע?",done:false},{text:"מה מדיניות אבטחה, שמירה ומצבי חירום?",done:false},
+ {text:"מה תנאי דחייה/ביטול במקרה ביטחוני או כוח עליון?",done:false},{text:"איפה נשמרות מעטפות ומתנות ומי אחראי עליהן?",done:false},{text:"האם יש חדר התארגנות / חדר לזוג?",done:false},
+ {text:"מתי טעימות ומה אפשר לשנות בתפריט?",done:false},{text:"איך מטפלים באלרגיות, טבעונות, צליאק ומנות ילדים?",done:false},{text:"האם ילדים נספרים כאורחים ומאיזה גיל?",done:false},
+ {text:"מי מנהל האירוע מטעם המקום והאם הוא נמצא כל הערב?",done:false},{text:"מה יחס המלצרים לשולחן / לכמות אורחים?",done:false},{text:"מה מדיניות קונפטי, נרות, זיקוקים, עשן ואפקטים?",done:false},
+ {text:"מה כלול בניקיון לפני, במהלך ואחרי האירוע?",done:false},{text:"האם יש מחירון כתוב לכל תוספת אפשרית?",done:false},{text:"אפשר לקבל את כל ההבטחות והסיכומים בכתב לפני חתימה?",done:false}
+]}
+
+function defaultContractChecks(){return [
+ {text:"שם המקום, התאריך והשעות מופיעים נכון",done:false},{text:"מחיר למנה ומע״מ כתובים במפורש",done:false},{text:"מינימום אורחים ומועד מסירת כמות סופית מוגדרים",done:false},
+ {text:"מה קורה במקרה של ירידה בכמות אורחים כתוב בחוזה",done:false},{text:"כל התוספות והעלויות הנלוות מפורטות",done:false},{text:"תאורה, הגברה, בר, אבטחה, ניקיון ועיצוב מוגדרים",done:false},
+ {text:"חניה והסדרי חניה מוגדרים אם הובטחו",done:false},{text:"נגישות ופתרונות שהובטחו מופיעים בכתב",done:false},{text:"לוח התשלומים והמקדמה ברורים",done:false},{text:"תנאי ביטול ודחייה ברורים",done:false},
+ {text:"יש סעיף ברור למצב ביטחוני / כוח עליון",done:false},{text:"פתרון למזג אוויר ותוכנית גיבוי מופיעים בכתב",done:false},{text:"שעות סיום ועלות שעה נוספת מוגדרות",done:false},{text:"הגבלת רעש / שעה אחרונה למוזיקה מוגדרת",done:false},
+ {text:"ספקים חיצוניים ודמי ספק חיצוני מוגדרים",done:false},{text:"תפריט, טעימות ואלרגיות מוגדרים",done:false},{text:"מועד קבלת כמות אורחים סופית מוגדר",done:false},{text:"אחריות על מעטפות / כספת / אבטחה ברורה",done:false},
+ {text:"שם איש הקשר מטעם המקום מוגדר",done:false},{text:"כל הבטחה חשובה מהפגישה נכנסה לחוזה",done:false},{text:"קיבלתם עותק חתום של החוזה והנספחים",done:false}
+]}
+
+function ensureVenueDetails(v){
+ if(!v.status)v.status="interested";
+ if(v.visitDate===undefined)v.visitDate="";
+ if(v.availableDates===undefined)v.availableDates="";
+ if(v.contactPerson===undefined)v.contactPerson="";
+ if(v.contactPhone===undefined)v.contactPhone="";
+ if(v.venueFee===undefined)v.venueFee=0;
+ if(v.extraCosts===undefined)v.extraCosts=0;
+ if(v.indoorOutdoor===undefined)v.indoorOutdoor="";
+ if(v.chuppah===undefined)v.chuppah="";
+ if(v.accessibility===undefined)v.accessibility="";
+ if(v.atmosphere===undefined)v.atmosphere=0;
+ if(v.myOverall===undefined)v.myOverall=v.overall||0;
+ if(v.partnerOverall===undefined)v.partnerOverall=0;
+ if(v.offerSummary===undefined)v.offerSummary="";
+ if(v.links===undefined)v.links="";
+ if(v.contractNotes===undefined)v.contractNotes="";
+ if(v.questions===undefined)v.questions=defaultVenueQuestions();
+ if(v.contractChecks===undefined)v.contractChecks=defaultContractChecks();
+ return v;
+}
+
+function venueStatusLabel(status){const x=venueStatusOptions.find(a=>a[0]===status);return x?x[1]:"מעניין אותנו"}
+function venueStatusClass(status){return "status-"+(status||"interested")}
+function clamp10(x){x=+x||0;return Math.max(0,Math.min(10,x))}
+function escAttr(s){return esc(s).replace(/\n/g,"&#10;")}
+function toggleVenueForm(){venueForm.style.display=venueForm.style.display==="none"?"block":"none"}
+
+function venueEstimatedCost(v){
+ const guests=+state.setup.estimatedGuests||0;
+ const minimum=+v.minGuests||0;
+ const billed=Math.max(guests,minimum);
+ if(!v.price&&!v.venueFee&&!v.extraCosts)return 0;
+ return (billed*(+v.price||0))+(+v.venueFee||0)+(+v.extraCosts||0);
+}
+
+function addVenue(){
+ if(!vName.value.trim()){alert("יש להזין שם מקום");return}
+ const v=ensureVenueDetails({id:Date.now(),name:vName.value.trim(),region:vRegion.value.trim(),website:vWebsite.value.trim(),price:+vPrice.value||0,minGuests:+vMinGuests.value||0,food:clamp10(vFood.value),
+ location:clamp10(vLocation.value),design:clamp10(vDesign.value),service:clamp10(vService.value),parking:vParking.value==="yes"?true:vParking.value==="no"?false:null,
+ overall:clamp10(vOverall.value),pros:vPros.value.trim(),cons:vCons.value.trim(),notes:vNotes.value.trim()});
+ state.venues.push(v);persist();toggleVenueForm();renderVenues();updateDashboard();openVenueDetail(v.id)
+}
+
+function deleteVenue(id){
+ if(!confirm("למחוק את המקום מהרשימה?"))return;
+ state.venues=state.venues.filter(v=>v.id!==id);
+ if(state.activeVenueId===id){state.activeVenueId=null;venueDetailPanel.style.display="none"}
+ persist();renderVenues();updateDashboard();renderComparisonImpressionEditor();renderComparison()
+}
+
+function renderVenues(){
+ if(!state.venues.length){venueList.innerHTML='<div class="card muted">עדיין לא שמרת מקומות. הפעילי חיפוש מקומות ושמרי את המקומות שמעניינים אותך.</div>';return}
+ state.venues.forEach(ensureVenueDetails);
+ venueList.innerHTML=state.venues.map(v=>{
+   const reviews=encodeURIComponent('"'+v.name+'" ביקורות המלצות חתונה');
+   const insta=encodeURIComponent('site:instagram.com "'+v.name+'"');
+   const maps=encodeURIComponent(v.name+" "+(v.region||""));
+   const rec=v.recommendation||null;
+   const estimate=venueEstimatedCost(v);
+   const couple=[+v.myOverall||0,+v.partnerOverall||0].filter(Boolean);const coupleAvg=couple.length?(couple.reduce((a,b)=>a+b,0)/couple.length).toFixed(1):"-";
+   return `
+  <div class="card venue-card ${state.activeVenueId===v.id?"selected-card":""}">
+    <div class="between"><h3>${esc(v.name)}</h3><span class="status-badge ${venueStatusClass(v.status)}">${venueStatusLabel(v.status)}</span></div>
+    <div class="muted small">${esc(v.region||"")}</div>
+    ${rec?`<div class="rec-meta"><span class="saved-mark">WedWise ${rec.overallScore??"-"}%</span>${rec.rating?`<span>Google ${rec.rating}/5</span>`:""}${rec.reviewCount?`<span>${Number(rec.reviewCount).toLocaleString()} ביקורות</span>`:""}</div>`:""}
+    <div class="venue-meta">${v.price?v.price.toLocaleString()+" ₪ למנה":"מחיר טרם הוזן"}${v.minGuests?" · מינימום "+v.minGuests:""}</div>
+    ${estimate?`<div class="cost-highlight small"><strong>עלות משוערת: ${estimate.toLocaleString()} ₪</strong><div class="mini-note">לפי ${Math.max(+state.setup.estimatedGuests||0,+v.minGuests||0)} אורחים לחיוב + תוספות שהזנת</div></div>`:""}
+    <div class="small" style="margin-top:10px">אוכל ${v.food||"-"}/10 · אווירה ${v.atmosphere||"-"}/10 · שירות ${v.service||"-"}/10 · ציון זוגי ${coupleAvg}</div>
+    <div class="row" style="margin-top:12px">
+      <button class="btn primary" onclick="openVenueDetail(${v.id})">פתחי כרטיס מקום</button>
+      ${v.website?`<a class="btn ghost" href="${esc(v.website)}" target="_blank" rel="noopener">אתר</a>`:""}
+      <a class="btn ghost" href="https://www.google.com/maps/search/?api=1&query=${maps}" target="_blank" rel="noopener">מפה</a>
+      <button class="btn danger small" onclick="deleteVenue(${v.id})">מחיקה</button>
+    </div>
+  </div>`;
+ }).join("")
+}
+
+function openVenueDetail(id){
+ const v=state.venues.find(x=>x.id===id);if(!v)return;
+ ensureVenueDetails(v);state.activeVenueId=id;renderVenues();renderVenueDetail();
+ venueDetailPanel.style.display="block";
+ setTimeout(()=>venueDetailPanel.scrollIntoView({behavior:"smooth",block:"start"}),50)
+}
+
+function closeVenueDetail(){state.activeVenueId=null;venueDetailPanel.style.display="none";renderVenues()}
+
+function renderVenueDetail(){
+ const v=state.venues.find(x=>x.id===state.activeVenueId);if(!v){venueDetailPanel.style.display="none";return}
+ ensureVenueDetails(v);
+ const estimate=venueEstimatedCost(v);
+ const billed=Math.max(+state.setup.estimatedGuests||0,+v.minGuests||0);
+ const qDone=v.questions.filter(x=>x.done).length;
+ const cDone=v.contractChecks.filter(x=>x.done).length;
+ const cap=(v.recommendation?.detectedCapacity||v.detectedCapacity||0);
+ venueDetailPanel.innerHTML=`
+ <div class="detail-head">
+  <div><div class="muted small">כרטיס מקום</div><h2 style="margin:3px 0">${esc(v.name)}</h2><div class="row"><span class="status-badge ${venueStatusClass(v.status)}">${venueStatusLabel(v.status)}</span>${v.region?`<span class="badge">${esc(v.region)}</span>`:""}${cap?`<span class="badge">קיבולת שנמצאה ברשת: ${cap}</span>`:""}</div></div>
+  <div class="row"><button class="btn secondary" onclick="closeVenueDetail()">סגירה</button><button class="btn primary" onclick="saveVenueDetail()">שמרי שינויים</button></div>
+ </div>
+
+ <div class="detail-grid" style="margin-top:16px">
+   <div class="metric-card"><span class="muted small">עלות משוערת</span><strong>${estimate?estimate.toLocaleString()+" ₪":"-"}</strong><div class="mini-note">${billed?`לפי ${billed} אורחים לחיוב`:"הזיני מחיר ומספר אורחים"}</div></div>
+   <div class="metric-card"><span class="muted small">ציון WedWise מהאינטרנט</span><strong>${v.recommendation?.overallScore??"-"}%</strong><div class="mini-note">משמש לסינון ראשוני בלבד</div></div>
+   <div class="metric-card"><span class="muted small">התקדמות בדיקה</span><strong>${qDone}/${v.questions.length}</strong><div class="mini-note">שאלות שנבדקו · חוזה ${cDone}/${v.contractChecks.length}</div></div>
+ </div>
+
+ <div class="detail-subsection"><h3>סטטוס ותיאום</h3>
+  <div class="detail-grid">
+   <div class="field"><label>סטטוס</label><select id="vdStatus">${venueStatusOptions.map(x=>`<option value="${x[0]}" ${v.status===x[0]?"selected":""}>${x[1]}</option>`).join("")}</select></div>
+   <div class="field"><label>תאריך ביקור / פגישה</label><input id="vdVisitDate" type="date" value="${esc(v.visitDate||"")}"></div>
+   <div class="field"><label>איש קשר</label><input id="vdContactPerson" value="${esc(v.contactPerson||"")}"></div>
+   <div class="field"><label>טלפון</label><input id="vdContactPhone" value="${esc(v.contactPhone||"")}"></div>
+   <div class="field" style="grid-column:span 2"><label>תאריכים פנויים שקיבלתם</label><textarea id="vdAvailableDates">${esc(v.availableDates||"")}</textarea></div>
+  </div>
+ </div>
+
+ <div class="detail-subsection"><h3>מחיר והצעה</h3>
+  <div class="detail-grid">
+   <div class="field"><label>מחיר למנה</label><input id="vdPrice" type="number" value="${v.price||""}"></div>
+   <div class="field"><label>מינימום אורחים</label><input id="vdMinGuests" type="number" value="${v.minGuests||""}"></div>
+   <div class="field"><label>דמי מקום / עלות קבועה</label><input id="vdVenueFee" type="number" value="${v.venueFee||""}"></div>
+   <div class="field"><label>תוספות צפויות</label><input id="vdExtraCosts" type="number" value="${v.extraCosts||""}"></div>
+   <div class="field" style="grid-column:span 2"><label>מה כלול בהצעה?</label><textarea id="vdOfferSummary" placeholder="למשל: בר, תאורה, הגברה, עיצוב בסיסי...">${esc(v.offerSummary||"")}</textarea></div>
+  </div>
+  <div class="cost-highlight"><strong>עלות משוערת לפי הנתונים כרגע: ${estimate?estimate.toLocaleString()+" ₪":"עדיין אין מספיק נתונים"}</strong><div class="mini-note">החישוב משתמש בגבוה מבין מספר האורחים שלכם לבין מינימום האורחים של המקום.</div></div>
+ </div>
+
+ <div class="detail-subsection"><h3>התאמה פרקטית</h3>
+  <div class="detail-grid">
+   <div class="field"><label>פנים / חוץ</label><select id="vdIndoorOutdoor"><option value="" ${!v.indoorOutdoor?"selected":""}>לא ידוע</option><option value="indoor" ${v.indoorOutdoor==="indoor"?"selected":""}>פנים</option><option value="outdoor" ${v.indoorOutdoor==="outdoor"?"selected":""}>חוץ</option><option value="both" ${v.indoorOutdoor==="both"?"selected":""}>משולב</option></select></div>
+   <div class="field"><label>חופה</label><select id="vdChuppah"><option value="" ${!v.chuppah?"selected":""}>לא ידוע</option><option value="outdoor" ${v.chuppah==="outdoor"?"selected":""}>בחוץ</option><option value="indoor" ${v.chuppah==="indoor"?"selected":""}>בפנים</option><option value="both" ${v.chuppah==="both"?"selected":""}>אפשר לבחור</option></select></div>
+   <div class="field"><label>חניה</label><select id="vdParking"><option value="" ${v.parking===null||v.parking===undefined?"selected":""}>לא ידוע</option><option value="yes" ${v.parking===true?"selected":""}>יש / נוחה</option><option value="no" ${v.parking===false?"selected":""}>אין / מוגבלת</option></select></div>
+   <div class="field"><label>נגישות</label><select id="vdAccessibility"><option value="" ${!v.accessibility?"selected":""}>לא בדקנו</option><option value="good" ${v.accessibility==="good"?"selected":""}>טובה</option><option value="partial" ${v.accessibility==="partial"?"selected":""}>חלקית</option><option value="poor" ${v.accessibility==="poor"?"selected":""}>בעייתית</option></select></div>
+   <div class="field"><label>קישור / אתר</label><input id="vdWebsite" value="${esc(v.website||"")}"></div>
+   <div class="field"><label>קישורים נוספים / תמונות</label><textarea id="vdLinks" placeholder="אפשר להדביק קישורי Instagram, אלבום תמונות, הצעת מחיר בענן...">${esc(v.links||"")}</textarea></div>
+  </div>
+ </div>
+
+ <div class="detail-subsection"><h3>התרשמות אחרי ביקור</h3>
+  <div class="detail-grid">
+   ${ratingField('vdFood','אוכל',v.food)}${ratingField('vdAtmosphere','אווירה',v.atmosphere)}${ratingField('vdLocation','מיקום',v.location)}${ratingField('vdDesign','עיצוב',v.design)}${ratingField('vdService','שירות',v.service)}
+   <div class="field"><label>הציון שלי 1-10</label><input id="vdMyOverall" type="number" min="1" max="10" value="${v.myOverall||""}"></div>
+   <div class="field"><label>ציון בן הזוג 1-10</label><input id="vdPartnerOverall" type="number" min="1" max="10" value="${v.partnerOverall||""}"></div>
+  </div>
+  <div class="detail-grid two">
+   <div class="field"><label>מה אהבנו?</label><textarea id="vdPros">${esc(v.pros||"")}</textarea></div>
+   <div class="field"><label>מה פחות?</label><textarea id="vdCons">${esc(v.cons||"")}</textarea></div>
+  </div>
+  <div class="field"><label>הערות חופשיות</label><textarea id="vdNotes">${esc(v.notes||"")}</textarea></div>
+ </div>
+
+ <div class="detail-subsection"><div class="between"><h3>שאלות לפגישה</h3><div class="row"><span class="badge">${qDone}/${v.questions.length}</span><button class="btn secondary small" onclick="addVenueChecklistItem('questions')">+ שאלה</button></div></div>
+  <div class="question-list">${v.questions.map((q,i)=>`<label class="question-item ${q.done?"done":""}"><input type="checkbox" ${q.done?"checked":""} onchange="toggleVenueChecklistItem('questions',${i})"><span>${esc(q.text)}</span></label>`).join("")}</div>
+ </div>
+
+ <div class="detail-subsection"><div class="between"><h3>בדיקות לפני חתימה על חוזה</h3><div class="row"><span class="badge">${cDone}/${v.contractChecks.length}</span><button class="btn secondary small" onclick="addVenueChecklistItem('contractChecks')">+ בדיקה</button></div></div>
+  <div class="question-list">${v.contractChecks.map((q,i)=>`<label class="question-item ${q.done?"done":""}"><input type="checkbox" ${q.done?"checked":""} onchange="toggleVenueChecklistItem('contractChecks',${i})"><span>${esc(q.text)}</span></label>`).join("")}</div>
+  <div class="field" style="margin-top:12px"><label>הערות לחוזה</label><textarea id="vdContractNotes">${esc(v.contractNotes||"")}</textarea></div>
+ </div>
+
+ <div class="row" style="margin-top:18px"><button class="btn primary" onclick="saveVenueDetail()">שמרי את כרטיס המקום</button><button class="btn secondary" onclick="closeVenueDetail()">סגירה</button></div>`;
+}
+
+function ratingField(id,label,value){return `<div class="field"><label>${label} 1-10</label><input id="${id}" type="number" min="1" max="10" value="${value||""}"></div>`}
+
+function saveVenueDetail(){
+ const v=state.venues.find(x=>x.id===state.activeVenueId);if(!v)return;
+ v.status=vdStatus.value;v.visitDate=vdVisitDate.value;v.contactPerson=vdContactPerson.value.trim();v.contactPhone=vdContactPhone.value.trim();v.availableDates=vdAvailableDates.value.trim();
+ v.price=+vdPrice.value||0;v.minGuests=+vdMinGuests.value||0;v.venueFee=+vdVenueFee.value||0;v.extraCosts=+vdExtraCosts.value||0;v.offerSummary=vdOfferSummary.value.trim();
+ v.indoorOutdoor=vdIndoorOutdoor.value;v.chuppah=vdChuppah.value;v.parking=vdParking.value==="yes"?true:vdParking.value==="no"?false:null;v.accessibility=vdAccessibility.value;v.website=vdWebsite.value.trim();v.links=vdLinks.value.trim();
+ v.food=clamp10(vdFood.value);v.atmosphere=clamp10(vdAtmosphere.value);v.location=clamp10(vdLocation.value);v.design=clamp10(vdDesign.value);v.service=clamp10(vdService.value);v.myOverall=clamp10(vdMyOverall.value);v.partnerOverall=clamp10(vdPartnerOverall.value);
+ v.pros=vdPros.value.trim();v.cons=vdCons.value.trim();v.notes=vdNotes.value.trim();v.contractNotes=vdContractNotes.value.trim();
+ if(v.status==="chosen")state.venues.forEach(x=>{if(x.id!==v.id&&x.status==="chosen")x.status="finalist"});
+ persist();renderVenues();renderVenueDetail();renderComparisonImpressionEditor();renderComparison();updateDashboard();
+ const saved=document.createElement('div');saved.className='status good';saved.textContent='כרטיס המקום נשמר';venueDetailPanel.prepend(saved);setTimeout(()=>saved.remove(),1800)
+}
+
+function toggleVenueChecklistItem(type,index){
+ const v=state.venues.find(x=>x.id===state.activeVenueId);if(!v)return;ensureVenueDetails(v);v[type][index].done=!v[type][index].done;persist();renderVenueDetail()
+}
+function addVenueChecklistItem(type){
+ const text=prompt(type==="questions"?"איזו שאלה להוסיף?":"איזו בדיקה להוסיף לחוזה?");if(!text)return;
+ const v=state.venues.find(x=>x.id===state.activeVenueId);if(!v)return;ensureVenueDetails(v);v[type].push({text,done:false});persist();renderVenueDetail()
+}
+
+
+
+function impressionSelectOptions(current){
+ let out='<option value="">לא דירגנו</option>';
+ for(let i=1;i<=10;i++)out+=`<option value="${i}" ${+current===i?"selected":""}>${i}</option>`;
+ return out;
+}
+
+function renderComparisonImpressionEditor(){
+ const box=document.getElementById("comparisonImpressionEditor");
+ if(!box)return;
+
+ if(!state.venues.length){
+   box.innerHTML='<div class="muted">עדיין לא שמרת מקומות. שמרי לפחות מקום אחד כדי להתחיל למלא התרשמות.</div>';
+   return;
+ }
+
+ state.venues.forEach(ensureVenueDetails);
+
+ box.innerHTML=state.venues.map(v=>`
+   <div class="impression-card">
+     <div class="between">
+       <div>
+         <h3>${esc(v.name)}</h3>
+         <div class="muted small">${esc(v.region||"")}</div>
+       </div>
+       <span class="status-badge ${venueStatusClass(v.status)}">${venueStatusLabel(v.status)}</span>
+     </div>
+
+     <div class="impression-fields">
+       <div class="field">
+         <label>אוכל</label>
+         <select onchange="updateComparisonImpression(${v.id},'food',this.value)">${impressionSelectOptions(v.food)}</select>
+       </div>
+       <div class="field">
+         <label>אווירה</label>
+         <select onchange="updateComparisonImpression(${v.id},'atmosphere',this.value)">${impressionSelectOptions(v.atmosphere)}</select>
+       </div>
+       <div class="field">
+         <label>מיקום</label>
+         <select onchange="updateComparisonImpression(${v.id},'location',this.value)">${impressionSelectOptions(v.location)}</select>
+       </div>
+       <div class="field">
+         <label>עיצוב</label>
+         <select onchange="updateComparisonImpression(${v.id},'design',this.value)">${impressionSelectOptions(v.design)}</select>
+       </div>
+       <div class="field">
+         <label>שירות</label>
+         <select onchange="updateComparisonImpression(${v.id},'service',this.value)">${impressionSelectOptions(v.service)}</select>
+       </div>
+       <div class="field">
+         <label>חניה</label>
+         <select onchange="updateComparisonParking(${v.id},this.value)">
+           <option value="" ${v.parking===null||v.parking===undefined?"selected":""}>לא בדקנו</option>
+           <option value="yes" ${v.parking===true?"selected":""}>טובה / נוחה</option>
+           <option value="no" ${v.parking===false?"selected":""}>בעייתית / מוגבלת</option>
+         </select>
+       </div>
+       <div class="field">
+         <label>הציון שלי</label>
+         <select onchange="updateComparisonImpression(${v.id},'myOverall',this.value)">${impressionSelectOptions(v.myOverall)}</select>
+       </div>
+       <div class="field">
+         <label>ציון בן הזוג</label>
+         <select onchange="updateComparisonImpression(${v.id},'partnerOverall',this.value)">${impressionSelectOptions(v.partnerOverall)}</select>
+       </div>
+     </div>
+
+     <div class="impression-note">
+       הציונים נשמרים מיד ונכנסים אוטומטית להשוואה. מחיר ועלויות ממלאים בכרטיס המקום, כי הם מחושבים לפי ההצעה שקיבלתם.
+     </div>
+   </div>
+ `).join("");
+}
+
+function updateComparisonImpression(id,key,value){
+ const v=state.venues.find(x=>x.id===id);
+ if(!v)return;
+ const num=value===""?0:Math.max(1,Math.min(10,+value||0));
+ v[key]=num;
+ persist();
+ renderComparison();
+ renderVenues();
+}
+
+function updateComparisonParking(id,value){
+ const v=state.venues.find(x=>x.id===id);
+ if(!v)return;
+ v.parking=value===""?null:(value==="yes");
+ persist();
+ renderComparison();
+ renderVenues();
+}
+
+const DEFAULT_COMPARE_WEIGHTS={price:20,food:20,atmosphere:15,location:15,design:10,service:10,parking:5,couple:5};
+
+function weightInput(id){
+ return document.getElementById(id);
+}
+
+function loadComparisonWeights(){
+ const w=state.compareWeights||DEFAULT_COMPARE_WEIGHTS;
+ const map={wPrice:"price",wFood:"food",wAtmosphere:"atmosphere",wLocation:"location",wDesign:"design",wService:"service",wParking:"parking",wCouple:"couple"};
+ Object.entries(map).forEach(([id,key])=>{
+   const el=weightInput(id);
+   if(el)el.value=w[key]??DEFAULT_COMPARE_WEIGHTS[key];
+ });
+ updateWeightTotal();
+}
+
+function weights(){
+ return {
+   price:+weightInput("wPrice").value||0,
+   food:+weightInput("wFood").value||0,
+   atmosphere:+weightInput("wAtmosphere").value||0,
+   location:+weightInput("wLocation").value||0,
+   design:+weightInput("wDesign").value||0,
+   service:+weightInput("wService").value||0,
+   parking:+weightInput("wParking").value||0,
+   couple:+weightInput("wCouple").value||0
+ };
+}
+
+function weightSum(w=weights()){
+ return Object.values(w).reduce((a,b)=>a+(+b||0),0);
+}
+
+function updateWeightTotal(){
+ const total=weightSum();
+ const badge=document.getElementById("weightTotal");
+ const btn=document.getElementById("compareCalcBtn");
+ if(!badge)return total;
+ badge.textContent=`סה"כ: ${total}%`;
+ badge.classList.toggle("bad",total!==100);
+ if(btn)btn.disabled=total!==100;
+ return total;
+}
+
+function onWeightChange(){
+ state.compareWeights=weights();
+ persist();
+ const total=updateWeightTotal();
+ if(total===100)renderComparison();
+}
+
+function resetComparisonWeights(){
+ state.compareWeights={...DEFAULT_COMPARE_WEIGHTS};
+ persist();
+ loadComparisonWeights();
+ renderComparison();
+}
+
+function coupleScore(v){
+ const vals=[+v.myOverall||0,+v.partnerOverall||0].filter(x=>x>0);
+ return vals.length?vals.reduce((a,b)=>a+b,0)/vals.length:0;
+}
+
+function scoreVenues(){
+ state.venues.forEach(ensureVenueDetails);
+
+ const w=weights();
+ const totalWeight=weightSum(w);
+ if(totalWeight!==100)return {rows:[],invalidWeights:true};
+
+ /*
+   Include every saved venue in the table, even if it does not
+   yet have enough data to be eligible for "best match".
+ */
+ const venues=[...state.venues];
+
+ const knownCosts=venues
+   .map(v=>venueEstimatedCost(v))
+   .filter(c=>c>0);
+
+ const uniqueCosts=[...new Set(knownCosts)];
+ const minC=knownCosts.length?Math.min(...knownCosts):0;
+ const maxC=knownCosts.length?Math.max(...knownCosts):0;
+
+ function costScore(cost){
+   if(!cost)return null;
+
+   /*
+     One known price cannot be compared against anything,
+     so use a neutral 5/10 rather than awarding 10/10.
+   */
+   if(uniqueCosts.length<2||maxC===minC)return 5;
+
+   /*
+     Relative cost score:
+     cheapest = 10/10, most expensive = 4/10.
+     This keeps price meaningful without letting a small price
+     difference overwhelm all qualitative criteria.
+   */
+   const ratio=(cost-minC)/(maxC-minC);
+   return 10-(ratio*6);
+ }
+
+ const rows=venues.map(v=>{
+   const cost=venueEstimatedCost(v);
+   const couple=coupleScore(v);
+
+   const criteria={
+     price:costScore(cost),
+     food:(+v.food||0)>0?+v.food:null,
+     atmosphere:(+v.atmosphere||0)>0?+v.atmosphere:null,
+     location:(+v.location||0)>0?+v.location:null,
+     design:(+v.design||0)>0?+v.design:null,
+     service:(+v.service||0)>0?+v.service:null,
+     parking:(v.parking===true?10:(v.parking===false?0:null)),
+     couple:couple>0?couple:null
+   };
+
+   let weightedPoints=0;
+   let knownWeight=0;
+
+   Object.entries(criteria).forEach(([key,val])=>{
+     const weight=+w[key]||0;
+     if(weight<=0)return;
+     if(val!==null&&val!==undefined){
+       weightedPoints+=(+val)*weight;
+       knownWeight+=weight;
+     }
+   });
+
+   const coverage=totalWeight?Math.round((knownWeight/totalWeight)*100):0;
+   const rawScore=knownWeight?Math.round((weightedPoints/knownWeight)*10):null;
+   const eligible=coverage>=60&&rawScore!==null;
+
+   return {
+     ...v,
+     estimatedCost:cost,
+     couple,
+     criteria,
+     match:rawScore,
+     coverage,
+     eligible
+   };
+ });
+
+ /*
+   Eligible venues are ranked first.
+   Missing-data venues still appear, but cannot win.
+   For equal scores, prefer the venue with more complete information.
+ */
+ rows.sort((a,b)=>{
+   if(a.eligible!==b.eligible)return a.eligible?-1:1;
+   const am=a.match??-1,bm=b.match??-1;
+   if(bm!==am)return bm-am;
+   return b.coverage-a.coverage;
+ });
+
+ return {rows,invalidWeights:false};
+}
+
+function renderComparison(){
+ const result=scoreVenues();
+ const body=document.getElementById("compareBody");
+ const best=document.getElementById("bestMatch");
+
+ if(result.invalidWeights){
+   best.style.display="block";
+   best.innerHTML=`<div class="status error">סך אחוזי החשיבות חייב להיות 100% לפני שמחשבים השוואה.</div>`;
+   body.innerHTML='<tr><td colspan="12" class="muted">עדכני את אחוזי החשיבות כך שיסתכמו ל-100%.</td></tr>';
+   return;
+ }
+
+ const rows=result.rows;
+
+ if(!rows.length){
+   best.style.display="none";
+   body.innerHTML='<tr><td colspan="12" class="muted">עדיין לא שמרת מקומות להשוואה.</td></tr>';
+   return;
+ }
+
+ body.innerHTML=rows.map(v=>{
+   const scoreText=v.match===null
+     ? '<span class="muted">אין מספיק נתונים</span>'
+     : `<span class="compare-score ${v.eligible?"":"low-data"}">${v.match}%</span>${v.eligible?"":'<div class="muted small">לא מדורג כמוביל</div>'}`;
+
+   const coverageClass=v.coverage>=80?"good":(v.coverage>=60?"":"warn");
+
+   return `<tr>
+     <td><strong>${esc(v.name)}</strong></td>
+     <td><span class="status-badge ${venueStatusClass(v.status)}">${venueStatusLabel(v.status)}</span></td>
+     <td>${v.estimatedCost?v.estimatedCost.toLocaleString()+" ₪":"-"}</td>
+     <td>${v.food||"-"}</td>
+     <td>${v.atmosphere||"-"}</td>
+     <td>${v.location||"-"}</td>
+     <td>${v.design||"-"}</td>
+     <td>${v.service||"-"}</td>
+     <td>${v.parking===true?"יש":(v.parking===false?"אין / מוגבלת":"-")}</td>
+     <td>${v.couple?v.couple.toFixed(1):"-"}</td>
+     <td><span class="coverage-badge ${coverageClass}">${v.coverage}%</span></td>
+     <td>${scoreText}</td>
+   </tr>`;
+ }).join("");
+
+ const eligible=rows.filter(v=>v.eligible);
+
+ if(eligible.length){
+   const top=eligible[0];
+   best.style.display="block";
+   best.innerHTML=`
+     <div class="between">
+       <div>
+         <div class="muted small">המקום שמוביל כרגע בהשוואה</div>
+         <h2>${esc(top.name)}</h2>
+         <div class="rec-meta" style="margin-top:10px">
+           <span>ציון התאמה: ${top.match}%</span>
+           <span>מידע שהושלם: ${top.coverage}%</span>
+         </div>
+       </div>
+       <div class="stat" style="color:var(--accent-strong)">${top.match}%</div>
+     </div>`;
+ }else{
+   best.style.display="block";
+   best.innerHTML=`
+     <div>
+       <div class="muted small">עדיין אין מספיק מידע להשוואה מלאה</div>
+       <h2>השלימו עוד ציונים על המקומות</h2>
+     </div>`;
+ }
+}
+
+
+const VENDOR_CATEGORIES={
+ photographer:{label:"צילום",icon:"📷",searchTitle:"צלמים לחתונה",criteria:["התאמת סגנון","איכות תיק עבודות","כימיה אישית","מקצועיות ושירות"]},
+ dj:{label:"DJ ומוזיקה",icon:"🎧",searchTitle:"DJ לחתונה",criteria:["התאמה מוזיקלית","אנרגיה והרמת קהל","כימיה אישית","מקצועיות ושירות"]},
+ makeup:{label:"איפור",icon:"✨",searchTitle:"מאפרות כלות",criteria:["התאמת סגנון","איכות תיק עבודות","כימיה ונוחות","מקצועיות ושירות"]},
+ hair:{label:"שיער",icon:"♡",searchTitle:"מעצבי שיער לכלות",criteria:["התאמת סגנון","איכות תיק עבודות","כימיה ונוחות","מקצועיות ושירות"]},
+ dress:{label:"שמלת כלה",icon:"♕",searchTitle:"שמלות כלה וסטודיואים",criteria:["התאמה לסגנון","נוחות והתאמה לגוף","איכות וגימור","שירות וליווי"]},
+ design:{label:"עיצוב ופרחים",icon:"❀",searchTitle:"מעצבי אירועים ופרחים",criteria:["התאמת סגנון","יצירתיות ואיכות","גמישות והתאמה","מקצועיות ושירות"]}
+};
+
+const DEFAULT_VENDOR_WEIGHTS={price:20,c1:20,c2:20,c3:20,c4:20};
+function defaultVendorQuestions(category){
+ const common=[
+  "האם אתם פנויים בתאריך החתונה?","מה בדיוק כלול במחיר ומה נחשב תוספת?","מה גובה המקדמה ומתי משלמים את היתרה?","מה תנאי הביטול / דחייה?",
+  "מה קורה אם אינכם יכולים להגיע ביום האירוע?","האם יש לכם מחליף / גיבוי?","האם יש עלויות נסיעה או שעות נוספות?","מתי מקבלים חוזה מסודר?"
+ ];
+ const byCategory={
+  photographer:["אפשר לראות גלריות מלאות של חתונות ולא רק תמונות נבחרות?","מה סגנון העריכה שלכם והאם הוא עקבי בכל הגלריה?","כמה שעות צילום כלולות?","מי הצלם שמגיע בפועל ביום האירוע?","האם יש צלם שני ומתי הוא מומלץ?","האם וידאו / רחפן כלולים או בנפרד?","יש ציוד וגיבוי לקבצים במקרה תקלה?","כמה זמן אחרי החתונה מקבלים טיזר / גלריה מלאה / סרטים?","כמה תמונות ערוכות מקבלים?","האם אלבומים כלולים ומה זמן האספקה?","איך מתנהלים צילומי משפחות ומי עוזר לרכז אנשים?"],
+  dj:["איך אתם בונים את הקו המוזיקלי עם הזוג?","אפשר לתת רשימת שירי חובה ורשימת Do Not Play?","איך אתם קוראים קהל ומשלבים גילאים שונים?","מי ה-DJ שמגיע בפועל?","יש ציוד גיבוי מלא?","האם מיקרופונים והגברה לחופה כלולים?","האם אתם מנחים / מדברים במיקרופון במהלך הערב?","מה שעת הסיום ומה עלות הארכה?","אפשר לשמוע סטים או חתונות קודמות?","איך מתאמים שירי חופה, שבירת כוס וריקוד ראשון?"],
+  makeup:["האם מומלץ / אפשר לעשות איפור ניסיון?","כמה זמן מוקצה לאיפור ביום האירוע?","באילו מוצרים עובדים והאם הם מתאימים לעור רגיש?","איך דואגים שהאיפור יחזיק לאורך כל היום?","האם ערכת טאצ'אפ כלולה?","כמה מלוות אפשר לאפר?","יש תוספת על התחלה מוקדמת / נסיעה?","מה קורה במקרה מחלה או חירום?","האם העבודה כוללת ריסים והכנת עור?"],
+  hair:["האם עושים ניסיון שיער?","כמה זמן מוקצה לשיער ביום האירוע?","האם עובדים עם תוספות שיער ומה העלות?","איך מחברים הינומה / אביזרי שיער?","האם אפשר שינוי תסרוקת במהלך הערב?","כמה מלוות אפשר לצרף?","יש תוספת על התחלה מוקדמת / נסיעה?","מה קורה במקרה מחלה או חירום?"],
+  dress:["מה המחיר הסופי כולל?","כמה מדידות ותיקונים כלולים?","מה לוח הזמנים עד למסירה?","מה גובה המקדמה?","האם השמלה להשכרה או קנייה?","מה קורה במקרה שינוי מידה?","האם הינומה / עליונית / אביזרים כלולים?","האם ניקוי אחרי האירוע כלול?","מתי מתקיימת המדידה האחרונה?"],
+  design:["מה בדיוק כלול בהצעת העיצוב?","אפשר לראות אירועים דומים בסגנון שלנו?","אילו פרחים עונתיים זמינים בתאריך?","מה קורה אם פרח מסוים לא זמין?","האם יש הדמיה / סקיצה לפני האירוע?","מי אחראי על הקמה ופירוק?","אילו פריטים הם השכרה וצריך להחזיר?","מה העלות של שינויים בכמויות שולחנות?","האם אתם מתאמים ישירות מול המקום?"]
+ };
+ return [...common,...(byCategory[category]||[])].map(text=>({text,done:false}));
+}
+function ensureVendorDetails(v){
+ if(!Array.isArray(v.questions))v.questions=defaultVendorQuestions(v.category);
+ else{const defaults=defaultVendorQuestions(v.category);const old=new Map(v.questions.map(q=>[q.text,q]));v.questions=[...defaults.map(q=>old.has(q.text)?{...q,...old.get(q.text)}:q),...v.questions.filter(q=>!defaults.some(d=>d.text===q.text))];}
+ if(v.notes===undefined)v.notes="";return v;
+}
+
+
+function vendorConfig(category=state.activeVendorCategory){return VENDOR_CATEGORIES[category]||VENDOR_CATEGORIES.photographer}
+function vendorCategoryLabel(category){return vendorConfig(category).label}
+function vendorRatingOptions(value){let s='<option value="">לא דירגנו</option>';for(let i=1;i<=10;i++)s+=`<option value="${i}" ${+value===i?"selected":""}>${i}</option>`;return s}
+function isSavedVendor(category,name){const n=String(name||"").trim().toLowerCase();return state.vendors.some(v=>v.category===category&&String(v.name||"").trim().toLowerCase()===n)}
+
+function renderVendorCategoryTabs(){
+ const box=document.getElementById("vendorCategoryTabs");if(!box)return;
+ box.innerHTML=Object.entries(VENDOR_CATEGORIES).map(([key,c])=>`<button class="vendor-category-btn ${state.activeVendorCategory===key?"active":""}" onclick="setVendorCategory('${key}')"><span class="vendor-category-icon">${c.icon}</span> ${c.label}</button>`).join("");
+}
+
+function setVendorCategory(category){
+ if(!VENDOR_CATEGORIES[category])return;
+ state.activeVendorCategory=category;persist();
+ renderVendorSection();
+ const sel=document.getElementById("vendorCompareCategory");if(sel)sel.value=category;
+}
+
+function renderVendorSection(){
+ renderVendorCategoryTabs();
+ const c=vendorConfig();
+ const title=document.getElementById("vendorSearchTitle");if(title)title.textContent=c.searchTitle;
+ const formCat=document.getElementById("vendorFormCategory");if(formCat)formCat.textContent=c.label;
+ renderVendorRecommendations();
+ renderSavedVendors();
+}
+
+function toggleVendorForm(){
+ const f=document.getElementById("vendorForm");if(!f)return;
+ f.style.display=f.style.display==="none"?"block":"none";
+ const formCat=document.getElementById("vendorFormCategory");if(formCat)formCat.textContent=vendorCategoryLabel(state.activeVendorCategory);
+}
+
+async function searchRecommendedVendors(){
+ const btn=document.getElementById("vendorSearchBtn");
+ const status=document.getElementById("vendorSearchStatus");
+ const category=state.activeVendorCategory;
+ const cfg=vendorConfig(category);
+ btn.disabled=true;btn.textContent="מחפשת...";
+ status.className="status";
+ status.innerHTML=`<span class="search-loading"><span class="spinner"></span><span>מחפשת ${esc(cfg.label)}, בודקת דירוגים ומצליבה מקורות...</span></span>`;
+ vendorRecommendationResults.innerHTML="";
+ try{
+   const response=await fetch(FUNCTION_URL,{
+     method:"POST",headers:{"Content-Type":"application/json"},
+     body:JSON.stringify({
+       entityType:"vendor",
+       vendorCategory:category,
+       regions:state.setup.regions||[],
+       vendorMaxBudget:+vendorMaxBudget.value||0,
+       vendorPreferences:vendorPreferences.value.trim()||""
+     })
+   });
+   let data={};try{data=await response.json()}catch(e){}
+   if(!response.ok||!data.success)throw new Error(data.error||`החיפוש נכשל (${response.status})`);
+   state.vendorRecommendations[category]=Array.isArray(data.vendors)?data.vendors:[];
+   persist();renderVendorRecommendations();
+   status.className="status good";
+   status.textContent=(state.vendorRecommendations[category]||[]).length?`נמצאו ${state.vendorRecommendations[category].length} ${cfg.label} מדורגים`:`לא נמצאו כרגע תוצאות מתאימות. נסי לשנות את מילות החיפוש.`;
+ }catch(err){
+   console.error(err);status.className="status error";status.textContent="לא הצלחתי להשלים את החיפוש: "+(err?.message||"שגיאה לא ידועה");
+ }finally{btn.disabled=false;btn.textContent="✨ מצאי ספקים מתאימים"}
+}
+
+function renderVendorRecommendations(){
+ const box=document.getElementById("vendorRecommendationResults");if(!box)return;
+ const category=state.activeVendorCategory;
+ const rows=state.vendorRecommendations[category]||[];
+ if(!rows.length){box.innerHTML="";return}
+ box.innerHTML=rows.map((v,i)=>{
+   const saved=isSavedVendor(category,v.name);
+   const sources=(v.sourceDomains||[]).slice(0,6);
+   const reasons=(v.reasons||[]).slice(0,5);
+   const checks=(v.thingsToCheck||[]).slice(0,4);
+   const price=v.detectedPrice?` · מחיר שנמצא: כ-${Number(v.detectedPrice).toLocaleString()} ₪`:"";
+   return `<div class="smart-card vendor-recommendation-card ${i===0?"top":""}">
+     <div class="smart-rank">${i+1}</div>
+     <div style="padding-left:38px"><h3 style="margin-bottom:4px">${esc(v.name)}</h3><div class="muted small">${esc(v.address||"אזור לא צוין")}${v.rating?` · ${v.rating}/5 (${Number(v.reviewCount||0).toLocaleString()} ביקורות)`:""}${price}</div>${(v.trustedSourceCount||v.weddingReviewCount)?`<div class="rec-meta"><span>${v.trustedSourceCount||0} מקורות המלצה אמינים</span>${v.weddingReviewCount?`<span>${Number(v.weddingReviewCount).toLocaleString()} מדרגים באתרי חתונות</span>`:""}</div>`:""}</div>
+     <div class="score-row">
+       <div class="score-box"><strong>${v.overallScore??"-"}%</strong><span>ציון כולל</span></div>
+       <div class="score-box"><strong>${v.matchScore??"-"}%</strong><span>התאמה לחיפוש</span></div>
+       <div class="score-box"><strong>${v.qualityScore??"-"}%</strong><span>איכות ברשת</span></div>
+       <div class="score-box"><strong>${v.confidenceScore??"-"}%</strong><span>ביטחון במידע</span></div>
+     </div>
+     ${reasons.length?`<div class="small"><strong>למה כדאי לבדוק:</strong></div><ul class="evidence-list small">${reasons.map(x=>`<li>${esc(x)}</li>`).join("")}</ul>`:""}
+     ${checks.length?`<div class="small" style="margin-top:10px"><strong>כדאי לוודא:</strong></div><ul class="check-list small">${checks.map(x=>`<li>${esc(x)}</li>`).join("")}</ul>`:""}
+     ${sources.length?`<div class="source-tags">${sources.map(d=>`<span>${esc(sourceLabel(d))}</span>`).join("")}</div>`:""}
+     <div class="row" style="margin-top:12px">
+       <button class="btn ${saved?"secondary":"primary"}" ${saved?"disabled":""} onclick="saveVendorRecommendation(${i})">${saved?"✓ נשמר":"שמרי ספק"}</button>
+       ${v.website?`<a class="btn ghost" href="${esc(v.website)}" target="_blank" rel="noopener">אתר</a>`:""}
+       ${v.instagram?`<a class="btn ghost" href="${esc(v.instagram)}" target="_blank" rel="noopener">Instagram</a>`:""}
+     </div>
+   </div>`;
+ }).join("");
+}
+
+function saveVendorRecommendation(index){
+ const category=state.activeVendorCategory;
+ const r=(state.vendorRecommendations[category]||[])[index];if(!r||isSavedVendor(category,r.name))return;
+ state.vendors.push(ensureVendorDetails({id:Date.now(),category,name:r.name||"",region:r.address||"",website:r.website||"",instagram:r.instagram||"",rating:r.rating||0,reviewCount:r.reviewCount||0,onlineScore:r.overallScore||0,price:r.detectedPrice||0,c1:0,c2:0,c3:0,c4:0,notes:"",recommendation:r}));
+ persist();renderVendorRecommendations();renderSavedVendors();updateDashboard();
+}
+
+function addVendorManually(){
+ const name=vendorManualName.value.trim();if(!name)return alert("הכניסי שם ספק");
+ state.vendors.push(ensureVendorDetails({id:Date.now(),category:state.activeVendorCategory,name,region:vendorManualRegion.value.trim(),website:vendorManualWebsite.value.trim(),instagram:"",rating:0,reviewCount:0,onlineScore:0,price:+vendorManualPrice.value||0,c1:0,c2:0,c3:0,c4:0,notes:vendorManualNotes.value.trim()}));
+ vendorManualName.value="";vendorManualRegion.value="";vendorManualWebsite.value="";vendorManualPrice.value="";vendorManualNotes.value="";persist();renderSavedVendors();toggleVendorForm();updateDashboard();
+}
+
+function deleteVendor(id){
+ if(!confirm("למחוק את הספק מהרשימה?"))return;
+ state.vendors=state.vendors.filter(v=>v.id!==id);persist();renderSavedVendors();renderVendorCompare();updateDashboard();
+}
+
+function renderSavedVendors(){
+ const box=document.getElementById("savedVendorList");if(!box)return;
+ state.vendors.forEach(ensureVendorDetails);
+ const rows=state.vendors.filter(v=>v.category===state.activeVendorCategory);
+ const cnt=document.getElementById("savedVendorCount");if(cnt)cnt.textContent=rows.length;
+ if(!rows.length){box.innerHTML='<div class="card muted">עדיין לא שמרתם ספקים בקטגוריה הזאת.</div>';return}
+ box.innerHTML=rows.map(v=>`<div class="vendor-card">
+   <div class="vendor-card-head"><div><div class="muted small">${vendorConfig(v.category).icon} ${esc(vendorCategoryLabel(v.category))}</div><h3>${esc(v.name)}</h3><div class="muted small">${esc(v.region||"")}</div></div>${v.onlineScore?`<span class="badge">WedWise ${v.onlineScore}%</span>`:""}</div>
+   <div class="vendor-online-meta">${v.rating?`<span>Google ${v.rating}/5</span>`:""}${v.reviewCount?`<span>${Number(v.reviewCount).toLocaleString()} ביקורות</span>`:""}${v.price?`<span>${Number(v.price).toLocaleString()} ₪</span>`:""}</div>
+   ${v.notes?`<p class="small">${esc(v.notes)}</p>`:""}
+   <div class="row"><button class="btn primary" onclick="openVendorCompare('${v.category}')">להשוואה</button>${v.website?`<a class="btn ghost" href="${esc(v.website)}" target="_blank">אתר</a>`:""}<button class="btn danger small" onclick="deleteVendor(${v.id})">מחיקה</button></div>
+ </div>`).join("");
+}
+
+function openVendorCompare(category){state.activeVendorCategory=category;persist();go("vendorCompare")}
+
+function vendorWeights(category=state.activeVendorCategory){
+ if(!state.vendorCompareWeights[category])state.vendorCompareWeights[category]={...DEFAULT_VENDOR_WEIGHTS};
+ return state.vendorCompareWeights[category];
+}
+
+function populateVendorCompareCategory(){
+ const select=document.getElementById("vendorCompareCategory");if(!select)return;
+ select.innerHTML=Object.entries(VENDOR_CATEGORIES).map(([key,c])=>`<option value="${key}">${c.label}</option>`).join("");select.value=state.activeVendorCategory;
+}
+
+function changeVendorCompareCategory(category){state.activeVendorCategory=category;persist();renderVendorCompare()}
+
+function loadVendorWeightInputs(){
+ const w=vendorWeights();vwPrice.value=w.price;vwC1.value=w.c1;vwC2.value=w.c2;vwC3.value=w.c3;vwC4.value=w.c4;updateVendorWeightTotal();
+}
+
+function currentVendorWeights(){return{price:+vwPrice.value||0,c1:+vwC1.value||0,c2:+vwC2.value||0,c3:+vwC3.value||0,c4:+vwC4.value||0}}
+function vendorWeightSum(w=currentVendorWeights()){return Object.values(w).reduce((s,x)=>s+(+x||0),0)}
+function updateVendorWeightTotal(){const total=vendorWeightSum();vendorWeightTotal.textContent=`סה״כ: ${total}%`;vendorWeightTotal.classList.toggle("bad",total!==100);return total}
+function onVendorWeightChange(){state.vendorCompareWeights[state.activeVendorCategory]=currentVendorWeights();persist();updateVendorWeightTotal();if(vendorWeightSum()===100)renderVendorComparisonResults()}
+function resetVendorWeights(){state.vendorCompareWeights[state.activeVendorCategory]={...DEFAULT_VENDOR_WEIGHTS};persist();loadVendorWeightInputs();renderVendorComparisonResults()}
+
+function renderVendorCompare(){
+ populateVendorCompareCategory();
+ const cfg=vendorConfig();
+ [vwLabel1,vcHead1].forEach(x=>x.textContent=cfg.criteria[0]);[vwLabel2,vcHead2].forEach(x=>x.textContent=cfg.criteria[1]);[vwLabel3,vcHead3].forEach(x=>x.textContent=cfg.criteria[2]);[vwLabel4,vcHead4].forEach(x=>x.textContent=cfg.criteria[3]);
+ loadVendorWeightInputs();renderVendorImpressionEditor();renderVendorComparisonResults();
+}
+
+function renderVendorImpressionEditor(){
+ const box=document.getElementById("vendorImpressionEditor");if(!box)return;
+ const cfg=vendorConfig();const rows=state.vendors.filter(v=>v.category===state.activeVendorCategory);
+ if(!rows.length){box.innerHTML='<div class="muted">שמרי לפחות שני ספקים מהקטגוריה כדי להתחיל להשוות.</div>';return}
+ box.innerHTML=rows.map(v=>`<div class="vendor-impression-card">
+   <div><h3>${esc(v.name)}</h3><div class="vendor-category-subtitle">${cfg.label}${v.rating?` · Google ${v.rating}/5`:""}</div></div>
+   <div class="vendor-rating-grid">
+     <div class="field"><label>מחיר</label><input type="number" min="0" value="${v.price||""}" placeholder="₪" onchange="updateVendorField(${v.id},'price',this.value)"></div>
+     <div class="field"><label>${esc(cfg.criteria[0])}</label><select onchange="updateVendorField(${v.id},'c1',this.value)">${vendorRatingOptions(v.c1)}</select></div>
+     <div class="field"><label>${esc(cfg.criteria[1])}</label><select onchange="updateVendorField(${v.id},'c2',this.value)">${vendorRatingOptions(v.c2)}</select></div>
+     <div class="field"><label>${esc(cfg.criteria[2])}</label><select onchange="updateVendorField(${v.id},'c3',this.value)">${vendorRatingOptions(v.c3)}</select></div>
+     <div class="field"><label>${esc(cfg.criteria[3])}</label><select onchange="updateVendorField(${v.id},'c4',this.value)">${vendorRatingOptions(v.c4)}</select></div>
+   </div>
+   <div class="field" style="margin-top:10px"><label>הערות</label><textarea onchange="updateVendorField(${v.id},'notes',this.value)">${esc(v.notes||"")}</textarea></div>
+   <details class="vendor-question-details"><summary>שאלות שכדאי לשאול בפגישה <span>${(v.questions||[]).filter(q=>q.done).length}/${(v.questions||[]).length}</span></summary><div class="vendor-question-list">${(v.questions||[]).map((q,qi)=>`<label class="vendor-question-item ${q.done?"done":""}"><input type="checkbox" ${q.done?"checked":""} onchange="toggleVendorQuestion(${v.id},${qi},this.checked)"><span>${esc(q.text)}</span></label>`).join("")}</div></details>
+ </div>`).join("");
+}
+
+function updateVendorField(id,key,value){
+ const v=state.vendors.find(x=>x.id===id);if(!v)return;
+ if(["price","c1","c2","c3","c4"].includes(key))v[key]=value===""?0:+value||0;else v[key]=value;persist();renderSavedVendors();renderVendorComparisonResults();
+}
+function toggleVendorQuestion(id,index,checked){const v=state.vendors.find(x=>x.id===id);if(!v)return;ensureVendorDetails(v);if(v.questions[index])v.questions[index].done=checked;persist();renderVendorImpressionEditor();}
+
+function vendorComparisonRows(){
+ const rows=state.vendors.filter(v=>v.category===state.activeVendorCategory);const w=currentVendorWeights();if(vendorWeightSum(w)!==100)return{rows:[],invalid:true};
+ const prices=rows.map(v=>+v.price||0).filter(Boolean);const unique=[...new Set(prices)];const min=prices.length?Math.min(...prices):0,max=prices.length?Math.max(...prices):0;
+ const priceScore=p=>{if(!p)return null;if(unique.length<2||max===min)return 5;return 10-((p-min)/(max-min))*6};
+ const scored=rows.map(v=>{
+   const vals={price:priceScore(+v.price||0),c1:+v.c1||null,c2:+v.c2||null,c3:+v.c3||null,c4:+v.c4||null};let points=0,known=0;
+   Object.entries(vals).forEach(([k,val])=>{const weight=+w[k]||0;if(weight>0&&val!==null){points+=(+val)*weight;known+=weight}});
+   const coverage=Math.round(known);const score=known?Math.round((points/known)*10):null;return{...v,coverage,score,eligible:coverage>=60&&score!==null};
+ });
+ scored.sort((a,b)=>{if(a.eligible!==b.eligible)return a.eligible?-1:1;return (b.score??-1)-(a.score??-1)||b.coverage-a.coverage});return{rows:scored,invalid:false};
+}
+
+function renderVendorComparisonResults(){
+ const body=document.getElementById("vendorCompareBody");const best=document.getElementById("vendorBestMatch");if(!body||!best)return;
+ const result=vendorComparisonRows();
+ if(result.invalid){best.style.display="block";best.innerHTML='<div class="status error">סך אחוזי החשיבות צריך להיות 100%.</div>';body.innerHTML='<tr><td colspan="8">עדכנו את האחוזים ל-100%.</td></tr>';return}
+ const cfg=vendorConfig();const rows=result.rows;
+ if(!rows.length){best.style.display="none";body.innerHTML='<tr><td colspan="8" class="muted">עדיין אין ספקים בקטגוריה הזאת.</td></tr>';return}
+ body.innerHTML=rows.map(v=>`<tr><td><strong>${esc(v.name)}</strong></td><td>${v.price?Number(v.price).toLocaleString()+" ₪":"-"}</td><td>${v.c1||"-"}</td><td>${v.c2||"-"}</td><td>${v.c3||"-"}</td><td>${v.c4||"-"}</td><td><span class="coverage-badge ${v.coverage>=80?"good":v.coverage<60?"warn":""}">${v.coverage}%</span></td><td>${v.score===null?'<span class="muted">אין מספיק נתונים</span>':`<strong>${v.score}%</strong>${v.eligible?"":'<div class="muted small">לא מדורג כמוביל</div>'}`}</td></tr>`).join("");
+ const eligible=rows.filter(v=>v.eligible);
+ if(eligible.length){const top=eligible[0];best.style.display="block";best.innerHTML=`<div class="between"><div><div class="muted small">המוביל כרגע בקטגוריית ${esc(cfg.label)}</div><h2>${esc(top.name)}</h2><div class="rec-meta"><span>ציון התאמה: ${top.score}%</span><span>מידע שהושלם: ${top.coverage}%</span></div></div><div class="stat" style="color:var(--accent-strong)">${top.score}%</div></div>`}else{best.style.display="block";best.innerHTML='<div><div class="muted small">עדיין אין מספיק מידע להשוואה מלאה</div><h2>השלימו עוד ציונים על הספקים</h2></div>'}
+}
+
+function renderChecklist(){checklistGroups.innerHTML=state.checklist.map((g,gi)=>{const done=g.items.filter(i=>i.done).length,pct=g.items.length?Math.round(done/g.items.length*100):0;return `<div class="check-group"><div class="check-head" onclick="toggleGroup(${gi})"><div><div class="check-title">${esc(g.title)}</div><div class="check-progress">${done}/${g.items.length} הושלמו</div></div><div style="min-width:120px"><div class="progress"><div style="width:${pct}%"></div></div></div></div><div class="subtasks" style="display:${g.open?"block":"none"}">${g.items.map((it,ii)=>`<div class="subtask"><input type="checkbox" ${it.done?"checked":""} onchange="toggleSubtask(${gi},${ii})"><span style="${it.done?"text-decoration:line-through;color:#999":""}">${esc(it.text)}</span><button class="btn ghost small" style="margin-right:auto" onclick="removeSubtask(${gi},${ii})">מחיקה</button></div>`).join("")}<button class="btn secondary small" style="margin-top:10px" onclick="addSubtask(${gi})">+ תת-משימה</button></div></div>`}).join("");updateDashboard()}
+function toggleGroup(i){state.checklist[i].open=!state.checklist[i].open;persist();renderChecklist()}function toggleSubtask(gi,ii){state.checklist[gi].items[ii].done=!state.checklist[gi].items[ii].done;persist();renderChecklist()}function removeSubtask(gi,ii){state.checklist[gi].items.splice(ii,1);persist();renderChecklist()}function addSubtask(gi){const t=prompt("מה תת-המשימה?");if(t){state.checklist[gi].items.push({text:t,done:false,custom:true});persist();renderChecklist()}}function addChecklistSection(){const t=prompt("שם השלב הראשי?");if(t){state.checklist.push({title:t,open:true,items:[],custom:true});persist();renderChecklist()}}
+function addExpensePrompt(){const category=prompt("קטגוריה?");if(!category)return;const desc=prompt("תיאור?")||"",amount=+prompt("סכום?")||0;state.expenses.push({id:Date.now(),category,desc,amount});persist();renderBudget();updateDashboard()}
+function removeExpense(id){state.expenses=state.expenses.filter(e=>e.id!==id);persist();renderBudget();updateDashboard()}
+function renderBudget(){const total=+state.setup.budget||0,spent=state.expenses.reduce((s,e)=>s+e.amount,0);budgetTotal.textContent=total?total.toLocaleString()+" ₪":"לא הוגדר";spentTotal.textContent=spent.toLocaleString()+" ₪";remainingTotal.textContent=total?(total-spent).toLocaleString()+" ₪":"-";expenseTable.innerHTML=state.expenses.map(e=>`<tr><td>${esc(e.category)}</td><td>${esc(e.desc)}</td><td>${e.amount.toLocaleString()} ₪</td><td><button class="btn ghost small" onclick="removeExpense(${e.id})">מחיקה</button></td></tr>`).join("")}
+function normalizeGuest(g){
+ return {
+  id:g.id||Date.now()+Math.random(),
+  name:g.name||"",
+  group:g.group||"",
+  status:g.status||"pending",
+  seats:Math.max(1,+g.seats||1),
+  seatingNote:g.seatingNote||"",
+  tableId:g.tableId||null
+ };
+}
+
+state.guests=state.guests.map(normalizeGuest);
+
+function openGuestForm(){
+ guestForm.style.display="block";
+ guestNameInput.focus();
+}
+function closeGuestForm(){
+ guestForm.style.display="none";
+}
+function saveGuestFromForm(){
+ const name=guestNameInput.value.trim();
+ if(!name)return alert("הכניסי שם");
+ state.guests.push(normalizeGuest({
+   id:Date.now(),
+   name,
+   group:guestGroupInput.value.trim(),
+   status:guestStatusInput.value,
+   seats:+guestSeatsInput.value||1,
+   seatingNote:guestSeatingNoteInput.value.trim(),
+   tableId:null
+ }));
+ guestNameInput.value="";
+ guestGroupInput.value="";
+ guestStatusInput.value="pending";
+ guestSeatsInput.value="1";
+ guestSeatingNoteInput.value="";
+ closeGuestForm();
+ persist();
+ renderGuests();
+ updateDashboard();
+}
+function removeGuest(id){
+ state.guests=state.guests.filter(g=>g.id!==id);
+ persist();
+ renderGuests();
+}
+function statusHe(s){
+ return s==="confirmed"?"אישר/ה":s==="declined"?"לא מגיע/ה":"טרם ענה/תה";
+}
+function showGuestWorkspace(mode){
+ const seating=mode==="seating";
+ guestRsvpWorkspace.style.display=seating?"none":"block";
+ guestSeatingWorkspace.style.display=seating?"block":"none";
+ guestTabRsvp.classList.toggle("active",!seating);
+ guestTabSeating.classList.toggle("active",seating);
+ if(seating)renderSeating();
+}
+function updateGuestStatus(id,status){
+ const g=state.guests.find(x=>x.id===id);if(!g)return;
+ g.status=status;
+ if(status!=="confirmed")g.tableId=null;
+ persist();renderGuests();
+}
+function updateGuestSeats(id,value){
+ const g=state.guests.find(x=>x.id===id);if(!g)return;
+ g.seats=Math.max(1,+value||1);
+ persist();renderGuests();
+}
+function guestTableName(tableId){
+ const t=state.seatingTables.find(x=>x.id===tableId);
+ return t?t.name:"לא שובץ";
+}
+function renderGuests(){
+ const c=state.guests.filter(g=>g.status==="confirmed").reduce((s,g)=>s+(+g.seats||1),0);
+ const p=state.guests.filter(g=>g.status!=="confirmed"&&g.status!=="declined").reduce((s,g)=>s+(+g.seats||1),0);
+ guestCount.textContent=state.guests.reduce((s,g)=>s+(+g.seats||1),0);
+ confirmedCount.textContent=c;
+ pendingCount.textContent=p;
+ guestTable.innerHTML=state.guests.map(g=>`<tr>
+   <td><strong>${esc(g.name)}</strong>${g.seatingNote?`<div class="muted small">${esc(g.seatingNote)}</div>`:""}</td>
+   <td>${esc(g.group||"-")}</td>
+   <td><input class="table-mini-input" type="number" min="1" max="20" value="${g.seats||1}" onchange="updateGuestSeats(${g.id},this.value)"></td>
+   <td><select class="table-mini-select" onchange="updateGuestStatus(${g.id},this.value)"><option value="pending" ${g.status==="pending"?"selected":""}>טרם ענה/תה</option><option value="confirmed" ${g.status==="confirmed"?"selected":""}>אישר/ה</option><option value="declined" ${g.status==="declined"?"selected":""}>לא מגיע/ה</option></select></td>
+   <td>${g.status==="confirmed"?esc(guestTableName(g.tableId)):"-"}</td>
+   <td><button class="btn ghost small" onclick="removeGuest(${g.id})">מחיקה</button></td>
+ </tr>`).join("");
+ if(guestSeatingWorkspace.style.display!=="none")renderSeating();
+}
+
+function addSeatingTable(){
+ const name=newTableName.value.trim()||`שולחן ${state.seatingTables.length+1}`;
+ const capacity=Math.max(1,+newTableCapacity.value||12);
+ state.seatingTables.push({id:Date.now(),name,capacity});
+ newTableName.value="";
+ newTableCapacity.value="12";
+ persist();renderSeating();
+}
+function tableUsedSeats(tableId){
+ return state.guests.filter(g=>g.status==="confirmed"&&g.tableId===tableId).reduce((s,g)=>s+(+g.seats||1),0);
+}
+function removeSeatingTable(id){
+ const table=state.seatingTables.find(t=>t.id===id);
+ if(!table)return;
+ if(!confirm(`למחוק את ${table.name}? האורחים ששובצו אליו יחזרו ללא שולחן.`))return;
+ state.guests.forEach(g=>{if(g.tableId===id)g.tableId=null});
+ state.seatingTables=state.seatingTables.filter(t=>t.id!==id);
+ persist();renderSeating();renderGuests();
+}
+function assignGuestTable(guestId,value){
+ const g=state.guests.find(x=>x.id===guestId);if(!g)return;
+ const tableId=value?+value:null;
+ if(tableId){
+   const table=state.seatingTables.find(t=>t.id===tableId);
+   const occupied=tableUsedSeats(tableId)-(g.tableId===tableId?(+g.seats||1):0);
+   if(table && occupied+(+g.seats||1)>table.capacity){
+     alert(`אין מספיק מקום ב-${table.name}. נשארו ${Math.max(0,table.capacity-occupied)} מקומות.`);
+     renderSeating();
+     return;
+   }
+ }
+ g.tableId=tableId;
+ persist();renderSeating();renderGuests();
+}
+function autoArrangeSeating(){
+ if(!state.seatingTables.length)return alert("הוסיפי לפחות שולחן אחד לפני הסידור האוטומטי.");
+ const confirmed=state.guests.filter(g=>g.status==="confirmed");
+ confirmed.forEach(g=>g.tableId=null);
+
+ const groups={};
+ confirmed.forEach(g=>{
+   const key=(g.group||"ללא קבוצה").trim()||"ללא קבוצה";
+   (groups[key] ||= []).push(g);
+ });
+
+ const groupEntries=Object.entries(groups).sort((a,b)=>{
+   const sa=a[1].reduce((s,g)=>s+g.seats,0), sb=b[1].reduce((s,g)=>s+g.seats,0);
+   return sb-sa;
+ });
+
+ for(const [,guests] of groupEntries){
+   guests.sort((a,b)=>b.seats-a.seats);
+   for(const g of guests){
+     let best=null,bestScore=-Infinity;
+     for(const table of state.seatingTables){
+       const used=tableUsedSeats(table.id);
+       const free=table.capacity-used;
+       if(free<g.seats)continue;
+       const sameGroup=state.guests.filter(x=>x.status==="confirmed"&&x.tableId===table.id&&x.group===g.group).reduce((s,x)=>s+x.seats,0);
+       const score=sameGroup*100 - free;
+       if(score>bestScore){bestScore=score;best=table}
+     }
+     if(best)g.tableId=best.id;
+   }
+ }
+ persist();renderSeating();renderGuests();
+}
+function renderSeating(){
+ const confirmed=state.guests.filter(g=>g.status==="confirmed");
+ const total=confirmed.reduce((s,g)=>s+g.seats,0);
+ const assigned=confirmed.filter(g=>g.tableId).reduce((s,g)=>s+g.seats,0);
+ seatingConfirmedSeats.textContent=total;
+ seatingAssignedSeats.textContent=assigned;
+ seatingUnassignedSeats.textContent=total-assigned;
+ seatingTableCount.textContent=state.seatingTables.length;
+
+ const options=`<option value="">לא שובץ</option>`+state.seatingTables.map(t=>{
+   const used=tableUsedSeats(t.id);
+   return `<option value="${t.id}">${esc(t.name)} (${used}/${t.capacity})</option>`;
+ }).join("");
+
+ seatingGuestTable.innerHTML=confirmed.length?confirmed.map(g=>`<tr>
+   <td><strong>${esc(g.name)}</strong></td>
+   <td>${esc(g.group||"-")}</td>
+   <td>${g.seats}</td>
+   <td>${esc(g.seatingNote||"-")}</td>
+   <td><select class="table-seat-select" onchange="assignGuestTable(${g.id},this.value)">${options.replace(`value="${g.tableId}"`,`value="${g.tableId}" selected`)}</select></td>
+ </tr>`).join(""):`<tr><td colspan="5" class="muted">אין עדיין אורחים שאישרו הגעה.</td></tr>`;
+
+ seatingTableCards.innerHTML=state.seatingTables.length?state.seatingTables.map(t=>{
+   const seated=confirmed.filter(g=>g.tableId===t.id);
+   const used=seated.reduce((s,g)=>s+g.seats,0);
+   const pct=Math.min(100,Math.round(used/t.capacity*100));
+   return `<div class="seating-table-card">
+     <div class="between"><div><div class="muted small">שולחן</div><h3>${esc(t.name)}</h3></div><button class="btn ghost small" onclick="removeSeatingTable(${t.id})">מחיקה</button></div>
+     <div class="table-capacity-line"><strong>${used}/${t.capacity}</strong><span>מקומות</span></div>
+     <div class="progress"><div style="width:${pct}%"></div></div>
+     <div class="seated-names">${seated.length?seated.map(g=>`<span>${esc(g.name)}${g.seats>1?` ×${g.seats}`:""}</span>`).join(""):'<span class="muted">עדיין ריק</span>'}</div>
+   </div>`;
+ }).join(""):`<div class="card muted">הוסיפי שולחנות כדי להתחיל לבנות סידור.</div>`;
+
+ const warnings=[];
+ const overfilled=state.seatingTables.filter(t=>tableUsedSeats(t.id)>t.capacity);
+ if(overfilled.length)warnings.push(`יש ${overfilled.length} שולחנות שחורגים מהקיבולת.`);
+ if(total-assigned>0)warnings.push(`נשארו ${total-assigned} מקומות של אורחים מאושרים ללא שולחן.`);
+ const emptySeats=state.seatingTables.reduce((s,t)=>s+Math.max(0,t.capacity-tableUsedSeats(t.id)),0);
+ if(state.seatingTables.length&&emptySeats>0)warnings.push(`נשארו ${emptySeats} מקומות פנויים בשולחנות שהוגדרו.`);
+ seatingWarnings.innerHTML=warnings.length?warnings.map(w=>`<div class="status">${esc(w)}</div>`).join(""):'<div class="status good">הסידור מאוזן ואין כרגע התראות.</div>';
+}
+
+function openGiftForm(){
+ giftForm.style.display="block";
+ renderGiftGuestSuggestions();
+ giftGiverInput.focus();
+}
+function closeGiftForm(){giftForm.style.display="none"}
+function updateGiftAmountVisibility(){
+ giftAmountField.style.display=giftTypeInput.value==="physical"?"none":"block";
+}
+function giftTypeHe(type){
+ return type==="cash"?"מזומן":type==="check"?"צ'ק":type==="transfer"?"העברה / Bit / PayBox":type==="physical"?"מתנה פיזית":"אחר";
+}
+function renderGiftGuestSuggestions(){
+ giftGuestSuggestions.innerHTML=state.guests.map(g=>`<option value="${esc(g.name)}"></option>`).join("");
+}
+function saveGiftFromForm(){
+ const giver=giftGiverInput.value.trim();
+ if(!giver)return alert("הכניסי שם נותן/ת המתנה");
+ state.gifts.push({
+   id:Date.now(),
+   giver,
+   type:giftTypeInput.value,
+   amount:giftTypeInput.value==="physical"?0:(+giftAmountInput.value||0),
+   note:giftNoteInput.value.trim(),
+   depositStatus:giftDepositStatusInput.value,
+   thankYouSent:false
+ });
+ giftGiverInput.value="";
+ giftTypeInput.value="cash";
+ giftAmountInput.value="";
+ giftNoteInput.value="";
+ giftDepositStatusInput.value="pending";
+ updateGiftAmountVisibility();
+ closeGiftForm();
+ persist();renderGifts();
+}
+function removeGift(id){
+ if(!confirm("למחוק את רישום המתנה?"))return;
+ state.gifts=state.gifts.filter(g=>g.id!==id);
+ persist();renderGifts();
+}
+function toggleGiftHandled(id,checked){
+ const g=state.gifts.find(x=>x.id===id);if(!g)return;
+ g.depositStatus=checked?"secured":"pending";
+ persist();renderGifts();
+}
+function toggleGiftThanks(id,checked){
+ const g=state.gifts.find(x=>x.id===id);if(!g)return;
+ g.thankYouSent=checked;
+ persist();renderGifts();
+}
+function renderGifts(){
+ renderGiftGuestSuggestions();
+ const money=state.gifts.filter(g=>g.type!=="physical"&&+g.amount>0);
+ const total=money.reduce((s,g)=>s+(+g.amount||0),0);
+ giftTotalAmount.textContent=total.toLocaleString()+" ₪";
+ giftEntryCount.textContent=state.gifts.length;
+ giftAverageAmount.textContent=(money.length?Math.round(total/money.length):0).toLocaleString()+" ₪";
+ giftThanksPending.textContent=state.gifts.filter(g=>!g.thankYouSent).length;
+ giftTable.innerHTML=state.gifts.length?state.gifts.map(g=>`<tr>
+   <td><strong>${esc(g.giver)}</strong></td>
+   <td>${esc(giftTypeHe(g.type))}</td>
+   <td>${g.type==="physical"?"-":(+g.amount||0).toLocaleString()+" ₪"}</td>
+   <td>${esc(g.note||"-")}</td>
+   <td><label class="inline-check"><input type="checkbox" ${g.depositStatus==="secured"?"checked":""} onchange="toggleGiftHandled(${g.id},this.checked)"><span>${g.depositStatus==="secured"?"טופל":"טרם טופל"}</span></label></td>
+   <td><label class="inline-check"><input type="checkbox" ${g.thankYouSent?"checked":""} onchange="toggleGiftThanks(${g.id},this.checked)"><span>${g.thankYouSent?"נשלחה":"ממתינה"}</span></label></td>
+   <td><button class="btn ghost small" onclick="removeGift(${g.id})">מחיקה</button></td>
+ </tr>`).join(""):`<tr><td colspan="7" class="muted">עדיין לא נרשמו מתנות.</td></tr>`;
+}
+
+function updateDashboard(){
+ const coupleName=state.setup.coupleNames||"החתונה שלנו";
+ dashCoupleTitle.textContent=coupleName;
+ sidebarWeddingName.textContent=coupleName;if(document.getElementById("mobileWeddingName"))mobileWeddingName.textContent=coupleName;
+
+ dashGuests.textContent=state.setup.estimatedGuests||"-";
+ dashVenues.textContent=state.venues.length;
+ dashVendors.textContent=state.vendors.length;
+
+ const items=state.checklist.flatMap(g=>g.items);
+ const done=items.filter(i=>i.done).length;
+ const pct=items.length?Math.round(done/items.length*100):0;
+ dashProgress.textContent=pct+"%";
+
+ const bud=+state.setup.budget||0;
+ const spent=state.expenses.reduce((s,e)=>s+e.amount,0);
+ dashBudget.textContent=bud?bud.toLocaleString()+" ₪":"לא הוגדר";
+ dashSpent.textContent=spent.toLocaleString()+" ₪";
+ budgetProgress.style.width=bud?Math.min(100,spent/bud*100)+"%":"0%";
+
+ if(bud){
+   const remaining=bud-spent;
+   dashBudgetCaption.textContent=remaining>=0
+     ? `נותרו ${remaining.toLocaleString()} ₪ מתוך התקציב`
+     : `חריגה של ${Math.abs(remaining).toLocaleString()} ₪ מהתקציב`;
+ }else{
+   dashBudgetCaption.textContent="הגדירי תקציב כדי להתחיל לעקוב.";
+ }
+
+ if(state.setup.weddingDate){
+   const target=new Date(state.setup.weddingDate+"T12:00:00");
+   const now=new Date();
+   const diff=Math.ceil((target-now)/(1000*60*60*24));
+   const formatted=target.toLocaleDateString("he-IL",{day:"numeric",month:"long",year:"numeric"});
+   dashDateLine.textContent=`תאריך החתונה: ${formatted}`;
+   if(diff>0){
+     dashCountdownDays.textContent=diff.toLocaleString();
+     dashCountdownCaption.textContent="ימים עד החתונה";
+   }else if(diff===0){
+     dashCountdownDays.textContent="היום";
+     dashCountdownCaption.textContent="זה היום שלכם";
+   }else{
+     dashCountdownDays.textContent="♡";
+     dashCountdownCaption.textContent="מזל טוב!";
+   }
+ }else{
+   dashDateLine.textContent="כל התכנון, ההחלטות והמעקב במקום אחד";
+   dashCountdownDays.textContent="—";
+   dashCountdownCaption.textContent="הוסיפו תאריך לספירה לאחור";
+ }
+
+ if(!state.setup.estimatedGuests){
+   nextStepText.textContent="מלאי את פרטי החתונה כדי להתחיל.";
+ }else if(!state.venues.length){
+   nextStepText.textContent="הפעילי את החיפוש החכם ובני רשימה קצרה של מקומות שמתאימים לכם.";
+ }else if(state.venues.some(v=>v.status==="chosen")&&!state.vendors.length){
+   nextStepText.textContent="המקום נבחר. עכשיו אפשר להתחיל לחפש ולשמור ספקים.";
+ }else if(state.vendors.length){
+   nextStepText.textContent="המשיכו להשוות ספקים, להשלים התרשמות ולהתקדם לבחירות הסופיות.";
+ }else{
+   nextStepText.textContent="השלימו פרטים אחרי שיחות וביקורים והשוו בין המקומות ששמרתם.";
+ }
+}
+
+state.venues.forEach(ensureVenueDetails);loadSetup();loadComparisonWeights();renderVenues();renderRecommendations();renderComparisonImpressionEditor();renderVendorSection();renderVendorCompare();renderChecklist();renderBudget();renderGuests();renderGifts();updateDashboard();syncMobileNavigation("dashboard");showStorageNoticeIfNeeded();
+</script>
+
+<script>
+if ("serviceWorker" in navigator && /^https?:$/.test(location.protocol)) {
+  window.addEventListener("load", () => {
+    navigator.serviceWorker.register("./sw.js").catch(() => {});
+  });
+}
+</script>
+
+</body>
+</html>

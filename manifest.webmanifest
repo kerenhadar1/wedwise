@@ -1,0 +1,24 @@
+{
+  "name": "WedWise - תכנון חתונה חכם",
+  "short_name": "WedWise",
+  "lang": "he",
+  "dir": "rtl",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#f8f4ef",
+  "theme_color": "#f8f4ef",
+  "description": "תכנון חתונה, מקומות, ספקים, תקציב, מוזמנים, הושבה ומתנות.",
+  "icons": [
+    {
+      "src": "./icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "./icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
