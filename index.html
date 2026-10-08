@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>WedWise v2.2 - Venue Decision Workspace</title>
+<title>WedWise v2.2.1 - Venue Decision Workspace</title>
 <style>
 
 :root{
@@ -1552,7 +1552,7 @@ tbody tr:hover{
 
 
 /* =====================================================
-   WedWise v2.2 — refined ivory & gold visual system
+   WedWise v2.2.1 — refined ivory & gold visual system
    ===================================================== */
 :root{
   --bg:#f4efe5;
@@ -1981,7 +1981,7 @@ input:focus,select:focus,textarea:focus{
 
 
 /* ============================================================
-   WedWise v2.2 — closer to the approved bridal reference
+   WedWise v2.2.1 — closer to the approved bridal reference
    ============================================================ */
 :root{
   --ww-bg:#f5f0e6;
@@ -2205,7 +2205,7 @@ h1,h2,h3,.ww19-wordmark,.ww19-card-title,.ww19-hero-label{
 }
 
 
-/* WedWise v2.2 */
+/* WedWise v2.2.1 */
 .username-gate{position:fixed;inset:0;z-index:1000;display:none;align-items:center;justify-content:center;padding:22px;background:radial-gradient(circle at 50% 16%,rgba(255,255,255,.96),transparent 27%),linear-gradient(180deg,#f7f2e8,#eee4d4)}
 .username-gate.open{display:flex}
 .username-gate-card{width:min(410px,100%);text-align:center;padding:30px 24px 25px;border:1px solid #decdb5;border-radius:30px;background:rgba(255,253,248,.97);box-shadow:0 28px 80px rgba(84,61,34,.16)}
@@ -2252,7 +2252,6 @@ h1,h2,h3,.ww19-wordmark,.ww19-card-title,.ww19-hero-label{
 .email-gate-state h1{font-size:31px!important;margin:19px 0 4px!important}.email-gate-state h1::before{display:none!important}
 .email-gate-state p{color:#7d6a58;font-size:11px;line-height:1.55;margin:0 0 16px}.email-field{text-align:right}.email-login-btn{width:100%}
 .email-gate-message{min-height:19px;margin:5px 0 8px;text-align:right;font-size:9.5px;color:#a05252}.email-gate-note{margin-top:12px;color:#988572;font-size:8.5px;line-height:1.45}
-.email-gate-spinner{width:34px;height:34px;margin:20px auto 0;border-radius:50%;border:3px solid #eadfcf;border-top-color:#b68c52;animation:spin .8s linear infinite}
 .email-sent-icon{width:52px;height:52px;margin:21px auto 8px;border-radius:16px;display:grid;place-items:center;background:#f0e3d0;color:#9d7440;font-size:23px}
 .ww22-sync-status{display:block;color:#6f8b6e;font-size:7.5px;margin-top:2px}.ww22-sync-status.saving{color:#a77c42}.ww22-sync-status.error{color:#ac5f58}
 
@@ -2320,15 +2319,10 @@ html {
   <div class="email-gate-card">
     <img src="./icon-192.png" class="email-gate-logo" alt="">
     <div class="email-gate-wordmark"><span>Wed</span><b>Wise</b></div>
-    <div class="email-gate-kicker">התכנון שלכם, שמור רק לכם</div>
+    
+    <div id="emailGateLoading" class="email-gate-state" style="display:none"></div>
 
-    <div id="emailGateLoading" class="email-gate-state">
-      <div class="email-gate-spinner"></div>
-      <h1>פותחים את התכנון שלכם</h1>
-      <p>רק רגע, בודקים אם כבר התחברתם.</p>
-    </div>
-
-    <div id="emailGateLogin" class="email-gate-state" style="display:none">
+    <div id="emailGateLogin" class="email-gate-state">
       <h1>כניסה ל-WedWise</h1>
       <p>הכניסו כתובת מייל. נשלח אליכם קישור כניסה מאובטח — בלי סיסמה.</p>
       <div class="field email-field">
@@ -3774,7 +3768,6 @@ let cloudUser=null;
 let cloudSaveTimer=null;
 let cloudApplying=false;
 const CLOUD_TABLE="wedwise_user_state";
-const LEGACY_MIGRATION_MARKER="ww22_legacy_migrated_uid";
 
 function rawStorageGet(key,fallback=null){try{const v=window.localStorage.getItem(key);return v===null?fallback:v}catch(e){return Object.prototype.hasOwnProperty.call(__wwMemoryStorage,key)?__wwMemoryStorage[key]:fallback}}
 function rawStorageSet(key,value){try{window.localStorage.setItem(key,String(value))}catch(e){__wwMemoryStorage[key]=String(value)}}
@@ -3807,26 +3800,6 @@ function localSnapshotForCurrentUser(){return{
  vendors:storageJSON("ww11_vendors",[]),vendorRecommendations:storageJSON("ww11_vendor_recommendations",{}),
  activeVendorCategory:storageGet("ww11_vendor_category","photographer")||"photographer",vendorCompareWeights:storageJSON("ww11_vendor_weights",{})
 }}
-function readLegacySnapshot(){
- const activeName=rawStorageGet("ww_meta_active_username","");
- const slug=String(activeName||"").trim().toLocaleLowerCase("he-IL").replace(/[^\p{L}\p{N}_-]+/gu,"_");
- const prefix=slug?`ww_user_${slug}__`:"";
- const read=(key,fallback)=>{
-   for(const k of (prefix?[prefix+key,key]:[key])){
-     const raw=rawStorageGet(k,null);
-     if(raw!==null){try{return JSON.parse(raw)}catch(e){return raw}}
-   }
-   return fallback;
- };
- return{
-  setup:read("ww3_setup",{}),venues:read("ww3_venues",[]),checklist:mergeChecklistWithDefaults(read("ww3_checklist",null)),
-  expenses:read("ww3_expenses",[]),guests:read("ww3_guests",[]),seatingTables:read("ww15_seating_tables",[]),
-  gifts:read("ww15_gifts",[]),recommendations:read("ww5_recommendations",[]),
-  compareWeights:read("ww7_compare_weights",null)||{price:20,food:20,atmosphere:15,location:15,design:10,service:10,parking:5,couple:5},
-  vendors:read("ww11_vendors",[]),vendorRecommendations:read("ww11_vendor_recommendations",{}),
-  activeVendorCategory:read("ww11_vendor_category","photographer")||"photographer",vendorCompareWeights:read("ww11_vendor_weights",{})
- }
-}
 function persistLocalSnapshot(){
  storageSet("ww3_setup",JSON.stringify(state.setup));storageSet("ww3_venues",JSON.stringify(state.venues));
  storageSet("ww3_checklist",JSON.stringify(state.checklist));storageSet("ww3_expenses",JSON.stringify(state.expenses));
@@ -3901,38 +3874,84 @@ function renderAllForUser(){
  renderVendorCompare();renderChecklist();renderBudget();renderGuests();renderGifts();updateDashboard();syncMobileNavigation(currentSectionId());
 }
 async function loadAuthenticatedUser(user){
- cloudUser=user;currentUserId=user.id;applyUserUi();setSyncStatus("saving","טוענת...");
+ cloudUser=user;
+ currentUserId=user.id;
+ applyUserUi();
+ setSyncStatus("saving","טוענת...");
+
  try{
-  const {data,error}=await cloudClient.from(CLOUD_TABLE).select("state,updated_at").eq("user_id",user.id).maybeSingle();
+  const {data,error}=await cloudClient
+    .from(CLOUD_TABLE)
+    .select("state,updated_at")
+    .eq("user_id",user.id)
+    .maybeSingle();
+
   if(error)throw error;
-  if(data?.state)applySnapshot(data.state);
-  else{
-   let initial=localSnapshotForCurrentUser();
-   if(!snapshotHasData(initial)&&!rawStorageGet(LEGACY_MIGRATION_MARKER,"")){
-    const legacy=readLegacySnapshot();
-    if(snapshotHasData(legacy)){initial=legacy;rawStorageSet(LEGACY_MIGRATION_MARKER,user.id)}
-   }
-   if(!snapshotHasData(initial))initial=emptyStateSnapshot();
-   applySnapshot(initial);await saveCloudNow();
+
+  if(data?.state){
+    applySnapshot(data.state);
+  }else{
+    // Clean start: do not search old local data or migrate anything.
+    applySnapshot(emptyStateSnapshot());
+    await saveCloudNow();
   }
-  setSyncStatus("","מסונכרן");hideEmailGate();
- }catch(err){console.error("Load user",err);setSyncStatus("error","שגיאת סנכרון");showEmailLogin("לא הצלחנו לטעון את הנתונים. נסו שוב.")}
+
+  setSyncStatus("","מסונכרן");
+  hideEmailGate();
+ }catch(err){
+  console.error("Load user",err);
+  setSyncStatus("error","שגיאת סנכרון");
+  showEmailLogin("לא הצלחנו לטעון את הנתונים. נסו שוב.");
+ }
 }
+
 async function initAuthentication(){
- showGateState("emailGateLoading");
+ // Show the login screen immediately; no long "checking data" loading state.
+ showEmailLogin();
+
  try{
-  const response=await fetch(FUNCTION_URL+"?config=1",{cache:"no-store"}),cfg=await response.json();
-  if(!response.ok||!cfg?.success)throw new Error(cfg?.error||"לא ניתן לטעון הגדרות כניסה");
-  if(!window.supabase?.createClient)throw new Error("ספריית ההתחברות לא נטענה");
-  cloudClient=window.supabase.createClient(cfg.supabaseUrl,cfg.publishableKey,{auth:{persistSession:true,autoRefreshToken:true,detectSessionInUrl:true}});
+  const response=await fetch(FUNCTION_URL+"?config=1",{cache:"no-store"});
+  const cfg=await response.json();
+
+  if(!response.ok||!cfg?.success){
+    throw new Error(cfg?.error||"לא ניתן לטעון הגדרות כניסה");
+  }
+
+  if(!window.supabase?.createClient){
+    throw new Error("ספריית ההתחברות לא נטענה");
+  }
+
+  cloudClient=window.supabase.createClient(
+    cfg.supabaseUrl,
+    cfg.publishableKey,
+    {auth:{persistSession:true,autoRefreshToken:true,detectSessionInUrl:true}}
+  );
+
   cloudClient.auth.onAuthStateChange((event,session)=>setTimeout(async()=>{
-    if(session?.user&&(!cloudUser||cloudUser.id!==session.user.id))await loadAuthenticatedUser(session.user);
-    else if(event==="SIGNED_OUT"){cloudUser=null;currentUserId="";showEmailLogin()}
+    if(session?.user&&(!cloudUser||cloudUser.id!==session.user.id)){
+      await loadAuthenticatedUser(session.user);
+    }else if(event==="SIGNED_OUT"){
+      cloudUser=null;
+      currentUserId="";
+      showEmailLogin();
+    }
   },0));
-  const {data,error}=await cloudClient.auth.getSession();if(error)throw error;
-  if(data?.session?.user)await loadAuthenticatedUser(data.session.user);else showEmailLogin();
- }catch(err){console.error("Auth init",err);showEmailLogin("לא הצלחנו להתחבר לשירות המשתמשים. בדקו חיבור לאינטרנט ונסו שוב.")}
+
+  const {data,error}=await cloudClient.auth.getSession();
+  if(error)throw error;
+
+  if(data?.session?.user){
+    await loadAuthenticatedUser(data.session.user);
+  }
+ }catch(err){
+  console.error("Auth init",err);
+  const msg=document.getElementById("emailGateMessage");
+  if(msg){
+    msg.textContent="לא הצלחנו להתחבר לשירות המשתמשים. בדקו חיבור לאינטרנט ונסו שוב.";
+  }
+ }
 }
+
 window.addEventListener("online",()=>{if(cloudUser)scheduleCloudSave()});
 const state={
  setup:{},venues:[],checklist:mergeChecklistWithDefaults(null),expenses:[],guests:[],seatingTables:[],gifts:[],recommendations:[],
@@ -5740,7 +5759,7 @@ showStorageNoticeIfNeeded();syncMobileNavigation("dashboard");initAuthentication
 </script>
 
 <script>
-const WEDWISE_REPAIR_KEY="ww22_pwa_repaired";
+const WEDWISE_REPAIR_KEY="ww221_pwa_repaired";
 window.addEventListener("load",async()=>{
  if(!("serviceWorker" in navigator)||!/^https?:$/.test(location.protocol))return;
  try{
@@ -5749,7 +5768,7 @@ window.addEventListener("load",async()=>{
      if("caches" in window){const names=await caches.keys();await Promise.all(names.filter(n=>n.startsWith("wedwise-")).map(n=>caches.delete(n)))}
      localStorage.setItem(WEDWISE_REPAIR_KEY,"1");location.reload();return;
    }
-   const reg=await navigator.serviceWorker.register("./sw.js?v=22",{updateViaCache:"none"});await reg.update().catch(()=>{});
+   const reg=await navigator.serviceWorker.register("./sw.js?v=221",{updateViaCache:"none"});await reg.update().catch(()=>{});
  }catch(e){console.warn("PWA init",e)}
 });
 </script>
