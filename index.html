@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>WedWise v2.2.4 - Venue Decision Workspace</title>
+<title>WedWise v2.2.5 - Venue Decision Workspace</title>
 <style>
 
 :root{
@@ -1552,7 +1552,7 @@ tbody tr:hover{
 
 
 /* =====================================================
-   WedWise v2.2.4 — refined ivory & gold visual system
+   WedWise v2.2.5 — refined ivory & gold visual system
    ===================================================== */
 :root{
   --bg:#f4efe5;
@@ -1981,7 +1981,7 @@ input:focus,select:focus,textarea:focus{
 
 
 /* ============================================================
-   WedWise v2.2.4 — closer to the approved bridal reference
+   WedWise v2.2.5 — closer to the approved bridal reference
    ============================================================ */
 :root{
   --ww-bg:#f5f0e6;
@@ -2205,7 +2205,7 @@ h1,h2,h3,.ww19-wordmark,.ww19-card-title,.ww19-hero-label{
 }
 
 
-/* WedWise v2.2.4 */
+/* WedWise v2.2.5 */
 .username-gate{position:fixed;inset:0;z-index:1000;display:none;align-items:center;justify-content:center;padding:22px;background:radial-gradient(circle at 50% 16%,rgba(255,255,255,.96),transparent 27%),linear-gradient(180deg,#f7f2e8,#eee4d4)}
 .username-gate.open{display:flex}
 .username-gate-card{width:min(410px,100%);text-align:center;padding:30px 24px 25px;border:1px solid #decdb5;border-radius:30px;background:rgba(255,253,248,.97);box-shadow:0 28px 80px rgba(84,61,34,.16)}
@@ -3768,6 +3768,7 @@ function mergeChecklistWithDefaults(saved){
 
 
 const FUNCTION_URL="https://fmcfhhdctqydvypclppj.supabase.co/functions/v1/recommend-venues";
+const CONFIG_FUNCTION_URL="https://fmcfhhdctqydvypclppj.supabase.co/functions/v1/wedwise-config";
 
 async function protectedSearchFetch(payload){
   if(!navigator.onLine)throw new Error("אין כרגע חיבור לאינטרנט. נסי שוב כשתחזרי לרשת.");
@@ -4029,7 +4030,7 @@ async function ensureCloudClient(){
    const timeout=setTimeout(()=>controller.abort(),8000);
 
    try{
-     const response=await fetch(FUNCTION_URL+"?config=1",{
+     const response=await fetch(CONFIG_FUNCTION_URL,{
        cache:"no-store",
        signal:controller.signal
      });
@@ -5900,7 +5901,7 @@ showStorageNoticeIfNeeded();syncMobileNavigation("dashboard");initAuthentication
 </script>
 
 <script>
-const WEDWISE_REPAIR_KEY="ww224_pwa_repaired";
+const WEDWISE_REPAIR_KEY="ww225_pwa_repaired";
 window.addEventListener("load",async()=>{
  if(!("serviceWorker" in navigator)||!/^https?:$/.test(location.protocol))return;
  try{
@@ -5909,7 +5910,7 @@ window.addEventListener("load",async()=>{
      if("caches" in window){const names=await caches.keys();await Promise.all(names.filter(n=>n.startsWith("wedwise-")).map(n=>caches.delete(n)))}
      localStorage.setItem(WEDWISE_REPAIR_KEY,"1");location.reload();return;
    }
-   const reg=await navigator.serviceWorker.register("./sw.js?v=224",{updateViaCache:"none"});await reg.update().catch(()=>{});
+   const reg=await navigator.serviceWorker.register("./sw.js?v=225",{updateViaCache:"none"});await reg.update().catch(()=>{});
  }catch(e){console.warn("PWA init",e)}
 });
 </script>
