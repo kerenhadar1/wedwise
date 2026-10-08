@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>WedWise v2.2.3 - Venue Decision Workspace</title>
+<title>WedWise v2.2.4 - Venue Decision Workspace</title>
 <style>
 
 :root{
@@ -1552,7 +1552,7 @@ tbody tr:hover{
 
 
 /* =====================================================
-   WedWise v2.2.3 — refined ivory & gold visual system
+   WedWise v2.2.4 — refined ivory & gold visual system
    ===================================================== */
 :root{
   --bg:#f4efe5;
@@ -1981,7 +1981,7 @@ input:focus,select:focus,textarea:focus{
 
 
 /* ============================================================
-   WedWise v2.2.3 — closer to the approved bridal reference
+   WedWise v2.2.4 — closer to the approved bridal reference
    ============================================================ */
 :root{
   --ww-bg:#f5f0e6;
@@ -2205,7 +2205,7 @@ h1,h2,h3,.ww19-wordmark,.ww19-card-title,.ww19-hero-label{
 }
 
 
-/* WedWise v2.2.3 */
+/* WedWise v2.2.4 */
 .username-gate{position:fixed;inset:0;z-index:1000;display:none;align-items:center;justify-content:center;padding:22px;background:radial-gradient(circle at 50% 16%,rgba(255,255,255,.96),transparent 27%),linear-gradient(180deg,#f7f2e8,#eee4d4)}
 .username-gate.open{display:flex}
 .username-gate-card{width:min(410px,100%);text-align:center;padding:30px 24px 25px;border:1px solid #decdb5;border-radius:30px;background:rgba(255,253,248,.97);box-shadow:0 28px 80px rgba(84,61,34,.16)}
@@ -2286,6 +2286,14 @@ h1,h2,h3,.ww19-wordmark,.ww19-card-title,.ww19-hero-label{
 .ww22-category-progress{height:4px;background:#eee3d4;border-radius:999px;overflow:hidden;margin-top:5px}.ww22-category-progress div{height:100%;background:#c49a58;border-radius:999px}
 @media(max-width:850px){.ww22-budget-overview{grid-template-columns:112px 1fr;padding:14px;gap:12px}.ww22-budget-summary{gap:6px}.ww22-money-stat{padding:8px}.ww22-money-stat strong{font-size:12px}}
 
+
+.email-gate-message.good{color:#5e765e}
+#emailGateSignupButton{margin-top:8px}
+.ww224-forgot-btn{
+  display:block;margin:11px auto 0;border:0;background:transparent;
+  color:#8f6c43;font-size:9px;text-decoration:underline;cursor:pointer;
+}
+
 </style>
 
 <meta name="theme-color" content="#f8f4ef">
@@ -2324,21 +2332,30 @@ html {
 
     <div id="emailGateLogin" class="email-gate-state">
       <h1>כניסה ל-WedWise</h1>
-      <p>הכניסו כתובת מייל ונשלח אליכם קישור כניסה.</p>
+      <p>הכניסו אימייל וסיסמה.</p>
+
       <div class="field email-field">
         <label for="emailGateInput">אימייל</label>
-        <input id="emailGateInput" type="email" autocomplete="email" placeholder="name@example.com" onkeydown="if(event.key==='Enter')sendLoginLink()">
+        <input id="emailGateInput" type="email" autocomplete="email" placeholder="name@example.com">
       </div>
+
+      <div class="field email-field">
+        <label for="passwordGateInput">סיסמה</label>
+        <input id="passwordGateInput" type="password" autocomplete="current-password" minlength="6" placeholder="לפחות 6 תווים" onkeydown="if(event.key==='Enter')loginWithPassword()">
+      </div>
+
       <div id="emailGateMessage" class="email-gate-message"></div>
-      <button id="emailGateButton" class="btn primary email-login-btn" onclick="sendLoginLink()">שליחת קישור כניסה</button>
-      
+
+      <button id="emailGateButton" class="btn primary email-login-btn" onclick="loginWithPassword()">כניסה</button>
+      <button id="emailGateSignupButton" class="btn secondary email-login-btn" onclick="signUpWithPassword()">יצירת חשבון</button>
+      <button class="ww224-forgot-btn" onclick="resetPassword()">שכחתי סיסמה</button>
     </div>
 
     <div id="emailGateSent" class="email-gate-state" style="display:none">
       <div class="email-sent-icon">✉</div>
-      <h1>הקישור בדרך</h1>
-      <p id="emailSentText">שלחנו קישור כניסה למייל.</p>
-      <button class="btn secondary" onclick="showEmailLogin()">שליחה למייל אחר</button>
+      <h1>בדקו את המייל</h1>
+      <p id="emailSentText">שלחנו הודעה למייל.</p>
+      <button class="btn secondary" onclick="showEmailLogin()">חזרה לכניסה</button>
     </div>
   </div>
 </div>
@@ -3825,44 +3842,115 @@ function showEmailLogin(message=""){
  setTimeout(()=>document.getElementById("emailGateInput")?.focus(),80);
 }
 function hideEmailGate(){const gate=document.getElementById("emailGate");if(gate){gate.classList.add("hidden");gate.setAttribute("aria-hidden","true")}document.body.style.overflow=""}
-async function sendLoginLink(){
- const input=document.getElementById("emailGateInput");
- const btn=document.getElementById("emailGateButton");
+function loginCredentials(){
+ const email=String(document.getElementById("emailGateInput")?.value||"").trim();
+ const password=String(document.getElementById("passwordGateInput")?.value||"");
+ return {email,password};
+}
+function setLoginMessage(text,good=false){
  const msg=document.getElementById("emailGateMessage");
- const email=String(input?.value||"").trim();
-
- if(!email||!email.includes("@")){
-   if(msg)msg.textContent="הכניסו כתובת מייל תקינה.";
-   return;
+ if(msg){
+   msg.textContent=text||"";
+   msg.className="email-gate-message"+(good?" good":"");
  }
+}
+function validateCredentials(email,password){
+ if(!email||!email.includes("@")){
+   setLoginMessage("הכניסו כתובת מייל תקינה.");
+   return false;
+ }
+ if(!password||password.length<6){
+   setLoginMessage("הסיסמה צריכה להכיל לפחות 6 תווים.");
+   return false;
+ }
+ return true;
+}
+async function loginWithPassword(){
+ const {email,password}=loginCredentials();
+ if(!validateCredentials(email,password))return;
 
+ const btn=document.getElementById("emailGateButton");
  try{
    btn.disabled=true;
-   btn.textContent="שולחים...";
+   btn.textContent="נכנסים...";
+   setLoginMessage("");
 
-   if(!cloudClient){
-     if(msg)msg.textContent="";
-     await ensureCloudClient();
+   const client=await ensureCloudClient();
+   const {error}=await client.auth.signInWithPassword({email,password});
+   if(error)throw error;
+ }catch(err){
+   console.error(err);
+   const message=String(err?.message||"");
+   if(/invalid login credentials/i.test(message)){
+     setLoginMessage("האימייל או הסיסמה אינם נכונים.");
+   }else if(/email not confirmed/i.test(message)){
+     setLoginMessage("צריך לאשר את כתובת המייל לפני הכניסה.");
+   }else{
+     setLoginMessage("לא הצלחנו להיכנס. בדקו את הפרטים ונסו שוב.");
    }
+ }finally{
+   btn.disabled=false;
+   btn.textContent="כניסה";
+ }
+}
+async function signUpWithPassword(){
+ const {email,password}=loginCredentials();
+ if(!validateCredentials(email,password))return;
 
-   if(!cloudClient)throw new Error("שירות הכניסה לא זמין כרגע");
+ const btn=document.getElementById("emailGateSignupButton");
+ try{
+   btn.disabled=true;
+   btn.textContent="יוצרים חשבון...";
+   setLoginMessage("");
 
+   const client=await ensureCloudClient();
    const redirectTo=location.origin+location.pathname;
-   const {error}=await cloudClient.auth.signInWithOtp({
+   const {data,error}=await client.auth.signUp({
      email,
+     password,
      options:{emailRedirectTo:redirectTo}
    });
    if(error)throw error;
 
+   if(data?.session?.user){
+     await loadAuthenticatedUser(data.session.user);
+     return;
+   }
+
    document.getElementById("emailSentText").textContent=
-     `שלחנו קישור כניסה אל ${email}. פתחו אותו כדי להיכנס לתכנון שלכם.`;
+     `שלחנו הודעת אישור אל ${email}. אחרי האישור תוכלו להיכנס עם האימייל והסיסמה.`;
    showGateState("emailGateSent");
  }catch(err){
    console.error(err);
-   if(msg)msg.textContent="לא הצלחנו לשלוח את קישור הכניסה. נסו שוב בעוד רגע.";
+   const message=String(err?.message||"");
+   if(/already registered|user already registered/i.test(message)){
+     setLoginMessage("כבר קיים חשבון עם האימייל הזה. נסו להיכנס.");
+   }else{
+     setLoginMessage("לא הצלחנו ליצור חשבון. נסו שוב.");
+   }
  }finally{
    btn.disabled=false;
-   btn.textContent="שליחת קישור כניסה";
+   btn.textContent="יצירת חשבון";
+ }
+}
+async function resetPassword(){
+ const email=String(document.getElementById("emailGateInput")?.value||"").trim();
+ if(!email||!email.includes("@")){
+   setLoginMessage("הכניסו קודם את כתובת המייל.");
+   return;
+ }
+ try{
+   setLoginMessage("");
+   const client=await ensureCloudClient();
+   const redirectTo=location.origin+location.pathname;
+   const {error}=await client.auth.resetPasswordForEmail(email,{redirectTo});
+   if(error)throw error;
+   document.getElementById("emailSentText").textContent=
+     `שלחנו אל ${email} קישור לאיפוס הסיסמה.`;
+   showGateState("emailGateSent");
+ }catch(err){
+   console.error(err);
+   setLoginMessage("לא הצלחנו לשלוח איפוס סיסמה כרגע.");
  }
 }
 
@@ -5812,7 +5900,7 @@ showStorageNoticeIfNeeded();syncMobileNavigation("dashboard");initAuthentication
 </script>
 
 <script>
-const WEDWISE_REPAIR_KEY="ww223_pwa_repaired";
+const WEDWISE_REPAIR_KEY="ww224_pwa_repaired";
 window.addEventListener("load",async()=>{
  if(!("serviceWorker" in navigator)||!/^https?:$/.test(location.protocol))return;
  try{
@@ -5821,7 +5909,7 @@ window.addEventListener("load",async()=>{
      if("caches" in window){const names=await caches.keys();await Promise.all(names.filter(n=>n.startsWith("wedwise-")).map(n=>caches.delete(n)))}
      localStorage.setItem(WEDWISE_REPAIR_KEY,"1");location.reload();return;
    }
-   const reg=await navigator.serviceWorker.register("./sw.js?v=223",{updateViaCache:"none"});await reg.update().catch(()=>{});
+   const reg=await navigator.serviceWorker.register("./sw.js?v=224",{updateViaCache:"none"});await reg.update().catch(()=>{});
  }catch(e){console.warn("PWA init",e)}
 });
 </script>

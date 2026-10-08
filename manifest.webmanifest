@@ -8,7 +8,7 @@
   "display": "standalone",
   "background_color": "#f5f0e6",
   "theme_color": "#f5f0e6",
-  "description": "תכנון חתונה אישי עם כניסה במייל, ספקים, תשלומים, תקציב, מוזמנים והושבה.",
+  "description": "תכנון חתונה אישי עם חשבון משתמש, ספקים, תשלומים, תקציב, מוזמנים והושבה.",
   "icons": [
     {
       "src": "./icon-192.png",
