@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>WedWise v2.2.1 - Venue Decision Workspace</title>
+<title>WedWise v2.2.3 - Venue Decision Workspace</title>
 <style>
 
 :root{
@@ -1552,7 +1552,7 @@ tbody tr:hover{
 
 
 /* =====================================================
-   WedWise v2.2.1 — refined ivory & gold visual system
+   WedWise v2.2.3 — refined ivory & gold visual system
    ===================================================== */
 :root{
   --bg:#f4efe5;
@@ -1981,7 +1981,7 @@ input:focus,select:focus,textarea:focus{
 
 
 /* ============================================================
-   WedWise v2.2.1 — closer to the approved bridal reference
+   WedWise v2.2.3 — closer to the approved bridal reference
    ============================================================ */
 :root{
   --ww-bg:#f5f0e6;
@@ -2205,7 +2205,7 @@ h1,h2,h3,.ww19-wordmark,.ww19-card-title,.ww19-hero-label{
 }
 
 
-/* WedWise v2.2.1 */
+/* WedWise v2.2.3 */
 .username-gate{position:fixed;inset:0;z-index:1000;display:none;align-items:center;justify-content:center;padding:22px;background:radial-gradient(circle at 50% 16%,rgba(255,255,255,.96),transparent 27%),linear-gradient(180deg,#f7f2e8,#eee4d4)}
 .username-gate.open{display:flex}
 .username-gate-card{width:min(410px,100%);text-align:center;padding:30px 24px 25px;border:1px solid #decdb5;border-radius:30px;background:rgba(255,253,248,.97);box-shadow:0 28px 80px rgba(84,61,34,.16)}
@@ -2251,7 +2251,7 @@ h1,h2,h3,.ww19-wordmark,.ww19-card-title,.ww19-hero-label{
 .email-gate-kicker{margin-top:7px;color:#a17d4e;font-size:9px;letter-spacing:1.4px}
 .email-gate-state h1{font-size:31px!important;margin:19px 0 4px!important}.email-gate-state h1::before{display:none!important}
 .email-gate-state p{color:#7d6a58;font-size:11px;line-height:1.55;margin:0 0 16px}.email-field{text-align:right}.email-login-btn{width:100%}
-.email-gate-message{min-height:19px;margin:5px 0 8px;text-align:right;font-size:9.5px;color:#a05252}.email-gate-note{margin-top:12px;color:#988572;font-size:8.5px;line-height:1.45}
+.email-gate-message{min-height:19px;margin:5px 0 8px;text-align:right;font-size:9.5px;color:#a05252}
 .email-sent-icon{width:52px;height:52px;margin:21px auto 8px;border-radius:16px;display:grid;place-items:center;background:#f0e3d0;color:#9d7440;font-size:23px}
 .ww22-sync-status{display:block;color:#6f8b6e;font-size:7.5px;margin-top:2px}.ww22-sync-status.saving{color:#a77c42}.ww22-sync-status.error{color:#ac5f58}
 
@@ -2324,14 +2324,14 @@ html {
 
     <div id="emailGateLogin" class="email-gate-state">
       <h1>כניסה ל-WedWise</h1>
-      <p>הכניסו כתובת מייל. נשלח אליכם קישור כניסה מאובטח — בלי סיסמה.</p>
+      <p>הכניסו כתובת מייל ונשלח אליכם קישור כניסה.</p>
       <div class="field email-field">
         <label for="emailGateInput">אימייל</label>
-        <input id="emailGateInput" type="email" autocomplete="email" placeholder="name@example.com">
+        <input id="emailGateInput" type="email" autocomplete="email" placeholder="name@example.com" onkeydown="if(event.key==='Enter')sendLoginLink()">
       </div>
       <div id="emailGateMessage" class="email-gate-message"></div>
       <button id="emailGateButton" class="btn primary email-login-btn" onclick="sendLoginLink()">שליחת קישור כניסה</button>
-      <div class="email-gate-note">לכל משתמש יש תכנון נפרד. משתמש אחר לא יוכל לראות את הנתונים שלכם.</div>
+      
     </div>
 
     <div id="emailGateSent" class="email-gate-state" style="display:none">
@@ -3767,6 +3767,7 @@ let cloudClient=null;
 let cloudUser=null;
 let cloudSaveTimer=null;
 let cloudApplying=false;
+let cloudInitPromise=null;
 const CLOUD_TABLE="wedwise_user_state";
 
 function rawStorageGet(key,fallback=null){try{const v=window.localStorage.getItem(key);return v===null?fallback:v}catch(e){return Object.prototype.hasOwnProperty.call(__wwMemoryStorage,key)?__wwMemoryStorage[key]:fallback}}
@@ -3825,20 +3826,46 @@ function showEmailLogin(message=""){
 }
 function hideEmailGate(){const gate=document.getElementById("emailGate");if(gate){gate.classList.add("hidden");gate.setAttribute("aria-hidden","true")}document.body.style.overflow=""}
 async function sendLoginLink(){
- const input=document.getElementById("emailGateInput"),btn=document.getElementById("emailGateButton"),msg=document.getElementById("emailGateMessage");
+ const input=document.getElementById("emailGateInput");
+ const btn=document.getElementById("emailGateButton");
+ const msg=document.getElementById("emailGateMessage");
  const email=String(input?.value||"").trim();
- if(!email||!email.includes("@")){if(msg)msg.textContent="הכניסו כתובת מייל תקינה.";return}
- if(!cloudClient){if(msg)msg.textContent="הכניסה עדיין נטענת. נסו שוב בעוד רגע.";return}
+
+ if(!email||!email.includes("@")){
+   if(msg)msg.textContent="הכניסו כתובת מייל תקינה.";
+   return;
+ }
+
  try{
-  btn.disabled=true;btn.textContent="שולחים...";
-  const redirectTo=location.origin+location.pathname;
-  const {error}=await cloudClient.auth.signInWithOtp({email,options:{emailRedirectTo:redirectTo}});
-  if(error)throw error;
-  document.getElementById("emailSentText").textContent=`שלחנו קישור כניסה אל ${email}. פתחו אותו כדי להיכנס לתכנון שלכם.`;
-  showGateState("emailGateSent");
- }catch(err){console.error(err);if(msg)msg.textContent="לא הצלחנו לשלוח קישור: "+(err?.message||"שגיאה לא ידועה")}
- finally{btn.disabled=false;btn.textContent="שליחת קישור כניסה"}
+   btn.disabled=true;
+   btn.textContent="שולחים...";
+
+   if(!cloudClient){
+     if(msg)msg.textContent="";
+     await ensureCloudClient();
+   }
+
+   if(!cloudClient)throw new Error("שירות הכניסה לא זמין כרגע");
+
+   const redirectTo=location.origin+location.pathname;
+   const {error}=await cloudClient.auth.signInWithOtp({
+     email,
+     options:{emailRedirectTo:redirectTo}
+   });
+   if(error)throw error;
+
+   document.getElementById("emailSentText").textContent=
+     `שלחנו קישור כניסה אל ${email}. פתחו אותו כדי להיכנס לתכנון שלכם.`;
+   showGateState("emailGateSent");
+ }catch(err){
+   console.error(err);
+   if(msg)msg.textContent="לא הצלחנו לשלוח את קישור הכניסה. נסו שוב בעוד רגע.";
+ }finally{
+   btn.disabled=false;
+   btn.textContent="שליחת קישור כניסה";
+ }
 }
+
 async function signOutUser(){
  try{if(cloudClient)await cloudClient.auth.signOut()}catch(e){console.error(e)}
  cloudUser=null;currentUserId="";toggleMobileMore(false);showEmailLogin();
@@ -3905,50 +3932,76 @@ async function loadAuthenticatedUser(user){
  }
 }
 
+async function ensureCloudClient(){
+ if(cloudClient)return cloudClient;
+ if(cloudInitPromise)return cloudInitPromise;
+
+ cloudInitPromise=(async()=>{
+   const controller=new AbortController();
+   const timeout=setTimeout(()=>controller.abort(),8000);
+
+   try{
+     const response=await fetch(FUNCTION_URL+"?config=1",{
+       cache:"no-store",
+       signal:controller.signal
+     });
+     const cfg=await response.json();
+
+     if(!response.ok||!cfg?.success){
+       throw new Error(cfg?.error||"לא ניתן לטעון הגדרות כניסה");
+     }
+     if(!window.supabase?.createClient){
+       throw new Error("ספריית ההתחברות לא נטענה");
+     }
+
+     cloudClient=window.supabase.createClient(
+       cfg.supabaseUrl,
+       cfg.publishableKey,
+       {auth:{persistSession:true,autoRefreshToken:true,detectSessionInUrl:true}}
+     );
+
+     cloudClient.auth.onAuthStateChange((event,session)=>setTimeout(async()=>{
+       if(session?.user&&(!cloudUser||cloudUser.id!==session.user.id)){
+         await loadAuthenticatedUser(session.user);
+       }else if(event==="SIGNED_OUT"){
+         cloudUser=null;
+         currentUserId="";
+         showEmailLogin();
+       }
+     },0));
+
+     return cloudClient;
+   }finally{
+     clearTimeout(timeout);
+   }
+ })();
+
+ try{
+   return await cloudInitPromise;
+ }catch(err){
+   cloudInitPromise=null;
+   throw err;
+ }
+}
+
 async function initAuthentication(){
- // Show the login screen immediately; no long "checking data" loading state.
  showEmailLogin();
 
  try{
-  const response=await fetch(FUNCTION_URL+"?config=1",{cache:"no-store"});
-  const cfg=await response.json();
+   const client=await ensureCloudClient();
 
-  if(!response.ok||!cfg?.success){
-    throw new Error(cfg?.error||"לא ניתן לטעון הגדרות כניסה");
-  }
+   const {data,error}=await client.auth.getSession();
+   if(error)throw error;
 
-  if(!window.supabase?.createClient){
-    throw new Error("ספריית ההתחברות לא נטענה");
-  }
-
-  cloudClient=window.supabase.createClient(
-    cfg.supabaseUrl,
-    cfg.publishableKey,
-    {auth:{persistSession:true,autoRefreshToken:true,detectSessionInUrl:true}}
-  );
-
-  cloudClient.auth.onAuthStateChange((event,session)=>setTimeout(async()=>{
-    if(session?.user&&(!cloudUser||cloudUser.id!==session.user.id)){
-      await loadAuthenticatedUser(session.user);
-    }else if(event==="SIGNED_OUT"){
-      cloudUser=null;
-      currentUserId="";
-      showEmailLogin();
-    }
-  },0));
-
-  const {data,error}=await cloudClient.auth.getSession();
-  if(error)throw error;
-
-  if(data?.session?.user){
-    await loadAuthenticatedUser(data.session.user);
-  }
+   if(data?.session?.user){
+     await loadAuthenticatedUser(data.session.user);
+   }
  }catch(err){
-  console.error("Auth init",err);
-  const msg=document.getElementById("emailGateMessage");
-  if(msg){
-    msg.textContent="לא הצלחנו להתחבר לשירות המשתמשים. בדקו חיבור לאינטרנט ונסו שוב.";
-  }
+   console.error("Auth init",err);
+   const msg=document.getElementById("emailGateMessage");
+   if(msg){
+     msg.textContent="לא הצלחנו להתחבר כרגע. לחצו שוב על שליחת קישור בעוד רגע.";
+   }
  }
 }
 
@@ -5759,7 +5812,7 @@ showStorageNoticeIfNeeded();syncMobileNavigation("dashboard");initAuthentication
 </script>
 
 <script>
-const WEDWISE_REPAIR_KEY="ww221_pwa_repaired";
+const WEDWISE_REPAIR_KEY="ww223_pwa_repaired";
 window.addEventListener("load",async()=>{
  if(!("serviceWorker" in navigator)||!/^https?:$/.test(location.protocol))return;
  try{
@@ -5768,7 +5821,7 @@ window.addEventListener("load",async()=>{
      if("caches" in window){const names=await caches.keys();await Promise.all(names.filter(n=>n.startsWith("wedwise-")).map(n=>caches.delete(n)))}
      localStorage.setItem(WEDWISE_REPAIR_KEY,"1");location.reload();return;
    }
-   const reg=await navigator.serviceWorker.register("./sw.js?v=221",{updateViaCache:"none"});await reg.update().catch(()=>{});
+   const reg=await navigator.serviceWorker.register("./sw.js?v=223",{updateViaCache:"none"});await reg.update().catch(()=>{});
  }catch(e){console.warn("PWA init",e)}
 });
 </script>
