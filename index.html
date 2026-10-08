@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>WedWise v2.0.1 - Venue Decision Workspace</title>
+<title>WedWise v2.2 - Venue Decision Workspace</title>
 <style>
 
 :root{
@@ -1552,7 +1552,7 @@ tbody tr:hover{
 
 
 /* =====================================================
-   WedWise v2.0.1 — refined ivory & gold visual system
+   WedWise v2.2 — refined ivory & gold visual system
    ===================================================== */
 :root{
   --bg:#f4efe5;
@@ -1981,7 +1981,7 @@ input:focus,select:focus,textarea:focus{
 
 
 /* ============================================================
-   WedWise v2.0.1 — closer to the approved bridal reference
+   WedWise v2.2 — closer to the approved bridal reference
    ============================================================ */
 :root{
   --ww-bg:#f5f0e6;
@@ -2205,98 +2205,87 @@ h1,h2,h3,.ww19-wordmark,.ww19-card-title,.ww19-hero-label{
 }
 
 
-/* ============================================================
-   WedWise v2.0.1 — cloud sync, update state, search freshness
-   ============================================================ */
-.offline-banner{
-  position:fixed;
-  left:50%;
-  bottom:90px;
-  transform:translateX(-50%);
-  z-index:490;
-  width:min(470px,calc(100% - 24px));
-  padding:9px 12px;
-  border-radius:12px;
-  background:#5f544d;
-  color:#fff;
-  text-align:center;
-  font-size:10px;
-  box-shadow:0 10px 26px rgba(0,0,0,.14);
-}
-.cloud-auth-modal{display:none;position:fixed;inset:0;z-index:520}
-.cloud-auth-modal.open{display:block}
-.cloud-auth-backdrop{
-  position:absolute;inset:0;background:rgba(47,34,27,.32);
-  backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px);
-}
-.cloud-auth-card{
-  position:absolute;
-  top:50%;left:50%;transform:translate(-50%,-50%);
-  width:min(430px,calc(100% - 28px));
-  padding:25px;
-  border:1px solid #e4d6c2;border-radius:24px;
-  background:#fffdf8;
-  box-shadow:0 28px 80px rgba(52,37,29,.22);
-}
-.cloud-auth-close{
-  position:absolute;top:12px;left:12px;
-  width:32px;height:32px;border:0;border-radius:50%;
-  background:#f5eee3;color:#725d49;font-size:20px;cursor:pointer;
-}
-.cloud-auth-icon{
-  width:44px;height:44px;display:grid;place-items:center;
-  border-radius:14px;background:#efe2cf;color:#9e7542;
-  font-size:21px;margin-bottom:14px;
-}
-.cloud-auth-card h2{margin:3px 0 7px;font-size:28px}
-.cloud-auth-card p{color:#786756;font-size:11px;line-height:1.55;margin-bottom:15px}
-.cloud-auth-message{min-height:20px;font-size:10px;margin:6px 0 10px;color:#8b624f}
-.cloud-auth-message.good{color:#5d765e}
-.cloud-auth-message.error{color:#a45151}
-.cloud-account-card{
-  display:flex;align-items:center;justify-content:space-between;gap:10px;
-  padding:12px;margin-bottom:12px;
-  border:1px solid #eadfce;border-radius:15px;background:#faf5ed;
-}
-.cloud-account-main{display:flex;align-items:center;gap:9px;min-width:0}
-.cloud-account-main strong{display:block;font-size:10.5px;color:#554337}
-.cloud-account-main small{
-  display:block;max-width:210px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;
-  color:#8c7a68;font-size:8.5px;margin-top:2px;
-}
-.cloud-sync-dot{width:8px;height:8px;flex:0 0 8px;border-radius:50%;background:#a99d92}
-.cloud-sync-dot.synced{background:#6f8b6e;box-shadow:0 0 0 4px rgba(111,139,110,.11)}
-.cloud-sync-dot.saving{background:#c59b58;box-shadow:0 0 0 4px rgba(197,155,88,.12)}
-.cloud-sync-dot.error{background:#b8675f;box-shadow:0 0 0 4px rgba(184,103,95,.11)}
-.cloud-sync-dot.local{background:#a99d92}
-.cloud-account-actions{display:flex;gap:5px;flex-wrap:wrap;justify-content:flex-end}
-.cloud-account-actions button{
-  border:1px solid #dfd1bd;background:#fffaf2;color:#745c44;
-  border-radius:9px;padding:6px 8px;font-size:8px;font-weight:700;cursor:pointer;
-}
-.cloud-sidebar-footer{
-  width:calc(100% - 12px);
-  text-align:right;border:0;background:transparent;cursor:pointer;
-}
-.search-freshness{
-  min-height:17px;
-  margin-top:6px;
-  color:#8f7a65;font-size:9px;
-}
-.search-freshness strong{color:#6f563d}
-.search-cache-badge{
-  display:inline-flex;align-items:center;gap:4px;
-  padding:3px 7px;border-radius:999px;
-  background:#f0e5d3;color:#85643e;font-size:8.5px;font-weight:700;
-}
-@media(max-width:850px){
-  .cloud-auth-card{
-    top:auto;bottom:0;left:0;transform:none;width:100%;
-    border-radius:24px 24px 0 0;
-    padding:23px 18px calc(24px + env(safe-area-inset-bottom));
-  }
-  .app-update-banner{top:calc(8px + env(safe-area-inset-top))}
-}
+/* WedWise v2.2 */
+.username-gate{position:fixed;inset:0;z-index:1000;display:none;align-items:center;justify-content:center;padding:22px;background:radial-gradient(circle at 50% 16%,rgba(255,255,255,.96),transparent 27%),linear-gradient(180deg,#f7f2e8,#eee4d4)}
+.username-gate.open{display:flex}
+.username-gate-card{width:min(410px,100%);text-align:center;padding:30px 24px 25px;border:1px solid #decdb5;border-radius:30px;background:rgba(255,253,248,.97);box-shadow:0 28px 80px rgba(84,61,34,.16)}
+.username-gate-logo{width:88px;height:88px;object-fit:cover;border-radius:25px;box-shadow:0 13px 30px rgba(110,77,37,.13);margin-bottom:12px}
+.username-gate-wordmark{direction:ltr;font-family:"Cormorant Garamond",Georgia,serif;font-size:36px;font-weight:700;line-height:1;color:#36271d}
+.username-gate-wordmark b{color:#bd9459}.username-gate-kicker{margin-top:7px;color:#a17d4e;font-size:9px;letter-spacing:1.5px}
+.username-gate-card h1{display:block!important;font-size:31px!important;margin:18px 0 3px!important}.username-gate-card h1::before{display:none!important}
+.username-gate-card p{color:#7f6c59;font-size:11px;margin:0 0 16px}.username-field{text-align:right}.username-login-btn{width:100%;margin-top:4px}
+.username-gate-error{min-height:18px;color:#a05252;font-size:10px;text-align:right;margin-top:4px}.username-gate-note{margin-top:12px;color:#9a8875;font-size:8.5px}
+.quick-date-modal{display:none;position:fixed;inset:0;z-index:800}.quick-date-modal.open{display:block}
+.quick-date-backdrop{position:absolute;inset:0;background:rgba(47,34,27,.30);backdrop-filter:blur(3px)}
+.quick-date-card{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:min(390px,calc(100% - 28px));background:#fffdf8;border:1px solid #e4d5c2;border-radius:24px;padding:24px;box-shadow:0 28px 80px rgba(52,37,29,.20)}
+.quick-date-card h2{margin:4px 0 16px}.quick-date-close{position:absolute;top:11px;left:11px;width:32px;height:32px;border:0;border-radius:50%;background:#f4ebdf;color:#755f49;font-size:20px}
+.ww21-back-btn,.ww21-user-btn{border:0;background:transparent;color:#67513f;min-width:42px;height:38px;display:flex;align-items:center;justify-content:center;gap:3px;border-radius:10px}
+.ww21-back-btn span{font-size:19px}.ww21-back-btn small{font-size:8px;font-weight:700}.ww21-back-btn.hidden{visibility:hidden;pointer-events:none}
+.ww21-user-btn span{width:31px;height:31px;border-radius:50%;display:grid;place-items:center;background:#eadbc4;color:#835f35;font-family:"Cormorant Garamond",serif;font-size:15px;font-weight:700}
+.ww21-profile-card{display:grid;grid-template-columns:39px 1fr auto;align-items:center;gap:9px;margin-bottom:12px;padding:11px;border:1px solid #eadfce;border-radius:15px;background:#fbf6ee}
+.ww21-profile-avatar{width:39px;height:39px;border-radius:50%;display:grid;place-items:center;background:linear-gradient(135deg,#d4b77e,#ad8148);color:#fff;font-family:"Cormorant Garamond",serif;font-size:17px}
+.ww21-profile-card small{display:block;color:#8d7965;font-size:8px}.ww21-profile-card strong{display:block;font-size:11px;color:#4b392c}.ww21-profile-card button{border:0;background:transparent;color:#9b7442;font-size:8px;font-weight:700}
+.mobile-bottom-nav{grid-template-columns:repeat(6,1fr)!important}.mobile-bottom-nav button{min-width:0!important}.mobile-bottom-nav button small{font-size:7.4px!important}.mobile-bottom-nav button span{font-size:17px!important}
+.ww21-date-trigger{position:relative;z-index:4;display:inline-block;border:0;background:transparent;color:rgba(255,255,255,.96);font-family:"Cormorant Garamond",Georgia,serif;font-size:16px;padding:7px 10px;border-radius:999px;cursor:pointer}
+.ww21-date-trigger:hover{background:rgba(255,255,255,.11)}
+.ww21-progress-card{display:grid;grid-template-columns:116px 1fr;gap:18px;align-items:center;padding:17px;margin-bottom:11px;border:1px solid var(--ww-line);border-radius:20px;background:var(--ww-surface);box-shadow:var(--ww-shadow)}
+.ww21-progress-ring{--progress-angle:0deg;position:relative;width:104px;height:104px;border-radius:50%;display:grid;place-items:center;background:conic-gradient(#c49a58 0deg var(--progress-angle),#eee3d2 var(--progress-angle) 360deg)}
+.ww21-progress-ring::before{content:"";position:absolute;width:76px;height:76px;border-radius:50%;background:#fffdf8}.ww21-progress-ring>div{position:relative;z-index:1;text-align:center}
+.ww21-progress-ring strong{display:block;font-family:"Cormorant Garamond",serif;font-size:24px;color:#4b3829}.ww21-progress-ring span{display:block;color:#8d7965;font-size:8px}
+.ww21-next-copy h2{font-size:23px!important;margin:2px 0 5px!important}.ww21-next-copy p{margin:0;color:#786755;font-size:10.5px;line-height:1.55}
+.ww21-resume-btn{width:100%;min-height:53px;border:1px solid #a97e45;border-radius:16px;background:linear-gradient(135deg,#c6a163,#ac8149);color:#fff;display:flex;align-items:center;justify-content:center;gap:11px;font-weight:700;box-shadow:0 12px 25px rgba(130,91,43,.18);cursor:pointer}
+.ww21-resume-btn i{font-style:normal;font-size:18px}
+.ww21-style-pills{display:flex;flex-wrap:wrap;gap:8px}.ww21-style-pills label{cursor:pointer}.ww21-style-pills input{position:absolute;opacity:0;pointer-events:none}
+.ww21-style-pills span{display:block;padding:8px 12px;border:1px solid #dfd1bd;border-radius:999px;background:#fffaf3;color:#6d5947;font-size:10px;transition:.15s}
+.ww21-style-pills input:checked+span{background:#c6a05f;border-color:#c6a05f;color:#fff;box-shadow:0 5px 14px rgba(150,108,54,.12)}
+.ww21-search-freshness{min-height:16px;margin-top:5px;color:#8d7965;font-size:8.5px}.ww21-search-freshness b{display:inline-flex;padding:2px 6px;border-radius:999px;background:#efe3d0;color:#7f5f38;font-size:8px;margin-left:3px}
+@media(max-width:850px){.quick-date-card{top:auto;bottom:0;left:0;transform:none;width:100%;border-radius:24px 24px 0 0;padding-bottom:calc(24px + env(safe-area-inset-bottom))}.ww21-progress-card{grid-template-columns:105px 1fr;padding:14px;gap:13px}}
+@media(max-width:365px){.mobile-bottom-nav button small{font-size:6.7px!important}.mobile-bottom-nav{padding-left:3px!important;padding-right:3px!important}}
+
+
+.email-gate{position:fixed;inset:0;z-index:1200;display:flex;align-items:center;justify-content:center;padding:22px;background:radial-gradient(circle at 50% 14%,rgba(255,255,255,.98),transparent 27%),linear-gradient(180deg,#f8f3e9,#eee3d3)}
+.email-gate.hidden{display:none}
+.email-gate-card{width:min(430px,100%);text-align:center;padding:30px 25px 26px;border:1px solid #decdb4;border-radius:30px;background:rgba(255,253,248,.98);box-shadow:0 28px 80px rgba(84,61,34,.16)}
+.email-gate-logo{width:88px;height:88px;object-fit:cover;border-radius:25px;box-shadow:0 13px 30px rgba(110,77,37,.13);margin-bottom:12px}
+.email-gate-wordmark{direction:ltr;font-family:"Cormorant Garamond",Georgia,serif;font-size:37px;font-weight:700;line-height:1;color:#36271d}.email-gate-wordmark b{color:#bd9459}
+.email-gate-kicker{margin-top:7px;color:#a17d4e;font-size:9px;letter-spacing:1.4px}
+.email-gate-state h1{font-size:31px!important;margin:19px 0 4px!important}.email-gate-state h1::before{display:none!important}
+.email-gate-state p{color:#7d6a58;font-size:11px;line-height:1.55;margin:0 0 16px}.email-field{text-align:right}.email-login-btn{width:100%}
+.email-gate-message{min-height:19px;margin:5px 0 8px;text-align:right;font-size:9.5px;color:#a05252}.email-gate-note{margin-top:12px;color:#988572;font-size:8.5px;line-height:1.45}
+.email-gate-spinner{width:34px;height:34px;margin:20px auto 0;border-radius:50%;border:3px solid #eadfcf;border-top-color:#b68c52;animation:spin .8s linear infinite}
+.email-sent-icon{width:52px;height:52px;margin:21px auto 8px;border-radius:16px;display:grid;place-items:center;background:#f0e3d0;color:#9d7440;font-size:23px}
+.ww22-sync-status{display:block;color:#6f8b6e;font-size:7.5px;margin-top:2px}.ww22-sync-status.saving{color:#a77c42}.ww22-sync-status.error{color:#ac5f58}
+
+
+.vendor-booked-toggle{display:flex;align-items:center;gap:8px;padding:9px 11px;margin-top:11px;border-radius:12px;background:#faf5ec;border:1px solid #eadcc7;color:#5e4936;font-size:10px;font-weight:700}
+.vendor-booked-toggle input{width:auto;min-height:0}
+.vendor-finance-details{margin-top:10px;border-top:1px solid #eee3d3;padding-top:10px}
+.vendor-finance-details summary{cursor:pointer;list-style:none;display:flex;align-items:center;justify-content:space-between;gap:8px;color:#5b4634;font-weight:700;font-size:11px}
+.vendor-finance-details summary::-webkit-details-marker{display:none}.vendor-finance-details summary span{color:#9b7849;font-size:9px}
+.vendor-finance-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:9px;margin-top:11px}
+.vendor-payment-summary,.venue-finance-summary{display:grid;grid-template-columns:repeat(3,1fr);gap:7px;margin:10px 0}
+.vendor-payment-summary>div,.venue-finance-summary>div{border:1px solid #eadfce;border-radius:12px;background:#fffaf3;padding:9px}
+.vendor-payment-summary span,.venue-finance-summary span{display:block;color:#8d7965;font-size:8px}
+.vendor-payment-summary strong,.venue-finance-summary strong{display:block;color:#4a3729;font-size:13px;margin-top:2px}
+.payment-schedule-list{display:grid;gap:6px;margin:10px 0}
+.payment-schedule-row{display:grid;grid-template-columns:22px 1fr auto 28px;gap:7px;align-items:center;padding:8px;border-radius:11px;background:#faf6ef;border:1px solid #eee2d2}
+.payment-schedule-row input[type="checkbox"]{width:auto;min-height:0}.payment-schedule-row strong{display:block;font-size:9.5px}.payment-schedule-row small{display:block;color:#8c7864;font-size:8px;margin-top:2px}
+.payment-schedule-row .amount{font-size:9px;font-weight:700;white-space:nowrap}.payment-schedule-row button{border:0;background:transparent;color:#a35f58;font-size:14px;cursor:pointer}
+.add-payment-row{display:grid;grid-template-columns:1.3fr 1fr 1fr auto;gap:7px;align-items:end;margin-top:8px;padding-top:9px;border-top:1px solid #eee2d2}
+.add-payment-row .field{margin:0}.add-payment-row input{min-height:37px!important;padding:8px!important}.add-payment-row button{height:37px}
+@media(max-width:850px){.vendor-finance-grid{grid-template-columns:1fr 1fr}.add-payment-row{grid-template-columns:1fr 1fr}.add-payment-row button{width:100%}}
+
+
+.ww22-budget-overview{display:grid;grid-template-columns:155px 1fr;gap:18px;align-items:center;padding:18px;border-radius:22px;background:#fffdf8;border:1px solid var(--ww-line);box-shadow:var(--ww-shadow);margin-bottom:10px}
+.ww22-budget-summary{display:grid;grid-template-columns:repeat(2,1fr);gap:8px}
+.ww22-money-stat{padding:10px;border-radius:13px;border:1px solid #eadfce;background:#faf6ef}.ww22-money-stat span{display:block;color:#8d7a66;font-size:8.5px}.ww22-money-stat strong{display:block;color:#453328;font-size:15px;margin-top:2px}
+.ww22-money-stat.paid{background:#f3f7f1;border-color:#dae6d7}.ww22-money-stat.pending{background:#fff8ed;border-color:#eadbbf}
+.ww22-budget-target-status{margin:0 0 11px;padding:10px 12px;border-radius:13px;background:#f7f0e5;color:#725a41;font-size:9.5px;line-height:1.5}
+.ww22-budget-target-status.good{background:#eef5ec;color:#5a7558}.ww22-budget-target-status.warn{background:#fbefeb;color:#945b52}
+.ww22-upcoming-payments{display:grid;gap:7px}.ww22-upcoming-row{display:grid;grid-template-columns:36px 1fr auto;gap:9px;align-items:center;padding:10px;border-radius:13px;background:#faf6ef;border:1px solid #eee2d2}
+.ww22-upcoming-icon{width:36px;height:36px;border-radius:11px;display:grid;place-items:center;background:#efe2cd;color:#9d7541;font-size:15px}.ww22-upcoming-row strong{display:block;font-size:10px}.ww22-upcoming-row small{display:block;color:#8a7764;font-size:8px;margin-top:2px}.ww22-upcoming-row .amount{font-weight:700;font-size:10px;color:#4d392a;white-space:nowrap}
+.ww22-category-progress{height:4px;background:#eee3d4;border-radius:999px;overflow:hidden;margin-top:5px}.ww22-category-progress div{height:100%;background:#c49a58;border-radius:999px}
+@media(max-width:850px){.ww22-budget-overview{grid-template-columns:112px 1fr;padding:14px;gap:12px}.ww22-budget-summary{gap:6px}.ww22-money-stat{padding:8px}.ww22-money-stat strong{font-size:12px}}
 
 </style>
 
@@ -2327,66 +2316,101 @@ html {
 <body>
 
 
+<div id="emailGate" class="email-gate open" aria-hidden="false">
+  <div class="email-gate-card">
+    <img src="./icon-192.png" class="email-gate-logo" alt="">
+    <div class="email-gate-wordmark"><span>Wed</span><b>Wise</b></div>
+    <div class="email-gate-kicker">התכנון שלכם, שמור רק לכם</div>
 
+    <div id="emailGateLoading" class="email-gate-state">
+      <div class="email-gate-spinner"></div>
+      <h1>פותחים את התכנון שלכם</h1>
+      <p>רק רגע, בודקים אם כבר התחברתם.</p>
+    </div>
+
+    <div id="emailGateLogin" class="email-gate-state" style="display:none">
+      <h1>כניסה ל-WedWise</h1>
+      <p>הכניסו כתובת מייל. נשלח אליכם קישור כניסה מאובטח — בלי סיסמה.</p>
+      <div class="field email-field">
+        <label for="emailGateInput">אימייל</label>
+        <input id="emailGateInput" type="email" autocomplete="email" placeholder="name@example.com">
+      </div>
+      <div id="emailGateMessage" class="email-gate-message"></div>
+      <button id="emailGateButton" class="btn primary email-login-btn" onclick="sendLoginLink()">שליחת קישור כניסה</button>
+      <div class="email-gate-note">לכל משתמש יש תכנון נפרד. משתמש אחר לא יוכל לראות את הנתונים שלכם.</div>
+    </div>
+
+    <div id="emailGateSent" class="email-gate-state" style="display:none">
+      <div class="email-sent-icon">✉</div>
+      <h1>הקישור בדרך</h1>
+      <p id="emailSentText">שלחנו קישור כניסה למייל.</p>
+      <button class="btn secondary" onclick="showEmailLogin()">שליחה למייל אחר</button>
+    </div>
+  </div>
 </div>
+
+<div id="quickDateModal" class="quick-date-modal" aria-hidden="true">
+  <div class="quick-date-backdrop" onclick="closeQuickDate()"></div>
+  <div class="quick-date-card">
+    <button class="quick-date-close" onclick="closeQuickDate()" aria-label="סגירה">×</button>
+    <div class="section-mini-label">ספירה לאחור</div>
+    <h2>מה תאריך החתונה?</h2>
+    <div class="field">
+      <label for="quickWeddingDate">תאריך</label>
+      <input id="quickWeddingDate" type="date">
+    </div>
+    <button class="btn primary" onclick="saveQuickDate()">שמירת תאריך</button>
+  </div>
+</div>
+
 
 <div id="mobileStorageNotice" class="mobile-storage-notice" style="display:none">הגרסה פתוחה בתצוגה מוגבלת. אפשר להשתמש בה, אבל לשמירה קבועה של הנתונים כדאי לפתוח אותה כאתר בדפדפן.</div>
 <div class="mobile-topbar ww19-topbar">
+  <button id="mobileBackBtn" class="ww21-back-btn hidden" onclick="goBack()" aria-label="חזרה">
+    <span>→</span><small>חזרה</small>
+  </button>
   <div class="ww19-wordmark" aria-label="WedWise">
     <span class="ww19-wordmark-wed">Wed</span><span class="ww19-wordmark-wise">Wise</span>
   </div>
-  <button class="ww19-header-action" onclick="mobileGo('checklist')" aria-label="משימות">
-    <span aria-hidden="true">♧</span>
-    <i></i>
+  <button class="ww21-user-btn" onclick="toggleMobileMore(true)" aria-label="פתיחת תפריט">
+    <span id="topUserInitial">♡</span>
   </button>
 </div>
 <div id="mobileMoreBackdrop" class="mobile-more-backdrop" onclick="toggleMobileMore(false)"></div>
 <div id="mobileMoreSheet" class="mobile-more-sheet" aria-hidden="true">
   <div class="mobile-sheet-handle"></div>
   <div class="mobile-sheet-header">
-    <div><div class="section-mini-label">ניווט</div><h2>עוד כלים</h2></div>
-  <div class="cloud-account-card">
-    <div class="cloud-account-main">
-      <span id="cloudSyncDot" class="cloud-sync-dot local"></span>
-      <div>
-        <strong id="cloudAccountStatus">שמירה מקומית</strong>
-        <small id="cloudAccountEmail">התחברי כדי לסנכרן בין הטלפון למחשב</small>
-      </div>
-    </div>
-    <div class="cloud-account-actions">
-      <button id="cloudLoginBtn" onclick="openCloudAuth()">כניסה</button>
-      <button id="cloudSyncBtn" onclick="syncCloudManually()" style="display:none">סנכרון</button>
-      <button id="cloudLogoutBtn" onclick="signOutCloud()" style="display:none">יציאה</button>
-    </div>
-  </div>
-
+    <div><div class="section-mini-label">ניווט</div><h2>עוד</h2></div>
     <button class="mobile-icon-btn" onclick="toggleMobileMore(false)" aria-label="סגירה">×</button>
   </div>
+
+  <div class="ww21-profile-card">
+    <div class="ww21-profile-avatar" id="moreUserInitial">♡</div>
+    <div>
+      <small>החשבון שלי</small>
+      <strong id="moreUserEmail">—</strong>
+      <span id="moreSyncStatus" class="ww22-sync-status">מסונכרן</span>
+    </div>
+    <button onclick="signOutUser()">יציאה</button>
+  </div>
+
   <div class="mobile-more-grid">
     <button onclick="mobileGo('setup')"><span>✦</span><div><strong>פרטי החתונה</strong><small>תאריך, תקציב והעדפות</small></div></button>
     <button onclick="mobileGo('venues')"><span>⌖</span><div><strong>מקומות</strong><small>חיפוש חכם ושמורים</small></div></button>
-    <button onclick="mobileGo('compare')"><span>⇄</span><div><strong>השוואת מקומות</strong><small>להחליט בין המועמדים</small></div></button>
-    <button onclick="mobileGo('vendorCompare')"><span>≋</span><div><strong>השוואת ספקים</strong><small>מחיר, איכות והתרשמות</small></div></button>
+    <button onclick="mobileGo('vendors')"><span>◇</span><div><strong>ספקים</strong><small>חיפוש ספקים ושמורים</small></div></button>
+    <button onclick="mobileGo('compare')"><span>⇄</span><div><strong>השוואת מקומות</strong><small>השוואה בין המקומות</small></div></button>
+    <button onclick="mobileGo('vendorCompare')"><span>≋</span><div><strong>השוואת ספקים</strong><small>השוואה לפי מה שחשוב לכם</small></div></button>
     <button onclick="mobileGo('checklist')"><span>✓</span><div><strong>צ'ק ליסט</strong><small>כל המשימות עד האירוע</small></div></button>
     <button onclick="mobileGo('gifts')"><span>▣</span><div><strong>מתנות</strong><small>מעטפות ותודות</small></div></button>
   </div>
 </div>
 <div class="mobile-bottom-nav" aria-label="ניווט מהיר">
-  <button data-mobile-target="dashboard" class="active" onclick="mobileGo('dashboard')">
-    <span class="bottom-nav-icon">⌂</span><small>בית</small>
-  </button>
-  <button data-mobile-target="budget" onclick="mobileGo('budget')">
-    <span class="bottom-nav-icon">◔</span><small>תקציב</small>
-  </button>
-  <button data-mobile-target="guests" onclick="mobileGo('guests')">
-    <span class="bottom-nav-icon">♙</span><small>מוזמנים</small>
-  </button>
-  <button data-mobile-target="vendors" onclick="mobileGo('vendors')">
-    <span class="bottom-nav-icon">◇</span><small>ספקים</small>
-  </button>
-  <button data-mobile-target="more" onclick="toggleMobileMore(true)">
-    <span class="bottom-nav-icon">•••</span><small>עוד</small>
-  </button>
+  <button data-mobile-target="dashboard" class="active" onclick="mobileGo('dashboard')"><span class="bottom-nav-icon">⌂</span><small>בית</small></button>
+  <button data-mobile-target="budget" onclick="mobileGo('budget')"><span class="bottom-nav-icon">◔</span><small>תקציב</small></button>
+  <button data-mobile-target="guests" onclick="mobileGo('guests')"><span class="bottom-nav-icon">♙</span><small>מוזמנים</small></button>
+  <button data-mobile-target="venues" onclick="mobileGo('venues')"><span class="bottom-nav-icon">⌖</span><small>מקומות</small></button>
+  <button data-mobile-target="vendors" onclick="mobileGo('vendors')"><span class="bottom-nav-icon">◇</span><small>ספקים</small></button>
+  <button data-mobile-target="more" onclick="toggleMobileMore(true)"><span class="bottom-nav-icon">•••</span><small>עוד</small></button>
 </div>
 
 
@@ -2480,21 +2504,16 @@ html {
     </div>
   </nav>
 
-  <button class="sidebar-footer cloud-sidebar-footer" onclick="openCloudAuth()" type="button">
-    <span id="cloudSidebarDot" class="autosave-dot"></span>
-    <span id="cloudSyncText">שמירה מקומית</span>
-  </button>
+  <div class="sidebar-footer">
+    <span class="autosave-dot"></span>
+    הנתונים נשמרים אוטומטית
+  </div>
 </aside>
 <main>
 
 <section id="dashboard" class="section active ww19-dashboard">
   <div class="reference-page-title desktop-only-title">
-    <div>
-      <div class="page-kicker">מרכז התכנון</div>
-      <h1 id="dashCoupleTitle">החתונה שלנו</h1>
-      <div class="subtitle">כל התכנון, ההחלטות והמעקב במקום אחד</div>
-    </div>
-    <button class="btn secondary compact-btn" onclick="go('setup')">עריכת פרטים</button>
+    <div><div class="page-kicker">מרכז התכנון</div><h1 id="dashCoupleTitle">החתונה שלנו</h1></div>
   </div>
 
   <div class="ww19-hero">
@@ -2508,57 +2527,42 @@ html {
         <strong id="dashCountdownDays">—</strong>
         <span id="dashCountdownCaption">ימים</span>
       </div>
-      <div id="dashDateLine" class="ww19-hero-date">הוסיפו תאריך לספירה לאחור</div>
+      <button id="dashDateLine" class="ww21-date-trigger" onclick="openQuickDate()">הוסיפו תאריך לספירה לאחור</button>
     </div>
-    <button class="ww19-round-arrow" onclick="go('setup')" aria-label="עריכת פרטי החתונה">←</button>
   </div>
 
   <div class="ww19-summary-grid">
     <button class="ww19-summary-card" onclick="go('budget')">
       <div class="ww19-card-title">תקציב</div>
-      <div class="ww19-budget-line">
-        <strong id="dashSpent">0 ₪</strong>
-        <span>/</span>
-        <span id="dashBudget">לא הוגדר</span>
-      </div>
+      <div class="ww19-budget-line"><strong id="dashSpent">0 ₪</strong><span>/</span><span id="dashBudget">לא הוגדר</span></div>
       <div class="ww19-progress"><div id="budgetProgress" style="width:0%"></div></div>
-      <small id="dashBudgetCaption">הגדירי תקציב כדי להתחיל לעקוב.</small>
+      <small id="dashBudgetCaption">אפשר להגדיר תקציב בכל שלב.</small>
       <span class="ww19-card-arrow">←</span>
     </button>
 
     <button class="ww19-summary-card" onclick="go('guests')">
       <div class="ww19-card-title">מוזמנים</div>
       <div class="ww19-guests-icon" aria-hidden="true">♙♙♙</div>
-      <div class="ww19-big-number"><strong id="dashGuests">-</strong></div>
+      <div class="ww19-big-number"><strong id="dashGuests">—</strong></div>
       <small>אישורי הגעה והושבה</small>
       <span class="ww19-card-arrow">←</span>
     </button>
   </div>
 
-  <div class="ww19-panel ww19-checklist-panel">
-    <div class="ww19-panel-head">
-      <div>
-        <h2>המשימות הקרובות</h2>
-        <div class="ww19-panel-sub"><span id="dashProgress">0%</span> הושלם</div>
-      </div>
-      <button class="ww19-see-all" onclick="go('checklist')">לכל המשימות ←</button>
+  <div class="ww21-progress-card">
+    <div class="ww21-progress-ring" id="dashProgressRing">
+      <div><strong id="dashProgress">0%</strong><span>התקדמות</span></div>
     </div>
-    <div id="dashChecklistList" class="ww19-mini-checklist"></div>
-    <p id="nextStepText" class="ww19-next-step">מלאי את פרטי החתונה כדי להתחיל.</p>
+    <div class="ww21-next-copy">
+      <div class="section-mini-label">השלב הבא</div>
+      <h2>ממשיכים מכאן</h2>
+      <p id="nextStepText">מתחילים בפרטי החתונה.</p>
+    </div>
   </div>
 
-  <div class="ww19-choice-row">
-    <button onclick="go('venues')">
-      <span class="ww19-choice-icon">⌂</span>
-      <div><small>מקומות</small><strong id="dashVenues">0</strong></div>
-      <i>←</i>
-    </button>
-    <button onclick="go('vendors')">
-      <span class="ww19-choice-icon">◇</span>
-      <div><small>ספקים</small><strong id="dashVendors">0</strong></div>
-      <i>←</i>
-    </button>
-  </div>
+  <button id="resumePlanningBtn" class="ww21-resume-btn" onclick="resumePlanning()">
+    <span id="resumePlanningLabel">להתחיל</span><i>←</i>
+  </button>
 </section>
 
 <section id="setup" class="section">
@@ -2588,12 +2592,12 @@ html {
       <div class="grid two">
         <div class="field">
           <label>שמות בני הזוג</label>
-          <input id="coupleNames" placeholder="למשל: קרן ודן">
+          <input id="coupleNames">
         </div>
 
         <div class="field">
           <label>מספר אורחים משוער</label>
-          <input id="estimatedGuests" type="number" min="0" placeholder="250">
+          <input id="estimatedGuests" type="number" min="0">
         </div>
 
         <div class="field">
@@ -2603,7 +2607,7 @@ html {
 
         <div class="field">
           <label>תקציב כולל משוער <span class="optional-label">אופציונלי</span></label>
-          <input id="weddingBudgetInput" type="number" min="0" placeholder="אפשר להשאיר ריק">
+          <input id="weddingBudgetInput" type="number" min="0">
         </div>
       </div>
     </div>
@@ -2630,17 +2634,16 @@ html {
       </div>
 
       <div class="grid three setup-select-grid">
-        <div class="field">
-          <label>סגנון</label>
-          <select id="style">
-            <option value="">לא החלטנו</option>
-            <option>מודרני</option>
-            <option>אורבני</option>
-            <option>טבע</option>
-            <option>קלאסי</option>
-            <option>כפרי</option>
-            <option>יוקרתי</option>
-          </select>
+        <div class="field ww21-style-field">
+          <label>סגנון <span class="optional-label">אפשר לבחור כמה</span></label>
+          <div id="stylePills" class="ww21-style-pills">
+            <label><input type="checkbox" value="מודרני"><span>מודרני</span></label>
+            <label><input type="checkbox" value="אורבני"><span>אורבני</span></label>
+            <label><input type="checkbox" value="טבע"><span>טבע</span></label>
+            <label><input type="checkbox" value="קלאסי"><span>קלאסי</span></label>
+            <label><input type="checkbox" value="כפרי"><span>כפרי</span></label>
+            <label><input type="checkbox" value="יוקרתי"><span>יוקרתי</span></label>
+          </div>
         </div>
 
         <div class="field">
@@ -2682,7 +2685,7 @@ html {
           <div class="field">
             <label>מחיר מקסימלי למנה <span class="optional-label">אופציונלי</span></label>
             <div class="input-with-suffix">
-              <input id="maxPricePerGuest" type="number" min="0" placeholder="למשל 380">
+              <input id="maxPricePerGuest" type="number" min="0">
               <span>₪</span>
             </div>
           </div>
@@ -2748,7 +2751,7 @@ html {
     <div class="card setup-final-card">
       <div class="field" style="margin-bottom:0">
         <label>מה הכי חשוב לכם?</label>
-        <input id="priorities" placeholder="למשל: אוכל, אווירה, שירות, חופה יפה">
+        <input id="priorities">
         <div class="field-hint">אפשר לכתוב במילים חופשיות. WedWise תשתמש בזה כדי לדייק את ההמלצות.</div>
       </div>
 
@@ -2765,7 +2768,7 @@ html {
     <div><h1>מקומות</h1><div class="subtitle">WedWise מחפשת מקומות אמיתיים ברשת, מצליבה מקורות ומציגה התאמה לפי מה שחשוב לכם.</div></div>
     <div class="row">
       <button id="smartSearchBtn" class="btn primary" onclick="searchRecommendedVenues(false)">✨ מצאי מקומות מתאימים</button>
-      <button id="smartRefreshBtn" class="btn ghost" onclick="searchRecommendedVenues(true)" title="מבצע חיפוש חדש ברשת ולא משתמש בתוצאה שנשמרה">↻ רענני מהרשת</button>
+      <button id="smartRefreshBtn" class="btn ghost" onclick="searchRecommendedVenues(true)">↻ רענון מהאינטרנט</button>
       <button class="btn secondary" onclick="toggleVenueForm()">+ הוספה ידנית</button>
     </div>
   </div>
@@ -2782,7 +2785,7 @@ html {
     <div id="smartSearchStatus" class="status" style="margin-top:14px">
       לחצי על ״מצאי מקומות מתאימים״ כדי להתחיל.
     </div>
-    <div id="venueSearchFreshness" class="search-freshness"></div>
+    <div id="venueSearchFreshness" class="ww21-search-freshness"></div>
 
     <div id="recommendationResults" class="reco-results"></div>
   </div>
@@ -2925,12 +2928,12 @@ html {
 
     <div class="row">
       <button id="vendorSearchBtn" class="btn primary" onclick="searchRecommendedVendors(false)">✨ מצאי ספקים מתאימים</button>
-      <button id="vendorRefreshBtn" class="btn secondary" onclick="searchRecommendedVendors(true)" title="מבצע חיפוש חדש ברשת ולא משתמש בתוצאה שנשמרה">↻ רענני מהרשת</button>
+      <button id="vendorRefreshBtn" class="btn secondary" onclick="searchRecommendedVendors(true)">↻ רענון מהאינטרנט</button>
       <button class="btn ghost" onclick="go('vendorCompare')">להשוואת הספקים</button>
     </div>
 
     <div id="vendorSearchStatus" class="status" style="margin-top:14px">בחרי קטגוריה ולחצי על החיפוש החכם.</div>
-    <div id="vendorSearchFreshness" class="search-freshness"></div>
+    <div id="vendorSearchFreshness" class="ww21-search-freshness"></div>
     <div id="vendorRecommendationResults" class="reco-results"></div>
   </div>
 
@@ -3028,46 +3031,56 @@ html {
   <div class="ww19-page-header">
     <div>
       <div class="page-kicker">ניהול כספי</div>
-      <h1>תקציב</h1>
+      <h1>תקציב ותשלומים</h1>
+      <div class="subtitle">כמה נסגר, כמה כבר שולם ומה עדיין מחכה לתשלום.</div>
     </div>
-    <button class="ww19-more-btn" onclick="addExpensePrompt()" aria-label="הוספת הוצאה">＋</button>
+    <button class="ww19-more-btn" onclick="addExpensePrompt()" aria-label="הוספת הוצאה נוספת">＋</button>
   </div>
 
-  <div class="ww19-budget-hero">
-    <div class="ww19-budget-leaf" aria-hidden="true">❧</div>
+  <div class="ww22-budget-overview">
     <div class="budget-donut ww19-budget-donut" id="budgetDonut">
       <div class="budget-donut-inner">
         <strong id="budgetPercentText">0%</strong>
-        <span>נוצל</span>
+        <span>מהתקציב נסגר</span>
       </div>
     </div>
-    <div class="ww19-budget-stats">
-      <div><span>הוצאות</span><strong id="spentTotal">0 ₪</strong></div>
-      <div><span>נותר</span><strong id="remainingTotal">-</strong></div>
-      <div><span>תקציב כולל</span><strong id="budgetTotal">לא הוגדר</strong></div>
+    <div class="ww22-budget-summary">
+      <div class="ww22-money-stat committed"><span>סה״כ נסגר</span><strong id="committedTotal">0 ₪</strong></div>
+      <div class="ww22-money-stat paid"><span>כבר שולם</span><strong id="spentTotal">0 ₪</strong></div>
+      <div class="ww22-money-stat pending"><span>נותר לשלם ממה שנסגר</span><strong id="remainingTotal">0 ₪</strong></div>
+      <div class="ww22-money-stat target"><span>יעד תקציב</span><strong id="budgetTotal">לא הוגדר</strong></div>
     </div>
+  </div>
+
+  <div id="budgetTargetStatus" class="ww22-budget-target-status"></div>
+
+  <div class="ww19-panel">
+    <div class="ww19-panel-head">
+      <div><div class="section-mini-label">מה צריך לשלם בהמשך</div><h2>תשלומים קרובים</h2></div>
+    </div>
+    <div id="budgetUpcomingPayments" class="ww22-upcoming-payments"></div>
   </div>
 
   <div class="ww19-panel">
     <div class="ww19-panel-head">
-      <h2>הוצאות אחרונות</h2>
-      <button class="ww19-see-all" onclick="addExpensePrompt()">הוספת הוצאה ＋</button>
-    </div>
-    <div id="recentExpenseList" class="ww19-list-rows"></div>
-  </div>
-
-  <div class="ww19-panel">
-    <div class="ww19-panel-head">
-      <h2>קטגוריות תקציב</h2>
+      <div><div class="section-mini-label">לפי מה שכבר סגרתם</div><h2>חלוקת התקציב</h2></div>
     </div>
     <div id="budgetCategoryList" class="ww19-budget-categories"></div>
   </div>
 
+  <div class="ww19-panel">
+    <div class="ww19-panel-head">
+      <div><div class="section-mini-label">שאינן חלק מחוזה מקום / ספק</div><h2>הוצאות נוספות ששולמו</h2></div>
+      <button class="ww19-see-all" onclick="addExpensePrompt()">+ הוספת הוצאה</button>
+    </div>
+    <div id="recentExpenseList" class="ww19-list-rows"></div>
+  </div>
+
   <div class="ww19-panel ww19-desktop-expense-table">
-    <div class="ww19-panel-head"><h2>כל ההוצאות</h2></div>
+    <div class="ww19-panel-head"><h2>פירוט הוצאות נוספות</h2></div>
     <div class="responsive-table">
       <table>
-        <thead><tr><th>קטגוריה</th><th>תיאור</th><th>סכום</th><th></th></tr></thead>
+        <thead><tr><th>קטגוריה</th><th>תיאור</th><th>סכום ששולם</th><th></th></tr></thead>
         <tbody id="expenseTable"></tbody>
       </table>
     </div>
@@ -3745,516 +3758,237 @@ function mergeChecklistWithDefaults(saved){
 
 const FUNCTION_URL="https://fmcfhhdctqydvypclppj.supabase.co/functions/v1/recommend-venues";
 
-const SEARCH_ACCESS_STORAGE_KEY="ww_search_access_key";
-let __searchAccessResolver=null;
-
-function getStoredSearchAccess(){
- return (storageGet(SEARCH_ACCESS_STORAGE_KEY,"")||"").trim();
-}
-function forgetSearchAccess(){
- storageRemove(SEARCH_ACCESS_STORAGE_KEY);
-}
-function openSearchAccessModal(message=""){
- return new Promise(resolve=>{
-   __searchAccessResolver=resolve;
-   const modal=document.getElementById("searchAccessModal");
-   const input=document.getElementById("searchAccessInput");
-   const error=document.getElementById("searchAccessError");
-   error.textContent=message||"";
-   input.value="";
-   modal.classList.add("open");
-   modal.setAttribute("aria-hidden","false");
-   document.body.style.overflow="hidden";
-   setTimeout(()=>input.focus(),60);
- });
-}
-function submitSearchAccess(){
- const input=document.getElementById("searchAccessInput");
- const error=document.getElementById("searchAccessError");
- const key=input.value.trim();
- if(key.length<6){
-   error.textContent="הקוד קצר מדי. נסי שוב.";
-   return;
- }
- if(document.getElementById("rememberSearchAccess").checked){
-   storageSet(SEARCH_ACCESS_STORAGE_KEY,key);
- }
- closeSearchAccessModal(true,key);
-}
-function closeSearchAccessModal(success=false,key=""){
- const modal=document.getElementById("searchAccessModal");
- if(modal){
-   modal.classList.remove("open");
-   modal.setAttribute("aria-hidden","true");
- }
- document.body.style.overflow="";
- const resolver=__searchAccessResolver;
- __searchAccessResolver=null;
- if(resolver)resolver(success?key:"");
-}
-async function getSearchAccessKey(forcePrompt=false,message=""){
- if(!forcePrompt){
-   const stored=getStoredSearchAccess();
-   if(stored)return stored;
- }
- return await openSearchAccessModal(message);
-}
 async function protectedSearchFetch(payload){
- if(!navigator.onLine)throw new Error("אין כרגע חיבור לאינטרנט. אפשר להמשיך לעבוד באפליקציה ולנסות את החיפוש שוב כשתחזרי לרשת.");
- let key=await getSearchAccessKey(false);
- if(!key)throw new Error("החיפוש בוטל");
-
- for(let attempt=0;attempt<2;attempt++){
-   const response=await fetch(FUNCTION_URL,{
-     method:"POST",
-     headers:{
-       "Content-Type":"application/json",
-       "X-WedWise-Key":key
-     },
-     body:JSON.stringify(payload)
-   });
-
-   if(response.status!==401)return response;
-
-   forgetSearchAccess();
-   if(attempt===0){
-     key=await getSearchAccessKey(true,"הקוד לא נכון. בדקי אותו ונסי שוב.");
-     if(!key)throw new Error("החיפוש בוטל");
-   }
- }
- throw new Error("קוד הגישה אינו תקין");
+  if(!navigator.onLine)throw new Error("אין כרגע חיבור לאינטרנט. נסי שוב כשתחזרי לרשת.");
+  return await fetch(FUNCTION_URL,{
+    method:"POST",
+    headers:{"Content-Type":"application/json"},
+    body:JSON.stringify(payload)
+  });
 }
-
 
 const __wwMemoryStorage={};
-function storageGet(key,fallback=null){
-  try{
-    const value=window.localStorage.getItem(key);
-    return value===null?fallback:value;
-  }catch(e){
-    return Object.prototype.hasOwnProperty.call(__wwMemoryStorage,key)?__wwMemoryStorage[key]:fallback;
-  }
-}
-function storageSet(key,value){
-  try{
-    window.localStorage.setItem(key,String(value));
-  }catch(e){
-    __wwMemoryStorage[key]=String(value);
-  }
-}
-function storageRemove(key){
-  try{
-    window.localStorage.removeItem(key);
-  }catch(e){
-    delete __wwMemoryStorage[key];
-  }
-}
-
-function storageIsPersistent(){
-  try{
-    const key='__ww_probe__';
-    window.localStorage.setItem(key,'1');
-    window.localStorage.removeItem(key);
-    return true;
-  }catch(e){
-    return false;
-  }
-}
-function showStorageNoticeIfNeeded(){
-  const notice=document.getElementById('mobileStorageNotice');
-  if(notice && !storageIsPersistent())notice.style.display='block';
-}
-
-function storageJSON(key,fallback){
-  const raw=storageGet(key,null);
-  if(raw===null)return fallback;
-  try{return JSON.parse(raw)}catch(e){return fallback}
-}
-
-
-const CLOUD_STATE_TABLE="wedwise_user_state";
-const CLOUD_LOCAL_TS_KEY="ww_cloud_local_updated_at";
+let currentUserId="";
 let cloudClient=null;
 let cloudUser=null;
-let cloudReady=false;
-let cloudApplying=false;
 let cloudSaveTimer=null;
-let cloudLastError="";
-let cloudConfig=null;
+let cloudApplying=false;
+const CLOUD_TABLE="wedwise_user_state";
+const LEGACY_MIGRATION_MARKER="ww22_legacy_migrated_uid";
 
-function cloudSnapshot(){
-  return {
-    setup:state.setup,
-    venues:state.venues,
-    checklist:state.checklist,
-    expenses:state.expenses,
-    guests:state.guests,
-    seatingTables:state.seatingTables,
-    gifts:state.gifts,
-    recommendations:state.recommendations,
-    compareWeights:state.compareWeights,
-    vendors:state.vendors,
-    vendorRecommendations:state.vendorRecommendations,
-    activeVendorCategory:state.activeVendorCategory,
-    vendorCompareWeights:state.vendorCompareWeights
-  };
-}
+function rawStorageGet(key,fallback=null){try{const v=window.localStorage.getItem(key);return v===null?fallback:v}catch(e){return Object.prototype.hasOwnProperty.call(__wwMemoryStorage,key)?__wwMemoryStorage[key]:fallback}}
+function rawStorageSet(key,value){try{window.localStorage.setItem(key,String(value))}catch(e){__wwMemoryStorage[key]=String(value)}}
+function rawStorageRemove(key){try{window.localStorage.removeItem(key)}catch(e){delete __wwMemoryStorage[key]}}
+function userPrefix(){return currentUserId?`ww_uid_${currentUserId}__`:"ww_no_session__"}
+function storageGet(key,fallback=null){return rawStorageGet(userPrefix()+key,fallback)}
+function storageSet(key,value){rawStorageSet(userPrefix()+key,value)}
+function storageRemove(key){rawStorageRemove(userPrefix()+key)}
+function storageJSON(key,fallback){const raw=storageGet(key,null);if(raw===null)return fallback;try{return JSON.parse(raw)}catch(e){return fallback}}
+function storageIsPersistent(){try{const k="__ww_probe__";window.localStorage.setItem(k,"1");window.localStorage.removeItem(k);return true}catch(e){return false}}
+function showStorageNoticeIfNeeded(){const n=document.getElementById("mobileStorageNotice");if(n&&!storageIsPersistent())n.style.display="block"}
 
-function hasMeaningfulLocalState(){
-  return Boolean(
-    state.setup?.coupleNames ||
-    state.setup?.estimatedGuests ||
-    state.setup?.weddingDate ||
-    state.venues?.length ||
-    state.expenses?.length ||
-    state.guests?.length ||
-    state.gifts?.length ||
-    state.vendors?.length
-  );
-}
-
-function setCloudStatus(kind,text,email=""){
-  const dot=document.getElementById("cloudSyncDot");
-  const sideDot=document.getElementById("cloudSidebarDot");
-  const status=document.getElementById("cloudAccountStatus");
-  const accountEmail=document.getElementById("cloudAccountEmail");
-  const syncText=document.getElementById("cloudSyncText");
-  [dot,sideDot].forEach(el=>{
-    if(!el)return;
-    el.classList.remove("local","saving","synced","error");
-    el.classList.add(kind||"local");
-  });
-  if(status)status.textContent=text||"שמירה מקומית";
-  if(syncText)syncText.textContent=text||"שמירה מקומית";
-  if(accountEmail){
-    accountEmail.textContent=email || (cloudUser?.email||"התחברי כדי לסנכרן בין הטלפון למחשב");
-  }
-  const login=document.getElementById("cloudLoginBtn");
-  const logout=document.getElementById("cloudLogoutBtn");
-  const sync=document.getElementById("cloudSyncBtn");
-  const signedIn=Boolean(cloudUser);
-  if(login)login.style.display=signedIn?"none":"inline-block";
-  if(logout)logout.style.display=signedIn?"inline-block":"none";
-  if(sync)sync.style.display=signedIn?"inline-block":"none";
-}
-
-function openCloudAuth(){
-  if(cloudUser){
-    toggleMobileMore(true);
-    return;
-  }
-  const modal=document.getElementById("cloudAuthModal");
-  if(!modal)return;
-  modal.classList.add("open");
-  modal.setAttribute("aria-hidden","false");
-  document.body.style.overflow="hidden";
-  const msg=document.getElementById("cloudAuthMessage");
-  if(msg){msg.textContent="";msg.className="cloud-auth-message";}
-  setTimeout(()=>document.getElementById("cloudEmailInput")?.focus(),60);
-}
-
-function closeCloudAuth(){
-  const modal=document.getElementById("cloudAuthModal");
-  if(modal){
-    modal.classList.remove("open");
-    modal.setAttribute("aria-hidden","true");
-  }
-  document.body.style.overflow="";
-}
-
-async function sendCloudMagicLink(){
-  const email=(document.getElementById("cloudEmailInput")?.value||"").trim();
-  const msg=document.getElementById("cloudAuthMessage");
-  const btn=document.getElementById("cloudAuthSubmitBtn");
-  if(!email || !email.includes("@")){
-    if(msg){msg.textContent="הכניסי כתובת מייל תקינה.";msg.className="cloud-auth-message error";}
-    return;
-  }
-  if(!cloudClient){
-    if(msg){msg.textContent="הסנכרון עדיין לא מוכן. נסי שוב בעוד כמה שניות.";msg.className="cloud-auth-message error";}
-    return;
-  }
-  try{
-    if(btn){btn.disabled=true;btn.textContent="שולחת...";}
-    const redirectTo=location.origin+location.pathname;
-    const {error}=await cloudClient.auth.signInWithOtp({
-      email,
-      options:{emailRedirectTo:redirectTo}
-    });
-    if(error)throw error;
-    if(msg){
-      msg.textContent="שלחנו קישור כניסה למייל. פתחי אותו באותו מכשיר או במכשיר שבו תרצי להשתמש ב-WedWise.";
-      msg.className="cloud-auth-message good";
-    }
-  }catch(err){
-    console.error(err);
-    if(msg){msg.textContent="לא הצלחתי לשלוח קישור: "+(err?.message||"שגיאה לא ידועה");msg.className="cloud-auth-message error";}
-  }finally{
-    if(btn){btn.disabled=false;btn.textContent="שלחי קישור כניסה";}
-  }
-}
-
-async function signOutCloud(){
-  if(!cloudClient)return;
-  try{await cloudClient.auth.signOut()}catch(e){console.error(e)}
-  cloudUser=null;
-  setCloudStatus("local","שמירה מקומית");
-}
-
-function persistLocalState(){
-  storageSet("ww3_setup",JSON.stringify(state.setup));
-  storageSet("ww3_venues",JSON.stringify(state.venues));
-  storageSet("ww3_checklist",JSON.stringify(state.checklist));
-  storageSet("ww3_expenses",JSON.stringify(state.expenses));
-  storageSet("ww3_guests",JSON.stringify(state.guests));
-  storageSet("ww15_seating_tables",JSON.stringify(state.seatingTables));
-  storageSet("ww15_gifts",JSON.stringify(state.gifts));
-  storageSet("ww5_recommendations",JSON.stringify(state.recommendations));
-  storageSet("ww7_compare_weights",JSON.stringify(state.compareWeights));
-  storageSet("ww11_vendors",JSON.stringify(state.vendors));
-  storageSet("ww11_vendor_recommendations",JSON.stringify(state.vendorRecommendations));
-  storageSet("ww11_vendor_category",state.activeVendorCategory);
-  storageSet("ww11_vendor_weights",JSON.stringify(state.vendorCompareWeights));
-}
-
-function scheduleCloudSave(){
-  if(cloudApplying || !cloudUser || !cloudClient)return;
-  clearTimeout(cloudSaveTimer);
-  setCloudStatus("saving","שומרת בענן...",cloudUser.email);
-  cloudSaveTimer=setTimeout(()=>saveCloudNow(),1100);
-}
-
-async function saveCloudNow(force=false){
-  if(!cloudUser || !cloudClient || cloudApplying)return;
-  if(!navigator.onLine){
-    setCloudStatus("saving","ממתינה לחיבור...",cloudUser.email);
-    return;
-  }
-  try{
-    setCloudStatus("saving","שומרת בענן...",cloudUser.email);
-    const now=new Date().toISOString();
-    const {data,error}=await cloudClient
-      .from(CLOUD_STATE_TABLE)
-      .upsert({user_id:cloudUser.id,state:cloudSnapshot(),updated_at:now},{onConflict:"user_id"})
-      .select("updated_at")
-      .single();
-    if(error)throw error;
-    const ts=Date.parse(data?.updated_at||now);
-    storageSet(CLOUD_LOCAL_TS_KEY,String(ts));
-    cloudLastError="";
-    setCloudStatus("synced","נשמר בענן",cloudUser.email);
-  }catch(err){
-    console.error("Cloud save failed",err);
-    cloudLastError=err?.message||"שגיאת סנכרון";
-    setCloudStatus("error","שגיאת סנכרון",cloudUser.email);
-  }
-}
-
-function applyCloudSnapshot(snapshot){
-  if(!snapshot || typeof snapshot!=="object")return;
-  cloudApplying=true;
-  try{
-    state.setup=snapshot.setup||{};
-    state.venues=Array.isArray(snapshot.venues)?snapshot.venues:[];
-    state.checklist=mergeChecklistWithDefaults(snapshot.checklist||null);
-    state.expenses=Array.isArray(snapshot.expenses)?snapshot.expenses:[];
-    state.guests=Array.isArray(snapshot.guests)?snapshot.guests.map(normalizeGuest):[];
-    state.seatingTables=Array.isArray(snapshot.seatingTables)?snapshot.seatingTables:[];
-    state.gifts=Array.isArray(snapshot.gifts)?snapshot.gifts:[];
-    state.recommendations=Array.isArray(snapshot.recommendations)?snapshot.recommendations:[];
-    state.compareWeights=snapshot.compareWeights||{price:20,food:20,atmosphere:15,location:15,design:10,service:10,parking:5,couple:5};
-    state.vendors=Array.isArray(snapshot.vendors)?snapshot.vendors:[];
-    state.vendorRecommendations=snapshot.vendorRecommendations||{};
-    state.activeVendorCategory=snapshot.activeVendorCategory||"photographer";
-    state.vendorCompareWeights=snapshot.vendorCompareWeights||{};
-    state.venues.forEach(ensureVenueDetails);
-    state.vendors.forEach(ensureVendorDetails);
-    persistLocalState();
-    renderEverything();
-  }finally{
-    cloudApplying=false;
-  }
-}
-
-function renderEverything(){
-  loadSetup();
-  loadComparisonWeights();
-  renderVenues();
-  renderRecommendations();
-  renderComparisonImpressionEditor();
-  renderVendorSection();
-  renderVendorCompare();
-  renderChecklist();
-  renderBudget();
-  renderGuests();
-  renderGifts();
-  updateDashboard();
-  syncMobileNavigation(document.querySelector(".section.active")?.id||"dashboard");
-}
-
-async function reconcileCloudState(){
-  if(!cloudUser || !cloudClient)return;
-  try{
-    setCloudStatus("saving","בודקת סנכרון...",cloudUser.email);
-    const {data,error}=await cloudClient
-      .from(CLOUD_STATE_TABLE)
-      .select("state,updated_at")
-      .eq("user_id",cloudUser.id)
-      .maybeSingle();
-
-    if(error)throw error;
-
-    const localTs=Number(storageGet(CLOUD_LOCAL_TS_KEY,"0"))||0;
-    const localHas=hasMeaningfulLocalState();
-
-    if(!data){
-      await saveCloudNow(true);
-      return;
-    }
-
-    const remoteTs=Date.parse(data.updated_at||0)||0;
-
-    if(localHas && localTs>remoteTs+2500){
-      await saveCloudNow(true);
-    }else{
-      applyCloudSnapshot(data.state||{});
-      storageSet(CLOUD_LOCAL_TS_KEY,String(remoteTs));
-      setCloudStatus("synced","מסונכרן",cloudUser.email);
-    }
-  }catch(err){
-    console.error("Cloud reconcile failed",err);
-    cloudLastError=err?.message||"שגיאת סנכרון";
-    setCloudStatus("error","שגיאת סנכרון",cloudUser.email);
-  }
-}
-
-async function syncCloudManually(){
-  if(!cloudUser){
-    openCloudAuth();
-    return;
-  }
-  await reconcileCloudState();
-}
-
-function findPublishableKey(config){
-  return config?.publishableKey||"";
-}
-
-async function initCloud(){
-  try{
-    setCloudStatus("local","מאתחלת סנכרון...");
-    const response=await fetch(FUNCTION_URL+"?config=1",{method:"GET",cache:"no-store"});
-    const config=await response.json();
-    if(!response.ok || !config?.success)throw new Error(config?.error||"Cloud config unavailable");
-    const publishableKey=findPublishableKey(config);
-    if(!publishableKey || !window.supabase?.createClient)throw new Error("Supabase client configuration missing");
-
-    cloudConfig=config;
-    cloudClient=window.supabase.createClient(config.supabaseUrl,publishableKey,{
-      auth:{persistSession:true,autoRefreshToken:true,detectSessionInUrl:true}
-    });
-    cloudReady=true;
-
-    cloudClient.auth.onAuthStateChange((event,session)=>{
-      setTimeout(async()=>{
-        cloudUser=session?.user||null;
-        if(cloudUser){
-          closeCloudAuth();
-          setCloudStatus("saving","מתחברת לענן...",cloudUser.email);
-          await reconcileCloudState();
-        }else{
-          setCloudStatus("local","שמירה מקומית");
-        }
-      },0);
-    });
-
-    const {data}=await cloudClient.auth.getSession();
-    cloudUser=data?.session?.user||null;
-    if(cloudUser){
-      await reconcileCloudState();
-    }else{
-      setCloudStatus("local","שמירה מקומית");
-    }
-  }catch(err){
-    console.error("Cloud init failed",err);
-    cloudReady=false;
-    setCloudStatus("error","ענן לא זמין כרגע");
-  }
-}
-
-function updateConnectivityUi(){
-  const banner=document.getElementById("offlineBanner");
-  if(banner)banner.style.display=navigator.onLine?"none":"block";
-  if(navigator.onLine && cloudUser)scheduleCloudSave();
-}
-window.addEventListener("online",updateConnectivityUi);
-window.addEventListener("offline",updateConnectivityUi);
-
-const state={
- setup:storageJSON("ww3_setup",{}),
- venues:storageJSON("ww3_venues",[]),
- checklist:mergeChecklistWithDefaults(storageJSON("ww3_checklist",null)),
- expenses:storageJSON("ww3_expenses",[]),
- guests:storageJSON("ww3_guests",[]),
- seatingTables:storageJSON("ww15_seating_tables",[]),
- gifts:storageJSON("ww15_gifts",[]),
- recommendations:storageJSON("ww5_recommendations",[]),
+function emptyStateSnapshot(){return{
+ setup:{},venues:[],checklist:mergeChecklistWithDefaults(null),expenses:[],guests:[],seatingTables:[],gifts:[],recommendations:[],
+ compareWeights:{price:20,food:20,atmosphere:15,location:15,design:10,service:10,parking:5,couple:5},
+ vendors:[],vendorRecommendations:{},activeVendorCategory:"photographer",vendorCompareWeights:{}
+}}
+function snapshotFromState(){return{
+ setup:state.setup,venues:state.venues,checklist:state.checklist,expenses:state.expenses,guests:state.guests,
+ seatingTables:state.seatingTables,gifts:state.gifts,recommendations:state.recommendations,compareWeights:state.compareWeights,
+ vendors:state.vendors,vendorRecommendations:state.vendorRecommendations,activeVendorCategory:state.activeVendorCategory,
+ vendorCompareWeights:state.vendorCompareWeights
+}}
+function snapshotHasData(s){return Boolean(s?.setup?.coupleNames||s?.setup?.weddingDate||s?.setup?.estimatedGuests||s?.venues?.length||s?.vendors?.length||s?.expenses?.length||s?.guests?.length||s?.gifts?.length)}
+function localSnapshotForCurrentUser(){return{
+ setup:storageJSON("ww3_setup",{}),venues:storageJSON("ww3_venues",[]),checklist:mergeChecklistWithDefaults(storageJSON("ww3_checklist",null)),
+ expenses:storageJSON("ww3_expenses",[]),guests:storageJSON("ww3_guests",[]),seatingTables:storageJSON("ww15_seating_tables",[]),
+ gifts:storageJSON("ww15_gifts",[]),recommendations:storageJSON("ww5_recommendations",[]),
  compareWeights:storageJSON("ww7_compare_weights",null)||{price:20,food:20,atmosphere:15,location:15,design:10,service:10,parking:5,couple:5},
- vendors:storageJSON("ww11_vendors",[]),
- vendorRecommendations:storageJSON("ww11_vendor_recommendations",{}),
- activeVendorCategory:storageGet("ww11_vendor_category",null)||"photographer",
- vendorCompareWeights:storageJSON("ww11_vendor_weights",{}),
- activeVenueId:null
-};
-function persist(){
-  persistLocalState();
-  storageSet(CLOUD_LOCAL_TS_KEY,String(Date.now()));
-  scheduleCloudSave();
+ vendors:storageJSON("ww11_vendors",[]),vendorRecommendations:storageJSON("ww11_vendor_recommendations",{}),
+ activeVendorCategory:storageGet("ww11_vendor_category","photographer")||"photographer",vendorCompareWeights:storageJSON("ww11_vendor_weights",{})
+}}
+function readLegacySnapshot(){
+ const activeName=rawStorageGet("ww_meta_active_username","");
+ const slug=String(activeName||"").trim().toLocaleLowerCase("he-IL").replace(/[^\p{L}\p{N}_-]+/gu,"_");
+ const prefix=slug?`ww_user_${slug}__`:"";
+ const read=(key,fallback)=>{
+   for(const k of (prefix?[prefix+key,key]:[key])){
+     const raw=rawStorageGet(k,null);
+     if(raw!==null){try{return JSON.parse(raw)}catch(e){return raw}}
+   }
+   return fallback;
+ };
+ return{
+  setup:read("ww3_setup",{}),venues:read("ww3_venues",[]),checklist:mergeChecklistWithDefaults(read("ww3_checklist",null)),
+  expenses:read("ww3_expenses",[]),guests:read("ww3_guests",[]),seatingTables:read("ww15_seating_tables",[]),
+  gifts:read("ww15_gifts",[]),recommendations:read("ww5_recommendations",[]),
+  compareWeights:read("ww7_compare_weights",null)||{price:20,food:20,atmosphere:15,location:15,design:10,service:10,parking:5,couple:5},
+  vendors:read("ww11_vendors",[]),vendorRecommendations:read("ww11_vendor_recommendations",{}),
+  activeVendorCategory:read("ww11_vendor_category","photographer")||"photographer",vendorCompareWeights:read("ww11_vendor_weights",{})
+ }
 }
+function persistLocalSnapshot(){
+ storageSet("ww3_setup",JSON.stringify(state.setup));storageSet("ww3_venues",JSON.stringify(state.venues));
+ storageSet("ww3_checklist",JSON.stringify(state.checklist));storageSet("ww3_expenses",JSON.stringify(state.expenses));
+ storageSet("ww3_guests",JSON.stringify(state.guests));storageSet("ww15_seating_tables",JSON.stringify(state.seatingTables));
+ storageSet("ww15_gifts",JSON.stringify(state.gifts));storageSet("ww5_recommendations",JSON.stringify(state.recommendations));
+ storageSet("ww7_compare_weights",JSON.stringify(state.compareWeights));storageSet("ww11_vendors",JSON.stringify(state.vendors));
+ storageSet("ww11_vendor_recommendations",JSON.stringify(state.vendorRecommendations));storageSet("ww11_vendor_category",state.activeVendorCategory);
+ storageSet("ww11_vendor_weights",JSON.stringify(state.vendorCompareWeights));
+}
+function setSyncStatus(kind,text){const el=document.getElementById("moreSyncStatus");if(el){el.textContent=text;el.className="ww22-sync-status "+(kind||"")}}
+function applyUserUi(){
+ const email=cloudUser?.email||"",initial=email?email[0].toUpperCase():"♡";
+ if(document.getElementById("topUserInitial"))topUserInitial.textContent=initial;
+ if(document.getElementById("moreUserInitial"))moreUserInitial.textContent=initial;
+ if(document.getElementById("moreUserEmail"))moreUserEmail.textContent=email||"—";
+}
+function showGateState(which){["emailGateLoading","emailGateLogin","emailGateSent"].forEach(id=>{const el=document.getElementById(id);if(el)el.style.display=id===which?"block":"none"})}
+function showEmailLogin(message=""){
+ const gate=document.getElementById("emailGate");if(gate){gate.classList.remove("hidden");gate.setAttribute("aria-hidden","false")}
+ document.body.style.overflow="hidden";showGateState("emailGateLogin");
+ const msg=document.getElementById("emailGateMessage");if(msg){msg.textContent=message;msg.className="email-gate-message"}
+ setTimeout(()=>document.getElementById("emailGateInput")?.focus(),80);
+}
+function hideEmailGate(){const gate=document.getElementById("emailGate");if(gate){gate.classList.add("hidden");gate.setAttribute("aria-hidden","true")}document.body.style.overflow=""}
+async function sendLoginLink(){
+ const input=document.getElementById("emailGateInput"),btn=document.getElementById("emailGateButton"),msg=document.getElementById("emailGateMessage");
+ const email=String(input?.value||"").trim();
+ if(!email||!email.includes("@")){if(msg)msg.textContent="הכניסו כתובת מייל תקינה.";return}
+ if(!cloudClient){if(msg)msg.textContent="הכניסה עדיין נטענת. נסו שוב בעוד רגע.";return}
+ try{
+  btn.disabled=true;btn.textContent="שולחים...";
+  const redirectTo=location.origin+location.pathname;
+  const {error}=await cloudClient.auth.signInWithOtp({email,options:{emailRedirectTo:redirectTo}});
+  if(error)throw error;
+  document.getElementById("emailSentText").textContent=`שלחנו קישור כניסה אל ${email}. פתחו אותו כדי להיכנס לתכנון שלכם.`;
+  showGateState("emailGateSent");
+ }catch(err){console.error(err);if(msg)msg.textContent="לא הצלחנו לשלוח קישור: "+(err?.message||"שגיאה לא ידועה")}
+ finally{btn.disabled=false;btn.textContent="שליחת קישור כניסה"}
+}
+async function signOutUser(){
+ try{if(cloudClient)await cloudClient.auth.signOut()}catch(e){console.error(e)}
+ cloudUser=null;currentUserId="";toggleMobileMore(false);showEmailLogin();
+}
+function scheduleCloudSave(){
+ if(cloudApplying||!cloudClient||!cloudUser)return;
+ clearTimeout(cloudSaveTimer);setSyncStatus("saving","שומרת...");
+ cloudSaveTimer=setTimeout(saveCloudNow,750);
+}
+async function saveCloudNow(){
+ if(cloudApplying||!cloudClient||!cloudUser)return;
+ if(!navigator.onLine){setSyncStatus("saving","ממתינה לאינטרנט");return}
+ try{
+  setSyncStatus("saving","שומרת...");
+  const {error}=await cloudClient.from(CLOUD_TABLE).upsert({user_id:cloudUser.id,state:snapshotFromState(),updated_at:new Date().toISOString()},{onConflict:"user_id"});
+  if(error)throw error;setSyncStatus("","מסונכרן");
+ }catch(err){console.error("Cloud save",err);setSyncStatus("error","שגיאת סנכרון")}
+}
+function applySnapshot(snapshot){
+ const s=snapshot||emptyStateSnapshot();cloudApplying=true;
+ try{
+  state.setup=s.setup||{};state.venues=Array.isArray(s.venues)?s.venues:[];state.checklist=mergeChecklistWithDefaults(s.checklist||null);
+  state.expenses=Array.isArray(s.expenses)?s.expenses:[];state.guests=Array.isArray(s.guests)?s.guests:[];
+  state.seatingTables=Array.isArray(s.seatingTables)?s.seatingTables:[];state.gifts=Array.isArray(s.gifts)?s.gifts:[];
+  state.recommendations=Array.isArray(s.recommendations)?s.recommendations:[];state.compareWeights=s.compareWeights||{price:20,food:20,atmosphere:15,location:15,design:10,service:10,parking:5,couple:5};
+  state.vendors=Array.isArray(s.vendors)?s.vendors:[];state.vendorRecommendations=s.vendorRecommendations||{};
+  state.activeVendorCategory=s.activeVendorCategory||"photographer";state.vendorCompareWeights=s.vendorCompareWeights||{};
+  state.venues.forEach(ensureVenueDetails);state.vendors.forEach(ensureVendorDetails);persistLocalSnapshot();renderAllForUser();
+ }finally{cloudApplying=false}
+}
+function renderAllForUser(){
+ loadSetup();loadComparisonWeights();renderVenues();renderRecommendations();renderComparisonImpressionEditor();renderVendorSection();
+ renderVendorCompare();renderChecklist();renderBudget();renderGuests();renderGifts();updateDashboard();syncMobileNavigation(currentSectionId());
+}
+async function loadAuthenticatedUser(user){
+ cloudUser=user;currentUserId=user.id;applyUserUi();setSyncStatus("saving","טוענת...");
+ try{
+  const {data,error}=await cloudClient.from(CLOUD_TABLE).select("state,updated_at").eq("user_id",user.id).maybeSingle();
+  if(error)throw error;
+  if(data?.state)applySnapshot(data.state);
+  else{
+   let initial=localSnapshotForCurrentUser();
+   if(!snapshotHasData(initial)&&!rawStorageGet(LEGACY_MIGRATION_MARKER,"")){
+    const legacy=readLegacySnapshot();
+    if(snapshotHasData(legacy)){initial=legacy;rawStorageSet(LEGACY_MIGRATION_MARKER,user.id)}
+   }
+   if(!snapshotHasData(initial))initial=emptyStateSnapshot();
+   applySnapshot(initial);await saveCloudNow();
+  }
+  setSyncStatus("","מסונכרן");hideEmailGate();
+ }catch(err){console.error("Load user",err);setSyncStatus("error","שגיאת סנכרון");showEmailLogin("לא הצלחנו לטעון את הנתונים. נסו שוב.")}
+}
+async function initAuthentication(){
+ showGateState("emailGateLoading");
+ try{
+  const response=await fetch(FUNCTION_URL+"?config=1",{cache:"no-store"}),cfg=await response.json();
+  if(!response.ok||!cfg?.success)throw new Error(cfg?.error||"לא ניתן לטעון הגדרות כניסה");
+  if(!window.supabase?.createClient)throw new Error("ספריית ההתחברות לא נטענה");
+  cloudClient=window.supabase.createClient(cfg.supabaseUrl,cfg.publishableKey,{auth:{persistSession:true,autoRefreshToken:true,detectSessionInUrl:true}});
+  cloudClient.auth.onAuthStateChange((event,session)=>setTimeout(async()=>{
+    if(session?.user&&(!cloudUser||cloudUser.id!==session.user.id))await loadAuthenticatedUser(session.user);
+    else if(event==="SIGNED_OUT"){cloudUser=null;currentUserId="";showEmailLogin()}
+  },0));
+  const {data,error}=await cloudClient.auth.getSession();if(error)throw error;
+  if(data?.session?.user)await loadAuthenticatedUser(data.session.user);else showEmailLogin();
+ }catch(err){console.error("Auth init",err);showEmailLogin("לא הצלחנו להתחבר לשירות המשתמשים. בדקו חיבור לאינטרנט ונסו שוב.")}
+}
+window.addEventListener("online",()=>{if(cloudUser)scheduleCloudSave()});
+const state={
+ setup:{},venues:[],checklist:mergeChecklistWithDefaults(null),expenses:[],guests:[],seatingTables:[],gifts:[],recommendations:[],
+ compareWeights:{price:20,food:20,atmosphere:15,location:15,design:10,service:10,parking:5,couple:5},
+ vendors:[],vendorRecommendations:{},activeVendorCategory:"photographer",vendorCompareWeights:{},activeVenueId:null
+};
+function persist(){if(!cloudUser||!currentUserId)return;persistLocalSnapshot();scheduleCloudSave()}
 function esc(s){return String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[c]))}
+const navigationHistory=[];
+const RESUMABLE_SECTIONS=new Set(["setup","venues","compare","vendors","vendorCompare","checklist","budget","guests","gifts"]);
 function syncMobileNavigation(id){
- const primary=["dashboard","budget","guests","vendors"];
+ const primary=["dashboard","budget","guests","venues","vendors"];
  document.querySelectorAll(".mobile-bottom-nav button").forEach(btn=>{
    const target=btn.dataset.mobileTarget;
-   btn.classList.toggle("active",target===id || (target==="more" && !primary.includes(id)));
+   btn.classList.toggle("active",target===id || (target==="more"&&!primary.includes(id)));
  });
- const name=document.getElementById("mobileWeddingName");
- if(name)name.textContent=state.setup.coupleNames||"החתונה שלנו";
+ const back=document.getElementById("mobileBackBtn");
+ if(back)back.classList.toggle("hidden",id==="dashboard"&&navigationHistory.length===0);
 }
-function toggleMobileMore(open){
- const sheet=document.getElementById("mobileMoreSheet"),backdrop=document.getElementById("mobileMoreBackdrop");
- if(!sheet||!backdrop)return;
- sheet.classList.toggle("open",!!open);backdrop.classList.toggle("open",!!open);
- sheet.setAttribute("aria-hidden",open?"false":"true");
- document.body.style.overflow=open?"hidden":"";
-}
+function toggleMobileMore(open){const sheet=document.getElementById("mobileMoreSheet"),backdrop=document.getElementById("mobileMoreBackdrop");if(!sheet||!backdrop)return;sheet.classList.toggle("open",!!open);backdrop.classList.toggle("open",!!open);sheet.setAttribute("aria-hidden",open?"false":"true");document.body.style.overflow=open?"hidden":""}
 function mobileGo(id){toggleMobileMore(false);go(id)}
-function go(id){
+function currentSectionId(){return document.querySelector(".section.active")?.id||"dashboard"}
+function go(id,options={}){
+ const current=currentSectionId();
+ if(current!==id&&options.pushHistory!==false)navigationHistory.push(current);
  document.querySelectorAll(".section").forEach(x=>x.classList.remove("active"));
- const target=document.querySelector("section#"+id);
- if(!target){console.warn("WedWise: section not found",id);return;}
+ const target=document.querySelector("section#"+id);if(!target)return;
  target.classList.add("active");
  document.querySelectorAll("nav button").forEach(b=>b.classList.toggle("active",b.dataset.target===id));
- if(id==="compare"){renderComparisonImpressionEditor();renderComparison();}
+ if(id==="compare"){renderComparisonImpressionEditor();renderComparison()}
  if(id==="vendors")renderVendorSection();
  if(id==="vendorCompare")renderVendorCompare();
  if(id==="checklist")renderChecklist();
  if(id==="budget")renderBudget();
  if(id==="guests")renderGuests();
  if(id==="gifts")renderGifts();
+ if(RESUMABLE_SECTIONS.has(id))storageSet("ww_last_step",id);
  syncMobileNavigation(id);
  window.scrollTo({top:0,behavior:"smooth"});
 }
+function goBack(){if(navigationHistory.length){go(navigationHistory.pop(),{pushHistory:false});return}if(currentSectionId()!=="dashboard")go("dashboard",{pushHistory:false})}
+function planningStarted(){return Boolean(state.setup.coupleNames||state.setup.estimatedGuests||state.setup.weddingDate||(state.setup.regions||[]).length||state.venues.length||state.vendors.length)}
+function resumePlanning(){let target="setup";if(planningStarted()){target=storageGet("ww_last_step","venues")||"venues";if(target==="dashboard")target="venues"}go(target)}
 document.querySelectorAll("nav button").forEach(b=>b.onclick=()=>go(b.dataset.target));
 
 function selectedRegions(){return [...document.querySelectorAll("#regionPills input:checked")].map(x=>x.value)}
+function selectedStyles(){return [...document.querySelectorAll("#stylePills input:checked")].map(x=>x.value)}
 function saveSetup(){
+ const styles=selectedStyles();
  state.setup={
    coupleNames:coupleNames.value.trim(),
    estimatedGuests:+estimatedGuests.value||0,
    weddingDate:weddingDate.value,
    regions:selectedRegions(),
-   style:style.value,
+   styles,
+   style:styles.join(", "),
    indoorOutdoor:indoorOutdoor.value,
    kosherPreference:kosherPreference.value,
    budget:+weddingBudgetInput.value||0,
@@ -4267,15 +4001,12 @@ function saveSetup(){
    parkingRequired:parkingRequired.checked,
    priorities:priorities.value.trim()
  };
- persist();
- updateDashboard();
- go("venues");
+ persist();updateDashboard();go("venues");
 }
 function loadSetup(){
  coupleNames.value=state.setup.coupleNames||"";
  estimatedGuests.value=state.setup.estimatedGuests||"";
  weddingDate.value=state.setup.weddingDate||"";
- style.value=state.setup.style||"";
  indoorOutdoor.value=state.setup.indoorOutdoor||"";
  kosherPreference.value=state.setup.kosherPreference||"";
  weddingBudgetInput.value=state.setup.budget||"";
@@ -4288,6 +4019,8 @@ function loadSetup(){
  parkingRequired.checked=!!state.setup.parkingRequired;
  priorities.value=state.setup.priorities||"";
  document.querySelectorAll("#regionPills input").forEach(x=>x.checked=(state.setup.regions||[]).includes(x.value));
+ const savedStyles=Array.isArray(state.setup.styles)?state.setup.styles:(state.setup.style?[state.setup.style]:[]);
+ document.querySelectorAll("#stylePills input").forEach(x=>x.checked=savedStyles.includes(x.value));
  updateDateFlexibilityUI();
 
  const hasAdvanced=
@@ -4312,6 +4045,10 @@ function updateDateFlexibilityUI(){
 
 
 
+
+function openQuickDate(){const modal=document.getElementById("quickDateModal"),input=document.getElementById("quickWeddingDate");if(input)input.value=state.setup.weddingDate||"";modal?.classList.add("open");modal?.setAttribute("aria-hidden","false");document.body.style.overflow="hidden"}
+function closeQuickDate(){const modal=document.getElementById("quickDateModal");modal?.classList.remove("open");modal?.setAttribute("aria-hidden","true");document.body.style.overflow=""}
+function saveQuickDate(){const value=document.getElementById("quickWeddingDate")?.value||"";if(!value)return;state.setup.weddingDate=value;persist();if(document.getElementById("weddingDate"))weddingDate.value=value;updateDashboard();closeQuickDate()}
 
 function kosherPreferenceLabel(value){
  if(value==="mehadrin")return "כשר למהדרין";
@@ -4339,7 +4076,7 @@ function setupSummaryText(){
  const parts=[
    regions?("אזורים: "+regions):"",
    state.setup.estimatedGuests?("אורחים: "+state.setup.estimatedGuests):"",
-   state.setup.style?("סגנון: "+state.setup.style):"",
+   (state.setup.styles||[]).length?("סגנון: "+state.setup.styles.join(", ")):(state.setup.style?("סגנון: "+state.setup.style):""),
    state.setup.kosherPreference?("כשרות: "+kosherPreferenceLabel(state.setup.kosherPreference)):"",
    state.setup.maxPricePerGuest?("עד "+state.setup.maxPricePerGuest+" ₪ למנה"):"",
    state.setup.preferredDay?("יום: "+preferredDayLabel(state.setup.preferredDay)):"",
@@ -4351,19 +4088,12 @@ function setupSummaryText(){
  return parts.join(" · ");
 }
 
-
 function renderSearchFreshness(elementId,cache){
-  const el=document.getElementById(elementId);
-  if(!el)return;
-  if(!cache){el.textContent="";return;}
-  const raw=cache.updatedAt||cache.createdAt||new Date().toISOString();
-  const date=new Date(raw);
-  const formatted=Number.isNaN(date.getTime())?"":date.toLocaleString("he-IL",{dateStyle:"short",timeStyle:"short"});
-  if(cache.hit){
-    el.innerHTML=`<span class="search-cache-badge">נשמר</span> מוצגות תוצאות מחיפוש קודם${formatted?" · עודכן "+formatted:""}. לחיפוש חדש לגמרי לחצי על ״רענני מהרשת״.`;
-  }else{
-    el.innerHTML=`<span class="search-cache-badge">חדש</span> המידע נבדק עכשיו ברשת${formatted?" · "+formatted:""}.`;
-  }
+ const el=document.getElementById(elementId);if(!el)return;
+ if(!cache){el.textContent="";return}
+ const raw=cache.updatedAt||cache.createdAt,date=raw?new Date(raw):null;
+ const formatted=date&&!Number.isNaN(date.getTime())?date.toLocaleString("he-IL",{dateStyle:"short",timeStyle:"short"}):"";
+ el.innerHTML=cache.hit?`<b>תוצאות שמורות</b>${formatted?" · עודכן "+formatted:""} · לרענון מלא לחצי על ״רענון מהאינטרנט״.`:`<b>חיפוש חדש</b>${formatted?" · "+formatted:""}`;
 }
 
 function isSavedVenue(name){
@@ -4455,7 +4185,7 @@ async function searchRecommendedVenues(forceRefresh=false){
 
  btn.disabled=true;
  const refreshBtn=document.getElementById("smartRefreshBtn");if(refreshBtn)refreshBtn.disabled=true;
- btn.textContent=forceRefresh?"מרעננת מהרשת...":"מחפשת...";
+ btn.textContent=forceRefresh?"מרעננת...":"מחפשת...";
  status.className="status";
  status.innerHTML=`<span class="search-loading"><span class="spinner"></span><span>מחפשת מקומות, בודקת ביקורות ומצליבה מקורות. זה יכול לקחת כמה שניות.</span></span>`;
  recommendationResults.innerHTML="";
@@ -4464,7 +4194,7 @@ async function searchRecommendedVenues(forceRefresh=false){
    const response=await protectedSearchFetch({
      regions:state.setup.regions||[],
      guestCount:+state.setup.estimatedGuests||0,
-     style:state.setup.style||"",
+     style:(state.setup.styles||[]).join(", ")||state.setup.style||"",
      indoorOutdoor:state.setup.indoorOutdoor||"",
      kosherPreference:state.setup.kosherPreference||"",
      maxPricePerGuest:+state.setup.maxPricePerGuest||0,
@@ -4596,6 +4326,11 @@ function ensureVenueDetails(v){
  if(v.offerSummary===undefined)v.offerSummary="";
  if(v.links===undefined)v.links="";
  if(v.contractNotes===undefined)v.contractNotes="";
+ if(v.paymentMethod===undefined)v.paymentMethod="";
+ if(v.depositAmount===undefined)v.depositAmount=0;
+ if(v.depositPaid===undefined)v.depositPaid=false;
+ if(!Array.isArray(v.payments))v.payments=[];
+ v.payments=v.payments.map(p=>({id:p.id||Date.now()+Math.random(),label:p.label||"תשלום",dueDate:p.dueDate||"",amount:+p.amount||0,paid:!!p.paid}));
  if(v.questions===undefined)v.questions=defaultVenueQuestions();
  if(v.contractChecks===undefined)v.contractChecks=defaultContractChecks();
  return v;
@@ -4708,7 +4443,38 @@ function renderVenueDetail(){
   <div class="cost-highlight"><strong>עלות משוערת לפי הנתונים כרגע: ${estimate?estimate.toLocaleString()+" ₪":"עדיין אין מספיק נתונים"}</strong><div class="mini-note">החישוב משתמש בגבוה מבין מספר האורחים שלכם לבין מינימום האורחים של המקום.</div></div>
  </div>
 
- <div class="detail-subsection"><h3>התאמה פרקטית</h3>
+ <div class="detail-subsection">
+  <div class="between">
+    <div>
+      <div class="section-mini-label">תשלומים למקום</div>
+      <h3>מקדמה ולוח תשלומים</h3>
+    </div>
+    <span class="badge">${v.status==="chosen"?"המקום שנבחר":"אפשר למלא גם לפני הבחירה"}</span>
+  </div>
+
+  <div class="detail-grid" style="margin-top:12px">
+    <div class="field"><label>אופן תשלום</label><select onchange="activeVenueFinanceUpdate('paymentMethod',this.value)">${paymentMethodOptions(v.paymentMethod)}</select></div>
+    <div class="field"><label>גובה מקדמה</label><input type="number" min="0" value="${v.depositAmount||""}" onchange="activeVenueFinanceUpdate('depositAmount',this.value)"></div>
+    <div class="field"><label>סטטוס מקדמה</label><select onchange="activeVenueFinanceUpdate('depositPaid',this.value==='paid')"><option value="pending" ${!v.depositPaid?"selected":""}>טרם שולמה</option><option value="paid" ${v.depositPaid?"selected":""}>שולמה</option></select></div>
+  </div>
+
+  <div class="venue-finance-summary">
+    <div><span>עלות משוערת / שסוכמה</span><strong>${venueEstimatedCost(v).toLocaleString()} ₪</strong></div>
+    <div><span>שולם עד עכשיו</span><strong>${venuePaidAmount(v).toLocaleString()} ₪</strong></div>
+    <div><span>נותר לשלם</span><strong>${contractRemaining(v,venueEstimatedCost(v)).toLocaleString()} ₪</strong></div>
+  </div>
+
+  <div class="small muted">לוח תשלומים · המקדמה מנוהלת בנפרד.</div>
+  <div class="payment-schedule-list">${venuePaymentRows(v)}</div>
+  <div class="add-payment-row">
+    <div class="field"><label>תיאור</label><input id="vdPayLabel" placeholder="למשל: תשלום שני"></div>
+    <div class="field"><label>מועד</label><input id="vdPayDate" type="date"></div>
+    <div class="field"><label>סכום</label><input id="vdPayAmount" type="number" min="0"></div>
+    <button class="btn secondary" onclick="addVenuePayment()">+ הוספה</button>
+  </div>
+</div>
+
+<div class="detail-subsection"><h3>התאמה פרקטית</h3>
   <div class="detail-grid">
    <div class="field"><label>פנים / חוץ</label><select id="vdIndoorOutdoor"><option value="" ${!v.indoorOutdoor?"selected":""}>לא ידוע</option><option value="indoor" ${v.indoorOutdoor==="indoor"?"selected":""}>פנים</option><option value="outdoor" ${v.indoorOutdoor==="outdoor"?"selected":""}>חוץ</option><option value="both" ${v.indoorOutdoor==="both"?"selected":""}>משולב</option></select></div>
    <div class="field"><label>חופה</label><select id="vdChuppah"><option value="" ${!v.chuppah?"selected":""}>לא ידוע</option><option value="outdoor" ${v.chuppah==="outdoor"?"selected":""}>בחוץ</option><option value="indoor" ${v.chuppah==="indoor"?"selected":""}>בפנים</option><option value="both" ${v.chuppah==="both"?"selected":""}>אפשר לבחור</option></select></div>
@@ -4742,6 +4508,46 @@ function renderVenueDetail(){
  </div>
 
  <div class="row" style="margin-top:18px"><button class="btn primary" onclick="saveVenueDetail()">שמרי את כרטיס המקום</button><button class="btn secondary" onclick="closeVenueDetail()">סגירה</button></div>`;
+}
+
+
+function venuePaidAmount(v){ensureVenueDetails(v);return contractPaidAmount(v)}
+function activeVenueFinanceUpdate(key,value){
+ const v=state.venues.find(x=>x.id===state.activeVenueId);if(!v)return;ensureVenueDetails(v);
+ if(key==="depositAmount")v.depositAmount=Math.max(0,+value||0);
+ else if(key==="depositPaid")v.depositPaid=!!value;
+ else v[key]=value;
+ persist();renderVenueDetail();renderBudget();updateDashboard();
+}
+function addVenuePayment(){
+ const v=state.venues.find(x=>x.id===state.activeVenueId);if(!v)return;ensureVenueDetails(v);
+ const label=document.getElementById("vdPayLabel")?.value.trim()||"תשלום";
+ const dueDate=document.getElementById("vdPayDate")?.value||"";
+ const amount=Math.max(0,+document.getElementById("vdPayAmount")?.value||0);
+ if(!amount)return alert("הכניסו סכום לתשלום");
+ v.payments.push({id:Date.now()+Math.random(),label,dueDate,amount,paid:false});
+ persist();renderVenueDetail();renderBudget();
+}
+function toggleVenuePayment(paymentId,paid){
+ const v=state.venues.find(x=>x.id===state.activeVenueId);if(!v)return;ensureVenueDetails(v);
+ const p=v.payments.find(x=>String(x.id)===String(paymentId));if(!p)return;
+ p.paid=!!paid;persist();renderVenueDetail();renderBudget();updateDashboard();
+}
+function deleteVenuePayment(paymentId){
+ const v=state.venues.find(x=>x.id===state.activeVenueId);if(!v)return;
+ v.payments=(v.payments||[]).filter(p=>String(p.id)!==String(paymentId));
+ persist();renderVenueDetail();renderBudget();
+}
+function venuePaymentRows(v){
+ ensureVenueDetails(v);
+ if(!v.payments.length)return '<div class="muted small">עדיין לא הוספתם תשלומים עתידיים למקום.</div>';
+ return [...v.payments].sort((a,b)=>(a.dueDate||"9999").localeCompare(b.dueDate||"9999")).map(p=>`
+ <div class="payment-schedule-row">
+   <input type="checkbox" ${p.paid?"checked":""} onchange="toggleVenuePayment('${p.id}',this.checked)">
+   <div><strong>${esc(p.label)}</strong><small>${esc(formatDateHe(p.dueDate))}${p.paid?" · שולם":" · טרם שולם"}</small></div>
+   <span class="amount">${Number(p.amount||0).toLocaleString()} ₪</span>
+   <button onclick="deleteVenuePayment('${p.id}')" aria-label="מחיקת תשלום">×</button>
+ </div>`).join("");
 }
 
 function ratingField(id,label,value){return `<div class="field"><label>${label} 1-10</label><input id="${id}" type="number" min="1" max="10" value="${value||""}"></div>`}
@@ -5118,10 +4924,99 @@ function defaultVendorQuestions(category){
 }
 function ensureVendorDetails(v){
  if(!Array.isArray(v.questions))v.questions=defaultVendorQuestions(v.category);
- else{const defaults=defaultVendorQuestions(v.category);const old=new Map(v.questions.map(q=>[q.text,q]));v.questions=[...defaults.map(q=>old.has(q.text)?{...q,...old.get(q.text)}:q),...v.questions.filter(q=>!defaults.some(d=>d.text===q.text))];}
- if(v.notes===undefined)v.notes="";return v;
+ else{
+   const defaults=defaultVendorQuestions(v.category);
+   const old=new Map(v.questions.map(q=>[q.text,q]));
+   v.questions=[...defaults.map(q=>old.has(q.text)?{...q,...old.get(q.text)}:q),...v.questions.filter(q=>!defaults.some(d=>d.text===q.text))];
+ }
+ if(v.notes===undefined)v.notes="";
+ if(v.booked===undefined)v.booked=false;
+ if(v.paymentMethod===undefined)v.paymentMethod="";
+ if(v.depositAmount===undefined)v.depositAmount=0;
+ if(v.depositPaid===undefined)v.depositPaid=false;
+ if(!Array.isArray(v.payments))v.payments=[];
+ v.payments=v.payments.map(p=>({
+   id:p.id||Date.now()+Math.random(),
+   label:p.label||"תשלום",
+   dueDate:p.dueDate||"",
+   amount:+p.amount||0,
+   paid:!!p.paid
+ }));
+ return v;
 }
 
+
+
+function paymentMethodOptions(value){
+ return `<option value="">לא הוגדר</option>
+ <option value="transfer" ${value==="transfer"?"selected":""}>העברה בנקאית</option>
+ <option value="credit" ${value==="credit"?"selected":""}>אשראי</option>
+ <option value="cash" ${value==="cash"?"selected":""}>מזומן</option>
+ <option value="checks" ${value==="checks"?"selected":""}>צ׳קים</option>
+ <option value="bit" ${value==="bit"?"selected":""}>Bit / PayBox</option>
+ <option value="other" ${value==="other"?"selected":""}>אחר</option>`;
+}
+function ensurePaymentFields(item){
+ if(item.paymentMethod===undefined)item.paymentMethod="";
+ if(item.depositAmount===undefined)item.depositAmount=0;
+ if(item.depositPaid===undefined)item.depositPaid=false;
+ if(!Array.isArray(item.payments))item.payments=[];
+ item.payments=item.payments.map(p=>({id:p.id||Date.now()+Math.random(),label:p.label||"תשלום",dueDate:p.dueDate||"",amount:+p.amount||0,paid:!!p.paid}));
+ return item;
+}
+function contractPaidAmount(item){
+ ensurePaymentFields(item);
+ return (item.depositPaid?(+item.depositAmount||0):0)+(item.payments||[]).filter(p=>p.paid).reduce((s,p)=>s+(+p.amount||0),0);
+}
+function contractRemaining(item,total){return Math.max(0,(+total||0)-contractPaidAmount(item))}
+function formatDateHe(value){
+ if(!value)return "ללא תאריך";
+ const d=new Date(value+"T12:00:00");
+ return Number.isNaN(d.getTime())?value:d.toLocaleDateString("he-IL",{day:"numeric",month:"short",year:"numeric"});
+}
+function vendorPaidAmount(v){ensureVendorDetails(v);return contractPaidAmount(v)}
+function vendorRemainingAmount(v){return contractRemaining(v,+v.price||0)}
+function setVendorBooked(id,checked){
+ const v=state.vendors.find(x=>x.id===id);if(!v)return;ensureVendorDetails(v);
+ v.booked=!!checked;persist();renderSavedVendors();renderBudget();updateDashboard();
+}
+function updateVendorFinance(id,key,value){
+ const v=state.vendors.find(x=>x.id===id);if(!v)return;ensureVendorDetails(v);
+ if(["price","depositAmount"].includes(key))v[key]=Math.max(0,+value||0);
+ else if(key==="depositPaid")v.depositPaid=!!value;
+ else v[key]=value;
+ persist();renderSavedVendors();renderBudget();updateDashboard();
+}
+function addVendorPayment(id){
+ const v=state.vendors.find(x=>x.id===id);if(!v)return;ensureVendorDetails(v);
+ const label=document.getElementById(`vendorPayLabel_${id}`)?.value.trim()||"תשלום";
+ const dueDate=document.getElementById(`vendorPayDate_${id}`)?.value||"";
+ const amount=Math.max(0,+document.getElementById(`vendorPayAmount_${id}`)?.value||0);
+ if(!amount)return alert("הכניסו סכום לתשלום");
+ v.payments.push({id:Date.now()+Math.random(),label,dueDate,amount,paid:false});
+ persist();renderSavedVendors();renderBudget();
+}
+function toggleVendorPayment(id,paymentId,paid){
+ const v=state.vendors.find(x=>x.id===id);if(!v)return;ensureVendorDetails(v);
+ const p=v.payments.find(x=>String(x.id)===String(paymentId));if(!p)return;
+ p.paid=!!paid;persist();renderSavedVendors();renderBudget();updateDashboard();
+}
+function deleteVendorPayment(id,paymentId){
+ const v=state.vendors.find(x=>x.id===id);if(!v)return;
+ v.payments=(v.payments||[]).filter(p=>String(p.id)!==String(paymentId));
+ persist();renderSavedVendors();renderBudget();
+}
+function vendorPaymentRows(v){
+ ensureVendorDetails(v);
+ if(!v.payments.length)return '<div class="muted small">עדיין לא הוספתם תשלומים עתידיים.</div>';
+ return [...v.payments].sort((a,b)=>(a.dueDate||"9999").localeCompare(b.dueDate||"9999")).map(p=>`
+ <div class="payment-schedule-row">
+   <input type="checkbox" ${p.paid?"checked":""} onchange="toggleVendorPayment(${v.id},'${p.id}',this.checked)">
+   <div><strong>${esc(p.label)}</strong><small>${esc(formatDateHe(p.dueDate))}${p.paid?" · שולם":" · טרם שולם"}</small></div>
+   <span class="amount">${Number(p.amount||0).toLocaleString()} ₪</span>
+   <button onclick="deleteVendorPayment(${v.id},'${p.id}')" aria-label="מחיקת תשלום">×</button>
+ </div>`).join("");
+}
 
 function vendorConfig(category=state.activeVendorCategory){return VENDOR_CATEGORIES[category]||VENDOR_CATEGORIES.photographer}
 function vendorCategoryLabel(category){return vendorConfig(category).label}
@@ -5160,7 +5055,7 @@ async function searchRecommendedVendors(forceRefresh=false){
  const status=document.getElementById("vendorSearchStatus");
  const category=state.activeVendorCategory;
  const cfg=vendorConfig(category);
- btn.disabled=true;btn.textContent=forceRefresh?"מרעננת מהרשת...":"מחפשת...";
+ btn.disabled=true;btn.textContent=forceRefresh?"מרעננת...":"מחפשת...";
  const refreshBtn=document.getElementById("vendorRefreshBtn");if(refreshBtn)refreshBtn.disabled=true;
  status.className="status";
  status.innerHTML=`<span class="search-loading"><span class="spinner"></span><span>מחפשת ${esc(cfg.label)}, בודקת דירוגים ומצליבה מקורות...</span></span>`;
@@ -5183,11 +5078,7 @@ async function searchRecommendedVendors(forceRefresh=false){
    renderSearchFreshness("vendorSearchFreshness",data.cache);
  }catch(err){
    console.error(err);status.className="status error";status.textContent="לא הצלחתי להשלים את החיפוש: "+(err?.message||"שגיאה לא ידועה");
- }finally{
-   btn.disabled=false;
-   const refreshBtn=document.getElementById("vendorRefreshBtn");if(refreshBtn)refreshBtn.disabled=false;
-   btn.textContent="✨ מצאי ספקים מתאימים";
- }
+ }finally{btn.disabled=false;const refreshBtn=document.getElementById("vendorRefreshBtn");if(refreshBtn)refreshBtn.disabled=false;btn.textContent="✨ מצאי ספקים מתאימים"}
 }
 
 function renderVendorRecommendations(){
@@ -5246,12 +5137,49 @@ function renderSavedVendors(){
  const rows=state.vendors.filter(v=>v.category===state.activeVendorCategory);
  const cnt=document.getElementById("savedVendorCount");if(cnt)cnt.textContent=rows.length;
  if(!rows.length){box.innerHTML='<div class="card muted">עדיין לא שמרתם ספקים בקטגוריה הזאת.</div>';return}
- box.innerHTML=rows.map(v=>`<div class="vendor-card">
-   <div class="vendor-card-head"><div><div class="muted small">${vendorConfig(v.category).icon} ${esc(vendorCategoryLabel(v.category))}</div><h3>${esc(v.name)}</h3><div class="muted small">${esc(v.region||"")}</div></div>${v.onlineScore?`<span class="badge">WedWise ${v.onlineScore}%</span>`:""}</div>
-   <div class="vendor-online-meta">${v.rating?`<span>Google ${v.rating}/5</span>`:""}${v.reviewCount?`<span>${Number(v.reviewCount).toLocaleString()} ביקורות</span>`:""}${v.price?`<span>${Number(v.price).toLocaleString()} ₪</span>`:""}</div>
-   ${v.notes?`<p class="small">${esc(v.notes)}</p>`:""}
-   <div class="row"><button class="btn primary" onclick="openVendorCompare('${v.category}')">להשוואה</button>${v.website?`<a class="btn ghost" href="${esc(v.website)}" target="_blank">אתר</a>`:""}<button class="btn danger small" onclick="deleteVendor(${v.id})">מחיקה</button></div>
- </div>`).join("");
+ box.innerHTML=rows.map(v=>{
+   const paid=vendorPaidAmount(v),remaining=vendorRemainingAmount(v);
+   return `<div class="vendor-card">
+    <div class="vendor-card-head">
+      <div><div class="muted small">${vendorConfig(v.category).icon} ${esc(vendorCategoryLabel(v.category))}</div><h3>${esc(v.name)}</h3><div class="muted small">${esc(v.region||"")}</div></div>
+      ${v.onlineScore?`<span class="badge">WedWise ${v.onlineScore}%</span>`:""}
+    </div>
+    <div class="vendor-online-meta">${v.rating?`<span>Google ${v.rating}/5</span>`:""}${v.reviewCount?`<span>${Number(v.reviewCount).toLocaleString()} ביקורות</span>`:""}${v.price?`<span>${Number(v.price).toLocaleString()} ₪</span>`:""}</div>
+    ${v.notes?`<p class="small">${esc(v.notes)}</p>`:""}
+
+    <label class="vendor-booked-toggle">
+      <input type="checkbox" ${v.booked?"checked":""} onchange="setVendorBooked(${v.id},this.checked)">
+      <span>${v.booked?"✓ סגרנו עם הספק":"סגרנו עם הספק"}</span>
+    </label>
+
+    <details class="vendor-finance-details" ${v.booked?"open":""}>
+      <summary><span>ניהול תשלומים</span><span>${v.booked?`${paid.toLocaleString()} ₪ שולמו · ${remaining.toLocaleString()} ₪ נותרו`:"ייפתח לאחר סימון שסגרתם"}</span></summary>
+      ${v.booked?`
+        <div class="vendor-finance-grid">
+          <div class="field"><label>מחיר שסוכם</label><input type="number" min="0" value="${v.price||""}" onchange="updateVendorFinance(${v.id},'price',this.value)"></div>
+          <div class="field"><label>אופן תשלום</label><select onchange="updateVendorFinance(${v.id},'paymentMethod',this.value)">${paymentMethodOptions(v.paymentMethod)}</select></div>
+          <div class="field"><label>גובה מקדמה</label><input type="number" min="0" value="${v.depositAmount||""}" onchange="updateVendorFinance(${v.id},'depositAmount',this.value)"></div>
+        </div>
+        <label class="vendor-booked-toggle"><input type="checkbox" ${v.depositPaid?"checked":""} onchange="updateVendorFinance(${v.id},'depositPaid',this.checked)"><span>${v.depositPaid?"המקדמה שולמה":"המקדמה עדיין לא שולמה"}</span></label>
+        <div class="vendor-payment-summary">
+          <div><span>מחיר שסוכם</span><strong>${Number(v.price||0).toLocaleString()} ₪</strong></div>
+          <div><span>שולם</span><strong>${paid.toLocaleString()} ₪</strong></div>
+          <div><span>נותר</span><strong>${remaining.toLocaleString()} ₪</strong></div>
+        </div>
+        <div class="small muted">לוח תשלומים · המקדמה מנוהלת בנפרד, אין צורך להוסיף אותה שוב.</div>
+        <div class="payment-schedule-list">${vendorPaymentRows(v)}</div>
+        <div class="add-payment-row">
+          <div class="field"><label>תיאור</label><input id="vendorPayLabel_${v.id}" placeholder="למשל: תשלום שני"></div>
+          <div class="field"><label>מועד</label><input id="vendorPayDate_${v.id}" type="date"></div>
+          <div class="field"><label>סכום</label><input id="vendorPayAmount_${v.id}" type="number" min="0"></div>
+          <button class="btn secondary" onclick="addVendorPayment(${v.id})">+ הוספה</button>
+        </div>
+      `:'<div class="muted small" style="margin-top:9px">סמנו ״סגרנו עם הספק״ כדי לנהל מחיר, מקדמה ולוח תשלומים.</div>'}
+    </details>
+
+    <div class="row" style="margin-top:12px"><button class="btn primary" onclick="openVendorCompare('${v.category}')">להשוואה</button>${v.website?`<a class="btn ghost" href="${esc(v.website)}" target="_blank" rel="noopener">אתר</a>`:""}<button class="btn danger small" onclick="deleteVendor(${v.id})">מחיקה</button></div>
+   </div>`;
+ }).join("");
 }
 
 function openVendorCompare(category){state.activeVendorCategory=category;persist();go("vendorCompare")}
@@ -5336,45 +5264,93 @@ function renderChecklist(){checklistGroups.innerHTML=state.checklist.map((g,gi)=
 function toggleGroup(i){state.checklist[i].open=!state.checklist[i].open;persist();renderChecklist()}function toggleSubtask(gi,ii){state.checklist[gi].items[ii].done=!state.checklist[gi].items[ii].done;persist();renderChecklist()}function removeSubtask(gi,ii){state.checklist[gi].items.splice(ii,1);persist();renderChecklist()}function addSubtask(gi){const t=prompt("מה תת-המשימה?");if(t){state.checklist[gi].items.push({text:t,done:false,custom:true});persist();renderChecklist()}}function addChecklistSection(){const t=prompt("שם השלב הראשי?");if(t){state.checklist.push({title:t,open:true,items:[],custom:true});persist();renderChecklist()}}
 function addExpensePrompt(){const category=prompt("קטגוריה?");if(!category)return;const desc=prompt("תיאור?")||"",amount=+prompt("סכום?")||0;state.expenses.push({id:Date.now(),category,desc,amount});persist();renderBudget();updateDashboard()}
 function removeExpense(id){state.expenses=state.expenses.filter(e=>e.id!==id);persist();renderBudget();updateDashboard()}
+
+function budgetMetrics(){
+ const chosenVenue=state.venues.find(v=>v.status==="chosen")||null;
+ const venueCommitted=chosenVenue?venueEstimatedCost(chosenVenue):0;
+ const venuePaid=chosenVenue?Math.min(venueCommitted,venuePaidAmount(chosenVenue)):0;
+ const bookedVendors=state.vendors.filter(v=>{ensureVendorDetails(v);return v.booked});
+ const vendorCommitted=bookedVendors.reduce((s,v)=>s+(+v.price||0),0);
+ const vendorPaid=bookedVendors.reduce((s,v)=>s+Math.min(+v.price||0,vendorPaidAmount(v)),0);
+ const extraPaid=state.expenses.reduce((s,e)=>s+(+e.amount||0),0);
+ const committed=venueCommitted+vendorCommitted+extraPaid;
+ const paid=venuePaid+vendorPaid+extraPaid;
+ const remaining=Math.max(0,committed-paid);
+ const target=+state.setup.budget||0;
+ return {chosenVenue,venueCommitted,venuePaid,bookedVendors,vendorCommitted,vendorPaid,extraPaid,committed,paid,remaining,target,committedPct:target?Math.round(committed/target*100):0};
+}
+function budgetUpcomingRows(){
+ const rows=[];
+ const venue=state.venues.find(v=>v.status==="chosen");
+ if(venue){
+  ensureVenueDetails(venue);
+  if((+venue.depositAmount||0)>0&&!venue.depositPaid)rows.push({type:"venue",name:venue.name,label:"מקדמה",date:"",amount:+venue.depositAmount||0});
+  venue.payments.filter(p=>!p.paid&&(+p.amount||0)>0).forEach(p=>rows.push({type:"venue",name:venue.name,label:p.label,date:p.dueDate,amount:+p.amount||0}));
+ }
+ state.vendors.filter(v=>v.booked).forEach(v=>{
+  ensureVendorDetails(v);
+  if((+v.depositAmount||0)>0&&!v.depositPaid)rows.push({type:"vendor",name:v.name,label:"מקדמה",date:"",amount:+v.depositAmount||0});
+  v.payments.filter(p=>!p.paid&&(+p.amount||0)>0).forEach(p=>rows.push({type:"vendor",name:v.name,label:p.label,date:p.dueDate,amount:+p.amount||0}));
+ });
+ return rows.sort((a,b)=>(a.date||"9999").localeCompare(b.date||"9999"));
+}
+
 function renderBudget(){
- const total=+state.setup.budget||0;
- const spent=state.expenses.reduce((s,e)=>s+e.amount,0);
- const remaining=total-spent;
- const pct=total?Math.max(0,Math.min(100,Math.round(spent/total*100))):0;
+ const m=budgetMetrics();
+ budgetTotal.textContent=m.target?m.target.toLocaleString()+" ₪":"לא הוגדר";
+ spentTotal.textContent=m.paid.toLocaleString()+" ₪";
+ remainingTotal.textContent=m.remaining.toLocaleString()+" ₪";
+ committedTotal.textContent=m.committed.toLocaleString()+" ₪";
 
- budgetTotal.textContent=total?total.toLocaleString()+" ₪":"לא הוגדר";
- spentTotal.textContent=spent.toLocaleString()+" ₪";
- remainingTotal.textContent=total?remaining.toLocaleString()+" ₪":"-";
+ const visualPct=m.target?Math.max(0,Math.min(100,m.committedPct)):0;
+ budgetDonut.style.setProperty("--budget-angle",(visualPct*3.6)+"deg");
+ budgetPercentText.textContent=m.target?m.committedPct+"%":"—";
 
- const donut=document.getElementById("budgetDonut");
- const pctText=document.getElementById("budgetPercentText");
- if(donut)donut.style.setProperty("--budget-angle",(pct*3.6)+"deg");
- if(pctText)pctText.textContent=pct+"%";
-
- const grouped={};
- state.expenses.forEach(e=>{grouped[e.category]=(grouped[e.category]||0)+(+e.amount||0)});
- const entries=Object.entries(grouped).sort((a,b)=>b[1]-a[1]);
- const categoryList=document.getElementById("budgetCategoryList");
- if(categoryList){
-   categoryList.innerHTML=entries.length
-    ? entries.map(([name,amount],i)=>{
-        const share=spent?Math.round(amount/spent*100):0;
-        const icons=["⌂","▣","◇","✦","◌","♡"];
-        return `<div class="budget-category-row">
-          <span class="budget-category-icon">${icons[i%icons.length]}</span>
-          <div><strong>${esc(name)}</strong><small>${share}% מההוצאות שנרשמו</small></div>
-          <strong>${Number(amount).toLocaleString()} ₪</strong>
-        </div>`;
-      }).join("")
-    : '<div class="muted small">עדיין לא נרשמו הוצאות.</div>';
+ const targetStatus=document.getElementById("budgetTargetStatus");
+ if(!m.target){
+   targetStatus.className="ww22-budget-target-status";
+   targetStatus.textContent="לא הוגדר יעד תקציב. אפשר להגדיר אותו בפרטי החתונה ועדיין לעקוב אחרי מה שנסגר ושולם.";
+ }else{
+   const left=m.target-m.committed;
+   if(left>=0){
+     targetStatus.className="ww22-budget-target-status good";
+     targetStatus.innerHTML=`מתוך יעד של <strong>${m.target.toLocaleString()} ₪</strong>, כבר נסגרו <strong>${m.committed.toLocaleString()} ₪</strong>. נשארו <strong>${left.toLocaleString()} ₪</strong> במסגרת היעד.`;
+   }else{
+     targetStatus.className="ww22-budget-target-status warn";
+     targetStatus.innerHTML=`הסכומים שכבר נסגרו גבוהים מהיעד ב-<strong>${Math.abs(left).toLocaleString()} ₪</strong>.`;
+   }
  }
 
- expenseTable.innerHTML=state.expenses.map(e=>`<tr>
-   <td>${esc(e.category)}</td>
-   <td>${esc(e.desc)}</td>
-   <td>${e.amount.toLocaleString()} ₪</td>
-   <td><button class="btn ghost small" onclick="removeExpense(${e.id})">מחיקה</button></td>
- </tr>`).join("");
+ const upcoming=document.getElementById("budgetUpcomingPayments");
+ const rows=budgetUpcomingRows();
+ upcoming.innerHTML=rows.length?rows.map(r=>`<div class="ww22-upcoming-row">
+   <span class="ww22-upcoming-icon">${r.type==="venue"?"⌂":"◇"}</span>
+   <div><strong>${esc(r.name)} · ${esc(r.label)}</strong><small>${r.date?`לתשלום ב-${esc(formatDateHe(r.date))}`:"לא הוגדר מועד — כדאי להשלים"}</small></div>
+   <span class="amount">${Number(r.amount).toLocaleString()} ₪</span>
+ </div>`).join(""):'<div class="muted small">אין כרגע תשלומים עתידיים שהוגדרו. אפשר להוסיף אותם בכרטיס המקום או הספק.</div>';
+
+ const categories=[];
+ if(m.chosenVenue&&m.venueCommitted>0)categories.push({name:"מקום האירוע · "+m.chosenVenue.name,amount:m.venueCommitted,paid:m.venuePaid,icon:"⌂"});
+ const byVendor={};
+ m.bookedVendors.forEach(v=>{
+   const key=vendorCategoryLabel(v.category);
+   if(!byVendor[key])byVendor[key]={name:key,amount:0,paid:0,icon:vendorConfig(v.category).icon};
+   byVendor[key].amount+=(+v.price||0);
+   byVendor[key].paid+=Math.min(+v.price||0,vendorPaidAmount(v));
+ });
+ categories.push(...Object.values(byVendor));
+ if(m.extraPaid>0)categories.push({name:"הוצאות נוספות",amount:m.extraPaid,paid:m.extraPaid,icon:"＋"});
+
+ budgetCategoryList.innerHTML=categories.length?categories.sort((a,b)=>b.amount-a.amount).map(c=>{
+   const pct=c.amount?Math.round(c.paid/c.amount*100):0;
+   return `<div class="budget-category-row">
+     <span class="budget-category-icon">${c.icon}</span>
+     <div><strong>${esc(c.name)}</strong><small>${c.paid.toLocaleString()} ₪ שולמו מתוך ${c.amount.toLocaleString()} ₪</small><div class="ww22-category-progress"><div style="width:${Math.min(100,pct)}%"></div></div></div>
+     <strong>${c.amount.toLocaleString()} ₪</strong>
+   </div>`;
+ }).join(""):'<div class="muted small">עדיין אין סכומים שסומנו כ״נסגרו״. בחרו מקום או סמנו ״סגרנו עם הספק״.</div>';
+
+ expenseTable.innerHTML=state.expenses.map(e=>`<tr><td>${esc(e.category)}</td><td>${esc(e.desc)}</td><td>${Number(e.amount||0).toLocaleString()} ₪</td><td><button class="btn ghost small" onclick="removeExpense(${e.id})">מחיקה</button></td></tr>`).join("");
  renderRecentExpenses();
 }
 function normalizeGuest(g){
@@ -5703,21 +5679,6 @@ function renderGifts(){
 }
 
 
-function renderDashboardChecklist(){
- const box=document.getElementById("dashChecklistList");
- if(!box)return;
- const all=(state.checklist||[]).flatMap(group=>(group.items||[]).map(item=>({...item,group:group.title})));
- const pending=all.filter(item=>!item.done).slice(0,6);
- if(!pending.length){
-   box.innerHTML='<div class="muted small">כל המשימות שסומנו כרגע הושלמו 🎉</div>';
-   return;
- }
- box.innerHTML=pending.map(item=>`<div class="ww19-mini-task">
-   <span class="dot">✓</span>
-   <span>${esc(item.text)}</span>
-   <i>←</i>
- </div>`).join("");
-}
 
 function renderRecentExpenses(){
  const box=document.getElementById("recentExpenseList");
@@ -5738,132 +5699,59 @@ function renderRecentExpenses(){
 
 function updateDashboard(){
  const coupleName=state.setup.coupleNames||"החתונה שלנו";
- dashCoupleTitle.textContent=coupleName;
- sidebarWeddingName.textContent=coupleName;if(document.getElementById("mobileWeddingName"))mobileWeddingName.textContent=coupleName;
+ if(document.getElementById("dashCoupleTitle"))dashCoupleTitle.textContent=coupleName;
+ if(document.getElementById("sidebarWeddingName"))sidebarWeddingName.textContent=coupleName;
+ dashGuests.textContent=state.setup.estimatedGuests||"—";
 
- dashGuests.textContent=state.setup.estimatedGuests||"-";
- dashVenues.textContent=state.venues.length;
- dashVendors.textContent=state.vendors.length;
-
- const items=state.checklist.flatMap(g=>g.items);
- const done=items.filter(i=>i.done).length;
+ const items=state.checklist.flatMap(g=>g.items),done=items.filter(i=>i.done).length;
  const pct=items.length?Math.round(done/items.length*100):0;
  dashProgress.textContent=pct+"%";
+ document.getElementById("dashProgressRing")?.style.setProperty("--progress-angle",(pct*3.6)+"deg");
 
- const bud=+state.setup.budget||0;
- const spent=state.expenses.reduce((s,e)=>s+e.amount,0);
- dashBudget.textContent=bud?bud.toLocaleString()+" ₪":"לא הוגדר";
- dashSpent.textContent=spent.toLocaleString()+" ₪";
- budgetProgress.style.width=bud?Math.min(100,spent/bud*100)+"%":"0%";
+ const bm=budgetMetrics();
+ dashBudget.textContent=bm.target?bm.target.toLocaleString()+" ₪":"לא הוגדר";
+ dashSpent.textContent=bm.committed.toLocaleString()+" ₪";
+ budgetProgress.style.width=bm.target?Math.min(100,bm.committed/bm.target*100)+"%":"0%";
+ dashBudgetCaption.textContent=bm.committed?`נסגרו ${bm.committed.toLocaleString()} ₪ · שולמו ${bm.paid.toLocaleString()} ₪`:"עדיין לא סגרתם הוצאות.";
 
- if(bud){
-   const remaining=bud-spent;
-   dashBudgetCaption.textContent=remaining>=0
-     ? `נותרו ${remaining.toLocaleString()} ₪ מתוך התקציב`
-     : `חריגה של ${Math.abs(remaining).toLocaleString()} ₪ מהתקציב`;
- }else{
-   dashBudgetCaption.textContent="הגדירי תקציב כדי להתחיל לעקוב.";
- }
-
+ const dateTrigger=document.getElementById("dashDateLine");
  if(state.setup.weddingDate){
-   const target=new Date(state.setup.weddingDate+"T12:00:00");
-   const now=new Date();
-   const diff=Math.ceil((target-now)/(1000*60*60*24));
+   const target=new Date(state.setup.weddingDate+"T12:00:00"),now=new Date(),diff=Math.ceil((target-now)/(1000*60*60*24));
    const formatted=target.toLocaleDateString("he-IL",{day:"numeric",month:"long",year:"numeric"});
-   dashDateLine.textContent=`תאריך החתונה: ${formatted}`;
-   if(diff>0){
-     dashCountdownDays.textContent=diff.toLocaleString();
-     dashCountdownCaption.textContent="ימים עד החתונה";
-   }else if(diff===0){
-     dashCountdownDays.textContent="היום";
-     dashCountdownCaption.textContent="זה היום שלכם";
-   }else{
-     dashCountdownDays.textContent="♡";
-     dashCountdownCaption.textContent="מזל טוב!";
-   }
- }else{
-   dashDateLine.textContent="כל התכנון, ההחלטות והמעקב במקום אחד";
-   dashCountdownDays.textContent="—";
-   dashCountdownCaption.textContent="הוסיפו תאריך לספירה לאחור";
- }
+   dateTrigger.textContent=formatted+" · שינוי תאריך";
+   if(diff>0){dashCountdownDays.textContent=diff.toLocaleString();dashCountdownCaption.textContent="ימים"}
+   else if(diff===0){dashCountdownDays.textContent="היום";dashCountdownCaption.textContent="זה היום שלכם"}
+   else{dashCountdownDays.textContent="♡";dashCountdownCaption.textContent="מזל טוב!"}
+ }else{dateTrigger.textContent="הוסיפו תאריך לספירה לאחור";dashCountdownDays.textContent="—";dashCountdownCaption.textContent="ימים"}
 
- if(!state.setup.estimatedGuests){
-   nextStepText.textContent="מלאי את פרטי החתונה כדי להתחיל.";
- }else if(!state.venues.length){
-   nextStepText.textContent="הפעילי את החיפוש החכם ובני רשימה קצרה של מקומות שמתאימים לכם.";
- }else if(state.venues.some(v=>v.status==="chosen")&&!state.vendors.length){
-   nextStepText.textContent="המקום נבחר. עכשיו אפשר להתחיל לחפש ולשמור ספקים.";
- }else if(state.vendors.length){
-   nextStepText.textContent="המשיכו להשוות ספקים, להשלים התרשמות ולהתקדם לבחירות הסופיות.";
- }else{
-   nextStepText.textContent="השלימו פרטים אחרי שיחות וביקורים והשוו בין המקומות ששמרתם.";
+ let next="מתחילים בפרטי החתונה.";
+ if(state.setup.estimatedGuests||(state.setup.regions||[]).length){
+   if(!state.venues.length)next="השלב הבא הוא למצוא מקומות שמתאימים למה שהגדרתם.";
+   else if(!state.venues.some(v=>v.status==="chosen"))next="המשיכו לבדוק ולהשוות בין המקומות ששמרתם.";
+   else if(!state.vendors.length)next="המקום נבחר — אפשר לעבור לחיפוש ספקים.";
+   else next="המשיכו מהשלב האחרון שבו עבדתם.";
  }
- renderDashboardChecklist();
+ nextStepText.textContent=next;
+ if(document.getElementById("resumePlanningLabel"))resumePlanningLabel.textContent=planningStarted()?"המשך מהמקום שבו הפסקתי":"להתחיל";
+ syncMobileNavigation(currentSectionId());
 }
 
-async function bootstrapApp(){
-  state.venues.forEach(ensureVenueDetails);
-  state.vendors.forEach(ensureVendorDetails);
-  loadSetup();
-  loadComparisonWeights();
-  renderVenues();
-  renderRecommendations();
-  renderComparisonImpressionEditor();
-  renderVendorSection();
-  renderVendorCompare();
-  renderChecklist();
-  renderBudget();
-  renderGuests();
-  renderGifts();
-  updateDashboard();
-  syncMobileNavigation("dashboard");
-  showStorageNoticeIfNeeded();
-  updateConnectivityUi();
-  await initCloud();
-}
-bootstrapApp();
+showStorageNoticeIfNeeded();syncMobileNavigation("dashboard");initAuthentication();
 </script>
 
 <script>
-const WEDWISE_BUILD="2.0.1";
-const WEDWISE_REPAIR_KEY="ww_pwa_repair_201";
-
-async function repairAndRegisterPwa(){
-  if(!("serviceWorker" in navigator) || !/^https?:$/.test(location.protocol)) return;
-
-  try{
-    // Run once to remove the stuck older worker/cache.
-    if(storageGet(WEDWISE_REPAIR_KEY,"")!=="done"){
-      const registrations=await navigator.serviceWorker.getRegistrations();
-      await Promise.all(registrations.map(reg=>reg.unregister()));
-
-      if("caches" in window){
-        const names=await caches.keys();
-        await Promise.all(
-          names
-            .filter(name=>name.startsWith("wedwise-"))
-            .map(name=>caches.delete(name))
-        );
-      }
-
-      storageSet(WEDWISE_REPAIR_KEY,"done");
-
-      const url=new URL(location.href);
-      url.searchParams.set("ww_build","201");
-      location.replace(url.toString());
-      return;
-    }
-
-    const registration=await navigator.serviceWorker.register("./sw.js?v=201",{
-      updateViaCache:"none"
-    });
-    await registration.update().catch(()=>{});
-  }catch(error){
-    console.warn("WedWise PWA recovery failed",error);
-  }
-}
-
-window.addEventListener("load",repairAndRegisterPwa);
+const WEDWISE_REPAIR_KEY="ww22_pwa_repaired";
+window.addEventListener("load",async()=>{
+ if(!("serviceWorker" in navigator)||!/^https?:$/.test(location.protocol))return;
+ try{
+   if(localStorage.getItem(WEDWISE_REPAIR_KEY)!=="1"){
+     const regs=await navigator.serviceWorker.getRegistrations();await Promise.all(regs.map(r=>r.unregister()));
+     if("caches" in window){const names=await caches.keys();await Promise.all(names.filter(n=>n.startsWith("wedwise-")).map(n=>caches.delete(n)))}
+     localStorage.setItem(WEDWISE_REPAIR_KEY,"1");location.reload();return;
+   }
+   const reg=await navigator.serviceWorker.register("./sw.js?v=22",{updateViaCache:"none"});await reg.update().catch(()=>{});
+ }catch(e){console.warn("PWA init",e)}
+});
 </script>
 
 </body>
