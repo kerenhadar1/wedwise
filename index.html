@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>WedWise v1.9 - Venue Decision Workspace</title>
+<title>WedWise v2.0 - Venue Decision Workspace</title>
 <style>
 
 :root{
@@ -1552,7 +1552,7 @@ tbody tr:hover{
 
 
 /* =====================================================
-   WedWise v1.9 — refined ivory & gold visual system
+   WedWise v2.0 — refined ivory & gold visual system
    ===================================================== */
 :root{
   --bg:#f4efe5;
@@ -1981,7 +1981,7 @@ input:focus,select:focus,textarea:focus{
 
 
 /* ============================================================
-   WedWise v1.9 — closer to the approved bridal reference
+   WedWise v2.0 — closer to the approved bridal reference
    ============================================================ */
 :root{
   --ww-bg:#f5f0e6;
@@ -2204,6 +2204,124 @@ h1,h2,h3,.ww19-wordmark,.ww19-card-title,.ww19-hero-label{
   .ww19-summary-grid{grid-template-columns:1fr 1fr}
 }
 
+
+/* ============================================================
+   WedWise v2.0 — cloud sync, update state, search freshness
+   ============================================================ */
+.app-update-banner{
+  position:fixed;
+  z-index:500;
+  top:14px;
+  left:50%;
+  transform:translateX(-50%);
+  width:min(520px,calc(100% - 24px));
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:14px;
+  padding:12px 14px;
+  border:1px solid #d9c6a8;
+  border-radius:15px;
+  background:#fffaf1;
+  color:#4e3a29;
+  box-shadow:0 14px 40px rgba(80,57,30,.15);
+}
+.app-update-banner strong{display:block;font-size:12px}
+.app-update-banner span{display:block;color:#8b7863;font-size:9.5px;margin-top:2px}
+.app-update-banner button{
+  border:0;border-radius:10px;padding:8px 12px;
+  background:#b98d50;color:#fff;font-weight:700;cursor:pointer;
+}
+.offline-banner{
+  position:fixed;
+  left:50%;
+  bottom:90px;
+  transform:translateX(-50%);
+  z-index:490;
+  width:min(470px,calc(100% - 24px));
+  padding:9px 12px;
+  border-radius:12px;
+  background:#5f544d;
+  color:#fff;
+  text-align:center;
+  font-size:10px;
+  box-shadow:0 10px 26px rgba(0,0,0,.14);
+}
+.cloud-auth-modal{display:none;position:fixed;inset:0;z-index:520}
+.cloud-auth-modal.open{display:block}
+.cloud-auth-backdrop{
+  position:absolute;inset:0;background:rgba(47,34,27,.32);
+  backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px);
+}
+.cloud-auth-card{
+  position:absolute;
+  top:50%;left:50%;transform:translate(-50%,-50%);
+  width:min(430px,calc(100% - 28px));
+  padding:25px;
+  border:1px solid #e4d6c2;border-radius:24px;
+  background:#fffdf8;
+  box-shadow:0 28px 80px rgba(52,37,29,.22);
+}
+.cloud-auth-close{
+  position:absolute;top:12px;left:12px;
+  width:32px;height:32px;border:0;border-radius:50%;
+  background:#f5eee3;color:#725d49;font-size:20px;cursor:pointer;
+}
+.cloud-auth-icon{
+  width:44px;height:44px;display:grid;place-items:center;
+  border-radius:14px;background:#efe2cf;color:#9e7542;
+  font-size:21px;margin-bottom:14px;
+}
+.cloud-auth-card h2{margin:3px 0 7px;font-size:28px}
+.cloud-auth-card p{color:#786756;font-size:11px;line-height:1.55;margin-bottom:15px}
+.cloud-auth-message{min-height:20px;font-size:10px;margin:6px 0 10px;color:#8b624f}
+.cloud-auth-message.good{color:#5d765e}
+.cloud-auth-message.error{color:#a45151}
+.cloud-account-card{
+  display:flex;align-items:center;justify-content:space-between;gap:10px;
+  padding:12px;margin-bottom:12px;
+  border:1px solid #eadfce;border-radius:15px;background:#faf5ed;
+}
+.cloud-account-main{display:flex;align-items:center;gap:9px;min-width:0}
+.cloud-account-main strong{display:block;font-size:10.5px;color:#554337}
+.cloud-account-main small{
+  display:block;max-width:210px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;
+  color:#8c7a68;font-size:8.5px;margin-top:2px;
+}
+.cloud-sync-dot{width:8px;height:8px;flex:0 0 8px;border-radius:50%;background:#a99d92}
+.cloud-sync-dot.synced{background:#6f8b6e;box-shadow:0 0 0 4px rgba(111,139,110,.11)}
+.cloud-sync-dot.saving{background:#c59b58;box-shadow:0 0 0 4px rgba(197,155,88,.12)}
+.cloud-sync-dot.error{background:#b8675f;box-shadow:0 0 0 4px rgba(184,103,95,.11)}
+.cloud-sync-dot.local{background:#a99d92}
+.cloud-account-actions{display:flex;gap:5px;flex-wrap:wrap;justify-content:flex-end}
+.cloud-account-actions button{
+  border:1px solid #dfd1bd;background:#fffaf2;color:#745c44;
+  border-radius:9px;padding:6px 8px;font-size:8px;font-weight:700;cursor:pointer;
+}
+.cloud-sidebar-footer{
+  width:calc(100% - 12px);
+  text-align:right;border:0;background:transparent;cursor:pointer;
+}
+.search-freshness{
+  min-height:17px;
+  margin-top:6px;
+  color:#8f7a65;font-size:9px;
+}
+.search-freshness strong{color:#6f563d}
+.search-cache-badge{
+  display:inline-flex;align-items:center;gap:4px;
+  padding:3px 7px;border-radius:999px;
+  background:#f0e5d3;color:#85643e;font-size:8.5px;font-weight:700;
+}
+@media(max-width:850px){
+  .cloud-auth-card{
+    top:auto;bottom:0;left:0;transform:none;width:100%;
+    border-radius:24px 24px 0 0;
+    padding:23px 18px calc(24px + env(safe-area-inset-bottom));
+  }
+  .app-update-banner{top:calc(8px + env(safe-area-inset-top))}
+}
+
 </style>
 
 <meta name="theme-color" content="#f8f4ef">
@@ -2228,8 +2346,40 @@ html {
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Heebo:wght@400;500;600;700&display=swap" rel="stylesheet">
 
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
 <body>
+
+
+<div id="appUpdateBanner" class="app-update-banner" style="display:none">
+  <div>
+    <strong>יש גרסה חדשה של WedWise</strong>
+    <span>אפשר לרענן עכשיו בלי לאבד את הנתונים.</span>
+  </div>
+  <button onclick="applyAppUpdate()">רענון</button>
+</div>
+
+<div id="offlineBanner" class="offline-banner" style="display:none">
+  אין כרגע חיבור לאינטרנט. אפשר להמשיך לעבוד, והסנכרון יתחדש כשתחזרי לרשת.
+</div>
+
+<div id="cloudAuthModal" class="cloud-auth-modal" aria-hidden="true">
+  <div class="cloud-auth-backdrop" onclick="closeCloudAuth()"></div>
+  <div class="cloud-auth-card" role="dialog" aria-modal="true" aria-labelledby="cloudAuthTitle">
+    <button class="cloud-auth-close" onclick="closeCloudAuth()" aria-label="סגירה">×</button>
+    <div class="cloud-auth-icon">♡</div>
+    <div class="section-mini-label">סנכרון בין מכשירים</div>
+    <h2 id="cloudAuthTitle">כניסה ל-WedWise</h2>
+    <p>הכניסי את כתובת המייל שלך. נשלח אלייך קישור כניסה מאובטח, בלי סיסמה.</p>
+    <div class="field">
+      <label for="cloudEmailInput">אימייל</label>
+      <input id="cloudEmailInput" type="email" autocomplete="email" placeholder="name@example.com">
+    </div>
+    <div id="cloudAuthMessage" class="cloud-auth-message"></div>
+    <button id="cloudAuthSubmitBtn" class="btn primary" onclick="sendCloudMagicLink()">שלחי קישור כניסה</button>
+    <div class="muted small" style="margin-top:10px">האפליקציה ממשיכה לעבוד גם בלי התחברות, אבל הנתונים יישארו רק במכשיר הזה.</div>
+  </div>
+</div>
 
 <div id="mobileStorageNotice" class="mobile-storage-notice" style="display:none">הגרסה פתוחה בתצוגה מוגבלת. אפשר להשתמש בה, אבל לשמירה קבועה של הנתונים כדאי לפתוח אותה כאתר בדפדפן.</div>
 <div class="mobile-topbar ww19-topbar">
@@ -2246,6 +2396,21 @@ html {
   <div class="mobile-sheet-handle"></div>
   <div class="mobile-sheet-header">
     <div><div class="section-mini-label">ניווט</div><h2>עוד כלים</h2></div>
+  <div class="cloud-account-card">
+    <div class="cloud-account-main">
+      <span id="cloudSyncDot" class="cloud-sync-dot local"></span>
+      <div>
+        <strong id="cloudAccountStatus">שמירה מקומית</strong>
+        <small id="cloudAccountEmail">התחברי כדי לסנכרן בין הטלפון למחשב</small>
+      </div>
+    </div>
+    <div class="cloud-account-actions">
+      <button id="cloudLoginBtn" onclick="openCloudAuth()">כניסה</button>
+      <button id="cloudSyncBtn" onclick="syncCloudManually()" style="display:none">סנכרון</button>
+      <button id="cloudLogoutBtn" onclick="signOutCloud()" style="display:none">יציאה</button>
+    </div>
+  </div>
+
     <button class="mobile-icon-btn" onclick="toggleMobileMore(false)" aria-label="סגירה">×</button>
   </div>
   <div class="mobile-more-grid">
@@ -2366,10 +2531,10 @@ html {
     </div>
   </nav>
 
-  <div class="sidebar-footer">
-    <span class="autosave-dot"></span>
-    הנתונים נשמרים אוטומטית
-  </div>
+  <button class="sidebar-footer cloud-sidebar-footer" onclick="openCloudAuth()" type="button">
+    <span id="cloudSidebarDot" class="autosave-dot"></span>
+    <span id="cloudSyncText">שמירה מקומית</span>
+  </button>
 </aside>
 <main>
 
@@ -2650,7 +2815,8 @@ html {
   <div class="between">
     <div><h1>מקומות</h1><div class="subtitle">WedWise מחפשת מקומות אמיתיים ברשת, מצליבה מקורות ומציגה התאמה לפי מה שחשוב לכם.</div></div>
     <div class="row">
-      <button id="smartSearchBtn" class="btn primary" onclick="searchRecommendedVenues()">✨ מצאי מקומות מתאימים</button>
+      <button id="smartSearchBtn" class="btn primary" onclick="searchRecommendedVenues(false)">✨ מצאי מקומות מתאימים</button>
+      <button id="smartRefreshBtn" class="btn ghost" onclick="searchRecommendedVenues(true)" title="מבצע חיפוש חדש ברשת ולא משתמש בתוצאה שנשמרה">↻ רענני מהרשת</button>
       <button class="btn secondary" onclick="toggleVenueForm()">+ הוספה ידנית</button>
     </div>
   </div>
@@ -2667,6 +2833,7 @@ html {
     <div id="smartSearchStatus" class="status" style="margin-top:14px">
       לחצי על ״מצאי מקומות מתאימים״ כדי להתחיל.
     </div>
+    <div id="venueSearchFreshness" class="search-freshness"></div>
 
     <div id="recommendationResults" class="reco-results"></div>
   </div>
@@ -2808,11 +2975,13 @@ html {
     </div>
 
     <div class="row">
-      <button id="vendorSearchBtn" class="btn primary" onclick="searchRecommendedVendors()">✨ מצאי ספקים מתאימים</button>
+      <button id="vendorSearchBtn" class="btn primary" onclick="searchRecommendedVendors(false)">✨ מצאי ספקים מתאימים</button>
+      <button id="vendorRefreshBtn" class="btn secondary" onclick="searchRecommendedVendors(true)" title="מבצע חיפוש חדש ברשת ולא משתמש בתוצאה שנשמרה">↻ רענני מהרשת</button>
       <button class="btn ghost" onclick="go('vendorCompare')">להשוואת הספקים</button>
     </div>
 
     <div id="vendorSearchStatus" class="status" style="margin-top:14px">בחרי קטגוריה ולחצי על החיפוש החכם.</div>
+    <div id="vendorSearchFreshness" class="search-freshness"></div>
     <div id="vendorRecommendationResults" class="reco-results"></div>
   </div>
 
@@ -3682,6 +3851,7 @@ async function getSearchAccessKey(forcePrompt=false,message=""){
  return await openSearchAccessModal(message);
 }
 async function protectedSearchFetch(payload){
+ if(!navigator.onLine)throw new Error("אין כרגע חיבור לאינטרנט. אפשר להמשיך לעבוד באפליקציה ולנסות את החיפוש שוב כשתחזרי לרשת.");
  let key=await getSearchAccessKey(false);
  if(!key)throw new Error("החיפוש בוטל");
 
@@ -3752,6 +3922,325 @@ function storageJSON(key,fallback){
   try{return JSON.parse(raw)}catch(e){return fallback}
 }
 
+
+const CLOUD_STATE_TABLE="wedwise_user_state";
+const CLOUD_LOCAL_TS_KEY="ww_cloud_local_updated_at";
+let cloudClient=null;
+let cloudUser=null;
+let cloudReady=false;
+let cloudApplying=false;
+let cloudSaveTimer=null;
+let cloudLastError="";
+let cloudConfig=null;
+
+function cloudSnapshot(){
+  return {
+    setup:state.setup,
+    venues:state.venues,
+    checklist:state.checklist,
+    expenses:state.expenses,
+    guests:state.guests,
+    seatingTables:state.seatingTables,
+    gifts:state.gifts,
+    recommendations:state.recommendations,
+    compareWeights:state.compareWeights,
+    vendors:state.vendors,
+    vendorRecommendations:state.vendorRecommendations,
+    activeVendorCategory:state.activeVendorCategory,
+    vendorCompareWeights:state.vendorCompareWeights
+  };
+}
+
+function hasMeaningfulLocalState(){
+  return Boolean(
+    state.setup?.coupleNames ||
+    state.setup?.estimatedGuests ||
+    state.setup?.weddingDate ||
+    state.venues?.length ||
+    state.expenses?.length ||
+    state.guests?.length ||
+    state.gifts?.length ||
+    state.vendors?.length
+  );
+}
+
+function setCloudStatus(kind,text,email=""){
+  const dot=document.getElementById("cloudSyncDot");
+  const sideDot=document.getElementById("cloudSidebarDot");
+  const status=document.getElementById("cloudAccountStatus");
+  const accountEmail=document.getElementById("cloudAccountEmail");
+  const syncText=document.getElementById("cloudSyncText");
+  [dot,sideDot].forEach(el=>{
+    if(!el)return;
+    el.classList.remove("local","saving","synced","error");
+    el.classList.add(kind||"local");
+  });
+  if(status)status.textContent=text||"שמירה מקומית";
+  if(syncText)syncText.textContent=text||"שמירה מקומית";
+  if(accountEmail){
+    accountEmail.textContent=email || (cloudUser?.email||"התחברי כדי לסנכרן בין הטלפון למחשב");
+  }
+  const login=document.getElementById("cloudLoginBtn");
+  const logout=document.getElementById("cloudLogoutBtn");
+  const sync=document.getElementById("cloudSyncBtn");
+  const signedIn=Boolean(cloudUser);
+  if(login)login.style.display=signedIn?"none":"inline-block";
+  if(logout)logout.style.display=signedIn?"inline-block":"none";
+  if(sync)sync.style.display=signedIn?"inline-block":"none";
+}
+
+function openCloudAuth(){
+  if(cloudUser){
+    toggleMobileMore(true);
+    return;
+  }
+  const modal=document.getElementById("cloudAuthModal");
+  if(!modal)return;
+  modal.classList.add("open");
+  modal.setAttribute("aria-hidden","false");
+  document.body.style.overflow="hidden";
+  const msg=document.getElementById("cloudAuthMessage");
+  if(msg){msg.textContent="";msg.className="cloud-auth-message";}
+  setTimeout(()=>document.getElementById("cloudEmailInput")?.focus(),60);
+}
+
+function closeCloudAuth(){
+  const modal=document.getElementById("cloudAuthModal");
+  if(modal){
+    modal.classList.remove("open");
+    modal.setAttribute("aria-hidden","true");
+  }
+  document.body.style.overflow="";
+}
+
+async function sendCloudMagicLink(){
+  const email=(document.getElementById("cloudEmailInput")?.value||"").trim();
+  const msg=document.getElementById("cloudAuthMessage");
+  const btn=document.getElementById("cloudAuthSubmitBtn");
+  if(!email || !email.includes("@")){
+    if(msg){msg.textContent="הכניסי כתובת מייל תקינה.";msg.className="cloud-auth-message error";}
+    return;
+  }
+  if(!cloudClient){
+    if(msg){msg.textContent="הסנכרון עדיין לא מוכן. נסי שוב בעוד כמה שניות.";msg.className="cloud-auth-message error";}
+    return;
+  }
+  try{
+    if(btn){btn.disabled=true;btn.textContent="שולחת...";}
+    const redirectTo=location.origin+location.pathname;
+    const {error}=await cloudClient.auth.signInWithOtp({
+      email,
+      options:{emailRedirectTo:redirectTo}
+    });
+    if(error)throw error;
+    if(msg){
+      msg.textContent="שלחנו קישור כניסה למייל. פתחי אותו באותו מכשיר או במכשיר שבו תרצי להשתמש ב-WedWise.";
+      msg.className="cloud-auth-message good";
+    }
+  }catch(err){
+    console.error(err);
+    if(msg){msg.textContent="לא הצלחתי לשלוח קישור: "+(err?.message||"שגיאה לא ידועה");msg.className="cloud-auth-message error";}
+  }finally{
+    if(btn){btn.disabled=false;btn.textContent="שלחי קישור כניסה";}
+  }
+}
+
+async function signOutCloud(){
+  if(!cloudClient)return;
+  try{await cloudClient.auth.signOut()}catch(e){console.error(e)}
+  cloudUser=null;
+  setCloudStatus("local","שמירה מקומית");
+}
+
+function persistLocalState(){
+  storageSet("ww3_setup",JSON.stringify(state.setup));
+  storageSet("ww3_venues",JSON.stringify(state.venues));
+  storageSet("ww3_checklist",JSON.stringify(state.checklist));
+  storageSet("ww3_expenses",JSON.stringify(state.expenses));
+  storageSet("ww3_guests",JSON.stringify(state.guests));
+  storageSet("ww15_seating_tables",JSON.stringify(state.seatingTables));
+  storageSet("ww15_gifts",JSON.stringify(state.gifts));
+  storageSet("ww5_recommendations",JSON.stringify(state.recommendations));
+  storageSet("ww7_compare_weights",JSON.stringify(state.compareWeights));
+  storageSet("ww11_vendors",JSON.stringify(state.vendors));
+  storageSet("ww11_vendor_recommendations",JSON.stringify(state.vendorRecommendations));
+  storageSet("ww11_vendor_category",state.activeVendorCategory);
+  storageSet("ww11_vendor_weights",JSON.stringify(state.vendorCompareWeights));
+}
+
+function scheduleCloudSave(){
+  if(cloudApplying || !cloudUser || !cloudClient)return;
+  clearTimeout(cloudSaveTimer);
+  setCloudStatus("saving","שומרת בענן...",cloudUser.email);
+  cloudSaveTimer=setTimeout(()=>saveCloudNow(),1100);
+}
+
+async function saveCloudNow(force=false){
+  if(!cloudUser || !cloudClient || cloudApplying)return;
+  if(!navigator.onLine){
+    setCloudStatus("saving","ממתינה לחיבור...",cloudUser.email);
+    return;
+  }
+  try{
+    setCloudStatus("saving","שומרת בענן...",cloudUser.email);
+    const now=new Date().toISOString();
+    const {data,error}=await cloudClient
+      .from(CLOUD_STATE_TABLE)
+      .upsert({user_id:cloudUser.id,state:cloudSnapshot(),updated_at:now},{onConflict:"user_id"})
+      .select("updated_at")
+      .single();
+    if(error)throw error;
+    const ts=Date.parse(data?.updated_at||now);
+    storageSet(CLOUD_LOCAL_TS_KEY,String(ts));
+    cloudLastError="";
+    setCloudStatus("synced","נשמר בענן",cloudUser.email);
+  }catch(err){
+    console.error("Cloud save failed",err);
+    cloudLastError=err?.message||"שגיאת סנכרון";
+    setCloudStatus("error","שגיאת סנכרון",cloudUser.email);
+  }
+}
+
+function applyCloudSnapshot(snapshot){
+  if(!snapshot || typeof snapshot!=="object")return;
+  cloudApplying=true;
+  try{
+    state.setup=snapshot.setup||{};
+    state.venues=Array.isArray(snapshot.venues)?snapshot.venues:[];
+    state.checklist=mergeChecklistWithDefaults(snapshot.checklist||null);
+    state.expenses=Array.isArray(snapshot.expenses)?snapshot.expenses:[];
+    state.guests=Array.isArray(snapshot.guests)?snapshot.guests.map(normalizeGuest):[];
+    state.seatingTables=Array.isArray(snapshot.seatingTables)?snapshot.seatingTables:[];
+    state.gifts=Array.isArray(snapshot.gifts)?snapshot.gifts:[];
+    state.recommendations=Array.isArray(snapshot.recommendations)?snapshot.recommendations:[];
+    state.compareWeights=snapshot.compareWeights||{price:20,food:20,atmosphere:15,location:15,design:10,service:10,parking:5,couple:5};
+    state.vendors=Array.isArray(snapshot.vendors)?snapshot.vendors:[];
+    state.vendorRecommendations=snapshot.vendorRecommendations||{};
+    state.activeVendorCategory=snapshot.activeVendorCategory||"photographer";
+    state.vendorCompareWeights=snapshot.vendorCompareWeights||{};
+    state.venues.forEach(ensureVenueDetails);
+    state.vendors.forEach(ensureVendorDetails);
+    persistLocalState();
+    renderEverything();
+  }finally{
+    cloudApplying=false;
+  }
+}
+
+function renderEverything(){
+  loadSetup();
+  loadComparisonWeights();
+  renderVenues();
+  renderRecommendations();
+  renderComparisonImpressionEditor();
+  renderVendorSection();
+  renderVendorCompare();
+  renderChecklist();
+  renderBudget();
+  renderGuests();
+  renderGifts();
+  updateDashboard();
+  syncMobileNavigation(document.querySelector(".section.active")?.id||"dashboard");
+}
+
+async function reconcileCloudState(){
+  if(!cloudUser || !cloudClient)return;
+  try{
+    setCloudStatus("saving","בודקת סנכרון...",cloudUser.email);
+    const {data,error}=await cloudClient
+      .from(CLOUD_STATE_TABLE)
+      .select("state,updated_at")
+      .eq("user_id",cloudUser.id)
+      .maybeSingle();
+
+    if(error)throw error;
+
+    const localTs=Number(storageGet(CLOUD_LOCAL_TS_KEY,"0"))||0;
+    const localHas=hasMeaningfulLocalState();
+
+    if(!data){
+      await saveCloudNow(true);
+      return;
+    }
+
+    const remoteTs=Date.parse(data.updated_at||0)||0;
+
+    if(localHas && localTs>remoteTs+2500){
+      await saveCloudNow(true);
+    }else{
+      applyCloudSnapshot(data.state||{});
+      storageSet(CLOUD_LOCAL_TS_KEY,String(remoteTs));
+      setCloudStatus("synced","מסונכרן",cloudUser.email);
+    }
+  }catch(err){
+    console.error("Cloud reconcile failed",err);
+    cloudLastError=err?.message||"שגיאת סנכרון";
+    setCloudStatus("error","שגיאת סנכרון",cloudUser.email);
+  }
+}
+
+async function syncCloudManually(){
+  if(!cloudUser){
+    openCloudAuth();
+    return;
+  }
+  await reconcileCloudState();
+}
+
+function findPublishableKey(config){
+  return config?.publishableKey||"";
+}
+
+async function initCloud(){
+  try{
+    setCloudStatus("local","מאתחלת סנכרון...");
+    const response=await fetch(FUNCTION_URL+"?config=1",{method:"GET",cache:"no-store"});
+    const config=await response.json();
+    if(!response.ok || !config?.success)throw new Error(config?.error||"Cloud config unavailable");
+    const publishableKey=findPublishableKey(config);
+    if(!publishableKey || !window.supabase?.createClient)throw new Error("Supabase client configuration missing");
+
+    cloudConfig=config;
+    cloudClient=window.supabase.createClient(config.supabaseUrl,publishableKey,{
+      auth:{persistSession:true,autoRefreshToken:true,detectSessionInUrl:true}
+    });
+    cloudReady=true;
+
+    cloudClient.auth.onAuthStateChange((event,session)=>{
+      setTimeout(async()=>{
+        cloudUser=session?.user||null;
+        if(cloudUser){
+          closeCloudAuth();
+          setCloudStatus("saving","מתחברת לענן...",cloudUser.email);
+          await reconcileCloudState();
+        }else{
+          setCloudStatus("local","שמירה מקומית");
+        }
+      },0);
+    });
+
+    const {data}=await cloudClient.auth.getSession();
+    cloudUser=data?.session?.user||null;
+    if(cloudUser){
+      await reconcileCloudState();
+    }else{
+      setCloudStatus("local","שמירה מקומית");
+    }
+  }catch(err){
+    console.error("Cloud init failed",err);
+    cloudReady=false;
+    setCloudStatus("error","ענן לא זמין כרגע");
+  }
+}
+
+function updateConnectivityUi(){
+  const banner=document.getElementById("offlineBanner");
+  if(banner)banner.style.display=navigator.onLine?"none":"block";
+  if(navigator.onLine && cloudUser)scheduleCloudSave();
+}
+window.addEventListener("online",updateConnectivityUi);
+window.addEventListener("offline",updateConnectivityUi);
+
 const state={
  setup:storageJSON("ww3_setup",{}),
  venues:storageJSON("ww3_venues",[]),
@@ -3768,7 +4257,11 @@ const state={
  vendorCompareWeights:storageJSON("ww11_vendor_weights",{}),
  activeVenueId:null
 };
-function persist(){storageSet("ww3_setup",JSON.stringify(state.setup));storageSet("ww3_venues",JSON.stringify(state.venues));storageSet("ww3_checklist",JSON.stringify(state.checklist));storageSet("ww3_expenses",JSON.stringify(state.expenses));storageSet("ww3_guests",JSON.stringify(state.guests));storageSet("ww15_seating_tables",JSON.stringify(state.seatingTables));storageSet("ww15_gifts",JSON.stringify(state.gifts));storageSet("ww5_recommendations",JSON.stringify(state.recommendations));storageSet("ww7_compare_weights",JSON.stringify(state.compareWeights));storageSet("ww11_vendors",JSON.stringify(state.vendors));storageSet("ww11_vendor_recommendations",JSON.stringify(state.vendorRecommendations));storageSet("ww11_vendor_category",state.activeVendorCategory);storageSet("ww11_vendor_weights",JSON.stringify(state.vendorCompareWeights))}
+function persist(){
+  persistLocalState();
+  storageSet(CLOUD_LOCAL_TS_KEY,String(Date.now()));
+  scheduleCloudSave();
+}
 function esc(s){return String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[c]))}
 function syncMobileNavigation(id){
  const primary=["dashboard","budget","guests","vendors"];
@@ -3909,6 +4402,21 @@ function setupSummaryText(){
  return parts.join(" · ");
 }
 
+
+function renderSearchFreshness(elementId,cache){
+  const el=document.getElementById(elementId);
+  if(!el)return;
+  if(!cache){el.textContent="";return;}
+  const raw=cache.updatedAt||cache.createdAt||new Date().toISOString();
+  const date=new Date(raw);
+  const formatted=Number.isNaN(date.getTime())?"":date.toLocaleString("he-IL",{dateStyle:"short",timeStyle:"short"});
+  if(cache.hit){
+    el.innerHTML=`<span class="search-cache-badge">נשמר</span> מוצגות תוצאות מחיפוש קודם${formatted?" · עודכן "+formatted:""}. לחיפוש חדש לגמרי לחצי על ״רענני מהרשת״.`;
+  }else{
+    el.innerHTML=`<span class="search-cache-badge">חדש</span> המידע נבדק עכשיו ברשת${formatted?" · "+formatted:""}.`;
+  }
+}
+
 function isSavedVenue(name){
  const n=String(name||"").trim().toLowerCase();
  return state.venues.some(v=>String(v.name||"").trim().toLowerCase()===n);
@@ -3986,7 +4494,7 @@ function renderRecommendations(){
  }).join("");
 }
 
-async function searchRecommendedVenues(){
+async function searchRecommendedVenues(forceRefresh=false){
  const btn=document.getElementById("smartSearchBtn");
  const status=document.getElementById("smartSearchStatus");
 
@@ -3997,7 +4505,8 @@ async function searchRecommendedVenues(){
  }
 
  btn.disabled=true;
- btn.textContent="מחפשת...";
+ const refreshBtn=document.getElementById("smartRefreshBtn");if(refreshBtn)refreshBtn.disabled=true;
+ btn.textContent=forceRefresh?"מרעננת מהרשת...":"מחפשת...";
  status.className="status";
  status.innerHTML=`<span class="search-loading"><span class="spinner"></span><span>מחפשת מקומות, בודקת ביקורות ומצליבה מקורות. זה יכול לקחת כמה שניות.</span></span>`;
  recommendationResults.innerHTML="";
@@ -4016,7 +4525,8 @@ async function searchRecommendedVenues(){
      preferredMonth:state.setup.preferredMonth||"",
      accessibilityRequired:!!state.setup.accessibilityRequired,
      parkingRequired:!!state.setup.parkingRequired,
-     priorities:state.setup.priorities||""
+     priorities:state.setup.priorities||"",
+     forceRefresh:!!forceRefresh
    });
 
    let data={};
@@ -4035,6 +4545,7 @@ async function searchRecommendedVenues(){
    status.textContent=state.recommendations.length
      ? `נמצאו ${state.recommendations.length} מקומות מדורגים${summary?" · "+summary:""}`
      : "החיפוש הסתיים, אבל לא נמצאו כרגע מקומות מתאימים. נסי להרחיב אזור או לשנות סגנון.";
+   renderSearchFreshness("venueSearchFreshness",data.cache);
 
  }catch(err){
    console.error(err);
@@ -4042,6 +4553,7 @@ async function searchRecommendedVenues(){
    status.textContent="לא הצלחתי להשלים את החיפוש: "+(err?.message||"שגיאה לא ידועה");
  }finally{
    btn.disabled=false;
+   const refreshBtn=document.getElementById("smartRefreshBtn");if(refreshBtn)refreshBtn.disabled=false;
    btn.textContent="✨ מצאי מקומות מתאימים";
  }
 }
@@ -4694,12 +5206,13 @@ function toggleVendorForm(){
  const formCat=document.getElementById("vendorFormCategory");if(formCat)formCat.textContent=vendorCategoryLabel(state.activeVendorCategory);
 }
 
-async function searchRecommendedVendors(){
+async function searchRecommendedVendors(forceRefresh=false){
  const btn=document.getElementById("vendorSearchBtn");
  const status=document.getElementById("vendorSearchStatus");
  const category=state.activeVendorCategory;
  const cfg=vendorConfig(category);
- btn.disabled=true;btn.textContent="מחפשת...";
+ btn.disabled=true;btn.textContent=forceRefresh?"מרעננת מהרשת...":"מחפשת...";
+ const refreshBtn=document.getElementById("vendorRefreshBtn");if(refreshBtn)refreshBtn.disabled=true;
  status.className="status";
  status.innerHTML=`<span class="search-loading"><span class="spinner"></span><span>מחפשת ${esc(cfg.label)}, בודקת דירוגים ומצליבה מקורות...</span></span>`;
  vendorRecommendationResults.innerHTML="";
@@ -4709,7 +5222,8 @@ async function searchRecommendedVendors(){
      vendorCategory:category,
      regions:state.setup.regions||[],
      vendorMaxBudget:+vendorMaxBudget.value||0,
-     vendorPreferences:vendorPreferences.value.trim()||""
+     vendorPreferences:vendorPreferences.value.trim()||"",
+     forceRefresh:!!forceRefresh
    });
    let data={};try{data=await response.json()}catch(e){}
    if(!response.ok||!data.success)throw new Error(data.error||`החיפוש נכשל (${response.status})`);
@@ -4717,9 +5231,14 @@ async function searchRecommendedVendors(){
    persist();renderVendorRecommendations();
    status.className="status good";
    status.textContent=(state.vendorRecommendations[category]||[]).length?`נמצאו ${state.vendorRecommendations[category].length} ${cfg.label} מדורגים`:`לא נמצאו כרגע תוצאות מתאימות. נסי לשנות את מילות החיפוש.`;
+   renderSearchFreshness("vendorSearchFreshness",data.cache);
  }catch(err){
    console.error(err);status.className="status error";status.textContent="לא הצלחתי להשלים את החיפוש: "+(err?.message||"שגיאה לא ידועה");
- }finally{btn.disabled=false;btn.textContent="✨ מצאי ספקים מתאימים"}
+ }finally{
+   btn.disabled=false;
+   const refreshBtn=document.getElementById("vendorRefreshBtn");if(refreshBtn)refreshBtn.disabled=false;
+   btn.textContent="✨ מצאי ספקים מתאימים";
+ }
 }
 
 function renderVendorRecommendations(){
@@ -5333,13 +5852,68 @@ function updateDashboard(){
  renderDashboardChecklist();
 }
 
-state.venues.forEach(ensureVenueDetails);loadSetup();loadComparisonWeights();renderVenues();renderRecommendations();renderComparisonImpressionEditor();renderVendorSection();renderVendorCompare();renderChecklist();renderBudget();renderGuests();renderGifts();updateDashboard();syncMobileNavigation("dashboard");showStorageNoticeIfNeeded();
+async function bootstrapApp(){
+  state.venues.forEach(ensureVenueDetails);
+  state.vendors.forEach(ensureVendorDetails);
+  loadSetup();
+  loadComparisonWeights();
+  renderVenues();
+  renderRecommendations();
+  renderComparisonImpressionEditor();
+  renderVendorSection();
+  renderVendorCompare();
+  renderChecklist();
+  renderBudget();
+  renderGuests();
+  renderGifts();
+  updateDashboard();
+  syncMobileNavigation("dashboard");
+  showStorageNoticeIfNeeded();
+  updateConnectivityUi();
+  await initCloud();
+}
+bootstrapApp();
 </script>
 
 <script>
+let pendingServiceWorker=null;
+function showAppUpdateBanner(){
+  const banner=document.getElementById("appUpdateBanner");
+  if(banner)banner.style.display="flex";
+}
+function applyAppUpdate(){
+  if(pendingServiceWorker){
+    pendingServiceWorker.postMessage({type:"SKIP_WAITING"});
+  }else{
+    location.reload();
+  }
+}
 if ("serviceWorker" in navigator && /^https?:$/.test(location.protocol)) {
-  window.addEventListener("load", () => {
-    navigator.serviceWorker.register("./sw.js").catch(() => {});
+  window.addEventListener("load", async() => {
+    try{
+      const registration=await navigator.serviceWorker.register("./sw.js");
+      if(registration.waiting){
+        pendingServiceWorker=registration.waiting;
+        showAppUpdateBanner();
+      }
+      registration.addEventListener("updatefound",()=>{
+        const worker=registration.installing;
+        if(!worker)return;
+        worker.addEventListener("statechange",()=>{
+          if(worker.state==="installed" && navigator.serviceWorker.controller){
+            pendingServiceWorker=worker;
+            showAppUpdateBanner();
+          }
+        });
+      });
+      navigator.serviceWorker.addEventListener("controllerchange",()=>{
+        if(sessionStorage.getItem("ww_reloading_for_update"))return;
+        sessionStorage.setItem("ww_reloading_for_update","1");
+        location.reload();
+      });
+    }catch(e){
+      console.warn("Service worker registration failed",e);
+    }
   });
 }
 </script>
