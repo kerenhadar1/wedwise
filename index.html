@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>WedWise v2.0 - Venue Decision Workspace</title>
+<title>WedWise v2.0.1 - Venue Decision Workspace</title>
 <style>
 
 :root{
@@ -1552,7 +1552,7 @@ tbody tr:hover{
 
 
 /* =====================================================
-   WedWise v2.0 — refined ivory & gold visual system
+   WedWise v2.0.1 — refined ivory & gold visual system
    ===================================================== */
 :root{
   --bg:#f4efe5;
@@ -1981,7 +1981,7 @@ input:focus,select:focus,textarea:focus{
 
 
 /* ============================================================
-   WedWise v2.0 — closer to the approved bridal reference
+   WedWise v2.0.1 — closer to the approved bridal reference
    ============================================================ */
 :root{
   --ww-bg:#f5f0e6;
@@ -2206,32 +2206,8 @@ h1,h2,h3,.ww19-wordmark,.ww19-card-title,.ww19-hero-label{
 
 
 /* ============================================================
-   WedWise v2.0 — cloud sync, update state, search freshness
+   WedWise v2.0.1 — cloud sync, update state, search freshness
    ============================================================ */
-.app-update-banner{
-  position:fixed;
-  z-index:500;
-  top:14px;
-  left:50%;
-  transform:translateX(-50%);
-  width:min(520px,calc(100% - 24px));
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  gap:14px;
-  padding:12px 14px;
-  border:1px solid #d9c6a8;
-  border-radius:15px;
-  background:#fffaf1;
-  color:#4e3a29;
-  box-shadow:0 14px 40px rgba(80,57,30,.15);
-}
-.app-update-banner strong{display:block;font-size:12px}
-.app-update-banner span{display:block;color:#8b7863;font-size:9.5px;margin-top:2px}
-.app-update-banner button{
-  border:0;border-radius:10px;padding:8px 12px;
-  background:#b98d50;color:#fff;font-weight:700;cursor:pointer;
-}
 .offline-banner{
   position:fixed;
   left:50%;
@@ -2351,34 +2327,7 @@ html {
 <body>
 
 
-<div id="appUpdateBanner" class="app-update-banner" style="display:none">
-  <div>
-    <strong>יש גרסה חדשה של WedWise</strong>
-    <span>אפשר לרענן עכשיו בלי לאבד את הנתונים.</span>
-  </div>
-  <button onclick="applyAppUpdate()">רענון</button>
-</div>
 
-<div id="offlineBanner" class="offline-banner" style="display:none">
-  אין כרגע חיבור לאינטרנט. אפשר להמשיך לעבוד, והסנכרון יתחדש כשתחזרי לרשת.
-</div>
-
-<div id="cloudAuthModal" class="cloud-auth-modal" aria-hidden="true">
-  <div class="cloud-auth-backdrop" onclick="closeCloudAuth()"></div>
-  <div class="cloud-auth-card" role="dialog" aria-modal="true" aria-labelledby="cloudAuthTitle">
-    <button class="cloud-auth-close" onclick="closeCloudAuth()" aria-label="סגירה">×</button>
-    <div class="cloud-auth-icon">♡</div>
-    <div class="section-mini-label">סנכרון בין מכשירים</div>
-    <h2 id="cloudAuthTitle">כניסה ל-WedWise</h2>
-    <p>הכניסי את כתובת המייל שלך. נשלח אלייך קישור כניסה מאובטח, בלי סיסמה.</p>
-    <div class="field">
-      <label for="cloudEmailInput">אימייל</label>
-      <input id="cloudEmailInput" type="email" autocomplete="email" placeholder="name@example.com">
-    </div>
-    <div id="cloudAuthMessage" class="cloud-auth-message"></div>
-    <button id="cloudAuthSubmitBtn" class="btn primary" onclick="sendCloudMagicLink()">שלחי קישור כניסה</button>
-    <div class="muted small" style="margin-top:10px">האפליקציה ממשיכה לעבוד גם בלי התחברות, אבל הנתונים יישארו רק במכשיר הזה.</div>
-  </div>
 </div>
 
 <div id="mobileStorageNotice" class="mobile-storage-notice" style="display:none">הגרסה פתוחה בתצוגה מוגבלת. אפשר להשתמש בה, אבל לשמירה קבועה של הנתונים כדאי לפתוח אותה כאתר בדפדפן.</div>
@@ -5876,46 +5825,45 @@ bootstrapApp();
 </script>
 
 <script>
-let pendingServiceWorker=null;
-function showAppUpdateBanner(){
-  const banner=document.getElementById("appUpdateBanner");
-  if(banner)banner.style.display="flex";
-}
-function applyAppUpdate(){
-  if(pendingServiceWorker){
-    pendingServiceWorker.postMessage({type:"SKIP_WAITING"});
-  }else{
-    location.reload();
+const WEDWISE_BUILD="2.0.1";
+const WEDWISE_REPAIR_KEY="ww_pwa_repair_201";
+
+async function repairAndRegisterPwa(){
+  if(!("serviceWorker" in navigator) || !/^https?:$/.test(location.protocol)) return;
+
+  try{
+    // Run once to remove the stuck older worker/cache.
+    if(storageGet(WEDWISE_REPAIR_KEY,"")!=="done"){
+      const registrations=await navigator.serviceWorker.getRegistrations();
+      await Promise.all(registrations.map(reg=>reg.unregister()));
+
+      if("caches" in window){
+        const names=await caches.keys();
+        await Promise.all(
+          names
+            .filter(name=>name.startsWith("wedwise-"))
+            .map(name=>caches.delete(name))
+        );
+      }
+
+      storageSet(WEDWISE_REPAIR_KEY,"done");
+
+      const url=new URL(location.href);
+      url.searchParams.set("ww_build","201");
+      location.replace(url.toString());
+      return;
+    }
+
+    const registration=await navigator.serviceWorker.register("./sw.js?v=201",{
+      updateViaCache:"none"
+    });
+    await registration.update().catch(()=>{});
+  }catch(error){
+    console.warn("WedWise PWA recovery failed",error);
   }
 }
-if ("serviceWorker" in navigator && /^https?:$/.test(location.protocol)) {
-  window.addEventListener("load", async() => {
-    try{
-      const registration=await navigator.serviceWorker.register("./sw.js");
-      if(registration.waiting){
-        pendingServiceWorker=registration.waiting;
-        showAppUpdateBanner();
-      }
-      registration.addEventListener("updatefound",()=>{
-        const worker=registration.installing;
-        if(!worker)return;
-        worker.addEventListener("statechange",()=>{
-          if(worker.state==="installed" && navigator.serviceWorker.controller){
-            pendingServiceWorker=worker;
-            showAppUpdateBanner();
-          }
-        });
-      });
-      navigator.serviceWorker.addEventListener("controllerchange",()=>{
-        if(sessionStorage.getItem("ww_reloading_for_update"))return;
-        sessionStorage.setItem("ww_reloading_for_update","1");
-        location.reload();
-      });
-    }catch(e){
-      console.warn("Service worker registration failed",e);
-    }
-  });
-}
+
+window.addEventListener("load",repairAndRegisterPwa);
 </script>
 
 </body>
