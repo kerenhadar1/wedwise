@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>WedWise v2.2.5 - Venue Decision Workspace</title>
+<title>WedWise v2.2.7 - Venue Decision Workspace</title>
 <style>
 
 :root{
@@ -1552,7 +1552,7 @@ tbody tr:hover{
 
 
 /* =====================================================
-   WedWise v2.2.5 — refined ivory & gold visual system
+   WedWise v2.2.7 — refined ivory & gold visual system
    ===================================================== */
 :root{
   --bg:#f4efe5;
@@ -1981,7 +1981,7 @@ input:focus,select:focus,textarea:focus{
 
 
 /* ============================================================
-   WedWise v2.2.5 — closer to the approved bridal reference
+   WedWise v2.2.7 — closer to the approved bridal reference
    ============================================================ */
 :root{
   --ww-bg:#f5f0e6;
@@ -2205,7 +2205,7 @@ h1,h2,h3,.ww19-wordmark,.ww19-card-title,.ww19-hero-label{
 }
 
 
-/* WedWise v2.2.5 */
+/* WedWise v2.2.7 */
 .username-gate{position:fixed;inset:0;z-index:1000;display:none;align-items:center;justify-content:center;padding:22px;background:radial-gradient(circle at 50% 16%,rgba(255,255,255,.96),transparent 27%),linear-gradient(180deg,#f7f2e8,#eee4d4)}
 .username-gate.open{display:flex}
 .username-gate-card{width:min(410px,100%);text-align:center;padding:30px 24px 25px;border:1px solid #decdb5;border-radius:30px;background:rgba(255,253,248,.97);box-shadow:0 28px 80px rgba(84,61,34,.16)}
@@ -2294,6 +2294,10 @@ h1,h2,h3,.ww19-wordmark,.ww19-card-title,.ww19-hero-label{
   color:#8f6c43;font-size:9px;text-decoration:underline;cursor:pointer;
 }
 
+
+/* WedWise v2.2.7 navigation */
+.mobile-bottom-nav{grid-template-columns:repeat(5,1fr)!important}
+.mobile-bottom-nav button small{font-size:8px!important}
 </style>
 
 <meta name="theme-color" content="#f8f4ef">
@@ -2406,48 +2410,23 @@ html {
   </div>
 
   <div class="mobile-more-grid">
-    <button onclick="mobileGo('setup')"><span>✦</span><div><strong>פרטי החתונה</strong><small>תאריך, תקציב והעדפות</small></div></button>
-    <button onclick="mobileGo('venues')"><span>⌖</span><div><strong>מקומות</strong><small>חיפוש חכם ושמורים</small></div></button>
-    <button onclick="mobileGo('vendors')"><span>◇</span><div><strong>ספקים</strong><small>חיפוש ספקים ושמורים</small></div></button>
-    <button onclick="mobileGo('compare')"><span>⇄</span><div><strong>השוואת מקומות</strong><small>השוואה בין המקומות</small></div></button>
+    <button onclick="mobileGo('dashboard')"><span>⌂</span><div><strong>בית</strong><small>תמונת מצב והשלב הנוכחי</small></div></button>
+    <button onclick="mobileGo('budget')"><span>◔</span><div><strong>תקציב</strong><small>מה נסגר, שולם ונשאר</small></div></button>
+    <button onclick="mobileGo('guests')"><span>♙</span><div><strong>מוזמנים</strong><small>אישורי הגעה והושבה</small></div></button>
+    <button onclick="mobileGo('compare')"><span>⇄</span><div><strong>השוואת מקומות</strong><small>השוואה בין המקומות ששמרתם</small></div></button>
     <button onclick="mobileGo('vendorCompare')"><span>≋</span><div><strong>השוואת ספקים</strong><small>השוואה לפי מה שחשוב לכם</small></div></button>
-    <button onclick="mobileGo('checklist')"><span>✓</span><div><strong>צ'ק ליסט</strong><small>כל המשימות עד האירוע</small></div></button>
-    <button onclick="mobileGo('gifts')"><span>▣</span><div><strong>מתנות</strong><small>מעטפות ותודות</small></div></button>
+    <button onclick="mobileGo('gifts')"><span>▣</span><div><strong>מתנות</strong><small>מעטפות, העברות ותודות</small></div></button>
   </div>
 </div>
 <div class="mobile-bottom-nav" aria-label="ניווט מהיר">
-  <button data-mobile-target="dashboard" class="active" onclick="mobileGo('dashboard')"><span class="bottom-nav-icon">⌂</span><small>בית</small></button>
-  <button data-mobile-target="budget" onclick="mobileGo('budget')"><span class="bottom-nav-icon">◔</span><small>תקציב</small></button>
-  <button data-mobile-target="guests" onclick="mobileGo('guests')"><span class="bottom-nav-icon">♙</span><small>מוזמנים</small></button>
+  <button data-mobile-target="setup" onclick="mobileGo('setup')"><span class="bottom-nav-icon">✦</span><small>פרטים</small></button>
   <button data-mobile-target="venues" onclick="mobileGo('venues')"><span class="bottom-nav-icon">⌖</span><small>מקומות</small></button>
   <button data-mobile-target="vendors" onclick="mobileGo('vendors')"><span class="bottom-nav-icon">◇</span><small>ספקים</small></button>
-  <button data-mobile-target="more" onclick="toggleMobileMore(true)"><span class="bottom-nav-icon">•••</span><small>עוד</small></button>
+  <button data-mobile-target="checklist" onclick="mobileGo('checklist')"><span class="bottom-nav-icon">✓</span><small>צ׳ק ליסט</small></button>
+  <button data-mobile-target="more" class="active" onclick="toggleMobileMore(true)"><span class="bottom-nav-icon">•••</span><small>עוד</small></button>
 </div>
 
 
-<div id="searchAccessModal" class="search-access-modal" aria-hidden="true">
-  <div class="search-access-backdrop" onclick="closeSearchAccessModal(false)"></div>
-  <div class="search-access-card" role="dialog" aria-modal="true" aria-labelledby="searchAccessTitle">
-    <div class="search-access-lock">⌁</div>
-    <div class="section-mini-label">חיפוש חכם מוגן</div>
-    <h2 id="searchAccessTitle">קוד גישה לחיפוש</h2>
-    <p>כדי לשמור על מכסת החיפושים, החיפוש ברשת זמין רק למי שקיבל מכם קוד גישה.</p>
-    <div class="field">
-      <label for="searchAccessInput">קוד גישה</label>
-      <input id="searchAccessInput" type="password" autocomplete="current-password" placeholder="הכניסי את הקוד">
-      <div id="searchAccessError" class="search-access-error"></div>
-    </div>
-    <label class="search-access-remember">
-      <input id="rememberSearchAccess" type="checkbox" checked>
-      <span>לזכור את הקוד במכשיר הזה</span>
-    </label>
-    <div class="row search-access-actions">
-      <button class="btn primary" onclick="submitSearchAccess()">המשך לחיפוש</button>
-      <button class="btn ghost" onclick="closeSearchAccessModal(false)">ביטול</button>
-    </div>
-    <div class="muted small">הקוד לא נשמר ב-GitHub ולא מופיע בקוד האתר.</div>
-  </div>
-</div>
 
 <div class="app">
 <aside>
@@ -3769,12 +3748,28 @@ function mergeChecklistWithDefaults(saved){
 
 const FUNCTION_URL="https://fmcfhhdctqydvypclppj.supabase.co/functions/v1/recommend-venues";
 const CONFIG_FUNCTION_URL="https://fmcfhhdctqydvypclppj.supabase.co/functions/v1/wedwise-config";
+const SEARCH_FUNCTION_URL="https://fmcfhhdctqydvypclppj.supabase.co/functions/v1/wedwise-search";
 
 async function protectedSearchFetch(payload){
-  if(!navigator.onLine)throw new Error("אין כרגע חיבור לאינטרנט. נסי שוב כשתחזרי לרשת.");
-  return await fetch(FUNCTION_URL,{
+  if(!navigator.onLine){
+    throw new Error("אין כרגע חיבור לאינטרנט. נסי שוב כשתחזרי לרשת.");
+  }
+
+  if(!cloudClient||!cloudUser){
+    throw new Error("צריך להתחבר מחדש לחשבון כדי לבצע חיפוש.");
+  }
+
+  const {data,error}=await cloudClient.auth.getSession();
+  if(error||!data?.session?.access_token){
+    throw new Error("החיבור לחשבון פג. צאי והיכנסי מחדש.");
+  }
+
+  return await fetch(SEARCH_FUNCTION_URL,{
     method:"POST",
-    headers:{"Content-Type":"application/json"},
+    headers:{
+      "Content-Type":"application/json",
+      "Authorization":`Bearer ${data.session.access_token}`
+    },
     body:JSON.stringify(payload)
   });
 }
@@ -4103,9 +4098,9 @@ const state={
 function persist(){if(!cloudUser||!currentUserId)return;persistLocalSnapshot();scheduleCloudSave()}
 function esc(s){return String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[c]))}
 const navigationHistory=[];
-const RESUMABLE_SECTIONS=new Set(["setup","venues","compare","vendors","vendorCompare","checklist","budget","guests","gifts"]);
+
 function syncMobileNavigation(id){
- const primary=["dashboard","budget","guests","venues","vendors"];
+ const primary=["setup","venues","vendors","checklist"];
  document.querySelectorAll(".mobile-bottom-nav button").forEach(btn=>{
    const target=btn.dataset.mobileTarget;
    btn.classList.toggle("active",target===id || (target==="more"&&!primary.includes(id)));
@@ -4113,16 +4108,31 @@ function syncMobileNavigation(id){
  const back=document.getElementById("mobileBackBtn");
  if(back)back.classList.toggle("hidden",id==="dashboard"&&navigationHistory.length===0);
 }
-function toggleMobileMore(open){const sheet=document.getElementById("mobileMoreSheet"),backdrop=document.getElementById("mobileMoreBackdrop");if(!sheet||!backdrop)return;sheet.classList.toggle("open",!!open);backdrop.classList.toggle("open",!!open);sheet.setAttribute("aria-hidden",open?"false":"true");document.body.style.overflow=open?"hidden":""}
+
+function toggleMobileMore(open){
+ const sheet=document.getElementById("mobileMoreSheet");
+ const backdrop=document.getElementById("mobileMoreBackdrop");
+ if(!sheet||!backdrop)return;
+ sheet.classList.toggle("open",!!open);
+ backdrop.classList.toggle("open",!!open);
+ sheet.setAttribute("aria-hidden",open?"false":"true");
+ document.body.style.overflow=open?"hidden":"";
+}
+
 function mobileGo(id){toggleMobileMore(false);go(id)}
 function currentSectionId(){return document.querySelector(".section.active")?.id||"dashboard"}
+
 function go(id,options={}){
  const current=currentSectionId();
  if(current!==id&&options.pushHistory!==false)navigationHistory.push(current);
+
  document.querySelectorAll(".section").forEach(x=>x.classList.remove("active"));
- const target=document.querySelector("section#"+id);if(!target)return;
+ const target=document.querySelector("section#"+id);
+ if(!target)return;
  target.classList.add("active");
+
  document.querySelectorAll("nav button").forEach(b=>b.classList.toggle("active",b.dataset.target===id));
+
  if(id==="compare"){renderComparisonImpressionEditor();renderComparison()}
  if(id==="vendors")renderVendorSection();
  if(id==="vendorCompare")renderVendorCompare();
@@ -4130,13 +4140,85 @@ function go(id,options={}){
  if(id==="budget")renderBudget();
  if(id==="guests")renderGuests();
  if(id==="gifts")renderGifts();
- if(RESUMABLE_SECTIONS.has(id))storageSet("ww_last_step",id);
+
  syncMobileNavigation(id);
  window.scrollTo({top:0,behavior:"smooth"});
 }
-function goBack(){if(navigationHistory.length){go(navigationHistory.pop(),{pushHistory:false});return}if(currentSectionId()!=="dashboard")go("dashboard",{pushHistory:false})}
-function planningStarted(){return Boolean(state.setup.coupleNames||state.setup.estimatedGuests||state.setup.weddingDate||(state.setup.regions||[]).length||state.venues.length||state.vendors.length)}
-function resumePlanning(){let target="setup";if(planningStarted()){target=storageGet("ww_last_step","venues")||"venues";if(target==="dashboard")target="venues"}go(target)}
+
+function goBack(){
+ if(navigationHistory.length){
+   go(navigationHistory.pop(),{pushHistory:false});
+   return;
+ }
+ if(currentSectionId()!=="dashboard")go("dashboard",{pushHistory:false});
+}
+
+function planningStarted(){
+ return Boolean(
+   state.setup.coupleNames ||
+   state.setup.estimatedGuests ||
+   state.setup.weddingDate ||
+   (state.setup.regions||[]).length ||
+   state.venues.length ||
+   state.vendors.length
+ );
+}
+
+function setupStageComplete(){
+ return Boolean(+state.setup.estimatedGuests>0 && (state.setup.regions||[]).length);
+}
+
+function venueStageComplete(){
+ return state.venues.some(v=>v.status==="chosen");
+}
+
+function vendorStageComplete(){
+ const required=["photographer","dj","makeup","hair","dress"];
+ const booked=new Set(
+   state.vendors
+     .filter(v=>v.booked)
+     .map(v=>v.category)
+ );
+ return required.every(category=>booked.has(category));
+}
+
+function currentPlanningStage(){
+ if(!setupStageComplete()){
+   return {
+     id:"setup",
+     label:"פרטי החתונה",
+     text:"השלב הנוכחי: השלמת פרטי החתונה."
+   };
+ }
+
+ if(!venueStageComplete()){
+   return {
+     id:"venues",
+     label:"בחירת מקום",
+     text:"השלב הנוכחי: מציאת ובחירת מקום לאירוע."
+   };
+ }
+
+ if(!vendorStageComplete()){
+   return {
+     id:"vendors",
+     label:"סגירת ספקים",
+     text:"השלב הנוכחי: בחירה וסגירה של הספקים המרכזיים."
+   };
+ }
+
+ return {
+   id:"checklist",
+   label:"צ׳ק ליסט",
+   text:"השלב הנוכחי: המשך לפי הצ׳ק ליסט המסודר."
+ };
+}
+
+function resumePlanning(){
+ const stage=currentPlanningStage();
+ go(stage.id);
+}
+
 document.querySelectorAll("nav button").forEach(b=>b.onclick=()=>go(b.dataset.target));
 
 function selectedRegions(){return [...document.querySelectorAll("#regionPills input:checked")].map(x=>x.value)}
@@ -4348,7 +4430,7 @@ async function searchRecommendedVenues(forceRefresh=false){
  const refreshBtn=document.getElementById("smartRefreshBtn");if(refreshBtn)refreshBtn.disabled=true;
  btn.textContent=forceRefresh?"מרעננת...":"מחפשת...";
  status.className="status";
- status.innerHTML=`<span class="search-loading"><span class="spinner"></span><span>מחפשת מקומות, בודקת ביקורות ומצליבה מקורות. זה יכול לקחת כמה שניות.</span></span>`;
+ status.innerHTML=`<span class="search-loading"><span class="spinner"></span><span>מחפשת מקומות מתאימים ובודקת דירוגים. זה יכול לקחת כמה שניות.</span></span>`;
  recommendationResults.innerHTML="";
 
  try{
@@ -5219,7 +5301,7 @@ async function searchRecommendedVendors(forceRefresh=false){
  btn.disabled=true;btn.textContent=forceRefresh?"מרעננת...":"מחפשת...";
  const refreshBtn=document.getElementById("vendorRefreshBtn");if(refreshBtn)refreshBtn.disabled=true;
  status.className="status";
- status.innerHTML=`<span class="search-loading"><span class="spinner"></span><span>מחפשת ${esc(cfg.label)}, בודקת דירוגים ומצליבה מקורות...</span></span>`;
+ status.innerHTML=`<span class="search-loading"><span class="spinner"></span><span>מחפשת ${esc(cfg.label)} מתאימים ובודקת דירוגים...</span></span>`;
  vendorRecommendationResults.innerHTML="";
  try{
    const response=await protectedSearchFetch({
@@ -5885,15 +5967,11 @@ function updateDashboard(){
    else{dashCountdownDays.textContent="♡";dashCountdownCaption.textContent="מזל טוב!"}
  }else{dateTrigger.textContent="הוסיפו תאריך לספירה לאחור";dashCountdownDays.textContent="—";dashCountdownCaption.textContent="ימים"}
 
- let next="מתחילים בפרטי החתונה.";
- if(state.setup.estimatedGuests||(state.setup.regions||[]).length){
-   if(!state.venues.length)next="השלב הבא הוא למצוא מקומות שמתאימים למה שהגדרתם.";
-   else if(!state.venues.some(v=>v.status==="chosen"))next="המשיכו לבדוק ולהשוות בין המקומות ששמרתם.";
-   else if(!state.vendors.length)next="המקום נבחר — אפשר לעבור לחיפוש ספקים.";
-   else next="המשיכו מהשלב האחרון שבו עבדתם.";
+ const planningStage=currentPlanningStage();
+ nextStepText.textContent=planningStage.text;
+ if(document.getElementById("resumePlanningLabel")){
+   resumePlanningLabel.textContent=planningStarted()?"המשך מהשלב הנוכחי":"להתחיל";
  }
- nextStepText.textContent=next;
- if(document.getElementById("resumePlanningLabel"))resumePlanningLabel.textContent=planningStarted()?"המשך מהמקום שבו הפסקתי":"להתחיל";
  syncMobileNavigation(currentSectionId());
 }
 
@@ -5901,7 +5979,7 @@ showStorageNoticeIfNeeded();syncMobileNavigation("dashboard");initAuthentication
 </script>
 
 <script>
-const WEDWISE_REPAIR_KEY="ww225_pwa_repaired";
+const WEDWISE_REPAIR_KEY="ww227_pwa_repaired";
 window.addEventListener("load",async()=>{
  if(!("serviceWorker" in navigator)||!/^https?:$/.test(location.protocol))return;
  try{
@@ -5910,7 +5988,7 @@ window.addEventListener("load",async()=>{
      if("caches" in window){const names=await caches.keys();await Promise.all(names.filter(n=>n.startsWith("wedwise-")).map(n=>caches.delete(n)))}
      localStorage.setItem(WEDWISE_REPAIR_KEY,"1");location.reload();return;
    }
-   const reg=await navigator.serviceWorker.register("./sw.js?v=225",{updateViaCache:"none"});await reg.update().catch(()=>{});
+   const reg=await navigator.serviceWorker.register("./sw.js?v=227",{updateViaCache:"none"});await reg.update().catch(()=>{});
  }catch(e){console.warn("PWA init",e)}
 });
 </script>
