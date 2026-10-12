@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>WedWise v2.2.7 - Venue Decision Workspace</title>
+<title>WedWise v2.3.0 - Venue Decision Workspace</title>
 <style>
 
 :root{
@@ -1552,7 +1552,7 @@ tbody tr:hover{
 
 
 /* =====================================================
-   WedWise v2.2.7 — refined ivory & gold visual system
+   WedWise v2.3.0 — refined ivory & gold visual system
    ===================================================== */
 :root{
   --bg:#f4efe5;
@@ -1981,7 +1981,7 @@ input:focus,select:focus,textarea:focus{
 
 
 /* ============================================================
-   WedWise v2.2.7 — closer to the approved bridal reference
+   WedWise v2.3.0 — closer to the approved bridal reference
    ============================================================ */
 :root{
   --ww-bg:#f5f0e6;
@@ -2205,7 +2205,7 @@ h1,h2,h3,.ww19-wordmark,.ww19-card-title,.ww19-hero-label{
 }
 
 
-/* WedWise v2.2.7 */
+/* WedWise v2.3.0 */
 .username-gate{position:fixed;inset:0;z-index:1000;display:none;align-items:center;justify-content:center;padding:22px;background:radial-gradient(circle at 50% 16%,rgba(255,255,255,.96),transparent 27%),linear-gradient(180deg,#f7f2e8,#eee4d4)}
 .username-gate.open{display:flex}
 .username-gate-card{width:min(410px,100%);text-align:center;padding:30px 24px 25px;border:1px solid #decdb5;border-radius:30px;background:rgba(255,253,248,.97);box-shadow:0 28px 80px rgba(84,61,34,.16)}
@@ -2295,9 +2295,31 @@ h1,h2,h3,.ww19-wordmark,.ww19-card-title,.ww19-hero-label{
 }
 
 
-/* WedWise v2.2.7 navigation */
+/* WedWise v2.3.0 navigation */
 .mobile-bottom-nav{grid-template-columns:repeat(5,1fr)!important}
 .mobile-bottom-nav button small{font-size:8px!important}
+
+/* WedWise v2.3.0 */
+.quote-upload-box{border:1px dashed #d7c7ae;border-radius:18px;padding:16px;background:#fffdf9;margin-top:12px}
+.quote-upload-box input[type=file]{display:none}
+.quote-upload-status{margin-top:8px;font-size:12px;color:var(--muted)}
+.quote-upload-status.good{color:#526b55}.quote-upload-status.error{color:#9b4f4f}
+.quote-items{display:grid;gap:9px;margin-top:12px}
+.quote-item{display:grid;grid-template-columns:minmax(150px,1.6fr) 115px 108px 76px 34px;gap:8px;align-items:center;padding:10px;border:1px solid var(--line);border-radius:14px;background:#fff}
+.quote-item input,.quote-item select{width:100%}
+.quote-item-check{display:flex;align-items:center;gap:5px;font-size:11px;color:var(--muted)}
+.quote-total-strip{display:flex;justify-content:space-between;gap:10px;align-items:center;padding:12px 14px;border-radius:14px;background:#f7f1e7;margin-top:10px}
+.quote-file-chip{display:inline-flex;gap:6px;align-items:center;padding:7px 10px;border-radius:999px;background:#f5efe5;font-size:12px}
+.import-actions{display:flex;gap:8px;flex-wrap:wrap;margin:12px 0}
+.guest-phone-link{font-size:12px;color:var(--accent-strong);text-decoration:none}
+.reminder-grid{display:grid;gap:10px}
+.reminder-row{display:grid;grid-template-columns:24px minmax(0,1fr) auto;gap:10px;align-items:start;padding:13px;border:1px solid var(--line);border-radius:16px;background:#fff}
+.reminder-row.done{opacity:.58}.reminder-row.done strong{text-decoration:line-through}
+.reminder-date{font-size:11px;color:var(--muted);margin-top:3px}
+.completion-chip{display:inline-flex;align-items:center;gap:5px;padding:5px 9px;border-radius:999px;background:#edf3ec;color:#526b55;font-size:11px;font-weight:700}
+.vendor-category-btn .done-mark{margin-inline-start:4px;color:#5e7a61}
+@media(max-width:720px){.quote-item{grid-template-columns:1fr 90px}.quote-item>*:nth-child(n+3){grid-column:auto}.reminder-row{grid-template-columns:24px 1fr}.reminder-row>.row{grid-column:2}}
+
 </style>
 
 <meta name="theme-color" content="#f8f4ef">
@@ -2323,6 +2345,9 @@ html {
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Heebo:wght@400;500;600;700&display=swap" rel="stylesheet">
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/mammoth@1.8.0/mammoth.browser.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
 </head>
 <body>
 
@@ -2412,6 +2437,7 @@ html {
   <div class="mobile-more-grid">
     <button onclick="mobileGo('dashboard')"><span>⌂</span><div><strong>בית</strong><small>תמונת מצב והשלב הנוכחי</small></div></button>
     <button onclick="mobileGo('budget')"><span>◔</span><div><strong>תקציב</strong><small>מה נסגר, שולם ונשאר</small></div></button>
+    <button onclick="mobileGo('reminders')"><span>◷</span><div><strong>תזכורות</strong><small>תשלומים ומשימות שצריך לזכור</small></div></button>
     <button onclick="mobileGo('guests')"><span>♙</span><div><strong>מוזמנים</strong><small>אישורי הגעה והושבה</small></div></button>
     <button onclick="mobileGo('compare')"><span>⇄</span><div><strong>השוואת מקומות</strong><small>השוואה בין המקומות ששמרתם</small></div></button>
     <button onclick="mobileGo('vendorCompare')"><span>≋</span><div><strong>השוואת ספקים</strong><small>השוואה לפי מה שחשוב לכם</small></div></button>
@@ -2798,6 +2824,16 @@ html {
     <div class="field"><label>מה אהבתם?</label><textarea id="vPros"></textarea></div>
     <div class="field"><label>מה פחות?</label><textarea id="vCons"></textarea></div>
     <div class="field"><label>הערות</label><textarea id="vNotes"></textarea></div>
+    
+    <div class="quote-upload-box">
+      <div class="between">
+        <div><strong>הצעת מחיר</strong><div class="muted small">אפשר לקרוא PDF, Word או קובץ טקסט ולהכניס את המחירים אוטומטית.</div></div>
+        <label class="btn secondary small" for="vQuoteFile">בחירת קובץ</label>
+      </div>
+      <input id="vQuoteFile" type="file" accept=".pdf,.docx,.txt,application/pdf,application/vnd.openxmlformats-officedocument.wordprocessingml.document,text/plain" onchange="handleVenueQuoteFile(this.files&&this.files[0],'new')">
+      <div id="venueQuoteImportStatus" class="quote-upload-status"></div>
+      <div id="venueQuotePreview"></div>
+    </div>
     <div class="row"><button class="btn primary" onclick="addVenue()">שמור</button><button class="btn secondary" onclick="toggleVenueForm()">ביטול</button></div>
   </div>
 
@@ -3077,6 +3113,26 @@ html {
   </div>
 </section>
 
+
+<section id="reminders" class="section">
+  <div class="between">
+    <div><h1>תזכורות</h1><div class="subtitle">תשלומים ומשימות שאתם רוצים לזכור, עם אפשרות להוסיף ליומן.</div></div>
+  </div>
+  <div class="card" style="margin-bottom:16px">
+    <div class="grid three">
+      <div class="field"><label>מה צריך לזכור?</label><input id="reminderTitleInput" placeholder="למשל: לשלם מקדמה לצלם"></div>
+      <div class="field"><label>תאריך</label><input id="reminderDateInput" type="date"></div>
+      <div class="field"><label>שעה <span class="optional-label">אופציונלי</span></label><input id="reminderTimeInput" type="time"></div>
+    </div>
+    <div class="field"><label>הערה <span class="optional-label">אופציונלי</span></label><input id="reminderNoteInput" placeholder="סכום, פרטי תשלום או כל דבר שחשוב לזכור"></div>
+    <button class="btn primary" onclick="addReminderFromForm()">+ הוספת תזכורת</button>
+  </div>
+  <div class="card">
+    <div class="between"><h2 style="margin:0">התזכורות שלי</h2><span id="reminderOpenCount" class="badge">0</span></div>
+    <div id="reminderList" class="reminder-grid" style="margin-top:12px"></div>
+  </div>
+</section>
+
 <section id="guests" class="section">
   <div class="reference-page-title">
     <div>
@@ -3084,7 +3140,13 @@ html {
       <h1>רשימת המוזמנים</h1>
       <div class="subtitle">אישורי הגעה, קבוצות וסידורי שולחן במקום אחד.</div>
     </div>
-    <button class="btn primary" onclick="openGuestForm()">+ הוספת אורח</button>
+    <div class="row">
+      <button class="btn secondary" onclick="importPhoneContacts()">אנשי קשר</button>
+      <button class="btn secondary" onclick="document.getElementById('guestSpreadsheetInput').click()">Excel / CSV</button>
+      <button class="btn primary" onclick="openGuestForm()">+ הוספת אורח</button>
+      <input id="guestSpreadsheetInput" type="file" accept=".xlsx,.xls,.csv" style="display:none" onchange="importGuestSpreadsheet(this.files&&this.files[0]);this.value=''">
+      <input id="guestVcardInput" type="file" accept=".vcf,text/vcard" style="display:none" onchange="importGuestVcard(this.files&&this.files[0]);this.value=''">
+    </div>
   </div>
 
   <div class="guest-tabs reference-tabs">
@@ -3104,6 +3166,10 @@ html {
       <div class="field">
         <label>שם</label>
         <input id="guestNameInput" placeholder="שם מלא">
+      </div>
+      <div class="field">
+        <label>טלפון</label>
+        <input id="guestPhoneInput" type="tel" inputmode="tel" placeholder="050-0000000">
       </div>
       <div class="field">
         <label>קבוצה</label>
@@ -3158,7 +3224,7 @@ html {
       <div class="responsive-table">
         <table>
           <thead>
-            <tr><th>שם</th><th>קבוצה</th><th>מקומות</th><th>סטטוס</th><th>הושבה</th><th></th></tr>
+            <tr><th>שם</th><th>טלפון</th><th>קבוצה</th><th>מקומות</th><th>סטטוס</th><th>הושבה</th><th></th></tr>
           </thead>
           <tbody id="guestTable"></tbody>
         </table>
@@ -3797,13 +3863,13 @@ function showStorageNoticeIfNeeded(){const n=document.getElementById("mobileStor
 function emptyStateSnapshot(){return{
  setup:{},venues:[],checklist:mergeChecklistWithDefaults(null),expenses:[],guests:[],seatingTables:[],gifts:[],recommendations:[],
  compareWeights:{price:20,food:20,atmosphere:15,location:15,design:10,service:10,parking:5,couple:5},
- vendors:[],vendorRecommendations:{},activeVendorCategory:"photographer",vendorCompareWeights:{}
+ vendors:[],vendorRecommendations:{},activeVendorCategory:"photographer",vendorCompareWeights:{},reminders:[]
 }}
 function snapshotFromState(){return{
  setup:state.setup,venues:state.venues,checklist:state.checklist,expenses:state.expenses,guests:state.guests,
  seatingTables:state.seatingTables,gifts:state.gifts,recommendations:state.recommendations,compareWeights:state.compareWeights,
  vendors:state.vendors,vendorRecommendations:state.vendorRecommendations,activeVendorCategory:state.activeVendorCategory,
- vendorCompareWeights:state.vendorCompareWeights
+ vendorCompareWeights:state.vendorCompareWeights,reminders:state.reminders
 }}
 function snapshotHasData(s){return Boolean(s?.setup?.coupleNames||s?.setup?.weddingDate||s?.setup?.estimatedGuests||s?.venues?.length||s?.vendors?.length||s?.expenses?.length||s?.guests?.length||s?.gifts?.length)}
 function localSnapshotForCurrentUser(){return{
@@ -3812,7 +3878,7 @@ function localSnapshotForCurrentUser(){return{
  gifts:storageJSON("ww15_gifts",[]),recommendations:storageJSON("ww5_recommendations",[]),
  compareWeights:storageJSON("ww7_compare_weights",null)||{price:20,food:20,atmosphere:15,location:15,design:10,service:10,parking:5,couple:5},
  vendors:storageJSON("ww11_vendors",[]),vendorRecommendations:storageJSON("ww11_vendor_recommendations",{}),
- activeVendorCategory:storageGet("ww11_vendor_category","photographer")||"photographer",vendorCompareWeights:storageJSON("ww11_vendor_weights",{})
+ activeVendorCategory:storageGet("ww11_vendor_category","photographer")||"photographer",vendorCompareWeights:storageJSON("ww11_vendor_weights",{}),reminders:storageJSON("ww23_reminders",[])
 }}
 function persistLocalSnapshot(){
  storageSet("ww3_setup",JSON.stringify(state.setup));storageSet("ww3_venues",JSON.stringify(state.venues));
@@ -3821,7 +3887,7 @@ function persistLocalSnapshot(){
  storageSet("ww15_gifts",JSON.stringify(state.gifts));storageSet("ww5_recommendations",JSON.stringify(state.recommendations));
  storageSet("ww7_compare_weights",JSON.stringify(state.compareWeights));storageSet("ww11_vendors",JSON.stringify(state.vendors));
  storageSet("ww11_vendor_recommendations",JSON.stringify(state.vendorRecommendations));storageSet("ww11_vendor_category",state.activeVendorCategory);
- storageSet("ww11_vendor_weights",JSON.stringify(state.vendorCompareWeights));
+ storageSet("ww11_vendor_weights",JSON.stringify(state.vendorCompareWeights));storageSet("ww23_reminders",JSON.stringify(state.reminders));
 }
 function setSyncStatus(kind,text){const el=document.getElementById("moreSyncStatus");if(el){el.textContent=text;el.className="ww22-sync-status "+(kind||"")}}
 function applyUserUi(){
@@ -3976,13 +4042,13 @@ function applySnapshot(snapshot){
   state.seatingTables=Array.isArray(s.seatingTables)?s.seatingTables:[];state.gifts=Array.isArray(s.gifts)?s.gifts:[];
   state.recommendations=Array.isArray(s.recommendations)?s.recommendations:[];state.compareWeights=s.compareWeights||{price:20,food:20,atmosphere:15,location:15,design:10,service:10,parking:5,couple:5};
   state.vendors=Array.isArray(s.vendors)?s.vendors:[];state.vendorRecommendations=s.vendorRecommendations||{};
-  state.activeVendorCategory=s.activeVendorCategory||"photographer";state.vendorCompareWeights=s.vendorCompareWeights||{};
+  state.activeVendorCategory=s.activeVendorCategory||"photographer";state.vendorCompareWeights=s.vendorCompareWeights||{};state.reminders=Array.isArray(s.reminders)?s.reminders:[];
   state.venues.forEach(ensureVenueDetails);state.vendors.forEach(ensureVendorDetails);persistLocalSnapshot();renderAllForUser();
  }finally{cloudApplying=false}
 }
 function renderAllForUser(){
  loadSetup();loadComparisonWeights();renderVenues();renderRecommendations();renderComparisonImpressionEditor();renderVendorSection();
- renderVendorCompare();renderChecklist();renderBudget();renderGuests();renderGifts();updateDashboard();syncMobileNavigation(currentSectionId());
+ renderVendorCompare();renderChecklist();renderBudget();renderGuests();renderGifts();renderReminders();updateDashboard();syncMobileNavigation(currentSectionId());
 }
 async function loadAuthenticatedUser(user){
  cloudUser=user;
@@ -4093,7 +4159,7 @@ window.addEventListener("online",()=>{if(cloudUser)scheduleCloudSave()});
 const state={
  setup:{},venues:[],checklist:mergeChecklistWithDefaults(null),expenses:[],guests:[],seatingTables:[],gifts:[],recommendations:[],
  compareWeights:{price:20,food:20,atmosphere:15,location:15,design:10,service:10,parking:5,couple:5},
- vendors:[],vendorRecommendations:{},activeVendorCategory:"photographer",vendorCompareWeights:{},activeVenueId:null
+ vendors:[],vendorRecommendations:{},activeVendorCategory:"photographer",vendorCompareWeights:{},reminders:[],activeVenueId:null
 };
 function persist(){if(!cloudUser||!currentUserId)return;persistLocalSnapshot();scheduleCloudSave()}
 function esc(s){return String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[c]))}
@@ -4138,6 +4204,7 @@ function go(id,options={}){
  if(id==="vendorCompare")renderVendorCompare();
  if(id==="checklist")renderChecklist();
  if(id==="budget")renderBudget();
+ if(id==="reminders")renderReminders();
  if(id==="guests")renderGuests();
  if(id==="gifts")renderGifts();
 
@@ -4560,6 +4627,11 @@ function ensureVenueDetails(v){
  if(v.contactPhone===undefined)v.contactPhone="";
  if(v.venueFee===undefined)v.venueFee=0;
  if(v.extraCosts===undefined)v.extraCosts=0;
+ if(!Array.isArray(v.quoteItems))v.quoteItems=[];
+ v.quoteItems=v.quoteItems.map(q=>({id:q.id||Date.now()+Math.random(),label:q.label||"תוספת",amount:+q.amount||0,mode:q.mode==="perGuest"?"perGuest":"fixed",selected:q.selected!==false,required:!!q.required,source:q.source||"manual"}));
+ if(v.quoteFileName===undefined)v.quoteFileName="";
+ if(v.quoteFilePath===undefined)v.quoteFilePath="";
+ if(v.quoteImportedText===undefined)v.quoteImportedText="";
  if(v.indoorOutdoor===undefined)v.indoorOutdoor="";
  if(v.chuppah===undefined)v.chuppah="";
  if(v.accessibility===undefined)v.accessibility="";
@@ -4583,23 +4655,174 @@ function venueStatusLabel(status){const x=venueStatusOptions.find(a=>a[0]===stat
 function venueStatusClass(status){return "status-"+(status||"interested")}
 function clamp10(x){x=+x||0;return Math.max(0,Math.min(10,x))}
 function escAttr(s){return esc(s).replace(/\n/g,"&#10;")}
-function toggleVenueForm(){venueForm.style.display=venueForm.style.display==="none"?"block":"none"}
-
+let pendingVenueQuote=null;
+function byId(id){return document.getElementById(id)}
+function toggleVenueForm(){
+ const form=byId("venueForm");if(!form)return;
+ const opening=form.style.display==="none"||!form.style.display;
+ form.style.display=opening?"block":"none";
+ if(opening)setTimeout(()=>byId("vName")?.focus(),30);
+ else{
+  pendingVenueQuote=null;
+  const preview=byId("venueQuotePreview");if(preview)preview.innerHTML="";
+  const status=byId("venueQuoteImportStatus");if(status)status.textContent="";
+  const file=byId("vQuoteFile");if(file)file.value="";
+ }
+}
+function quoteItemsCost(v){
+ ensureVenueDetails(v);
+ const billed=Math.max(+state.setup.estimatedGuests||0,+v.minGuests||0);
+ return v.quoteItems.filter(q=>q.selected&&(+q.amount||0)>0).reduce((sum,q)=>sum+(q.mode==="perGuest"?(+q.amount||0)*billed:(+q.amount||0)),0);
+}
 function venueEstimatedCost(v){
- const guests=+state.setup.estimatedGuests||0;
- const minimum=+v.minGuests||0;
- const billed=Math.max(guests,minimum);
- if(!v.price&&!v.venueFee&&!v.extraCosts)return 0;
- return (billed*(+v.price||0))+(+v.venueFee||0)+(+v.extraCosts||0);
+ ensureVenueDetails(v);
+ const billed=Math.max(+state.setup.estimatedGuests||0,+v.minGuests||0);
+ if(!v.price&&!v.venueFee&&!v.extraCosts&&!v.quoteItems.some(q=>q.selected&&q.amount))return 0;
+ return billed*(+v.price||0)+(+v.venueFee||0)+(+v.extraCosts||0)+quoteItemsCost(v);
+}
+function fieldValue(id){return String(byId(id)?.value||"").trim()}
+function fieldNumber(id){return Math.max(0,+byId(id)?.value||0)}
+function addVenue(){
+ const name=fieldValue("vName");if(!name){alert("יש להזין שם מקום");return}
+ const v=ensureVenueDetails({
+  id:Date.now(),name,region:fieldValue("vRegion"),website:fieldValue("vWebsite"),price:fieldNumber("vPrice"),minGuests:fieldNumber("vMinGuests"),
+  food:clamp10(fieldValue("vFood")),location:clamp10(fieldValue("vLocation")),design:clamp10(fieldValue("vDesign")),service:clamp10(fieldValue("vService")),
+  parking:fieldValue("vParking")==="yes"?true:fieldValue("vParking")==="no"?false:null,overall:clamp10(fieldValue("vOverall")),pros:fieldValue("vPros"),cons:fieldValue("vCons"),notes:fieldValue("vNotes")
+ });
+ if(pendingVenueQuote){
+  if(pendingVenueQuote.price&&!v.price)v.price=pendingVenueQuote.price;
+  if(pendingVenueQuote.minGuests&&!v.minGuests)v.minGuests=pendingVenueQuote.minGuests;
+  if(pendingVenueQuote.venueFee)v.venueFee=pendingVenueQuote.venueFee;
+  v.quoteItems=(pendingVenueQuote.items||[]).map(x=>({...x}));
+  v.quoteFileName=pendingVenueQuote.file?.name||pendingVenueQuote.fileName||"";
+  v.quoteImportedText=pendingVenueQuote.text||"";
+ }
+ const pendingFile=pendingVenueQuote?.file||null;
+ state.venues.push(v);persist();
+ ["vName","vRegion","vWebsite","vPrice","vMinGuests","vFood","vLocation","vDesign","vService","vOverall","vPros","vCons","vNotes"].forEach(id=>{const e=byId(id);if(e)e.value=""});
+ const park=byId("vParking");if(park)park.value="";
+ toggleVenueForm();renderVenues();updateDashboard();openVenueDetail(v.id);
+ if(pendingFile)uploadVenueQuoteFile(v.id,pendingFile);
 }
 
-function addVenue(){
- if(!vName.value.trim()){alert("יש להזין שם מקום");return}
- const v=ensureVenueDetails({id:Date.now(),name:vName.value.trim(),region:vRegion.value.trim(),website:vWebsite.value.trim(),price:+vPrice.value||0,minGuests:+vMinGuests.value||0,food:clamp10(vFood.value),
- location:clamp10(vLocation.value),design:clamp10(vDesign.value),service:clamp10(vService.value),parking:vParking.value==="yes"?true:vParking.value==="no"?false:null,
- overall:clamp10(vOverall.value),pros:vPros.value.trim(),cons:vCons.value.trim(),notes:vNotes.value.trim()});
- state.venues.push(v);persist();toggleVenueForm();renderVenues();updateDashboard();openVenueDetail(v.id)
+function moneyFromLine(line){
+ const matches=[...String(line).matchAll(/(?:₪\s*)?(\d{1,3}(?:[.,]\d{3})+|\d{2,6})(?:[.,](\d{1,2}))?\s*(?:₪|ש[״"']?ח|nis|ils)/ig)];
+ if(!matches.length)return 0;
+ const raw=(matches[0][1]||"").replace(/[.,](?=\d{3}(?:\D|$))/g,"").replace(",",".");
+ return Math.round(parseFloat(raw)||0);
 }
+function extractVenueQuoteData(rawText){
+ const clean=String(rawText||"").replace(/\u00a0/g," ").replace(/[ \t]+/g," ");
+ const lines=clean.split(/\r?\n/).map(x=>x.trim()).filter(x=>x.length>2);
+ let price=0,minGuests=0,venueFee=0;
+ const items=[];
+ const seen=new Set();
+ for(const line of lines){
+   const lower=line.toLowerCase();
+   const amount=moneyFromLine(line);
+   if(/מינימום|מינ['׳]?|התחייבות/.test(lower)){
+     const nums=(line.match(/\b\d{2,4}\b/g)||[]).map(Number).filter(x=>x>=20&&x<=3000);
+     if(nums.length&&!minGuests)minGuests=nums[0];
+   }
+   if(amount&&/(מחיר.{0,20}(?:מנה|אורח|סועד)|(?:מנה|אורח|סועד).{0,20}מחיר|למנה|לאורח|לסועד)/.test(lower)&&!/(שדרוג|תוספת|אופציונ|נוסף)/.test(lower)){
+     if(amount>=50&&amount<=2000&&!price)price=amount;
+     continue;
+   }
+   if(amount&&/(דמי מקום|השכרת המקום|שכירות מקום|venue fee)/i.test(lower)){
+     if(!venueFee)venueFee=amount;
+     continue;
+   }
+   if(!amount||/סה.?כ|total|מקדמה|יתרה לתשלום/.test(lower)||/כלול/.test(lower))continue;
+   const optional=/(אופציונ|לבחירה|שדרוג|ניתן להוסיף|תוספת אפשרית)/.test(lower);
+   const perGuest=/(למנה|לאורח|לסועד|פר אורח|per guest)/i.test(lower);
+   const label=line.replace(/(?:₪\s*)?\d[\d,.]*\s*(?:₪|ש[״"']?ח|nis|ils)/ig,"").replace(/^[\s:–—-]+|[\s:–—-]+$/g,"").slice(0,120)||"תוספת";
+   const key=label.toLowerCase()+"|"+amount;
+   if(seen.has(key))continue;seen.add(key);
+   items.push({id:Date.now()+Math.random(),label,amount,mode:perGuest?"perGuest":"fixed",selected:!optional,required:!optional,source:"document"});
+ }
+ return {price,minGuests,venueFee,items:items.slice(0,30),text:clean.slice(0,25000)};
+}
+async function readQuoteFileText(file){
+ const name=(file?.name||"").toLowerCase();
+ if(name.endsWith(".pdf")||file.type==="application/pdf"){
+   if(!window.pdfjsLib)throw new Error("קורא ה-PDF לא נטען. נסי לרענן את האפליקציה.");
+   window.pdfjsLib.GlobalWorkerOptions.workerSrc="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js";
+   const pdf=await window.pdfjsLib.getDocument({data:await file.arrayBuffer()}).promise;
+   const pages=[];
+   for(let i=1;i<=Math.min(pdf.numPages,25);i++){
+     const page=await pdf.getPage(i);const content=await page.getTextContent();
+     pages.push(content.items.map(x=>x.str||"").join(" "));
+   }
+   return pages.join("\n");
+ }
+ if(name.endsWith(".docx")){
+   if(!window.mammoth)throw new Error("קורא ה-Word לא נטען. נסי לרענן.");
+   const r=await window.mammoth.extractRawText({arrayBuffer:await file.arrayBuffer()});return r.value||"";
+ }
+ if(name.endsWith(".txt")||file.type.startsWith("text/"))return await file.text();
+ throw new Error("כרגע אפשר לקרוא PDF, Word ‏(.docx) או קובץ טקסט.");
+}
+function quoteItemEditor(item,scope,venueId=""){
+ const change=(key)=>scope==="new"?`updatePendingQuoteItem('${item.id}','${key}',this.${key==="selected"?"checked":"value"})`:`updateVenueQuoteItem(${venueId},'${item.id}','${key}',this.${key==="selected"?"checked":"value"})`;
+ const remove=scope==="new"?`removePendingQuoteItem('${item.id}')`:`removeVenueQuoteItem(${venueId},'${item.id}')`;
+ return `<div class="quote-item">
+   <input value="${esc(item.label)}" onchange="${change("label")}">
+   <div class="input-with-suffix"><input type="number" min="0" value="${item.amount||""}" onchange="${change("amount")}"><span>₪</span></div>
+   <select onchange="${change("mode")}"><option value="fixed" ${item.mode!=="perGuest"?"selected":""}>קבוע</option><option value="perGuest" ${item.mode==="perGuest"?"selected":""}>לכל אורח</option></select>
+   <label class="quote-item-check"><input type="checkbox" ${item.selected?"checked":""} onchange="${change("selected")}">בחישוב</label>
+   <button class="btn ghost small" onclick="${remove}">×</button>
+ </div>`;
+}
+function renderPendingQuotePreview(){
+ const box=byId("venueQuotePreview");if(!box)return;
+ if(!pendingVenueQuote){box.innerHTML="";return}
+ const p=pendingVenueQuote;
+ box.innerHTML=`<div class="quote-total-strip"><span>זוהו מהקובץ</span><strong>${p.price?p.price+" ₪ למנה":"מחיר מנה לא זוהה"}${p.minGuests?` · מינימום ${p.minGuests}`:""}</strong></div>
+ <div class="quote-items">${(p.items||[]).map(x=>quoteItemEditor(x,"new")).join("")}</div>
+ <button class="btn ghost small" style="margin-top:8px" onclick="addPendingQuoteItem()">+ הוספת שורה ידנית</button>`;
+}
+function updatePendingQuoteItem(id,key,value){const q=pendingVenueQuote?.items?.find(x=>String(x.id)===String(id));if(!q)return;if(key==="amount")q.amount=Math.max(0,+value||0);else if(key==="selected")q.selected=!!value;else q[key]=value;renderPendingQuotePreview()}
+function removePendingQuoteItem(id){if(!pendingVenueQuote)return;pendingVenueQuote.items=pendingVenueQuote.items.filter(x=>String(x.id)!==String(id));renderPendingQuotePreview()}
+function addPendingQuoteItem(){if(!pendingVenueQuote)pendingVenueQuote={price:0,minGuests:0,venueFee:0,items:[],text:""};pendingVenueQuote.items.push({id:Date.now()+Math.random(),label:"תוספת",amount:0,mode:"fixed",selected:true,required:false,source:"manual"});renderPendingQuotePreview()}
+async function handleVenueQuoteFile(file,target){
+ if(!file)return;
+ const status=target==="new"?byId("venueQuoteImportStatus"):byId("venueQuoteDetailStatus");
+ if(status){status.className="quote-upload-status";status.textContent="קוראת את הצעת המחיר..."}
+ try{
+   const raw=await readQuoteFileText(file);
+   if(!raw.trim())throw new Error("לא נמצא טקסט קריא בקובץ. אם זה מסמך סרוק כתמונה, יהיה צורך להזין או לתקן את הנתונים ידנית.");
+   const parsed=extractVenueQuoteData(raw);parsed.file=file;parsed.fileName=file.name;
+   if(target==="new"){
+     pendingVenueQuote=parsed;
+     if(parsed.price&&!fieldNumber("vPrice"))byId("vPrice").value=parsed.price;
+     if(parsed.minGuests&&!fieldNumber("vMinGuests"))byId("vMinGuests").value=parsed.minGuests;
+     renderPendingQuotePreview();
+   }else{
+     const v=state.venues.find(x=>String(x.id)===String(target));if(!v)return;
+     ensureVenueDetails(v);
+     if(parsed.price&&!v.price)v.price=parsed.price;if(parsed.minGuests&&!v.minGuests)v.minGuests=parsed.minGuests;if(parsed.venueFee&&!v.venueFee)v.venueFee=parsed.venueFee;
+     v.quoteItems=parsed.items;v.quoteFileName=file.name;v.quoteImportedText=parsed.text;persist();await uploadVenueQuoteFile(v.id,file);renderVenueDetail();renderVenues();renderBudget();
+   }
+   if(status){status.className="quote-upload-status good";status.textContent=`נקראו ${parsed.items.length} שורות מחיר. אפשר לתקן כל שורה לפני או אחרי השמירה.`}
+ }catch(err){console.error(err);if(status){status.className="quote-upload-status error";status.textContent=err?.message||"לא הצלחתי לקרוא את הקובץ."}}
+}
+async function uploadVenueQuoteFile(venueId,file){
+ if(!cloudClient||!cloudUser||!file)return;
+ const v=state.venues.find(x=>String(x.id)===String(venueId));if(!v)return;
+ try{
+   const safe=String(file.name||"quote").replace(/[^a-zA-Z0-9._-]+/g,"_").slice(-100);
+   const path=`${cloudUser.id}/${venueId}/${Date.now()}_${safe}`;
+   const {error}=await cloudClient.storage.from("venue-quotes").upload(path,file,{upsert:false,contentType:file.type||undefined});
+   if(error)throw error;v.quoteFilePath=path;v.quoteFileName=file.name;persist();
+ }catch(err){console.warn("Quote file upload skipped",err)}
+}
+async function openVenueQuoteFile(venueId){
+ const v=state.venues.find(x=>String(x.id)===String(venueId));if(!v?.quoteFilePath)return;
+ try{const {data,error}=await cloudClient.storage.from("venue-quotes").createSignedUrl(v.quoteFilePath,120);if(error)throw error;window.open(data.signedUrl,"_blank","noopener")}catch(e){alert("לא הצלחתי לפתוח את הקובץ כרגע.")}
+}
+function updateVenueQuoteItem(venueId,itemId,key,value){const v=state.venues.find(x=>String(x.id)===String(venueId));if(!v)return;ensureVenueDetails(v);const q=v.quoteItems.find(x=>String(x.id)===String(itemId));if(!q)return;if(key==="amount")q.amount=Math.max(0,+value||0);else if(key==="selected")q.selected=!!value;else q[key]=value;persist();renderVenueDetail();renderVenues();renderBudget()}
+function removeVenueQuoteItem(venueId,itemId){const v=state.venues.find(x=>String(x.id)===String(venueId));if(!v)return;v.quoteItems=(v.quoteItems||[]).filter(x=>String(x.id)!==String(itemId));persist();renderVenueDetail();renderVenues();renderBudget()}
+function addVenueQuoteItem(venueId){const v=state.venues.find(x=>String(x.id)===String(venueId));if(!v)return;ensureVenueDetails(v);v.quoteItems.push({id:Date.now()+Math.random(),label:"תוספת",amount:0,mode:"fixed",selected:true,required:false,source:"manual"});persist();renderVenueDetail()}
 
 function deleteVenue(id){
  if(!confirm("למחוק את המקום מהרשימה?"))return;
@@ -4628,12 +4851,19 @@ function renderVenues(){
     <div class="small" style="margin-top:10px">אוכל ${v.food||"-"}/10 · אווירה ${v.atmosphere||"-"}/10 · שירות ${v.service||"-"}/10 · ציון זוגי ${coupleAvg}</div>
     <div class="row" style="margin-top:12px">
       <button class="btn primary" onclick="openVenueDetail(${v.id})">פתחי כרטיס מקום</button>
+      ${v.status!=="chosen"?`<button class="btn secondary" onclick="chooseVenue(${v.id})">בחרנו במקום</button>`:`<span class="completion-chip">✓ המקום נבחר</span>`}
       ${v.website?`<a class="btn ghost" href="${esc(v.website)}" target="_blank" rel="noopener">אתר</a>`:""}
       <a class="btn ghost" href="https://www.google.com/maps/search/?api=1&query=${maps}" target="_blank" rel="noopener">מפה</a>
       <button class="btn danger small" onclick="deleteVenue(${v.id})">מחיקה</button>
     </div>
   </div>`;
  }).join("")
+}
+
+function chooseVenue(id){
+ const v=state.venues.find(x=>x.id===id);if(!v)return;
+ state.venues.forEach(x=>{if(x.id!==id&&x.status==="chosen")x.status="finalist"});
+ v.status="chosen";persist();renderVenues();renderBudget();updateDashboard();if(state.activeVenueId===id)renderVenueDetail();
 }
 
 function openVenueDetail(id){
@@ -4683,6 +4913,16 @@ function renderVenueDetail(){
    <div class="field"><label>תוספות צפויות</label><input id="vdExtraCosts" type="number" value="${v.extraCosts||""}"></div>
    <div class="field" style="grid-column:span 2"><label>מה כלול בהצעה?</label><textarea id="vdOfferSummary" placeholder="למשל: בר, תאורה, הגברה, עיצוב בסיסי...">${esc(v.offerSummary||"")}</textarea></div>
   </div>
+  <div class="quote-upload-box">
+   <div class="between"><div><strong>הצעת מחיר וקובץ</strong><div class="muted small">קריאה אוטומטית של מחיר בסיס ותוספות, עם אפשרות לתקן כל נתון.</div></div><label class="btn secondary small" for="vdQuoteFile">${v.quoteFileName?"החלפת קובץ":"העלאת הצעה"}</label></div>
+   <input id="vdQuoteFile" type="file" accept=".pdf,.docx,.txt,application/pdf,application/vnd.openxmlformats-officedocument.wordprocessingml.document,text/plain" onchange="handleVenueQuoteFile(this.files&&this.files[0],${v.id});this.value=''">
+   <div id="venueQuoteDetailStatus" class="quote-upload-status"></div>
+   ${v.quoteFileName?`<div style="margin-top:8px"><span class="quote-file-chip">📄 ${esc(v.quoteFileName)}</span>${v.quoteFilePath?` <button class="btn ghost small" onclick="openVenueQuoteFile(${v.id})">פתיחת הקובץ</button>`:""}</div>`:""}
+   <div class="quote-items">${v.quoteItems.length?v.quoteItems.map(q=>quoteItemEditor(q,"saved",v.id)).join(""):'<div class="muted small">לא נוספו עדיין תוספות מפורטות.</div>'}</div>
+   <button class="btn ghost small" style="margin-top:8px" onclick="addVenueQuoteItem(${v.id})">+ הוספת תוספת ידנית</button>
+   <div class="quote-total-strip"><span>תוספות שנבחרו לחישוב</span><strong>${quoteItemsCost(v).toLocaleString()} ₪</strong></div>
+  </div>
+
   <div class="cost-highlight"><strong>עלות משוערת לפי הנתונים כרגע: ${estimate?estimate.toLocaleString()+" ₪":"עדיין אין מספיק נתונים"}</strong><div class="mini-note">החישוב משתמש בגבוה מבין מספר האורחים שלכם לבין מינימום האורחים של המקום.</div></div>
  </div>
 
@@ -4797,7 +5037,7 @@ function ratingField(id,label,value){return `<div class="field"><label>${label} 
 
 function saveVenueDetail(){
  const v=state.venues.find(x=>x.id===state.activeVenueId);if(!v)return;
- v.status=vdStatus.value;v.visitDate=vdVisitDate.value;v.contactPerson=vdContactPerson.value.trim();v.contactPhone=vdContactPhone.value.trim();v.availableDates=vdAvailableDates.value.trim();
+ v.status=byId("vdStatus")?.value||v.status;if(v.status==="chosen")state.venues.forEach(x=>{if(x.id!==v.id&&x.status==="chosen")x.status="finalist"});v.visitDate=vdVisitDate.value;v.contactPerson=vdContactPerson.value.trim();v.contactPhone=vdContactPhone.value.trim();v.availableDates=vdAvailableDates.value.trim();
  v.price=+vdPrice.value||0;v.minGuests=+vdMinGuests.value||0;v.venueFee=+vdVenueFee.value||0;v.extraCosts=+vdExtraCosts.value||0;v.offerSummary=vdOfferSummary.value.trim();
  v.indoorOutdoor=vdIndoorOutdoor.value;v.chuppah=vdChuppah.value;v.parking=vdParking.value==="yes"?true:vdParking.value==="no"?false:null;v.accessibility=vdAccessibility.value;v.website=vdWebsite.value.trim();v.links=vdLinks.value.trim();
  v.food=clamp10(vdFood.value);v.atmosphere=clamp10(vdAtmosphere.value);v.location=clamp10(vdLocation.value);v.design=clamp10(vdDesign.value);v.service=clamp10(vdService.value);v.myOverall=clamp10(vdMyOverall.value);v.partnerOverall=clamp10(vdPartnerOverall.value);
@@ -5221,14 +5461,14 @@ function vendorPaidAmount(v){ensureVendorDetails(v);return contractPaidAmount(v)
 function vendorRemainingAmount(v){return contractRemaining(v,+v.price||0)}
 function setVendorBooked(id,checked){
  const v=state.vendors.find(x=>x.id===id);if(!v)return;ensureVendorDetails(v);
- v.booked=!!checked;persist();renderSavedVendors();renderBudget();updateDashboard();
+ v.booked=!!checked;persist();renderVendorCategoryTabs();renderSavedVendors();renderBudget();updateDashboard();
 }
 function updateVendorFinance(id,key,value){
  const v=state.vendors.find(x=>x.id===id);if(!v)return;ensureVendorDetails(v);
  if(["price","depositAmount"].includes(key))v[key]=Math.max(0,+value||0);
  else if(key==="depositPaid")v.depositPaid=!!value;
  else v[key]=value;
- persist();renderSavedVendors();renderBudget();updateDashboard();
+ persist();renderVendorCategoryTabs();renderSavedVendors();renderBudget();renderReminders();updateDashboard();
 }
 function addVendorPayment(id){
  const v=state.vendors.find(x=>x.id===id);if(!v)return;ensureVendorDetails(v);
@@ -5268,7 +5508,7 @@ function isSavedVendor(category,name){const n=String(name||"").trim().toLowerCas
 
 function renderVendorCategoryTabs(){
  const box=document.getElementById("vendorCategoryTabs");if(!box)return;
- box.innerHTML=Object.entries(VENDOR_CATEGORIES).map(([key,c])=>`<button class="vendor-category-btn ${state.activeVendorCategory===key?"active":""}" onclick="setVendorCategory('${key}')"><span class="vendor-category-icon">${c.icon}</span> ${c.label}</button>`).join("");
+ box.innerHTML=Object.entries(VENDOR_CATEGORIES).map(([key,c])=>{const done=state.vendors.some(v=>v.category===key&&ensureVendorDetails(v).booked);return `<button class="vendor-category-btn ${state.activeVendorCategory===key?"active":""}" onclick="setVendorCategory('${key}')"><span class="vendor-category-icon">${c.icon}</span> ${c.label}${done?`<span class="done-mark">✓</span>`:""}</button>`}).join("");
 }
 
 function setVendorCategory(category){
@@ -5288,9 +5528,10 @@ function renderVendorSection(){
 }
 
 function toggleVendorForm(){
- const f=document.getElementById("vendorForm");if(!f)return;
- f.style.display=f.style.display==="none"?"block":"none";
- const formCat=document.getElementById("vendorFormCategory");if(formCat)formCat.textContent=vendorCategoryLabel(state.activeVendorCategory);
+ const f=byId("vendorForm");if(!f)return;
+ const opening=f.style.display==="none"||!f.style.display;f.style.display=opening?"block":"none";
+ const formCat=byId("vendorFormCategory");if(formCat)formCat.textContent=vendorCategoryLabel(state.activeVendorCategory);
+ if(opening)setTimeout(()=>byId("vendorManualName")?.focus(),30);
 }
 
 async function searchRecommendedVendors(forceRefresh=false){
@@ -5364,9 +5605,10 @@ function saveVendorRecommendation(index){
 }
 
 function addVendorManually(){
- const name=vendorManualName.value.trim();if(!name)return alert("הכניסי שם ספק");
- state.vendors.push(ensureVendorDetails({id:Date.now(),category:state.activeVendorCategory,name,region:vendorManualRegion.value.trim(),website:vendorManualWebsite.value.trim(),instagram:"",rating:0,reviewCount:0,onlineScore:0,price:+vendorManualPrice.value||0,c1:0,c2:0,c3:0,c4:0,notes:vendorManualNotes.value.trim()}));
- vendorManualName.value="";vendorManualRegion.value="";vendorManualWebsite.value="";vendorManualPrice.value="";vendorManualNotes.value="";persist();renderSavedVendors();toggleVendorForm();updateDashboard();
+ const name=fieldValue("vendorManualName");if(!name)return alert("הכניסי שם ספק");
+ state.vendors.push(ensureVendorDetails({id:Date.now(),category:state.activeVendorCategory,name,region:fieldValue("vendorManualRegion"),website:fieldValue("vendorManualWebsite"),instagram:"",rating:0,reviewCount:0,onlineScore:0,price:fieldNumber("vendorManualPrice"),c1:0,c2:0,c3:0,c4:0,notes:fieldValue("vendorManualNotes")}));
+ ["vendorManualName","vendorManualRegion","vendorManualWebsite","vendorManualPrice","vendorManualNotes"].forEach(id=>{const e=byId(id);if(e)e.value=""});
+ persist();renderSavedVendors();toggleVendorForm();updateDashboard();
 }
 
 function deleteVendor(id){
@@ -5508,6 +5750,39 @@ function toggleGroup(i){state.checklist[i].open=!state.checklist[i].open;persist
 function addExpensePrompt(){const category=prompt("קטגוריה?");if(!category)return;const desc=prompt("תיאור?")||"",amount=+prompt("סכום?")||0;state.expenses.push({id:Date.now(),category,desc,amount});persist();renderBudget();updateDashboard()}
 function removeExpense(id){state.expenses=state.expenses.filter(e=>e.id!==id);persist();renderBudget();updateDashboard()}
 
+function normalizeReminder(r){return{id:r.id||Date.now()+Math.random(),title:r.title||"תזכורת",date:r.date||"",time:r.time||"",note:r.note||"",done:!!r.done,source:r.source||"manual",sourceId:r.sourceId||""}}
+function addReminderFromForm(){
+ const title=fieldValue("reminderTitleInput");if(!title)return alert("כתבי מה צריך לזכור.");
+ state.reminders.push(normalizeReminder({title,date:fieldValue("reminderDateInput"),time:fieldValue("reminderTimeInput"),note:fieldValue("reminderNoteInput")}));
+ ["reminderTitleInput","reminderDateInput","reminderTimeInput","reminderNoteInput"].forEach(id=>{const e=byId(id);if(e)e.value=""});persist();renderReminders();
+}
+function toggleReminder(id,done){const r=state.reminders.find(x=>String(x.id)===String(id));if(!r)return;r.done=!!done;persist();renderReminders()}
+function deleteReminder(id){state.reminders=state.reminders.filter(x=>String(x.id)!==String(id));persist();renderReminders()}
+function createPaymentReminder(type,ownerId,paymentId){
+ let owner=null,payment=null,title="",note="",date="";
+ if(type==="venue")owner=state.venues.find(x=>String(x.id)===String(ownerId));else owner=state.vendors.find(x=>String(x.id)===String(ownerId));
+ if(!owner)return;
+ ensurePaymentFields(owner);
+ if(String(paymentId)==="deposit"){title=`מקדמה · ${owner.name}`;note=`${Number(owner.depositAmount||0).toLocaleString()} ₪`;date=""}
+ else{payment=owner.payments.find(p=>String(p.id)===String(paymentId));if(!payment)return;title=`${payment.label} · ${owner.name}`;note=`${Number(payment.amount||0).toLocaleString()} ₪`;date=payment.dueDate||""}
+ state.reminders.push(normalizeReminder({title,date,note,source:"payment",sourceId:`${type}:${ownerId}:${paymentId}`}));persist();renderReminders();alert("התזכורת נוספה. אפשר לערוך אותה במסך תזכורות.");
+}
+function reminderDateLabel(r){if(!r.date)return "ללא תאריך";return `${formatDateHe(r.date)}${r.time?` · ${r.time}`:""}`}
+function renderReminders(){
+ const box=byId("reminderList");if(!box)return;state.reminders=state.reminders.map(normalizeReminder);
+ const rows=[...state.reminders].sort((a,b)=>(a.done-b.done)||(`${a.date||"9999"}T${a.time||"23:59"}`).localeCompare(`${b.date||"9999"}T${b.time||"23:59"}`));
+ const count=rows.filter(r=>!r.done).length;const badge=byId("reminderOpenCount");if(badge)badge.textContent=count;
+ box.innerHTML=rows.length?rows.map(r=>`<div class="reminder-row ${r.done?"done":""}"><input type="checkbox" ${r.done?"checked":""} onchange="toggleReminder('${r.id}',this.checked)"><div><strong>${esc(r.title)}</strong><div class="reminder-date">${esc(reminderDateLabel(r))}${r.note?` · ${esc(r.note)}`:""}</div></div><div class="row"><button class="btn ghost small" onclick="downloadReminderIcs('${r.id}')">ליומן</button><button class="btn ghost small" onclick="deleteReminder('${r.id}')">מחיקה</button></div></div>`).join(""):'<div class="muted small">אין עדיין תזכורות.</div>';
+}
+function icsEscape(s){return String(s||"").replace(/\\/g,"\\\\").replace(/;/g,"\\;").replace(/,/g,"\\,").replace(/\n/g,"\\n")}
+function downloadReminderIcs(id){
+ const r=state.reminders.find(x=>String(x.id)===String(id));if(!r)return;if(!r.date)return alert("הוסיפי תאריך לתזכורת לפני ההוספה ליומן.");
+ const start=(r.date.replace(/-/g,"")+(r.time?`T${r.time.replace(":","")}00`:""));const allDay=!r.time;
+ const dt=allDay?`DTSTART;VALUE=DATE:${start}`:`DTSTART:${start}`;
+ const content=`BEGIN:VCALENDAR\r\nVERSION:2.0\r\nPRODID:-//WedWise//HE\r\nBEGIN:VEVENT\r\nUID:${r.id}@wedwise\r\n${dt}\r\nSUMMARY:${icsEscape(r.title)}\r\nDESCRIPTION:${icsEscape(r.note)}\r\nEND:VEVENT\r\nEND:VCALENDAR`;
+ const blob=new Blob([content],{type:"text/calendar;charset=utf-8"});const a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download="wedwise-reminder.ics";document.body.appendChild(a);a.click();setTimeout(()=>{URL.revokeObjectURL(a.href);a.remove()},1000);
+}
+
 function budgetMetrics(){
  const chosenVenue=state.venues.find(v=>v.status==="chosen")||null;
  const venueCommitted=chosenVenue?venueEstimatedCost(chosenVenue):0;
@@ -5527,13 +5802,13 @@ function budgetUpcomingRows(){
  const venue=state.venues.find(v=>v.status==="chosen");
  if(venue){
   ensureVenueDetails(venue);
-  if((+venue.depositAmount||0)>0&&!venue.depositPaid)rows.push({type:"venue",name:venue.name,label:"מקדמה",date:"",amount:+venue.depositAmount||0});
-  venue.payments.filter(p=>!p.paid&&(+p.amount||0)>0).forEach(p=>rows.push({type:"venue",name:venue.name,label:p.label,date:p.dueDate,amount:+p.amount||0}));
+  if((+venue.depositAmount||0)>0&&!venue.depositPaid)rows.push({type:"venue",ownerId:venue.id,paymentId:"deposit",name:venue.name,label:"מקדמה",date:"",amount:+venue.depositAmount||0});
+  venue.payments.filter(p=>!p.paid&&(+p.amount||0)>0).forEach(p=>rows.push({type:"venue",ownerId:venue.id,paymentId:p.id,name:venue.name,label:p.label,date:p.dueDate,amount:+p.amount||0}));
  }
  state.vendors.filter(v=>v.booked).forEach(v=>{
   ensureVendorDetails(v);
-  if((+v.depositAmount||0)>0&&!v.depositPaid)rows.push({type:"vendor",name:v.name,label:"מקדמה",date:"",amount:+v.depositAmount||0});
-  v.payments.filter(p=>!p.paid&&(+p.amount||0)>0).forEach(p=>rows.push({type:"vendor",name:v.name,label:p.label,date:p.dueDate,amount:+p.amount||0}));
+  if((+v.depositAmount||0)>0&&!v.depositPaid)rows.push({type:"vendor",ownerId:v.id,paymentId:"deposit",name:v.name,label:"מקדמה",date:"",amount:+v.depositAmount||0});
+  v.payments.filter(p=>!p.paid&&(+p.amount||0)>0).forEach(p=>rows.push({type:"vendor",ownerId:v.id,paymentId:p.id,name:v.name,label:p.label,date:p.dueDate,amount:+p.amount||0}));
  });
  return rows.sort((a,b)=>(a.date||"9999").localeCompare(b.date||"9999"));
 }
@@ -5570,6 +5845,7 @@ function renderBudget(){
    <span class="ww22-upcoming-icon">${r.type==="venue"?"⌂":"◇"}</span>
    <div><strong>${esc(r.name)} · ${esc(r.label)}</strong><small>${r.date?`לתשלום ב-${esc(formatDateHe(r.date))}`:"לא הוגדר מועד — כדאי להשלים"}</small></div>
    <span class="amount">${Number(r.amount).toLocaleString()} ₪</span>
+   <button class="btn ghost small" onclick="createPaymentReminder('${r.type}','${r.ownerId}','${r.paymentId}')">תזכורת</button>
  </div>`).join(""):'<div class="muted small">אין כרגע תשלומים עתידיים שהוגדרו. אפשר להוסיף אותם בכרטיס המקום או הספק.</div>';
 
  const categories=[];
@@ -5600,6 +5876,7 @@ function normalizeGuest(g){
  return {
   id:g.id||Date.now()+Math.random(),
   name:g.name||"",
+  phone:g.phone||"",
   group:g.group||"",
   status:g.status||"pending",
   seats:Math.max(1,+g.seats||1),
@@ -5611,34 +5888,80 @@ function normalizeGuest(g){
 state.guests=state.guests.map(normalizeGuest);
 
 function openGuestForm(){
- guestForm.style.display="block";
- guestNameInput.focus();
+ const form=byId("guestForm");if(!form)return;form.style.display="block";byId("guestNameInput")?.focus();
 }
-function closeGuestForm(){
- guestForm.style.display="none";
-}
+function closeGuestForm(){const form=byId("guestForm");if(form)form.style.display="none";}
 function saveGuestFromForm(){
- const name=guestNameInput.value.trim();
+ const name=fieldValue("guestNameInput");
  if(!name)return alert("הכניסי שם");
  state.guests.push(normalizeGuest({
    id:Date.now(),
    name,
-   group:guestGroupInput.value.trim(),
-   status:guestStatusInput.value,
-   seats:+guestSeatsInput.value||1,
-   seatingNote:guestSeatingNoteInput.value.trim(),
+   phone:fieldValue("guestPhoneInput"),
+   group:fieldValue("guestGroupInput"),
+   status:byId("guestStatusInput")?.value||"pending",
+   seats:+byId("guestSeatsInput")?.value||1,
+   seatingNote:fieldValue("guestSeatingNoteInput"),
    tableId:null
  }));
- guestNameInput.value="";
- guestGroupInput.value="";
- guestStatusInput.value="pending";
- guestSeatsInput.value="1";
- guestSeatingNoteInput.value="";
+ byId("guestNameInput").value="";
+ byId("guestPhoneInput").value="";
+ byId("guestGroupInput").value="";
+ byId("guestStatusInput").value="pending";
+ byId("guestSeatsInput").value="1";
+ byId("guestSeatingNoteInput").value="";
  closeGuestForm();
  persist();
  renderGuests();
  updateDashboard();
 }
+function normalizedPhone(value){return String(value||"").replace(/[^\d+]/g,"").replace(/^00/,"+")}
+function whatsappPhone(value){let p=normalizedPhone(value).replace(/^\+/,"");if(p.startsWith("0"))p="972"+p.slice(1);else if(/^5\d{8}$/.test(p))p="972"+p;return p}
+function addImportedGuests(rows){
+ let added=0,skipped=0;
+ const existingPhones=new Set(state.guests.map(g=>normalizedPhone(g.phone)).filter(Boolean));
+ const existingNames=new Set(state.guests.map(g=>String(g.name||"").trim().toLowerCase()).filter(Boolean));
+ rows.forEach(r=>{
+  const name=String(r.name||"").trim();if(!name){skipped++;return}
+  const phone=normalizedPhone(r.phone||"");const key=name.toLowerCase();
+  if((phone&&existingPhones.has(phone))||(!phone&&existingNames.has(key))){skipped++;return}
+  state.guests.push(normalizeGuest({id:Date.now()+Math.random(),name,phone,group:r.group||"",seats:Math.max(1,+r.seats||1),status:"pending",seatingNote:"",tableId:null}));
+  if(phone)existingPhones.add(phone);existingNames.add(key);added++;
+ });
+ persist();renderGuests();updateDashboard();alert(`${added} מוזמנים נוספו${skipped?` · ${skipped} כפילויות/שורות ריקות דולגו`:""}`);
+}
+async function importPhoneContacts(){
+ if(navigator.contacts?.select){
+  try{const contacts=await navigator.contacts.select(["name","tel"],{multiple:true});addImportedGuests((contacts||[]).map(c=>({name:Array.isArray(c.name)?c.name[0]:c.name||"",phone:Array.isArray(c.tel)?c.tel[0]:c.tel||"",seats:1,group:""})));return}catch(e){if(e?.name==="AbortError")return}
+ }
+ alert("בדפדפן הזה אין גישה ישירה לאנשי הקשר. אפשר לבחור קובץ אנשי קשר מסוג VCF שיוצא מאפליקציית אנשי הקשר.");byId("guestVcardInput")?.click();
+}
+async function importGuestVcard(file){
+ if(!file)return;const txt=await file.text();const cards=txt.split(/BEGIN:VCARD/i).slice(1);const rows=[];
+ cards.forEach(card=>{const name=(card.match(/\nFN(?:;[^:]*)?:(.+)/i)||[])[1]?.trim();const phone=(card.match(/\nTEL(?:;[^:]*)?:(.+)/i)||[])[1]?.trim();if(name)rows.push({name,phone:phone||"",seats:1,group:""})});
+ if(!rows.length)return alert("לא נמצאו אנשי קשר בקובץ.");addImportedGuests(rows);
+}
+function headerValue(row,names){const keys=Object.keys(row||{});for(const name of names){const k=keys.find(x=>String(x).trim().toLowerCase()===name);if(k!==undefined)return row[k]}return ""}
+async function importGuestSpreadsheet(file){
+ if(!file)return;if(!window.XLSX)return alert("רכיב Excel לא נטען. רענני את האפליקציה ונסי שוב.");
+ try{
+  const wb=window.XLSX.read(await file.arrayBuffer(),{type:"array"});const sheet=wb.Sheets[wb.SheetNames[0]];const data=window.XLSX.utils.sheet_to_json(sheet,{defval:""});
+  const rows=data.map(r=>({
+   name:headerValue(r,["שם","שם מלא","name","full name","guest"]),
+   phone:headerValue(r,["טלפון","נייד","מספר טלפון","phone","mobile"]),
+   seats:headerValue(r,["מספר אנשים","כמות","מקומות","מספר מקומות","seats","guests","party size"])||1,
+   group:headerValue(r,["קבוצה","צד","משפחה","group","side"])
+  })).filter(x=>x.name);
+  if(!rows.length)return alert("לא מצאתי עמודת שם. השתמשי בכותרת ׳שם׳ או ׳Name׳.");addImportedGuests(rows);
+ }catch(e){console.error(e);alert("לא הצלחתי לקרוא את קובץ ה-Excel/CSV.")}
+}
+function sendRsvpWhatsapp(id){
+ const g=state.guests.find(x=>x.id===id);if(!g?.phone)return alert("חסר מספר טלפון למוזמן.");
+ const couple=state.setup.coupleNames||"אנחנו";const date=state.setup.weddingDate?` ב-${formatDateHe(state.setup.weddingDate)}`:"";
+ const message=`היי ${g.name} ❤️ ${couple} מתחתנים${date}! נשמח לדעת אם תגיעו וכמה אנשים תהיו. תודה!`;
+ const phone=whatsappPhone(g.phone);if(!phone)return alert("מספר הטלפון לא תקין.");window.open(`https://wa.me/${phone}?text=${encodeURIComponent(message)}`,"_blank","noopener");
+}
+
 function removeGuest(id){
  state.guests=state.guests.filter(g=>g.id!==id);
  persist();
@@ -5697,7 +6020,7 @@ function renderGuestCards(){
  const query=(document.getElementById("guestSearchInput")?.value||"").trim().toLowerCase();
  const filtered=state.guests.filter(g=>{
    const groupOk=guestUiFilter==="all"||g.group===guestUiFilter;
-   const searchOk=!query||`${g.name} ${g.group}`.toLowerCase().includes(query);
+   const searchOk=!query||`${g.name} ${g.group} ${g.phone||""}`.toLowerCase().includes(query);
    return groupOk&&searchOk;
  });
 
@@ -5709,7 +6032,7 @@ function renderGuestCards(){
      <span class="guest-avatar">${esc(guestInitials(g.name))}</span>
      <div>
        <strong>${esc(g.name)}</strong>
-       <small>${esc(g.group||"ללא קבוצה")}${table&&table!=="לא שובץ"?` · ${esc(table)}`:""}${g.seats>1?` · ${g.seats} מקומות`:""}</small>
+       <small>${esc(g.group||"ללא קבוצה")}${table&&table!=="לא שובץ"?` · ${esc(table)}`:""}${g.seats>1?` · ${g.seats} מקומות`:""}${g.phone?` · <a class="guest-phone-link" href="tel:${esc(g.phone)}">${esc(g.phone)}</a>`:""}</small>${g.phone?`<button class="btn ghost small" style="margin-top:5px" onclick="sendRsvpWhatsapp(${g.id})">WhatsApp לאישור הגעה</button>`:""}
      </div>
      <span class="guest-status-pill ${cls}">${status}</span>
    </div>`;
@@ -5731,6 +6054,7 @@ function renderGuests(){
  pendingCount.textContent=p;
  guestTable.innerHTML=state.guests.map(g=>`<tr>
    <td><strong>${esc(g.name)}</strong>${g.seatingNote?`<div class="muted small">${esc(g.seatingNote)}</div>`:""}</td>
+   <td>${g.phone?`<a class="guest-phone-link" href="tel:${esc(g.phone)}">${esc(g.phone)}</a><div><button class="btn ghost small" onclick="sendRsvpWhatsapp(${g.id})">WhatsApp</button></div>`:"-"}</td>
    <td>${esc(g.group||"-")}</td>
    <td><input class="table-mini-input" type="number" min="1" max="20" value="${g.seats||1}" onchange="updateGuestSeats(${g.id},this.value)"></td>
    <td><select class="table-mini-select" onchange="updateGuestStatus(${g.id},this.value)"><option value="pending" ${g.status==="pending"?"selected":""}>טרם ענה/תה</option><option value="confirmed" ${g.status==="confirmed"?"selected":""}>אישר/ה</option><option value="declined" ${g.status==="declined"?"selected":""}>לא מגיע/ה</option></select></td>
@@ -5979,7 +6303,7 @@ showStorageNoticeIfNeeded();syncMobileNavigation("dashboard");initAuthentication
 </script>
 
 <script>
-const WEDWISE_REPAIR_KEY="ww227_pwa_repaired";
+const WEDWISE_REPAIR_KEY="ww230_pwa_repaired";
 window.addEventListener("load",async()=>{
  if(!("serviceWorker" in navigator)||!/^https?:$/.test(location.protocol))return;
  try{
@@ -5988,7 +6312,7 @@ window.addEventListener("load",async()=>{
      if("caches" in window){const names=await caches.keys();await Promise.all(names.filter(n=>n.startsWith("wedwise-")).map(n=>caches.delete(n)))}
      localStorage.setItem(WEDWISE_REPAIR_KEY,"1");location.reload();return;
    }
-   const reg=await navigator.serviceWorker.register("./sw.js?v=227",{updateViaCache:"none"});await reg.update().catch(()=>{});
+   const reg=await navigator.serviceWorker.register("./sw.js?v=230",{updateViaCache:"none"});await reg.update().catch(()=>{});
  }catch(e){console.warn("PWA init",e)}
 });
 </script>
