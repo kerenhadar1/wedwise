@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>WedWise v2.3.10 - Wedding Planning Workspace</title>
+<title>WedWise v2.4.0 - Wedding Planning Workspace</title>
 <style>
 
 :root{
@@ -2852,6 +2852,46 @@ aside .brand-lockup-centered .brand small{
 }
 </style>
 
+
+<style>
+/* WedWise v2.4.0 — wedding summary */
+.wedding-summary-cta{display:flex;align-items:center;justify-content:space-between;gap:18px;margin:16px 0;background:linear-gradient(135deg,#fffaf7,#f8e9e2)!important;border-color:#ead1c6!important}
+.wedding-summary-cta h2{margin:3px 0 5px}
+.wedding-summary-head{align-items:flex-end}
+.wedding-summary-actions{display:flex;gap:8px;flex-wrap:wrap}
+.wedding-summary-hero{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:14px}
+.wedding-summary-hero>div{background:#fffdfb;border:1px solid #ead5cb;border-radius:18px;padding:16px;box-shadow:0 8px 25px rgba(92,58,44,.05)}
+.wedding-summary-hero span{display:block;font-size:10px;color:var(--muted);margin-bottom:5px}
+.wedding-summary-hero strong{display:block;font-size:22px;color:#4b382f}
+.wedding-summary-hero .summary-net-card{background:linear-gradient(135deg,#f8e7df,#fffaf7)}
+.wedding-summary-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px}
+.wedding-summary-card{margin-bottom:12px}
+.wedding-summary-card h2{margin:2px 0 12px}
+.summary-detail-list,.summary-booked-list,.summary-finance-list{display:grid;gap:8px}
+.summary-detail-row,.summary-booked-row,.summary-finance-row{display:flex;align-items:center;justify-content:space-between;gap:14px;padding:10px 0;border-bottom:1px solid #f0e4de}
+.summary-detail-row:last-child,.summary-booked-row:last-child,.summary-finance-row:last-child{border-bottom:0}
+.summary-detail-row span,.summary-finance-row span{color:var(--muted);font-size:10px}
+.summary-detail-row strong,.summary-finance-row strong{font-size:13px;color:#4b382f;text-align:left}
+.summary-booked-row>div{min-width:0}
+.summary-booked-row strong{display:block;color:#4b382f}
+.summary-booked-row small{display:block;color:var(--muted);margin-top:2px}
+.summary-booked-row>span{font-weight:700;white-space:nowrap;color:#875d4d}
+.summary-stat-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:8px}
+.summary-stat-grid>div{padding:12px;border:1px solid #eeddd6;background:#fffaf7;border-radius:14px}
+.summary-stat-grid span{display:block;color:var(--muted);font-size:9px;margin-bottom:4px}
+.summary-stat-grid strong{font-size:17px;color:#4b382f}
+.wedding-summary-notes{width:100%;box-sizing:border-box;margin-top:12px;resize:vertical;min-height:140px;line-height:1.7}
+.summary-note-save{margin-top:6px}
+.wedding-summary-export-card{display:flex;justify-content:space-between;align-items:center;gap:18px;background:linear-gradient(135deg,#fffaf7,#f6e5de)!important;border-color:#e7cfc5!important}
+@media(max-width:850px){
+ .wedding-summary-hero{grid-template-columns:1fr 1fr}
+ .wedding-summary-grid{grid-template-columns:1fr}
+ .wedding-summary-head{align-items:flex-start}
+ .wedding-summary-actions{width:100%}.wedding-summary-actions .btn{flex:1}
+ .wedding-summary-export-card,.wedding-summary-cta{align-items:stretch;flex-direction:column}
+}
+@media(max-width:480px){.wedding-summary-hero{grid-template-columns:1fr}.summary-stat-grid{grid-template-columns:1fr 1fr}.wedding-summary-hero strong{font-size:19px}}
+</style>
 </head>
 <body>
 
@@ -2947,6 +2987,7 @@ aside .brand-lockup-centered .brand small{
     <button onclick="mobileGo('compare')"><span>⇄</span><div><strong>השוואת מקומות</strong><small>השוואה בין המקומות ששמרתם</small></div></button>
     <button onclick="mobileGo('vendorCompare')"><span>≋</span><div><strong>השוואת ספקים</strong><small>השוואה לפי מה שחשוב לכם</small></div></button>
     <button onclick="mobileGo('gifts')"><span>▣</span><div><strong>מתנות</strong><small>מעטפות, העברות ותודות</small></div></button>
+    <button onclick="mobileGo('weddingSummary')"><span>≣</span><div><strong>סיכום החתונה</strong><small>הוצאות, הכנסות, ספקים והפקת קובץ</small></div></button>
   </div>
 </div>
 <div class="mobile-bottom-nav" aria-label="ניווט מהיר">
@@ -3021,6 +3062,10 @@ aside .brand-lockup-centered .brand small{
       <button data-target="gifts">
         <span class="nav-icon" aria-hidden="true">▣</span>
         <span>מתנות</span>
+      </button>
+      <button data-target="weddingSummary">
+        <span class="nav-icon" aria-hidden="true">≣</span>
+        <span>סיכום החתונה</span>
       </button>
       <button data-target="inspiration">
         <span class="nav-icon" aria-hidden="true">♡</span>
@@ -3915,6 +3960,15 @@ aside .brand-lockup-centered .brand small{
     <button class="btn primary" onclick="saveGiftFromForm()">שמרי מתנה</button>
   </div>
 
+  <div class="card wedding-summary-cta">
+    <div>
+      <div class="section-mini-label">כשהאירוע מאחוריכם</div>
+      <h2>כל החתונה במקום אחד</h2>
+      <div class="muted small">רכזו הוצאות, הכנסות, המקום והספקים שסגרתם, הוסיפו הערות אישיות והפיקו קובץ מסכם.</div>
+    </div>
+    <button class="btn primary" onclick="go('weddingSummary')">לסיכום החתונה ←</button>
+  </div>
+
   <div class="card gift-aftercare-card">
     <div class="between">
       <div>
@@ -3946,6 +4000,81 @@ aside .brand-lockup-centered .brand small{
       </thead>
       <tbody id="giftTable"></tbody>
     </table>
+  </div>
+</section>
+
+<section id="weddingSummary" class="section wedding-summary-page">
+  <div class="ww19-page-header wedding-summary-head">
+    <div>
+      <div class="page-kicker">אחרי האירוע</div>
+      <h1>סיכום החתונה</h1>
+      <div class="subtitle">כל הנתונים החשובים מהתכנון והאירוע, מרוכזים במקום אחד.</div>
+    </div>
+    <div class="wedding-summary-actions">
+      <button class="btn ghost" onclick="exportWeddingSummaryExcel()">הורדת Excel</button>
+      <button class="btn primary" onclick="exportWeddingSummaryPdf()">הפקת PDF</button>
+    </div>
+  </div>
+
+  <div class="wedding-summary-hero">
+    <div><span>סה״כ הוצאות שנסגרו</span><strong id="summaryCommitted">0 ₪</strong></div>
+    <div><span>סה״כ שולם</span><strong id="summaryPaid">0 ₪</strong></div>
+    <div><span>הכנסות ממתנות</span><strong id="summaryIncome">0 ₪</strong></div>
+    <div class="summary-net-card"><span>מאזן מתנות מול הוצאות</span><strong id="summaryNet">0 ₪</strong></div>
+  </div>
+
+  <div class="wedding-summary-grid">
+    <div class="card wedding-summary-card">
+      <div class="section-mini-label">פרטי האירוע</div>
+      <h2>החתונה</h2>
+      <div id="summaryWeddingDetails" class="summary-detail-list"></div>
+    </div>
+    <div class="card wedding-summary-card">
+      <div class="section-mini-label">מי נבחר</div>
+      <h2>מקום וספקים</h2>
+      <div id="summaryBookedList" class="summary-booked-list"></div>
+    </div>
+  </div>
+
+  <div class="card wedding-summary-card">
+    <div class="between">
+      <div><div class="section-mini-label">תמונה כספית מלאה</div><h2>הוצאות ותשלומים</h2></div>
+      <span id="summaryPaymentStatus" class="badge"></span>
+    </div>
+    <div id="summaryFinancialBreakdown" class="summary-finance-list"></div>
+  </div>
+
+  <div class="wedding-summary-grid">
+    <div class="card wedding-summary-card">
+      <div class="section-mini-label">האורחים</div>
+      <h2>מוזמנים והגעה</h2>
+      <div id="summaryGuestStats" class="summary-stat-grid"></div>
+    </div>
+    <div class="card wedding-summary-card">
+      <div class="section-mini-label">אחרי האירוע</div>
+      <h2>מתנות</h2>
+      <div id="summaryGiftStats" class="summary-stat-grid"></div>
+    </div>
+  </div>
+
+  <div class="card wedding-summary-card">
+    <div class="section-mini-label">שלכם בלבד</div>
+    <h2>הערות אישיות לסיכום</h2>
+    <div class="subtitle">אפשר לכתוב כאן דברים שתרצו לזכור: מה היה מוצלח, מה הייתם עושים אחרת, רגעים מיוחדים או כל הערה שתרצו לשמור עם הסיכום.</div>
+    <textarea id="weddingSummaryNotesInput" class="wedding-summary-notes" rows="7" placeholder="כתבו כאן..." oninput="saveWeddingSummaryNotes(this.value)"></textarea>
+    <div class="muted small summary-note-save">נשמר אוטומטית בחשבון שלכם</div>
+  </div>
+
+  <div class="card wedding-summary-export-card">
+    <div>
+      <div class="section-mini-label">לשמירה אצלכם</div>
+      <h2>הפקת קובץ מסכם</h2>
+      <div class="muted small">קובץ Excel כולל גיליונות נפרדים למקום, ספקים, תשלומים, הוצאות, מתנות, מוזמנים וצ׳ק ליסט. PDF מרכז את הסיכום למסמך נוח לשמירה או הדפסה.</div>
+    </div>
+    <div class="wedding-summary-actions">
+      <button class="btn ghost" onclick="exportWeddingSummaryExcel()">Excel</button>
+      <button class="btn primary" onclick="exportWeddingSummaryPdf()">PDF</button>
+    </div>
   </div>
 </section>
 
@@ -4378,22 +4507,22 @@ function showStorageNoticeIfNeeded(){const n=document.getElementById("mobileStor
 function emptyStateSnapshot(){return{
  setup:{},venues:[],checklist:mergeChecklistWithDefaults(null),expenses:[],guests:[],seatingTables:[],gifts:[],recommendations:[],
  compareWeights:{price:20,food:20,atmosphere:15,location:15,design:10,service:10,parking:5,couple:5},
- vendors:[],vendorRecommendations:{},activeVendorCategory:"photographer",vendorCompareWeights:{},reminders:[],inspirationAlbums:[]
+ vendors:[],vendorRecommendations:{},activeVendorCategory:"photographer",vendorCompareWeights:{},reminders:[],inspirationAlbums:[],weddingSummaryNotes:""
 }}
 function snapshotFromState(){return{
  setup:state.setup,venues:state.venues,checklist:state.checklist,expenses:state.expenses,guests:state.guests,
  seatingTables:state.seatingTables,gifts:state.gifts,recommendations:state.recommendations,compareWeights:state.compareWeights,
  vendors:state.vendors,vendorRecommendations:state.vendorRecommendations,activeVendorCategory:state.activeVendorCategory,
- vendorCompareWeights:state.vendorCompareWeights,reminders:state.reminders,inspirationAlbums:state.inspirationAlbums
+ vendorCompareWeights:state.vendorCompareWeights,reminders:state.reminders,inspirationAlbums:state.inspirationAlbums,weddingSummaryNotes:state.weddingSummaryNotes
 }}
-function snapshotHasData(s){return Boolean(s?.setup?.coupleNames||s?.setup?.weddingDate||s?.setup?.estimatedGuests||s?.venues?.length||s?.vendors?.length||s?.expenses?.length||s?.guests?.length||s?.gifts?.length||s?.inspirationAlbums?.length)}
+function snapshotHasData(s){return Boolean(s?.setup?.coupleNames||s?.setup?.weddingDate||s?.setup?.estimatedGuests||s?.venues?.length||s?.vendors?.length||s?.expenses?.length||s?.guests?.length||s?.gifts?.length||s?.inspirationAlbums?.length||s?.weddingSummaryNotes)}
 function localSnapshotForCurrentUser(){return{
  setup:storageJSON("ww3_setup",{}),venues:storageJSON("ww3_venues",[]),checklist:mergeChecklistWithDefaults(storageJSON("ww3_checklist",null)),
  expenses:storageJSON("ww3_expenses",[]),guests:storageJSON("ww3_guests",[]),seatingTables:storageJSON("ww15_seating_tables",[]),
  gifts:storageJSON("ww15_gifts",[]),recommendations:storageJSON("ww5_recommendations",[]),
  compareWeights:storageJSON("ww7_compare_weights",null)||{price:20,food:20,atmosphere:15,location:15,design:10,service:10,parking:5,couple:5},
  vendors:storageJSON("ww11_vendors",[]),vendorRecommendations:storageJSON("ww11_vendor_recommendations",{}),
- activeVendorCategory:storageGet("ww11_vendor_category","photographer")||"photographer",vendorCompareWeights:storageJSON("ww11_vendor_weights",{}),reminders:storageJSON("ww23_reminders",[]),inspirationAlbums:storageJSON("ww234_inspiration_albums",[])
+ activeVendorCategory:storageGet("ww11_vendor_category","photographer")||"photographer",vendorCompareWeights:storageJSON("ww11_vendor_weights",{}),reminders:storageJSON("ww23_reminders",[]),inspirationAlbums:storageJSON("ww234_inspiration_albums",[]),weddingSummaryNotes:storageGet("ww240_wedding_summary_notes","")||""
 }}
 function persistLocalSnapshot(){
  storageSet("ww3_setup",JSON.stringify(state.setup));storageSet("ww3_venues",JSON.stringify(state.venues));
@@ -4402,7 +4531,7 @@ function persistLocalSnapshot(){
  storageSet("ww15_gifts",JSON.stringify(state.gifts));storageSet("ww5_recommendations",JSON.stringify(state.recommendations));
  storageSet("ww7_compare_weights",JSON.stringify(state.compareWeights));storageSet("ww11_vendors",JSON.stringify(state.vendors));
  storageSet("ww11_vendor_recommendations",JSON.stringify(state.vendorRecommendations));storageSet("ww11_vendor_category",state.activeVendorCategory);
- storageSet("ww11_vendor_weights",JSON.stringify(state.vendorCompareWeights));storageSet("ww23_reminders",JSON.stringify(state.reminders));storageSet("ww234_inspiration_albums",JSON.stringify(state.inspirationAlbums));
+ storageSet("ww11_vendor_weights",JSON.stringify(state.vendorCompareWeights));storageSet("ww23_reminders",JSON.stringify(state.reminders));storageSet("ww234_inspiration_albums",JSON.stringify(state.inspirationAlbums));storageSet("ww240_wedding_summary_notes",state.weddingSummaryNotes||"");
 }
 function setSyncStatus(kind,text){const el=document.getElementById("moreSyncStatus");if(el){el.textContent=text;el.className="ww22-sync-status "+(kind||"")}}
 function applyUserUi(){
@@ -4557,13 +4686,13 @@ function applySnapshot(snapshot){
   state.seatingTables=Array.isArray(s.seatingTables)?s.seatingTables:[];state.gifts=Array.isArray(s.gifts)?s.gifts:[];
   state.recommendations=Array.isArray(s.recommendations)?s.recommendations:[];state.compareWeights=s.compareWeights||{price:20,food:20,atmosphere:15,location:15,design:10,service:10,parking:5,couple:5};
   state.vendors=Array.isArray(s.vendors)?s.vendors:[];state.vendorRecommendations=s.vendorRecommendations||{};
-  state.activeVendorCategory=s.activeVendorCategory||"photographer";state.vendorCompareWeights=s.vendorCompareWeights||{};state.reminders=Array.isArray(s.reminders)?s.reminders:[];state.inspirationAlbums=Array.isArray(s.inspirationAlbums)?s.inspirationAlbums:[];
+  state.activeVendorCategory=s.activeVendorCategory||"photographer";state.vendorCompareWeights=s.vendorCompareWeights||{};state.reminders=Array.isArray(s.reminders)?s.reminders:[];state.inspirationAlbums=Array.isArray(s.inspirationAlbums)?s.inspirationAlbums:[];state.weddingSummaryNotes=String(s.weddingSummaryNotes||"");
   state.venues.forEach(ensureVenueDetails);state.vendors.forEach(ensureVendorDetails);persistLocalSnapshot();renderAllForUser();
  }finally{cloudApplying=false}
 }
 function renderAllForUser(){
  loadSetup();loadComparisonWeights();renderVenues();renderRecommendations();renderComparisonImpressionEditor();renderVendorSection();
- renderVendorCompare();renderChecklist();renderBudget();renderGuests();renderGifts();renderReminders();renderInspiration();updateDashboard();syncMobileNavigation(currentSectionId());
+ renderVendorCompare();renderChecklist();renderBudget();renderGuests();renderGifts();renderReminders();renderInspiration();renderWeddingSummary();updateDashboard();syncMobileNavigation(currentSectionId());
 }
 async function loadAuthenticatedUser(user){
  cloudUser=user;
@@ -4674,7 +4803,7 @@ window.addEventListener("online",()=>{if(cloudUser)scheduleCloudSave()});
 const state={
  setup:{},venues:[],checklist:mergeChecklistWithDefaults(null),expenses:[],guests:[],seatingTables:[],gifts:[],recommendations:[],
  compareWeights:{price:20,food:20,atmosphere:15,location:15,design:10,service:10,parking:5,couple:5},
- vendors:[],vendorRecommendations:{},activeVendorCategory:"photographer",vendorCompareWeights:{},reminders:[],inspirationAlbums:[],activeVenueId:null
+ vendors:[],vendorRecommendations:{},activeVendorCategory:"photographer",vendorCompareWeights:{},reminders:[],inspirationAlbums:[],weddingSummaryNotes:"",activeVenueId:null
 };
 function persist(){if(!cloudUser||!currentUserId)return;persistLocalSnapshot();scheduleCloudSave()}
 function esc(s){return String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[c]))}
@@ -4723,6 +4852,7 @@ function go(id,options={}){
  if(id==="inspiration")renderInspiration();
  if(id==="guests")renderGuests();
  if(id==="gifts")renderGifts();
+ if(id==="weddingSummary")renderWeddingSummary();
 
  syncMobileNavigation(id);
  window.scrollTo({top:0,behavior:"smooth"});
@@ -6810,6 +6940,96 @@ function renderGifts(){
 }
 
 
+function paymentMethodHe(value){
+ return value==="transfer"?"העברה בנקאית":value==="credit"?"אשראי":value==="cash"?"מזומן":value==="checks"?"צ׳קים":value==="bit"?"Bit / PayBox":value==="other"?"אחר":"לא הוגדר";
+}
+function weddingSummaryGiftTotal(){
+ return state.gifts.filter(g=>g.type!=="physical").reduce((s,g)=>s+(+g.amount||0),0);
+}
+function weddingSummaryGuestMetrics(){
+ const total=state.guests.reduce((s,g)=>s+(+g.seats||1),0);
+ const confirmed=state.guests.filter(g=>g.status==="confirmed").reduce((s,g)=>s+(+g.seats||1),0);
+ const declined=state.guests.filter(g=>g.status==="declined").reduce((s,g)=>s+(+g.seats||1),0);
+ const pending=Math.max(0,total-confirmed-declined);
+ return {total,confirmed,declined,pending};
+}
+function saveWeddingSummaryNotes(value){state.weddingSummaryNotes=String(value||"");persist()}
+function weddingSummaryBookedRows(){
+ const rows=[];
+ const venue=state.venues.find(v=>v.status==="chosen");
+ if(venue){ensureVenueDetails(venue);rows.push({category:"מקום",name:venue.name||"—",price:venueEstimatedCost(venue),paid:venuePaidAmount(venue),remaining:Math.max(0,venueEstimatedCost(venue)-venuePaidAmount(venue))})}
+ Object.entries(VENDOR_CATEGORIES).forEach(([key,c])=>{
+   const v=state.vendors.find(x=>x.category===key&&ensureVendorDetails(x).booked);
+   if(v)rows.push({category:c.label,name:v.name||"—",price:+v.price||0,paid:vendorPaidAmount(v),remaining:vendorRemainingAmount(v)});
+ });
+ return rows;
+}
+function renderWeddingSummary(){
+ const page=byId("weddingSummary");if(!page)return;
+ const m=budgetMetrics(),income=weddingSummaryGiftTotal(),net=income-m.committed,guests=weddingSummaryGuestMetrics();
+ byId("summaryCommitted").textContent=m.committed.toLocaleString()+" ₪";
+ byId("summaryPaid").textContent=m.paid.toLocaleString()+" ₪";
+ byId("summaryIncome").textContent=income.toLocaleString()+" ₪";
+ const netEl=byId("summaryNet");netEl.textContent=(net<0?"− ":"+")+Math.abs(net).toLocaleString()+" ₪";netEl.style.color=net>=0?"#607b60":"#9a5e54";
+ const date=state.setup.weddingDate?formatDateHe(state.setup.weddingDate):"לא הוגדר";
+ byId("summaryWeddingDetails").innerHTML=[
+   ["זוג",state.setup.coupleNames||"לא הוגדר"],["תאריך",date],["מספר מוזמנים שאישרו",guests.confirmed.toLocaleString()],["יעד תקציב",m.target?m.target.toLocaleString()+" ₪":"לא הוגדר"]
+ ].map(([a,b])=>`<div class="summary-detail-row"><span>${esc(a)}</span><strong>${esc(b)}</strong></div>`).join("");
+ const booked=weddingSummaryBookedRows();
+ byId("summaryBookedList").innerHTML=booked.length?booked.map(r=>`<div class="summary-booked-row"><div><strong>${esc(r.category)} · ${esc(r.name)}</strong><small>שולם ${r.paid.toLocaleString()} ₪ · נותר ${r.remaining.toLocaleString()} ₪</small></div><span>${r.price.toLocaleString()} ₪</span></div>`).join(""):`<div class="muted small">עדיין לא סומנו מקום או ספקים כסגורים.</div>`;
+ const extra=state.expenses.reduce((s,e)=>s+(+e.amount||0),0);
+ byId("summaryFinancialBreakdown").innerHTML=[
+   ["מקום",m.venueCommitted],["ספקים",m.vendorCommitted],["הוצאות נוספות",extra],["סה״כ נסגר",m.committed],["כבר שולם",m.paid],["נותר לשלם",m.remaining]
+ ].map(([a,b])=>`<div class="summary-finance-row"><span>${esc(a)}</span><strong>${Number(b).toLocaleString()} ₪</strong></div>`).join("");
+ const status=byId("summaryPaymentStatus");status.textContent=m.remaining?`${m.remaining.toLocaleString()} ₪ נותרו לתשלום`:"הכול שולם";status.className="badge"+(m.remaining?"":" good");
+ byId("summaryGuestStats").innerHTML=[["סה״כ ברשימה",guests.total],["אישרו הגעה",guests.confirmed],["לא מגיעים",guests.declined],["טרם ענו",guests.pending]].map(([a,b])=>`<div><span>${esc(a)}</span><strong>${Number(b).toLocaleString()}</strong></div>`).join("");
+ const money=state.gifts.filter(g=>g.type!=="physical"&&(+g.amount||0)>0),avg=money.length?Math.round(income/money.length):0;
+ byId("summaryGiftStats").innerHTML=[["סה״כ הכנסות",income.toLocaleString()+" ₪"],["מספר מתנות",state.gifts.length],["ממוצע מתנה כספית",avg.toLocaleString()+" ₪"],["תודות ממתינות",state.gifts.filter(g=>!g.thankYouSent).length]].map(([a,b])=>`<div><span>${esc(a)}</span><strong>${esc(b)}</strong></div>`).join("");
+ const notes=byId("weddingSummaryNotesInput");if(notes&&document.activeElement!==notes)notes.value=state.weddingSummaryNotes||"";
+}
+function weddingSummaryFileBase(){
+ const couple=(state.setup.coupleNames||"WedWise").replace(/[^\p{L}\p{N}_-]+/gu,"-").replace(/^-+|-+$/g,"");
+ const date=state.setup.weddingDate||new Date().toISOString().slice(0,10);
+ return `${couple||"WedWise"}-סיכום-חתונה-${date}`;
+}
+function exportWeddingSummaryExcel(){
+ if(!window.XLSX)return alert("רכיב Excel לא נטען. רענני את האפליקציה ונסי שוב.");
+ const m=budgetMetrics(),income=weddingSummaryGiftTotal(),guests=weddingSummaryGuestMetrics(),booked=weddingSummaryBookedRows();
+ const wb=XLSX.utils.book_new();
+ const add=(name,rows)=>XLSX.utils.book_append_sheet(wb,XLSX.utils.json_to_sheet(rows.length?rows:[{מידע:"אין נתונים"}]),name.slice(0,31));
+ add("סיכום",[
+   {פריט:"שמות הזוג",ערך:state.setup.coupleNames||""},{פריט:"תאריך חתונה",ערך:state.setup.weddingDate||""},{פריט:"יעד תקציב",ערך:m.target},{פריט:"סה״כ הוצאות שנסגרו",ערך:m.committed},{פריט:"סה״כ שולם",ערך:m.paid},{פריט:"נותר לשלם",ערך:m.remaining},{פריט:"הכנסות ממתנות",ערך:income},{פריט:"מאזן מתנות מול הוצאות",ערך:income-m.committed},{פריט:"מוזמנים שאישרו",ערך:guests.confirmed},{פריט:"הערות אישיות",ערך:state.weddingSummaryNotes||""}
+ ]);
+ const venue=state.venues.find(v=>v.status==="chosen");
+ add("מקום",venue?[{שם:venue.name||"",אזור:venue.region||"",מחיר_למנה:+venue.price||0,מינימום_אורחים:+venue.minGuests||0,דמי_מקום:+venue.venueFee||0,הוצאות_נוספות:+venue.extraCosts||0,עלות_כוללת:venueEstimatedCost(venue),שולם:venuePaidAmount(venue),נותר:Math.max(0,venueEstimatedCost(venue)-venuePaidAmount(venue)),אופן_תשלום:paymentMethodHe(venue.paymentMethod),מקדמה:+venue.depositAmount||0,מקדמה_שולמה:venue.depositPaid?"כן":"לא",איש_קשר:venue.contactPerson||"",טלפון:venue.contactPhone||"",הערות:venue.notes||""}]:[]);
+ add("תוספות מקום",venue?(venue.quoteItems||[]).map(q=>({תוספת:q.label||"",מחיר:+q.amount||0,סוג:q.mode==="perGuest"?"לאורח":"קבוע",נכללת:q.selected!==false?"כן":"לא",הכרחית:q.required?"כן":"לא"})):[]);
+ add("ספקים",state.vendors.filter(v=>ensureVendorDetails(v).booked).map(v=>({קטגוריה:vendorConfig(v.category).label,שם:v.name||"",מחיר:+v.price||0,שולם:vendorPaidAmount(v),נותר:vendorRemainingAmount(v),אופן_תשלום:paymentMethodHe(v.paymentMethod),מקדמה:+v.depositAmount||0,מקדמה_שולמה:v.depositPaid?"כן":"לא",הערות:v.notes||""})));
+ const payments=[];
+ if(venue){ensureVenueDetails(venue);if(+venue.depositAmount)payments.push({סוג:"מקום",שם:venue.name,תשלום:"מקדמה",תאריך:"",סכום:+venue.depositAmount,שולם:venue.depositPaid?"כן":"לא"});(venue.payments||[]).forEach(p=>payments.push({סוג:"מקום",שם:venue.name,תשלום:p.label,תאריך:p.dueDate||"",סכום:+p.amount||0,שולם:p.paid?"כן":"לא"}))}
+ state.vendors.filter(v=>v.booked).forEach(v=>{ensureVendorDetails(v);if(+v.depositAmount)payments.push({סוג:vendorConfig(v.category).label,שם:v.name,תשלום:"מקדמה",תאריך:"",סכום:+v.depositAmount,שולם:v.depositPaid?"כן":"לא"});(v.payments||[]).forEach(p=>payments.push({סוג:vendorConfig(v.category).label,שם:v.name,תשלום:p.label,תאריך:p.dueDate||"",סכום:+p.amount||0,שולם:p.paid?"כן":"לא"}))});
+ add("תשלומים",payments);
+ add("הוצאות נוספות",state.expenses.map(e=>({קטגוריה:e.category||"",תיאור:e.desc||"",סכום:+e.amount||0})));
+ add("מתנות",state.gifts.map(g=>({נותן_ת:g.giver||"",סוג:giftTypeHe(g.type),סכום:g.type==="physical"?0:(+g.amount||0),הערה:g.note||"",טופל:g.depositStatus==="secured"?"כן":"לא",תודה_נשלחה:g.thankYouSent?"כן":"לא"})));
+ add("מוזמנים",state.guests.map(g=>({שם:g.name||"",טלפון:g.phone||"",קבוצה:g.group||"",מספר_אנשים:+g.seats||1,סטטוס:statusHe(g.status),שולחן:g.status==="confirmed"?guestTableName(g.tableId):"",הערת_הושבה:g.seatingNote||""})));
+ add("צ'ק ליסט",state.checklist.flatMap(group=>(group.items||[]).map(item=>({קטגוריה:group.title,משימה:item.text,הושלמה:item.done?"כן":"לא"}))));
+ XLSX.writeFile(wb,weddingSummaryFileBase()+".xlsx");
+}
+function weddingSummaryPrintTable(headers,rows){
+ return `<table><thead><tr>${headers.map(h=>`<th>${esc(h)}</th>`).join("")}</tr></thead><tbody>${rows.length?rows.map(r=>`<tr>${r.map(v=>`<td>${esc(v??"")}</td>`).join("")}</tr>`).join(""):`<tr><td colspan="${headers.length}">אין נתונים</td></tr>`}</tbody></table>`;
+}
+function exportWeddingSummaryPdf(){
+ const m=budgetMetrics(),income=weddingSummaryGiftTotal(),guests=weddingSummaryGuestMetrics(),booked=weddingSummaryBookedRows(),venue=state.venues.find(v=>v.status==="chosen");
+ const w=window.open("","_blank");if(!w)return alert("הדפדפן חסם את חלון ה-PDF. אפשרי חלונות קופצים ונסי שוב.");
+ const title=state.setup.coupleNames?`סיכום החתונה · ${state.setup.coupleNames}`:"סיכום החתונה · WedWise";
+ const vendors=booked.map(r=>[r.category,r.name,`${r.price.toLocaleString()} ₪`,`${r.paid.toLocaleString()} ₪`,`${r.remaining.toLocaleString()} ₪`]);
+ const gifts=state.gifts.map(g=>[g.giver,giftTypeHe(g.type),g.type==="physical"?"—":`${(+g.amount||0).toLocaleString()} ₪`,g.note||""]);
+ const expenses=state.expenses.map(e=>[e.category||"",e.desc||"",`${(+e.amount||0).toLocaleString()} ₪`]);
+ const guestRows=state.guests.map(g=>[g.name,g.group||"",String(+g.seats||1),statusHe(g.status),g.status==="confirmed"?guestTableName(g.tableId):""]);
+ w.document.write(`<!doctype html><html dir="rtl" lang="he"><head><meta charset="utf-8"><title>${esc(title)}</title><style>@page{size:A4;margin:15mm}body{font-family:Arial,sans-serif;color:#3e302a;line-height:1.5}h1{font-size:28px;margin:0 0 4px}h2{font-size:18px;margin:26px 0 8px;border-bottom:1px solid #dbc8bf;padding-bottom:5px}.sub{color:#866f65;margin-bottom:20px}.cards{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}.card{border:1px solid #dbc8bf;border-radius:10px;padding:10px}.card span{font-size:10px;color:#866f65;display:block}.card strong{font-size:16px}table{width:100%;border-collapse:collapse;font-size:11px;margin-top:8px}th,td{border-bottom:1px solid #e7dad4;padding:6px;text-align:right;vertical-align:top}th{background:#faf3ef}.notes{white-space:pre-wrap;border:1px solid #dbc8bf;border-radius:10px;padding:12px;min-height:60px}.pagebreak{break-before:page}@media print{button{display:none}}</style></head><body><h1>${esc(title)}</h1><div class="sub">${esc(state.setup.weddingDate?formatDateHe(state.setup.weddingDate):"")}</div><div class="cards"><div class="card"><span>הוצאות שנסגרו</span><strong>${m.committed.toLocaleString()} ₪</strong></div><div class="card"><span>שולם</span><strong>${m.paid.toLocaleString()} ₪</strong></div><div class="card"><span>הכנסות ממתנות</span><strong>${income.toLocaleString()} ₪</strong></div><div class="card"><span>מאזן</span><strong>${(income-m.committed).toLocaleString()} ₪</strong></div></div><h2>מקום וספקים</h2>${weddingSummaryPrintTable(["קטגוריה","שם","עלות","שולם","נותר"],vendors)}<h2>הוצאות נוספות</h2>${weddingSummaryPrintTable(["קטגוריה","תיאור","סכום"],expenses)}<h2>מתנות</h2>${weddingSummaryPrintTable(["נותן/ת","סוג","סכום","הערה"],gifts)}<div class="pagebreak"></div><h2>מוזמנים</h2>${weddingSummaryPrintTable(["שם","קבוצה","אנשים","סטטוס","שולחן"],guestRows)}<h2>סיכום אורחים</h2><p>סה״כ ברשימה: ${guests.total} · אישרו: ${guests.confirmed} · לא מגיעים: ${guests.declined} · טרם ענו: ${guests.pending}</p><h2>הערות אישיות</h2><div class="notes">${esc(state.weddingSummaryNotes||"אין הערות אישיות.")}</div><p style="margin-top:28px;color:#9a8378;font-size:10px">הופק באמצעות WedWise</p><script>window.onload=()=>setTimeout(()=>window.print(),250)<\/script></body></html>`);
+ w.document.close();
+}
+
+
 
 let activeInspirationAlbumId=null;
 function inspirationAlbums(){
@@ -6970,7 +7190,7 @@ showStorageNoticeIfNeeded();syncMobileNavigation("dashboard");initAuthentication
 </script>
 
 <script>
-const WEDWISE_REPAIR_KEY="ww2310_pwa_repaired";
+const WEDWISE_REPAIR_KEY="ww240_pwa_repaired";
 window.addEventListener("load",async()=>{
  if(!("serviceWorker" in navigator)||!/^https?:$/.test(location.protocol))return;
  try{
@@ -6979,7 +7199,7 @@ window.addEventListener("load",async()=>{
      if("caches" in window){const names=await caches.keys();await Promise.all(names.filter(n=>n.startsWith("wedwise-")).map(n=>caches.delete(n)))}
      localStorage.setItem(WEDWISE_REPAIR_KEY,"1");location.reload();return;
    }
-   const reg=await navigator.serviceWorker.register("./sw.js?v=2310",{updateViaCache:"none"});await reg.update().catch(()=>{});
+   const reg=await navigator.serviceWorker.register("./sw.js?v=240",{updateViaCache:"none"});await reg.update().catch(()=>{});
  }catch(e){console.warn("PWA init",e)}
 });
 </script>
