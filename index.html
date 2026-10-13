@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>WedWise v2.3.5 - Wedding Planning Workspace</title>
+<title>WedWise v2.3.8 - Wedding Planning Workspace</title>
 <style>
 
 :root{
@@ -2776,6 +2776,83 @@ aside .sidebar-footer{color:#dbc8be!important;border-color:rgba(255,255,255,.12)
 }
 </style>
 
+
+<style id="wedwise-fixes-v236">
+/* WedWise v2.3.6 — sidebar contrast, tappable home wordmark, reliable mobile manual forms */
+aside .brand-lockup-centered .brand{
+  color:#fffaf7!important;
+  text-shadow:0 1px 10px rgba(20,10,6,.22)!important;
+}
+aside .brand-lockup-centered .brand small{
+  color:#f3ded3!important;
+  opacity:1!important;
+  text-shadow:0 1px 8px rgba(20,10,6,.16)!important;
+}
+.ww236-home-logo{
+  cursor:pointer!important;
+  touch-action:manipulation!important;
+  -webkit-tap-highlight-color:transparent!important;
+  user-select:none!important;
+}
+.ww236-home-logo:focus-visible{outline:2px solid #d49a82!important;outline-offset:5px!important;border-radius:8px!important}
+#venueForm,#vendorForm{scroll-margin-top:92px!important}
+.ww236-manual-add-btn{touch-action:manipulation!important;-webkit-tap-highlight-color:rgba(190,123,94,.10)!important}
+@media(max-width:850px){
+  .ww236-manual-add-btn{min-height:46px!important;position:relative!important;z-index:2!important}
+  #venueForm.ww236-manual-form-open,#vendorForm.ww236-manual-form-open{display:block!important;visibility:visible!important;opacity:1!important}
+}
+</style>
+
+<style id="wedwise-fixes-v238">
+/* WedWise v2.3.8 — vendor payments + clickable reminder confirmation */
+.ww-action-toast{position:fixed;z-index:9999;left:50%;bottom:88px;transform:translate(-50%,18px);opacity:0;pointer-events:none;display:flex;align-items:center;gap:12px;justify-content:space-between;width:min(92vw,430px);border:1px solid rgba(176,120,72,.24);border-radius:16px;background:#fffaf6;color:#4b3024;box-shadow:0 14px 38px rgba(82,48,30,.18);padding:13px 15px;font:inherit;text-align:right;transition:opacity .2s ease,transform .2s ease;cursor:pointer}
+.ww-action-toast.show{opacity:1;transform:translate(-50%,0);pointer-events:auto}
+.ww-action-toast span{font-weight:700}.ww-action-toast strong{color:#b67848;white-space:nowrap;font-size:12px}
+@media(min-width:851px){.ww-action-toast{left:auto;right:24px;bottom:24px;transform:translateY(18px)}.ww-action-toast.show{transform:translateY(0)}}
+</style>
+<style id="wedwise-fixes-v237">
+/* WedWise v2.3.7 — reminder form mobile sizing */
+#reminders .grid.three > .field{min-width:0!important;max-width:100%!important}
+#reminders input{box-sizing:border-box!important;max-width:100%!important}
+#reminderDateInput,#reminderTimeInput{
+  display:block!important;
+  width:100%!important;
+  max-width:100%!important;
+  min-width:0!important;
+  inline-size:100%!important;
+  box-sizing:border-box!important;
+}
+@media(max-width:850px){
+  #reminders .grid.three{
+    display:grid!important;
+    grid-template-columns:minmax(0,1fr)!important;
+    gap:0!important;
+    width:100%!important;
+    max-width:100%!important;
+  }
+  #reminders .field{
+    width:100%!important;
+    max-width:100%!important;
+    min-width:0!important;
+    overflow:visible!important;
+  }
+  #reminderDateInput,#reminderTimeInput{
+    width:100%!important;
+    max-width:100%!important;
+    min-width:0!important;
+    direction:ltr!important;
+    text-align:right!important;
+    padding-left:12px!important;
+    padding-right:12px!important;
+    font-size:16px!important;
+  }
+}
+@media(max-width:390px){
+  #reminders .card{padding-left:13px!important;padding-right:13px!important}
+  #reminderDateInput,#reminderTimeInput{font-size:16px!important}
+}
+</style>
+
 </head>
 <body>
 
@@ -2837,7 +2914,7 @@ aside .sidebar-footer{color:#dbc8be!important;border-color:rgba(255,255,255,.12)
   <button id="mobileBackBtn" class="ww21-back-btn hidden" onclick="goBack()" aria-label="חזרה">
     <span>→</span><small>חזרה</small>
   </button>
-  <div class="ww19-wordmark" aria-label="WedWise">
+  <div class="ww19-wordmark ww236-home-logo" role="button" tabindex="0" aria-label="מעבר למסך הבית" onclick="mobileGo('dashboard')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();mobileGo('dashboard')}">
     <span class="ww19-wordmark-wed">Wed</span><span class="ww19-wordmark-wise">Wise</span>
   </div>
   <button class="ww21-user-btn" onclick="toggleMobileMore(true)" aria-label="פתיחת תפריט">
@@ -3210,7 +3287,7 @@ aside .sidebar-footer{color:#dbc8be!important;border-color:rgba(255,255,255,.12)
     <div class="row">
       <button id="smartSearchBtn" class="btn primary" onclick="searchRecommendedVenues(false)">✨ מצאי מקומות מתאימים</button>
       <button id="smartRefreshBtn" class="btn ghost" onclick="searchRecommendedVenues(true)">↻ רענון מהאינטרנט</button>
-      <button class="btn secondary" onclick="toggleVenueForm()">+ הוספה ידנית</button>
+      <button type="button" class="btn secondary ww236-manual-add-btn" onclick="openVenueManualForm(event)">+ הוספה ידנית</button>
     </div>
   </div>
 
@@ -3349,7 +3426,7 @@ aside .sidebar-footer{color:#dbc8be!important;border-color:rgba(255,255,255,.12)
       <h1>ספקים</h1>
       <div class="subtitle">חיפוש חכם, שמירה והשוואה של הספקים המרכזיים לחתונה.</div>
     </div>
-    <button class="btn secondary" onclick="toggleVendorForm()">+ הוספה ידנית</button>
+    <button type="button" class="btn secondary ww236-manual-add-btn" onclick="openVendorManualForm(event)">+ הוספה ידנית</button>
   </div>
 
   <div class="vendor-category-tabs" id="vendorCategoryTabs"></div>
@@ -5097,17 +5174,34 @@ function clamp10(x){x=+x||0;return Math.max(0,Math.min(10,x))}
 function escAttr(s){return esc(s).replace(/\n/g,"&#10;")}
 let pendingVenueQuote=null;
 function byId(id){return document.getElementById(id)}
+function revealManualForm(form,focusId){
+ if(!form)return;
+ form.style.display="block";
+ form.classList.add("ww236-manual-form-open");
+ const mobile=window.matchMedia&&window.matchMedia("(max-width:850px)").matches;
+ requestAnimationFrame(()=>{
+  if(mobile){
+   setTimeout(()=>form.scrollIntoView({behavior:"smooth",block:"start"}),40);
+  }else{
+   setTimeout(()=>byId(focusId)?.focus(),30);
+  }
+ });
+}
+function openVenueManualForm(event){
+ if(event){event.preventDefault();event.stopPropagation()}
+ const form=byId("venueForm");if(!form)return;
+ revealManualForm(form,"vName");
+}
 function toggleVenueForm(){
  const form=byId("venueForm");if(!form)return;
  const opening=form.style.display==="none"||!form.style.display;
- form.style.display=opening?"block":"none";
- if(opening)setTimeout(()=>byId("vName")?.focus(),30);
- else{
-  pendingVenueQuote=null;
-  const preview=byId("venueQuotePreview");if(preview)preview.innerHTML="";
-  const status=byId("venueQuoteImportStatus");if(status)status.textContent="";
-  const file=byId("vQuoteFile");if(file)file.value="";
- }
+ if(opening){revealManualForm(form,"vName");return}
+ form.style.display="none";
+ form.classList.remove("ww236-manual-form-open");
+ pendingVenueQuote=null;
+ const preview=byId("venueQuotePreview");if(preview)preview.innerHTML="";
+ const status=byId("venueQuoteImportStatus");if(status)status.textContent="";
+ const file=byId("vQuoteFile");if(file)file.value="";
 }
 function quoteItemsCost(v){
  ensureVenueDetails(v);
@@ -5899,6 +5993,13 @@ function formatDateHe(value){
 }
 function vendorPaidAmount(v){ensureVendorDetails(v);return contractPaidAmount(v)}
 function vendorRemainingAmount(v){return contractRemaining(v,+v.price||0)}
+function vendorScheduleDefaultAmount(v){
+ ensureVendorDetails(v);
+ const total=Math.max(0,+v.price||0);
+ const deposit=Math.max(0,+v.depositAmount||0);
+ const scheduled=(v.payments||[]).reduce((sum,p)=>sum+(+p.amount||0),0);
+ return Math.max(0,total-deposit-scheduled);
+}
 function setVendorBooked(id,checked){
  const v=state.vendors.find(x=>x.id===id);if(!v)return;ensureVendorDetails(v);
  v.booked=!!checked;persist();renderVendorCategoryTabs();renderSavedVendors();renderBudget();updateDashboard();
@@ -5967,11 +6068,19 @@ function renderVendorSection(){
  renderSavedVendors();
 }
 
+function openVendorManualForm(event){
+ if(event){event.preventDefault();event.stopPropagation()}
+ const f=byId("vendorForm");if(!f)return;
+ const formCat=byId("vendorFormCategory");if(formCat)formCat.textContent=vendorCategoryLabel(state.activeVendorCategory);
+ revealManualForm(f,"vendorManualName");
+}
 function toggleVendorForm(){
  const f=byId("vendorForm");if(!f)return;
- const opening=f.style.display==="none"||!f.style.display;f.style.display=opening?"block":"none";
+ const opening=f.style.display==="none"||!f.style.display;
  const formCat=byId("vendorFormCategory");if(formCat)formCat.textContent=vendorCategoryLabel(state.activeVendorCategory);
- if(opening)setTimeout(()=>byId("vendorManualName")?.focus(),30);
+ if(opening){revealManualForm(f,"vendorManualName");return}
+ f.style.display="none";
+ f.classList.remove("ww236-manual-form-open");
 }
 
 async function searchRecommendedVendors(forceRefresh=false){
@@ -6085,7 +6194,7 @@ function renderSavedVendors(){
           <div class="field"><label>אופן תשלום</label><select onchange="updateVendorFinance(${v.id},'paymentMethod',this.value)">${paymentMethodOptions(v.paymentMethod)}</select></div>
           <div class="field"><label>גובה מקדמה</label><input type="number" min="0" value="${v.depositAmount||""}" onchange="updateVendorFinance(${v.id},'depositAmount',this.value)"></div>
         </div>
-        <label class="vendor-booked-toggle"><input type="checkbox" ${v.depositPaid?"checked":""} onchange="updateVendorFinance(${v.id},'depositPaid',this.checked)"><span>${v.depositPaid?"המקדמה שולמה":"המקדמה עדיין לא שולמה"}</span></label>
+        <label class="vendor-booked-toggle"><input type="checkbox" ${v.depositPaid?"checked":""} onchange="updateVendorFinance(${v.id},'depositPaid',this.checked)"><span>שולמה מקדמה</span></label>
         <div class="vendor-payment-summary">
           <div><span>מחיר שסוכם</span><strong>${Number(v.price||0).toLocaleString()} ₪</strong></div>
           <div><span>שולם</span><strong>${paid.toLocaleString()} ₪</strong></div>
@@ -6096,7 +6205,7 @@ function renderSavedVendors(){
         <div class="add-payment-row">
           <div class="field"><label>תיאור</label><input id="vendorPayLabel_${v.id}" placeholder="למשל: תשלום שני"></div>
           <div class="field"><label>מועד</label><input id="vendorPayDate_${v.id}" type="date"></div>
-          <div class="field"><label>סכום</label><input id="vendorPayAmount_${v.id}" type="number" min="0"></div>
+          <div class="field"><label>סכום</label><input id="vendorPayAmount_${v.id}" type="number" min="0" value="${vendorScheduleDefaultAmount(v)||""}"></div>
           <button class="btn secondary" onclick="addVendorPayment(${v.id})">+ הוספה</button>
         </div>
       `:'<div class="muted small" style="margin-top:9px">סמנו ״סגרנו עם הספק״ כדי לנהל מחיר, מקדמה ולוח תשלומים.</div>'}
@@ -6190,6 +6299,22 @@ function toggleGroup(i){state.checklist[i].open=!state.checklist[i].open;persist
 function addExpensePrompt(){const category=prompt("קטגוריה?");if(!category)return;const desc=prompt("תיאור?")||"",amount=+prompt("סכום?")||0;state.expenses.push({id:Date.now(),category,desc,amount});persist();renderBudget();updateDashboard()}
 function removeExpense(id){state.expenses=state.expenses.filter(e=>e.id!==id);persist();renderBudget();updateDashboard()}
 
+let wwActionToastTimer=null;
+function showActionToast(message,target){
+ let toast=byId("wwActionToast");
+ if(!toast){
+   toast=document.createElement("button");
+   toast.id="wwActionToast";
+   toast.type="button";
+   toast.className="ww-action-toast";
+   document.body.appendChild(toast);
+ }
+ toast.innerHTML=`<span>${esc(message)}</span><strong>לצפייה ←</strong>`;
+ toast.onclick=()=>{toast.classList.remove("show");if(target)go(target)};
+ clearTimeout(wwActionToastTimer);
+ requestAnimationFrame(()=>toast.classList.add("show"));
+ wwActionToastTimer=setTimeout(()=>toast.classList.remove("show"),5500);
+}
 function normalizeReminder(r){return{id:r.id||Date.now()+Math.random(),title:r.title||"תזכורת",date:r.date||"",time:r.time||"",note:r.note||"",done:!!r.done,source:r.source||"manual",sourceId:r.sourceId||""}}
 function addReminderFromForm(){
  const title=fieldValue("reminderTitleInput");if(!title)return alert("כתבי מה צריך לזכור.");
@@ -6205,7 +6330,7 @@ function createPaymentReminder(type,ownerId,paymentId){
  ensurePaymentFields(owner);
  if(String(paymentId)==="deposit"){title=`מקדמה · ${owner.name}`;note=`${Number(owner.depositAmount||0).toLocaleString()} ₪`;date=""}
  else{payment=owner.payments.find(p=>String(p.id)===String(paymentId));if(!payment)return;title=`${payment.label} · ${owner.name}`;note=`${Number(payment.amount||0).toLocaleString()} ₪`;date=payment.dueDate||""}
- state.reminders.push(normalizeReminder({title,date,note,source:"payment",sourceId:`${type}:${ownerId}:${paymentId}`}));persist();renderReminders();alert("התזכורת נוספה. אפשר לערוך אותה במסך תזכורות.");
+ state.reminders.push(normalizeReminder({title,date,note,source:"payment",sourceId:`${type}:${ownerId}:${paymentId}`}));persist();renderReminders();showActionToast("התזכורת נוספה. לחצי כאן כדי לראות אותה במסך תזכורות.","reminders");
 }
 function reminderDateLabel(r){if(!r.date)return "ללא תאריך";return `${formatDateHe(r.date)}${r.time?` · ${r.time}`:""}`}
 function renderReminders(){
@@ -6846,7 +6971,7 @@ showStorageNoticeIfNeeded();syncMobileNavigation("dashboard");initAuthentication
 </script>
 
 <script>
-const WEDWISE_REPAIR_KEY="ww235_pwa_repaired";
+const WEDWISE_REPAIR_KEY="ww238_pwa_repaired";
 window.addEventListener("load",async()=>{
  if(!("serviceWorker" in navigator)||!/^https?:$/.test(location.protocol))return;
  try{
@@ -6855,7 +6980,7 @@ window.addEventListener("load",async()=>{
      if("caches" in window){const names=await caches.keys();await Promise.all(names.filter(n=>n.startsWith("wedwise-")).map(n=>caches.delete(n)))}
      localStorage.setItem(WEDWISE_REPAIR_KEY,"1");location.reload();return;
    }
-   const reg=await navigator.serviceWorker.register("./sw.js?v=235",{updateViaCache:"none"});await reg.update().catch(()=>{});
+   const reg=await navigator.serviceWorker.register("./sw.js?v=238",{updateViaCache:"none"});await reg.update().catch(()=>{});
  }catch(e){console.warn("PWA init",e)}
 });
 </script>
