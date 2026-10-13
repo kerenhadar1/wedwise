@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>WedWise v2.3.9 - Wedding Planning Workspace</title>
+<title>WedWise v2.3.10 - Wedding Planning Workspace</title>
 <style>
 
 :root{
@@ -2976,7 +2976,7 @@ aside .brand-lockup-centered .brand small{
       <div class="nav-label">סקירה</div>
       <button data-target="dashboard" class="active">
         <span class="nav-icon" aria-hidden="true">⌂</span>
-        <span>דשבורד</span>
+        <span>מסך הבית</span>
       </button>
       <button data-target="setup">
         <span class="nav-icon" aria-hidden="true">✦</span>
@@ -6970,7 +6970,7 @@ showStorageNoticeIfNeeded();syncMobileNavigation("dashboard");initAuthentication
 </script>
 
 <script>
-const WEDWISE_REPAIR_KEY="ww239_pwa_repaired";
+const WEDWISE_REPAIR_KEY="ww2310_pwa_repaired";
 window.addEventListener("load",async()=>{
  if(!("serviceWorker" in navigator)||!/^https?:$/.test(location.protocol))return;
  try{
@@ -6979,7 +6979,7 @@ window.addEventListener("load",async()=>{
      if("caches" in window){const names=await caches.keys();await Promise.all(names.filter(n=>n.startsWith("wedwise-")).map(n=>caches.delete(n)))}
      localStorage.setItem(WEDWISE_REPAIR_KEY,"1");location.reload();return;
    }
-   const reg=await navigator.serviceWorker.register("./sw.js?v=239",{updateViaCache:"none"});await reg.update().catch(()=>{});
+   const reg=await navigator.serviceWorker.register("./sw.js?v=2310",{updateViaCache:"none"});await reg.update().catch(()=>{});
  }catch(e){console.warn("PWA init",e)}
 });
 </script>
