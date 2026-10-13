@@ -1,4 +1,4 @@
-const CACHE="wedwise-v231";
+const CACHE="wedwise-v232";
 const ASSETS=["./","./index.html","./manifest.webmanifest","./icon-192.png","./icon-512.png"];
 
 self.addEventListener("install",event=>{

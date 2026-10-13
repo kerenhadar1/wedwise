@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>WedWise v2.3.1 - Venue Decision Workspace</title>
+<title>WedWise v2.3.2 - Venue Decision Workspace</title>
 <style>
 
 :root{
@@ -2342,20 +2342,27 @@ html {
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Assistant:wght@400;500;600;700&family=Cormorant+Garamond:wght@500;600;700&family=Frank+Ruhl+Libre:wght@500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Gveret+Levin&family=Varela+Round&display=swap" rel="stylesheet">
 
 
-<style id="wedwise-typography-v231">
-/* WedWise v2.3.1 — Hebrew-first typography */
+<style id="wedwise-typography-v232">
+/* WedWise v2.3.2 — rounded body + handwritten Hebrew headings */
 body,button,input,select,textarea,label,summary{
-  font-family:"Assistant",Arial,sans-serif!important;
-}
-h1,h2,h3,h4,.summary-card-title,.ww19-big-number strong,.ww19-choice-row strong,
-.ww21-progress-ring strong,.budget-donut-inner strong,.guest-summary-strip strong,.guest-person-card strong{
-  font-family:"Frank Ruhl Libre",Georgia,serif!important;
+  font-family:"Varela Round",Arial,sans-serif!important;
   letter-spacing:0!important;
 }
-h1,h2,h3,h4{line-height:1.18!important;}
+h1,h2,h3,h4,.summary-card-title,.ww19-choice-row strong{
+  font-family:"Gveret Levin","Varela Round",cursive!important;
+  font-weight:400!important;
+  letter-spacing:0!important;
+}
+h1,h2,h3,h4{line-height:1.22!important;}
+/* Keep numeric UI highly readable. */
+.ww19-big-number strong,.ww21-progress-ring strong,.budget-donut-inner strong,
+.guest-summary-strip strong,.guest-person-card strong{
+  font-family:"Varela Round",Arial,sans-serif!important;
+}
+/* Preserve the WedWise English wordmark. */
 .brand,.mobile-brand-center span,.username-gate-wordmark,.email-gate-wordmark,
 .ww19-countdown strong,.ww19-hero-date,.ww21-user-btn span,.ww21-profile-avatar,.ww21-date-trigger{
   font-family:"Cormorant Garamond",Georgia,serif!important;
@@ -6321,7 +6328,7 @@ showStorageNoticeIfNeeded();syncMobileNavigation("dashboard");initAuthentication
 </script>
 
 <script>
-const WEDWISE_REPAIR_KEY="ww231_pwa_repaired";
+const WEDWISE_REPAIR_KEY="ww232_pwa_repaired";
 window.addEventListener("load",async()=>{
  if(!("serviceWorker" in navigator)||!/^https?:$/.test(location.protocol))return;
  try{
@@ -6330,7 +6337,7 @@ window.addEventListener("load",async()=>{
      if("caches" in window){const names=await caches.keys();await Promise.all(names.filter(n=>n.startsWith("wedwise-")).map(n=>caches.delete(n)))}
      localStorage.setItem(WEDWISE_REPAIR_KEY,"1");location.reload();return;
    }
-   const reg=await navigator.serviceWorker.register("./sw.js?v=231",{updateViaCache:"none"});await reg.update().catch(()=>{});
+   const reg=await navigator.serviceWorker.register("./sw.js?v=232",{updateViaCache:"none"});await reg.update().catch(()=>{});
  }catch(e){console.warn("PWA init",e)}
 });
 </script>
