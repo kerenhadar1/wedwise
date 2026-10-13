@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>WedWise v2.3.8 - Wedding Planning Workspace</title>
+<title>WedWise v2.3.9 - Wedding Planning Workspace</title>
 <style>
 
 :root{
@@ -2705,7 +2705,7 @@ aside .sidebar-footer{color:#dbc8be!important;border-color:rgba(255,255,255,.12)
   font-family:"Varela Round",Arial,sans-serif!important;font-size:15px!important;font-weight:400!important;
   line-height:1.3!important;text-decoration:none!important;white-space:nowrap!important;text-shadow:0 1px 8px rgba(67,34,20,.25)!important;
 }
-.ww25-date-icon{display:inline-grid!important;place-items:center!important;font-size:21px!important;line-height:1!important;color:#fff!important;transform:translateY(-1px)}
+
 
 /* Planning progress — ring on the left, five-stage timeline on the right */
 .ww24-progress-card{padding:24px 27px 25px!important;border-radius:27px!important;margin-bottom:15px!important}
@@ -2744,7 +2744,6 @@ aside .sidebar-footer{color:#dbc8be!important;border-color:rgba(255,255,255,.12)
   .ww24-home-hero .ww19-countdown strong{font-size:76px!important}
   .ww24-home-hero .ww19-countdown span{font-size:17px!important}
   .ww24-home-hero .ww21-date-trigger{font-size:12.5px!important;gap:7px!important;margin-top:10px!important}
-  .ww25-date-icon{font-size:18px!important}
   .ww24-progress-card{padding:18px 16px 19px!important;border-radius:23px!important}
   .ww24-progress-heading h2{font-size:24px!important}
   .ww24-progress-heading p{font-size:10.5px!important}
@@ -2804,7 +2803,7 @@ aside .brand-lockup-centered .brand small{
 </style>
 
 <style id="wedwise-fixes-v238">
-/* WedWise v2.3.8 — vendor payments + clickable reminder confirmation */
+/* WedWise v2.3.9 — vendor payments + clickable reminder confirmation */
 .ww-action-toast{position:fixed;z-index:9999;left:50%;bottom:88px;transform:translate(-50%,18px);opacity:0;pointer-events:none;display:flex;align-items:center;gap:12px;justify-content:space-between;width:min(92vw,430px);border:1px solid rgba(176,120,72,.24);border-radius:16px;background:#fffaf6;color:#4b3024;box-shadow:0 14px 38px rgba(82,48,30,.18);padding:13px 15px;font:inherit;text-align:right;transition:opacity .2s ease,transform .2s ease;cursor:pointer}
 .ww-action-toast.show{opacity:1;transform:translate(-50%,0);pointer-events:auto}
 .ww-action-toast span{font-weight:700}.ww-action-toast strong{color:#b67848;white-space:nowrap;font-size:12px}
@@ -3049,7 +3048,7 @@ aside .brand-lockup-centered .brand small{
         <strong id="dashCountdownDays">—</strong>
         <span id="dashCountdownCaption">ימים</span>
       </div>
-      <button id="dashDateLine" class="ww21-date-trigger" onclick="openQuickDate()" title="שינוי תאריך"><span class="ww25-date-icon" aria-hidden="true">▦</span><span id="dashDateText">הוסיפו תאריך לספירה לאחור</span></button>
+      <button id="dashDateLine" class="ww21-date-trigger" onclick="openQuickDate()" title="שינוי תאריך"><span id="dashDateText">הוסיפו תאריך לספירה לאחור</span></button>
     </div>
   </div>
 
@@ -6971,7 +6970,7 @@ showStorageNoticeIfNeeded();syncMobileNavigation("dashboard");initAuthentication
 </script>
 
 <script>
-const WEDWISE_REPAIR_KEY="ww238_pwa_repaired";
+const WEDWISE_REPAIR_KEY="ww239_pwa_repaired";
 window.addEventListener("load",async()=>{
  if(!("serviceWorker" in navigator)||!/^https?:$/.test(location.protocol))return;
  try{
@@ -6980,7 +6979,7 @@ window.addEventListener("load",async()=>{
      if("caches" in window){const names=await caches.keys();await Promise.all(names.filter(n=>n.startsWith("wedwise-")).map(n=>caches.delete(n)))}
      localStorage.setItem(WEDWISE_REPAIR_KEY,"1");location.reload();return;
    }
-   const reg=await navigator.serviceWorker.register("./sw.js?v=238",{updateViaCache:"none"});await reg.update().catch(()=>{});
+   const reg=await navigator.serviceWorker.register("./sw.js?v=239",{updateViaCache:"none"});await reg.update().catch(()=>{});
  }catch(e){console.warn("PWA init",e)}
 });
 </script>
