@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>WedWise v2.3.2 - Venue Decision Workspace</title>
+<title>WedWise v2.3.3 - Venue Decision Workspace</title>
 <style>
 
 :root{
@@ -2322,7 +2322,7 @@ h1,h2,h3,.ww19-wordmark,.ww19-card-title,.ww19-hero-label{
 
 </style>
 
-<meta name="theme-color" content="#f8f4ef">
+<meta name="theme-color" content="#f7e8e2">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
 <meta name="apple-mobile-web-app-title" content="WedWise">
@@ -2346,7 +2346,7 @@ html {
 
 
 <style id="wedwise-typography-v232">
-/* WedWise v2.3.2 — rounded body + handwritten Hebrew headings */
+/* WedWise v2.3.3 — rounded body + handwritten Hebrew headings */
 body,button,input,select,textarea,label,summary{
   font-family:"Varela Round",Arial,sans-serif!important;
   letter-spacing:0!important;
@@ -2368,6 +2368,243 @@ h1,h2,h3,h4{line-height:1.22!important;}
   font-family:"Cormorant Garamond",Georgia,serif!important;
 }
 </style>
+
+
+<style id="wedwise-visual-v233">
+/* WedWise v2.3.3 — blush editorial redesign based on the approved visual reference */
+:root{
+  --bg:#f8eee9!important;
+  --card:#fffaf7!important;
+  --text:#49382f!important;
+  --muted:#92796d!important;
+  --accent:#d49a82!important;
+  --accent-strong:#ad6f57!important;
+  --accent-soft:#f5ddd4!important;
+  --line:#ead4ca!important;
+  --shadow:0 12px 28px rgba(105,68,51,.09)!important;
+  --shadow-soft:0 7px 18px rgba(105,68,51,.07)!important;
+  --radius:22px!important;
+  --ww-bg:#f8eee9!important;
+  --ww-surface:#fffaf7!important;
+  --ww-ink:#49382f!important;
+  --ww-muted:#92796d!important;
+  --ww-gold:#c98770!important;
+  --ww-gold-2:#ad6f57!important;
+  --ww-gold-soft:#f0cfc3!important;
+  --ww-line:#ead4ca!important;
+  --ww-shadow:0 12px 28px rgba(105,68,51,.09)!important;
+}
+html,body{background:#f8eee9!important}
+body{
+  background:
+    radial-gradient(circle at 12% 4%,rgba(255,255,255,.88),transparent 28%),
+    linear-gradient(180deg,#fbf3ef 0%,#f6e9e3 55%,#f4e5de 100%)!important;
+  color:var(--text)!important;
+}
+.app{background:transparent!important}
+main{padding-top:32px!important}
+
+/* Editorial type hierarchy */
+h1,h2,h3,h4,.summary-card-title,.ww19-card-title,.ww19-hero-label,.reference-card-heading h2,
+.mobile-sheet-header h2,.setup-card-title h2,.detail-head h2{
+  color:#553d31!important;
+  text-wrap:balance;
+}
+h1{font-size:42px!important}
+h2{font-size:29px!important}
+.subtitle,.muted,.small{color:#937d72!important}
+.page-kicker,.section-mini-label,.setup-kicker{
+  color:#ad715a!important;
+  letter-spacing:.4px!important;
+}
+
+/* Desktop sidebar: warm editorial rail */
+aside{
+  background:linear-gradient(180deg,#5a4033 0%,#463128 100%)!important;
+  box-shadow:16px 0 44px rgba(68,43,30,.13)!important;
+}
+nav button.active,nav button:hover{background:rgba(255,240,231,.12)!important;border-color:rgba(255,240,231,.12)!important}
+.sidebar-event-chip{background:rgba(255,244,237,.10)!important;border-color:rgba(255,244,237,.12)!important}
+
+/* Mobile header */
+.ww19-topbar{
+  min-height:76px!important;
+  background:rgba(255,250,247,.96)!important;
+  border-bottom:1px solid rgba(216,180,164,.32)!important;
+  box-shadow:0 5px 20px rgba(96,59,43,.05)!important;
+  backdrop-filter:blur(18px)!important;
+}
+.ww19-wordmark{font-size:31px!important;letter-spacing:-1px!important}
+.ww19-wordmark-wed{color:#4d3328!important}
+.ww19-wordmark-wise{color:#c48770!important}
+.ww21-user-btn{
+  width:40px!important;height:40px!important;border-radius:50%!important;
+  background:#f0d6c7!important;border:1px solid #e5c6b7!important;color:#80513e!important;
+}
+.ww21-back-btn{color:#76584a!important}
+
+/* Hero: photographic floral banner */
+.ww19-hero{
+  min-height:232px!important;
+  border-radius:28px!important;
+  border:0!important;
+  background:
+    linear-gradient(90deg,rgba(75,47,35,.08) 0%,rgba(104,63,46,.22) 48%,rgba(93,55,40,.50) 100%),
+    url('./hero-floral.jpg') center/cover no-repeat!important;
+  box-shadow:0 18px 38px rgba(94,57,40,.18)!important;
+  justify-content:flex-end!important;
+  text-align:right!important;
+  padding:24px 28px!important;
+}
+.ww19-hero::before{
+  inset:0!important;border:0!important;border-radius:inherit!important;
+  background:linear-gradient(90deg,rgba(255,247,242,.04),rgba(72,43,32,.14))!important;
+}
+.ww19-hero::after{display:none!important}
+.ww19-hero-flowers,.ww19-hero-rings,.ww19-hero-sparkles{display:none!important}
+.ww19-hero-content{width:58%!important;text-align:right!important;color:#fffaf6!important;text-shadow:0 1px 10px rgba(71,39,27,.25)}
+.ww19-hero-label{font-size:31px!important;color:#fffaf6!important;margin-bottom:3px!important}
+.ww19-countdown{justify-content:flex-start!important;gap:7px!important}
+.ww19-countdown strong{font-size:67px!important;color:#fff!important}
+.ww19-countdown span{font-size:18px!important;color:#fff8f4!important}
+.ww21-date-trigger{color:#fff9f5!important;border-bottom:1px solid rgba(255,255,255,.42)!important}
+.ww19-round-arrow{background:#fff6f0!important;color:#a96850!important;border:0!important}
+
+/* Surfaces */
+.card,.smart-card,.venue-card,.impression-card,.detail-panel,.live-box,
+.reference-feature-card,.reference-summary-card,.ww19-summary-card,.ww21-progress-card,
+.metric-card,.check-group,.ww22-budget-overview,.ww21-profile-card{
+  background:rgba(255,250,247,.98)!important;
+  border:1px solid #ead4ca!important;
+  box-shadow:0 10px 26px rgba(98,61,45,.075)!important;
+  border-radius:22px!important;
+}
+.card::before,.live-box::before,.detail-panel::before,.hero-banner::before{display:none!important}
+
+/* Dashboard summary cards */
+.ww19-summary-grid{gap:12px!important;margin:13px 0!important}
+.ww19-summary-card{min-height:140px!important;padding:17px!important;overflow:hidden!important}
+.ww19-summary-card::before{
+  content:"";position:absolute;left:-25px;bottom:-30px;width:105px;height:105px;border-radius:50%;
+  background:radial-gradient(circle,#f5ddd4 0 28%,#faebe5 29% 52%,transparent 53%);opacity:.72;
+}
+.ww19-card-title{font-size:23px!important}
+.ww19-progress{height:7px!important;background:#f1ded6!important}
+.ww19-progress>div{background:linear-gradient(90deg,#dca48d,#bd745b)!important}
+.ww19-card-arrow{color:#b56f57!important}
+.ww19-guests-icon{color:#bd7c63!important}
+.ww21-progress-card{padding:18px!important}
+.ww21-progress-ring{background:conic-gradient(#ca846b var(--progress,0%),#f0dfd8 0)!important}
+.ww21-progress-ring::before{background:#fffaf7!important}
+.ww21-resume-btn{
+  background:linear-gradient(135deg,#dca188,#bd765e)!important;color:white!important;
+  border:0!important;border-radius:18px!important;box-shadow:0 10px 24px rgba(174,104,79,.22)!important;
+}
+
+/* Buttons */
+.btn{border-radius:16px!important;min-height:44px!important;box-shadow:none!important}
+.primary,.ww19-primary-btn,.reference-primary-btn{
+  background:linear-gradient(135deg,#dba18a,#bd775f)!important;color:#fff!important;border-color:#bd775f!important;
+}
+.secondary{background:#fff7f3!important;color:#7c5444!important;border:1px solid #e6c8ba!important}
+.ghost{background:#fffaf7!important;border:1px solid #e7d1c6!important;color:#77584a!important}
+.btn:hover{transform:translateY(-1px)!important}
+
+/* Inputs */
+input,select,textarea{
+  background:#fffdfb!important;border:1px solid #e5cfc4!important;border-radius:15px!important;
+  color:#513a30!important;min-height:44px;
+}
+input:focus,select:focus,textarea:focus{border-color:#cf8f77!important;box-shadow:0 0 0 4px rgba(207,143,119,.13)!important}
+label{color:#73584b!important}
+.region-pill,.ww21-style-pills label span{
+  background:#fff8f4!important;border-color:#e7cfc3!important;color:#7d5c4e!important;
+}
+.region-pill:has(input:checked),.ww21-style-pills label:has(input:checked) span{
+  background:#e8bca9!important;border-color:#d59a81!important;color:#fff!important;
+}
+
+/* Search/venue/vendor cards */
+.live-box{background:linear-gradient(135deg,#fffaf7,#fae9e1)!important}
+.smart-card.top,.venue-card.selected-card{border-color:#d89d86!important;box-shadow:0 16px 34px rgba(160,95,70,.14)!important}
+.smart-rank{background:#f0d0c3!important;color:#9d5f48!important}
+.score-box{background:#fbefea!important;border-color:#edd8cf!important}
+.score-box strong{color:#a9644e!important}
+.status-chosen,.saved-mark,.completion-chip{background:#e5f0e3!important;color:#557154!important}
+.status-finalist{background:#f1e5ee!important;color:#77556d!important}
+.detail-tabs button.active{background:#cf8b72!important;border-color:#cf8b72!important}
+
+/* Checklist */
+.check-head:hover{background:#fdf2ee!important}
+.subtask{border-color:#eedbd2!important}
+.check-group input[type='checkbox']{accent-color:#bd765e}
+
+/* Budget & guest UI */
+.budget-donut{background:conic-gradient(#c88068 var(--budget-progress,0%),#f1dfd7 0)!important}
+.ww22-money-stat,.guest-summary-strip>div,.guest-person-card,.budget-category-row{background:#fffaf7!important;border-color:#ead5cb!important}
+.guest-avatar{background:linear-gradient(135deg,#dda48c,#bd765e)!important}
+.guest-filter-chip.active{background:#ca846b!important;border-color:#ca846b!important}
+
+/* More sheet / modal */
+.mobile-more-sheet,.quick-date-card{
+  background:#fff9f6!important;border-color:#ead5cb!important;box-shadow:0 -18px 50px rgba(86,51,38,.15)!important;
+}
+.mobile-more-grid button{background:#fffdfb!important;border-color:#ead5cb!important}
+.mobile-more-grid button span{background:#f5dfd5!important;color:#9e624c!important}
+
+/* Bottom nav like the reference */
+.mobile-bottom-nav{
+  background:rgba(255,250,247,.985)!important;
+  border-top:1px solid #ead8cf!important;
+  box-shadow:0 -8px 24px rgba(88,52,38,.07)!important;
+  backdrop-filter:blur(18px)!important;
+  padding-top:8px!important;
+}
+.mobile-bottom-nav button{color:#836f66!important;border-radius:14px!important}
+.mobile-bottom-nav button.active{color:#b86f56!important;background:#f8e6df!important}
+.mobile-bottom-nav button.active .bottom-nav-icon{
+  width:31px;height:31px;display:grid;place-items:center;border-radius:50%;background:#f0d1c4;color:#a65e47;
+}
+.bottom-nav-icon{font-size:18px!important}
+.mobile-bottom-nav button small{font-size:8.7px!important}
+
+/* Quote upload + reminders */
+.quote-upload-box{background:#fff8f4!important;border-color:#dcb9aa!important}
+.quote-item,.reminder-row{background:#fffdfb!important;border-color:#ead5cb!important}
+.quote-total-strip{background:#f8e7df!important}
+
+/* Auth */
+.email-gate{background:linear-gradient(180deg,#f7e9e3,#f4ded6)!important}
+.email-gate-card{background:#fffaf7!important;border-color:#e6cfc4!important;box-shadow:0 22px 55px rgba(94,57,40,.14)!important}
+.email-gate-logo{filter:saturate(.8) sepia(.08)}
+.email-gate-kicker{color:#b6755b!important}
+
+@media(max-width:850px){
+  body{background:linear-gradient(180deg,#fbf4f0 0%,#f7eae4 100%)!important}
+  main{padding:83px 13px calc(104px + env(safe-area-inset-bottom))!important}
+  .ww19-dashboard{max-width:620px!important;margin:0 auto!important}
+  .ww19-hero{min-height:220px!important;padding:21px!important;border-radius:25px!important}
+  .ww19-hero-content{width:61%!important}
+  .ww19-hero-label{font-size:27px!important}
+  .ww19-countdown strong{font-size:60px!important}
+  .ww19-summary-grid{gap:10px!important}
+  .ww19-summary-card{min-height:132px!important;padding:14px!important;border-radius:20px!important}
+  .ww19-card-title{font-size:20px!important}
+  .reference-page-title h1{font-size:34px!important}
+  .card,.reference-feature-card,.detail-panel,.live-box{border-radius:20px!important}
+  .setup-card{padding:18px!important}
+  .setup-card-title h2{font-size:25px!important}
+  .reco-results{gap:12px!important}
+  .smart-card,.venue-card{padding:16px!important}
+}
+@media(max-width:390px){
+  .ww19-hero-content{width:66%!important}
+  .ww19-hero-label{font-size:24px!important}
+  .ww19-countdown strong{font-size:53px!important}
+  .ww19-summary-grid{grid-template-columns:1fr 1fr!important}
+}
+</style>
+
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
@@ -6328,7 +6565,7 @@ showStorageNoticeIfNeeded();syncMobileNavigation("dashboard");initAuthentication
 </script>
 
 <script>
-const WEDWISE_REPAIR_KEY="ww232_pwa_repaired";
+const WEDWISE_REPAIR_KEY="ww233_pwa_repaired";
 window.addEventListener("load",async()=>{
  if(!("serviceWorker" in navigator)||!/^https?:$/.test(location.protocol))return;
  try{
@@ -6337,7 +6574,7 @@ window.addEventListener("load",async()=>{
      if("caches" in window){const names=await caches.keys();await Promise.all(names.filter(n=>n.startsWith("wedwise-")).map(n=>caches.delete(n)))}
      localStorage.setItem(WEDWISE_REPAIR_KEY,"1");location.reload();return;
    }
-   const reg=await navigator.serviceWorker.register("./sw.js?v=232",{updateViaCache:"none"});await reg.update().catch(()=>{});
+   const reg=await navigator.serviceWorker.register("./sw.js?v=233",{updateViaCache:"none"});await reg.update().catch(()=>{});
  }catch(e){console.warn("PWA init",e)}
 });
 </script>
