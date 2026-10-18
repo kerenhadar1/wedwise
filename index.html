@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>WedWise v2.4.0 - Wedding Planning Workspace</title>
+<title>WedWise v2.4.3 - Wedding Planning Workspace</title>
 <style>
 
 :root{
@@ -2320,6 +2320,11 @@ h1,h2,h3,.ww19-wordmark,.ww19-card-title,.ww19-hero-label{
 .vendor-category-btn .done-mark{margin-inline-start:4px;color:#5e7a61}
 @media(max-width:720px){.quote-item{grid-template-columns:1fr 90px}.quote-item>*:nth-child(n+3){grid-column:auto}.reminder-row{grid-template-columns:24px 1fr}.reminder-row>.row{grid-column:2}}
 
+
+/* WedWise v2.4.3 — attendants checklist + wedding-day timeline */
+.wedding-day-timeline-page{max-width:980px;margin:0 auto}.timeline-form-card,.timeline-list-card{background:#fffaf7;border:1px solid #ead5cb;border-radius:24px;padding:18px;box-shadow:0 10px 28px rgba(98,61,45,.06);margin-bottom:16px}.timeline-form-grid{display:grid;grid-template-columns:150px 1.4fr 1fr 1fr;gap:12px}.timeline-form-actions{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-top:12px}.timeline-list{display:grid;gap:10px}.timeline-row{display:grid;grid-template-columns:74px minmax(0,1fr) auto;gap:13px;align-items:start;padding:13px;border:1px solid #eadfd8;border-radius:18px;background:#fffdfb}.timeline-row.done{opacity:.62}.timeline-row.done .timeline-title{text-decoration:line-through}.timeline-time{background:#f7e6de;color:#8f5844;border-radius:14px;padding:9px 7px;text-align:center;font-weight:700;font-size:15px;min-height:42px;display:grid;place-items:center}.timeline-title{font-size:15px;font-weight:700;color:#4d382f;margin-bottom:4px}.timeline-meta{display:flex;gap:8px;flex-wrap:wrap;color:#94786c;font-size:10px}.timeline-note{margin-top:6px;color:#715b52;font-size:11px;line-height:1.5}.timeline-actions{display:flex;gap:6px;flex-wrap:wrap;justify-content:flex-end}.timeline-empty{border:1px dashed #ddc1b5;border-radius:18px;padding:30px;text-align:center;color:#947b70;background:#fff9f6}.timeline-count{display:inline-flex;align-items:center;justify-content:center;min-width:30px;height:30px;padding:0 10px;border-radius:999px;background:#f4e1d8;color:#8d5c49;font-size:11px;font-weight:700}.timeline-helper{font-size:10px;color:#9a8074;margin-top:4px}.timeline-done-check{display:flex;align-items:center;gap:6px;font-size:10px;color:#7d675d;white-space:nowrap}.timeline-done-check input{width:17px;height:17px;accent-color:#b97960}
+@media(max-width:850px){.timeline-form-grid{grid-template-columns:1fr 1fr}.timeline-row{grid-template-columns:62px minmax(0,1fr)}.timeline-actions{grid-column:1/-1;justify-content:flex-start;padding-inline-start:75px}.timeline-time{font-size:13px}.timeline-form-card,.timeline-list-card{padding:15px;border-radius:20px}}
+@media(max-width:480px){.timeline-form-grid{grid-template-columns:1fr}.timeline-row{grid-template-columns:56px minmax(0,1fr);gap:9px;padding:11px}.timeline-actions{padding-inline-start:65px}.timeline-actions .btn{font-size:9px;padding:7px 9px}.timeline-meta{gap:5px}.timeline-time{padding:7px 4px}}
 </style>
 
 <meta name="theme-color" content="#f7e8e2">
@@ -2982,6 +2987,7 @@ aside .brand-lockup-centered .brand small{
     <button onclick="mobileGo('dashboard')"><span>⌂</span><div><strong>בית</strong><small>תמונת מצב והשלב הנוכחי</small></div></button>
     <button onclick="mobileGo('budget')"><span>◔</span><div><strong>תקציב</strong><small>מה נסגר, שולם ונשאר</small></div></button>
     <button onclick="mobileGo('reminders')"><span>◷</span><div><strong>תזכורות</strong><small>תשלומים ומשימות שצריך לזכור</small></div></button>
+    <button onclick="mobileGo('weddingDayTimeline')"><span>◴</span><div><strong>לו״ז יום החתונה</strong><small>שעות, מקומות ואחריות ביום עצמו</small></div></button>
     <button onclick="mobileGo('inspiration')"><span>♡</span><div><strong>השראה</strong><small>אלבומים ותמונות ששמרתם</small></div></button>
     <button onclick="mobileGo('guests')"><span>♙</span><div><strong>מוזמנים</strong><small>אישורי הגעה והושבה</small></div></button>
     <button onclick="mobileGo('compare')"><span>⇄</span><div><strong>השוואת מקומות</strong><small>השוואה בין המקומות ששמרתם</small></div></button>
@@ -3050,6 +3056,10 @@ aside .brand-lockup-centered .brand small{
       <button data-target="checklist">
         <span class="nav-icon" aria-hidden="true">✓</span>
         <span>צ'ק ליסט</span>
+      </button>
+      <button data-target="weddingDayTimeline">
+        <span class="nav-icon" aria-hidden="true">◴</span>
+        <span>לו״ז יום החתונה</span>
       </button>
       <button data-target="budget">
         <span class="nav-icon" aria-hidden="true">₪</span>
@@ -3693,6 +3703,42 @@ aside .brand-lockup-centered .brand small{
   </div>
 </section>
 
+
+<section id="weddingDayTimeline" class="section wedding-day-timeline-page">
+  <div class="ww19-page-header">
+    <div>
+      <div class="page-kicker">היום הגדול</div>
+      <h1>לו״ז יום החתונה</h1>
+      <div class="subtitle">רכזו את כל מה שקורה במהלך היום — שעה, מקום, מי אחראי ומה חשוב לזכור.</div>
+    </div>
+  </div>
+
+  <div class="timeline-form-card">
+    <div class="between" style="margin-bottom:12px">
+      <div><h2 style="margin:0">הוספת שלב ללו״ז</h2><div class="timeline-helper">אפשר לערוך אחר כך ולסדר הכול לפי שעה.</div></div>
+    </div>
+    <div class="timeline-form-grid">
+      <div class="field"><label>שעה</label><input id="timelineTimeInput" type="time"></div>
+      <div class="field"><label>מה קורה?</label><input id="timelineTitleInput" placeholder="למשל: יציאה לצילומים"></div>
+      <div class="field"><label>מיקום <span class="optional-label">אופציונלי</span></label><input id="timelineLocationInput" placeholder="מקום ההתארגנות / האולם"></div>
+      <div class="field"><label>אחראי/ת <span class="optional-label">אופציונלי</span></label><input id="timelineResponsibleInput" placeholder="שם מלווה / ספק / בן משפחה"></div>
+    </div>
+    <div class="field"><label>הערות <span class="optional-label">אופציונלי</span></label><input id="timelineNotesInput" placeholder="מה צריך להביא, למי להתקשר, דגשים מיוחדים..."></div>
+    <div class="timeline-form-actions">
+      <button id="timelineSaveButton" class="btn primary" onclick="saveWeddingDayTimelineItem()">+ הוספה ללו״ז</button>
+      <button id="timelineCancelButton" class="btn ghost" style="display:none" onclick="cancelWeddingDayTimelineEdit()">ביטול עריכה</button>
+    </div>
+  </div>
+
+  <div class="timeline-list-card">
+    <div class="between" style="margin-bottom:12px">
+      <div><h2 style="margin:0">הלו״ז שלי</h2><div class="timeline-helper">האירועים מסודרים אוטומטית לפי השעה.</div></div>
+      <span id="timelineCount" class="timeline-count">0</span>
+    </div>
+    <div id="weddingDayTimelineList" class="timeline-list"></div>
+  </div>
+</section>
+
 <section id="guests" class="section">
   <div class="reference-page-title">
     <div>
@@ -4322,6 +4368,21 @@ const defaultChecklist=[
   {text:"לאשר נקודת פריקה / חניה לספקים",done:false}
  ]},
 
+ {title:"מלוות, מלווים וחלוקת אחריות",open:false,items:[
+  {text:"לבחור מי יהיו המלוות והמלווים ביום החתונה ולוודא שהם זמינים",done:false},
+  {text:"לשתף את המלוות והמלווים בלו״ז המלא ובמספרי הטלפון החשובים",done:false},
+  {text:"להגדיר איש/אשת קשר מרכזי/ת מטעם הזוג ליום החתונה",done:false},
+  {text:"לקבוע מי אחראי/ת להביא את הציוד והחפצים ממקום ההתארגנות לאולם",done:false},
+  {text:"לקבוע מי אחראי/ת על תיקי ההחלפה, נעליים, טאצ׳אפ וחפצים אישיים",done:false},
+  {text:"לקבוע מי אחראי/ת לוודא שהטבעות, המסמכים והפריטים לטקס הגיעו",done:false},
+  {text:"לקבוע מי אחראי/ת על מים, אוכל, טלפונים ומטענים בזמן ההתארגנות והצילומים",done:false},
+  {text:"לקבוע מי מטפל/ת בתשלומים או מעטפות לספקים אם צריך ביום האירוע",done:false},
+  {text:"לקבוע מי יכול/ה לענות לספקים ולטפל בבלת״מים כשהזוג לא פנוי",done:false},
+  {text:"לקבוע מי אחראי/ת על מעטפות ומתנות בסוף האירוע",done:false},
+  {text:"לקבוע מי אוסף/ת בסוף הערב ציוד, בגדים וחפצים אישיים ומחזיר/ה אותם",done:false},
+  {text:"לעבור עם כל מלווה/מלווה על האחריות שלו/ה כמה ימים לפני החתונה",done:false}
+ ]},
+
  {title:"השבוע האחרון",open:false,items:[
   {text:"לאשר כמות אורחים סופית",done:false},
   {text:"להעביר סידור הושבה סופי",done:false},
@@ -4406,6 +4467,7 @@ const CHECKLIST_GROUP_ALIASES={
  "תקציב, חוזים ותשלומים":"תקציב, חוזים ותשלומים",
  "לוח זמנים ותיאום ספקים":"תיאום ספקים ולוח זמנים",
  "תיאום ספקים ולוח זמנים":"תיאום ספקים ולוח זמנים",
+ "מלוות, מלווים וחלוקת אחריות":"מלוות, מלווים וחלוקת אחריות",
  "השבוע האחרון":"השבוע האחרון",
  "יום החתונה":"יום החתונה",
  "אחרי החתונה":"אחרי החתונה"
@@ -4507,22 +4569,22 @@ function showStorageNoticeIfNeeded(){const n=document.getElementById("mobileStor
 function emptyStateSnapshot(){return{
  setup:{},venues:[],checklist:mergeChecklistWithDefaults(null),expenses:[],guests:[],seatingTables:[],gifts:[],recommendations:[],
  compareWeights:{price:20,food:20,atmosphere:15,location:15,design:10,service:10,parking:5,couple:5},
- vendors:[],vendorRecommendations:{},activeVendorCategory:"photographer",vendorCompareWeights:{},reminders:[],inspirationAlbums:[],weddingSummaryNotes:""
+ vendors:[],vendorRecommendations:{},activeVendorCategory:"photographer",vendorCompareWeights:{},reminders:[],inspirationAlbums:[],weddingDayTimeline:[],weddingSummaryNotes:""
 }}
 function snapshotFromState(){return{
  setup:state.setup,venues:state.venues,checklist:state.checklist,expenses:state.expenses,guests:state.guests,
  seatingTables:state.seatingTables,gifts:state.gifts,recommendations:state.recommendations,compareWeights:state.compareWeights,
  vendors:state.vendors,vendorRecommendations:state.vendorRecommendations,activeVendorCategory:state.activeVendorCategory,
- vendorCompareWeights:state.vendorCompareWeights,reminders:state.reminders,inspirationAlbums:state.inspirationAlbums,weddingSummaryNotes:state.weddingSummaryNotes
+ vendorCompareWeights:state.vendorCompareWeights,reminders:state.reminders,inspirationAlbums:state.inspirationAlbums,weddingDayTimeline:state.weddingDayTimeline,weddingSummaryNotes:state.weddingSummaryNotes
 }}
-function snapshotHasData(s){return Boolean(s?.setup?.coupleNames||s?.setup?.weddingDate||s?.setup?.estimatedGuests||s?.venues?.length||s?.vendors?.length||s?.expenses?.length||s?.guests?.length||s?.gifts?.length||s?.inspirationAlbums?.length||s?.weddingSummaryNotes)}
+function snapshotHasData(s){return Boolean(s?.setup?.coupleNames||s?.setup?.weddingDate||s?.setup?.estimatedGuests||s?.venues?.length||s?.vendors?.length||s?.expenses?.length||s?.guests?.length||s?.gifts?.length||s?.inspirationAlbums?.length||s?.weddingDayTimeline?.length||s?.weddingSummaryNotes)}
 function localSnapshotForCurrentUser(){return{
  setup:storageJSON("ww3_setup",{}),venues:storageJSON("ww3_venues",[]),checklist:mergeChecklistWithDefaults(storageJSON("ww3_checklist",null)),
  expenses:storageJSON("ww3_expenses",[]),guests:storageJSON("ww3_guests",[]),seatingTables:storageJSON("ww15_seating_tables",[]),
  gifts:storageJSON("ww15_gifts",[]),recommendations:storageJSON("ww5_recommendations",[]),
  compareWeights:storageJSON("ww7_compare_weights",null)||{price:20,food:20,atmosphere:15,location:15,design:10,service:10,parking:5,couple:5},
  vendors:storageJSON("ww11_vendors",[]),vendorRecommendations:storageJSON("ww11_vendor_recommendations",{}),
- activeVendorCategory:storageGet("ww11_vendor_category","photographer")||"photographer",vendorCompareWeights:storageJSON("ww11_vendor_weights",{}),reminders:storageJSON("ww23_reminders",[]),inspirationAlbums:storageJSON("ww234_inspiration_albums",[]),weddingSummaryNotes:storageGet("ww240_wedding_summary_notes","")||""
+ activeVendorCategory:storageGet("ww11_vendor_category","photographer")||"photographer",vendorCompareWeights:storageJSON("ww11_vendor_weights",{}),reminders:storageJSON("ww23_reminders",[]),inspirationAlbums:storageJSON("ww234_inspiration_albums",[]),weddingDayTimeline:storageJSON("ww241_wedding_day_timeline",[]),weddingSummaryNotes:storageGet("ww240_wedding_summary_notes","")||""
 }}
 function persistLocalSnapshot(){
  storageSet("ww3_setup",JSON.stringify(state.setup));storageSet("ww3_venues",JSON.stringify(state.venues));
@@ -4531,7 +4593,7 @@ function persistLocalSnapshot(){
  storageSet("ww15_gifts",JSON.stringify(state.gifts));storageSet("ww5_recommendations",JSON.stringify(state.recommendations));
  storageSet("ww7_compare_weights",JSON.stringify(state.compareWeights));storageSet("ww11_vendors",JSON.stringify(state.vendors));
  storageSet("ww11_vendor_recommendations",JSON.stringify(state.vendorRecommendations));storageSet("ww11_vendor_category",state.activeVendorCategory);
- storageSet("ww11_vendor_weights",JSON.stringify(state.vendorCompareWeights));storageSet("ww23_reminders",JSON.stringify(state.reminders));storageSet("ww234_inspiration_albums",JSON.stringify(state.inspirationAlbums));storageSet("ww240_wedding_summary_notes",state.weddingSummaryNotes||"");
+ storageSet("ww11_vendor_weights",JSON.stringify(state.vendorCompareWeights));storageSet("ww23_reminders",JSON.stringify(state.reminders));storageSet("ww234_inspiration_albums",JSON.stringify(state.inspirationAlbums));storageSet("ww241_wedding_day_timeline",JSON.stringify(state.weddingDayTimeline));storageSet("ww240_wedding_summary_notes",state.weddingSummaryNotes||"");
 }
 function setSyncStatus(kind,text){const el=document.getElementById("moreSyncStatus");if(el){el.textContent=text;el.className="ww22-sync-status "+(kind||"")}}
 function applyUserUi(){
@@ -4686,13 +4748,13 @@ function applySnapshot(snapshot){
   state.seatingTables=Array.isArray(s.seatingTables)?s.seatingTables:[];state.gifts=Array.isArray(s.gifts)?s.gifts:[];
   state.recommendations=Array.isArray(s.recommendations)?s.recommendations:[];state.compareWeights=s.compareWeights||{price:20,food:20,atmosphere:15,location:15,design:10,service:10,parking:5,couple:5};
   state.vendors=Array.isArray(s.vendors)?s.vendors:[];state.vendorRecommendations=s.vendorRecommendations||{};
-  state.activeVendorCategory=s.activeVendorCategory||"photographer";state.vendorCompareWeights=s.vendorCompareWeights||{};state.reminders=Array.isArray(s.reminders)?s.reminders:[];state.inspirationAlbums=Array.isArray(s.inspirationAlbums)?s.inspirationAlbums:[];state.weddingSummaryNotes=String(s.weddingSummaryNotes||"");
+  state.activeVendorCategory=s.activeVendorCategory||"photographer";state.vendorCompareWeights=s.vendorCompareWeights||{};state.reminders=Array.isArray(s.reminders)?s.reminders:[];state.inspirationAlbums=Array.isArray(s.inspirationAlbums)?s.inspirationAlbums:[];state.weddingDayTimeline=Array.isArray(s.weddingDayTimeline)?s.weddingDayTimeline:[];state.weddingSummaryNotes=String(s.weddingSummaryNotes||"");
   state.venues.forEach(ensureVenueDetails);state.vendors.forEach(ensureVendorDetails);persistLocalSnapshot();renderAllForUser();
  }finally{cloudApplying=false}
 }
 function renderAllForUser(){
  loadSetup();loadComparisonWeights();renderVenues();renderRecommendations();renderComparisonImpressionEditor();renderVendorSection();
- renderVendorCompare();renderChecklist();renderBudget();renderGuests();renderGifts();renderReminders();renderInspiration();renderWeddingSummary();updateDashboard();syncMobileNavigation(currentSectionId());
+ renderVendorCompare();renderChecklist();renderBudget();renderGuests();renderGifts();renderReminders();renderInspiration();renderWeddingDayTimeline();renderWeddingSummary();updateDashboard();syncMobileNavigation(currentSectionId());
 }
 async function loadAuthenticatedUser(user){
  cloudUser=user;
@@ -4803,7 +4865,7 @@ window.addEventListener("online",()=>{if(cloudUser)scheduleCloudSave()});
 const state={
  setup:{},venues:[],checklist:mergeChecklistWithDefaults(null),expenses:[],guests:[],seatingTables:[],gifts:[],recommendations:[],
  compareWeights:{price:20,food:20,atmosphere:15,location:15,design:10,service:10,parking:5,couple:5},
- vendors:[],vendorRecommendations:{},activeVendorCategory:"photographer",vendorCompareWeights:{},reminders:[],inspirationAlbums:[],weddingSummaryNotes:"",activeVenueId:null
+ vendors:[],vendorRecommendations:{},activeVendorCategory:"photographer",vendorCompareWeights:{},reminders:[],inspirationAlbums:[],weddingDayTimeline:[],weddingSummaryNotes:"",activeVenueId:null
 };
 function persist(){if(!cloudUser||!currentUserId)return;persistLocalSnapshot();scheduleCloudSave()}
 function esc(s){return String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[c]))}
@@ -4850,6 +4912,7 @@ function go(id,options={}){
  if(id==="budget")renderBudget();
  if(id==="reminders")renderReminders();
  if(id==="inspiration")renderInspiration();
+ if(id==="weddingDayTimeline")renderWeddingDayTimeline();
  if(id==="guests")renderGuests();
  if(id==="gifts")renderGifts();
  if(id==="weddingSummary")renderWeddingSummary();
@@ -5089,6 +5152,7 @@ function renderRecommendations(){
    const rating=v.rating?`${v.rating}/5 · ${Number(v.reviewCount||0).toLocaleString()} ביקורות`:"דירוג לא נמצא";
    const webPrice=v.detectedPricePerGuest?` · כ-${Number(v.detectedPricePerGuest).toLocaleString()} ₪ למנה`:"";
    const site=v.website?`<a class="btn ghost small" href="${esc(v.website)}" target="_blank" rel="noopener">אתר המקום</a>`:"";
+   const urban=v.urbanBridesUrl?`<a class="btn ghost small" href="${esc(v.urbanBridesUrl)}" target="_blank" rel="noopener">כלות אורבניות</a>`:"";
 
    return `
    <div class="smart-card ${i===0?"top":""}">
@@ -5124,6 +5188,7 @@ function renderRecommendations(){
          ${saved?"✓ נשמר ברשימה":"שמרי לרשימה"}
        </button>
        ${site}
+       ${urban}
      </div>
    </div>`;
  }).join("");
@@ -5143,7 +5208,7 @@ async function searchRecommendedVenues(forceRefresh=false){
  const refreshBtn=document.getElementById("smartRefreshBtn");if(refreshBtn)refreshBtn.disabled=true;
  btn.textContent=forceRefresh?"מרעננת...":"מחפשת...";
  status.className="status";
- status.innerHTML=`<span class="search-loading"><span class="spinner"></span><span>מחפשת מקומות מתאימים ובודקת דירוגים. זה יכול לקחת כמה שניות.</span></span>`;
+ status.innerHTML=`<span class="search-loading"><span class="spinner"></span><span>מחפשת מקומות מתאימים ב-Google ובכלות אורבניות ובודקת דירוגים. זה יכול לקחת כמה שניות.</span></span>`;
  recommendationResults.innerHTML="";
 
  try{
@@ -5223,7 +5288,9 @@ function saveRecommendation(index){
      rating:r.rating??null,
      reviewCount:r.reviewCount??null,
      detectedCapacity:r.detectedCapacity??null,
-     sources:r.sourceDomains||[]
+     sources:r.sourceDomains||[],
+     urbanBridesUrl:r.urbanBridesUrl||"",
+     urbanBridesTitle:r.urbanBridesTitle||""
    }
  });
 
@@ -6049,7 +6116,8 @@ const VENDOR_CATEGORIES={
  makeup:{label:"איפור",icon:"✨",searchTitle:"מאפרות כלות",criteria:["התאמת סגנון","איכות תיק עבודות","כימיה ונוחות","מקצועיות ושירות"]},
  hair:{label:"שיער",icon:"♡",searchTitle:"מעצבי שיער לכלות",criteria:["התאמת סגנון","איכות תיק עבודות","כימיה ונוחות","מקצועיות ושירות"]},
  dress:{label:"שמלת כלה",icon:"♕",searchTitle:"שמלות כלה וסטודיואים",criteria:["התאמה לסגנון","נוחות והתאמה לגוף","איכות וגימור","שירות וליווי"]},
- design:{label:"עיצוב ופרחים",icon:"❀",searchTitle:"מעצבי אירועים ופרחים",criteria:["התאמת סגנון","יצירתיות ואיכות","גמישות והתאמה","מקצועיות ושירות"]}
+ design:{label:"עיצוב ופרחים",icon:"❀",searchTitle:"מעצבי אירועים ופרחים",criteria:["התאמת סגנון","יצירתיות ואיכות","גמישות והתאמה","מקצועיות ושירות"]},
+ producer:{label:"מפיקים",icon:"✦",searchTitle:"מפיקי ומפיקות חתונות",criteria:["ניסיון וניהול אירוע","סדר ותיאום ספקים","כימיה וזמינות","מקצועיות ושירות"]}
 };
 
 const DEFAULT_VENDOR_WEIGHTS={price:20,c1:20,c2:20,c3:20,c4:20};
@@ -6064,7 +6132,8 @@ function defaultVendorQuestions(category){
   makeup:["האם מומלץ / אפשר לעשות איפור ניסיון?","כמה זמן מוקצה לאיפור ביום האירוע?","באילו מוצרים עובדים והאם הם מתאימים לעור רגיש?","איך דואגים שהאיפור יחזיק לאורך כל היום?","האם ערכת טאצ'אפ כלולה?","כמה מלוות אפשר לאפר?","יש תוספת על התחלה מוקדמת / נסיעה?","מה קורה במקרה מחלה או חירום?","האם העבודה כוללת ריסים והכנת עור?"],
   hair:["האם עושים ניסיון שיער?","כמה זמן מוקצה לשיער ביום האירוע?","האם עובדים עם תוספות שיער ומה העלות?","איך מחברים הינומה / אביזרי שיער?","האם אפשר שינוי תסרוקת במהלך הערב?","כמה מלוות אפשר לצרף?","יש תוספת על התחלה מוקדמת / נסיעה?","מה קורה במקרה מחלה או חירום?"],
   dress:["מה המחיר הסופי כולל?","כמה מדידות ותיקונים כלולים?","מה לוח הזמנים עד למסירה?","מה גובה המקדמה?","האם השמלה להשכרה או קנייה?","מה קורה במקרה שינוי מידה?","האם הינומה / עליונית / אביזרים כלולים?","האם ניקוי אחרי האירוע כלול?","מתי מתקיימת המדידה האחרונה?"],
-  design:["מה בדיוק כלול בהצעת העיצוב?","אפשר לראות אירועים דומים בסגנון שלנו?","אילו פרחים עונתיים זמינים בתאריך?","מה קורה אם פרח מסוים לא זמין?","האם יש הדמיה / סקיצה לפני האירוע?","מי אחראי על הקמה ופירוק?","אילו פריטים הם השכרה וצריך להחזיר?","מה העלות של שינויים בכמויות שולחנות?","האם אתם מתאמים ישירות מול המקום?"]
+  design:["מה בדיוק כלול בהצעת העיצוב?","אפשר לראות אירועים דומים בסגנון שלנו?","אילו פרחים עונתיים זמינים בתאריך?","מה קורה אם פרח מסוים לא זמין?","האם יש הדמיה / סקיצה לפני האירוע?","מי אחראי על הקמה ופירוק?","אילו פריטים הם השכרה וצריך להחזיר?","מה העלות של שינויים בכמויות שולחנות?","האם אתם מתאמים ישירות מול המקום?"],
+  producer:["מה כולל הליווי שלכם ומה אתם לוקחים על עצמכם?","האם הליווי הוא רק ביום האירוע או גם בתקופת ההכנות?","האם אתם מנהלים את התקשורת והתיאומים מול כל הספקים?","האם אתם בונים ומנהלים את לו״ז יום החתונה?","כמה אנשי צוות נמצאים באירוע עצמו?","מאיזו שעה אתם מגיעים ומתי מסתיים הליווי?","איך אתם מטפלים בבלת״מים ובעיכובים בזמן אמת?","האם אתם אחראים על תשלומים או מעטפות לספקים ביום האירוע?","האם אתם מלווים גם את הקמת המקום והעיצוב?","אפשר לדבר עם זוגות שליוויתם באירועים דומים?","איך אתם עובדים מול מנהל/ת האירוע מטעם המקום?"]
  };
  return [...common,...(byCategory[category]||[])].map(text=>({text,done:false}));
 }
@@ -6220,7 +6289,7 @@ async function searchRecommendedVendors(forceRefresh=false){
  btn.disabled=true;btn.textContent=forceRefresh?"מרעננת...":"מחפשת...";
  const refreshBtn=document.getElementById("vendorRefreshBtn");if(refreshBtn)refreshBtn.disabled=true;
  status.className="status";
- status.innerHTML=`<span class="search-loading"><span class="spinner"></span><span>מחפשת ${esc(cfg.label)} מתאימים ובודקת דירוגים...</span></span>`;
+ status.innerHTML=`<span class="search-loading"><span class="spinner"></span><span>מחפשת ${esc(cfg.label)} מתאימים ב-Google ובכלות אורבניות ובודקת דירוגים...</span></span>`;
  vendorRecommendationResults.innerHTML="";
  try{
    const response=await protectedSearchFetch({
@@ -6269,6 +6338,7 @@ function renderVendorRecommendations(){
      <div class="row" style="margin-top:12px">
        <button class="btn ${saved?"secondary":"primary"}" ${saved?"disabled":""} onclick="saveVendorRecommendation(${i})">${saved?"✓ נשמר":"שמרי ספק"}</button>
        ${v.website?`<a class="btn ghost" href="${esc(v.website)}" target="_blank" rel="noopener">אתר</a>`:""}
+       ${v.urbanBridesUrl?`<a class="btn ghost" href="${esc(v.urbanBridesUrl)}" target="_blank" rel="noopener">כלות אורבניות</a>`:""}
        ${v.instagram?`<a class="btn ghost" href="${esc(v.instagram)}" target="_blank" rel="noopener">Instagram</a>`:""}
      </div>
    </div>`;
@@ -6940,6 +7010,80 @@ function renderGifts(){
 }
 
 
+
+let editingWeddingDayTimelineId=null;
+function normalizedWeddingDayTimelineItem(item={}){
+ return {id:item.id||String(Date.now())+Math.random().toString(36).slice(2,7),time:String(item.time||""),title:String(item.title||""),location:String(item.location||""),responsible:String(item.responsible||""),notes:String(item.notes||""),done:!!item.done};
+}
+function weddingDayTimelineItems(){
+ if(!Array.isArray(state.weddingDayTimeline))state.weddingDayTimeline=[];
+ state.weddingDayTimeline=state.weddingDayTimeline.map(normalizedWeddingDayTimelineItem);
+ return state.weddingDayTimeline;
+}
+function clearWeddingDayTimelineForm(){
+ editingWeddingDayTimelineId=null;
+ ["timelineTimeInput","timelineTitleInput","timelineLocationInput","timelineResponsibleInput","timelineNotesInput"].forEach(id=>{const el=byId(id);if(el)el.value=""});
+ const save=byId("timelineSaveButton");if(save)save.textContent="+ הוספה ללו״ז";
+ const cancel=byId("timelineCancelButton");if(cancel)cancel.style.display="none";
+}
+function saveWeddingDayTimelineItem(){
+ const title=fieldValue("timelineTitleInput").trim();if(!title)return alert("כתבי מה קורה בשלב הזה.");
+ const item=normalizedWeddingDayTimelineItem({
+   id:editingWeddingDayTimelineId||undefined,
+   time:fieldValue("timelineTimeInput"),title,
+   location:fieldValue("timelineLocationInput"),responsible:fieldValue("timelineResponsibleInput"),notes:fieldValue("timelineNotesInput")
+ });
+ if(editingWeddingDayTimelineId){
+   const current=weddingDayTimelineItems().find(x=>String(x.id)===String(editingWeddingDayTimelineId));
+   if(current){item.done=!!current.done;Object.assign(current,item)}
+ }else weddingDayTimelineItems().push(item);
+ persist();clearWeddingDayTimelineForm();renderWeddingDayTimeline();
+}
+function editWeddingDayTimelineItem(id){
+ const item=weddingDayTimelineItems().find(x=>String(x.id)===String(id));if(!item)return;
+ editingWeddingDayTimelineId=item.id;
+ const values={timelineTimeInput:item.time,timelineTitleInput:item.title,timelineLocationInput:item.location,timelineResponsibleInput:item.responsible,timelineNotesInput:item.notes};
+ Object.entries(values).forEach(([key,value])=>{const el=byId(key);if(el)el.value=value||""});
+ const save=byId("timelineSaveButton");if(save)save.textContent="שמירת שינויים";
+ const cancel=byId("timelineCancelButton");if(cancel)cancel.style.display="inline-flex";
+ byId("timelineTitleInput")?.scrollIntoView({behavior:"smooth",block:"center"});
+}
+function cancelWeddingDayTimelineEdit(){clearWeddingDayTimelineForm()}
+function toggleWeddingDayTimelineItem(id,done){const item=weddingDayTimelineItems().find(x=>String(x.id)===String(id));if(!item)return;item.done=!!done;persist();renderWeddingDayTimeline()}
+function deleteWeddingDayTimelineItem(id){
+ if(!confirm("למחוק את השלב הזה מהלו״ז?"))return;
+ state.weddingDayTimeline=weddingDayTimelineItems().filter(x=>String(x.id)!==String(id));
+ if(String(editingWeddingDayTimelineId)===String(id))clearWeddingDayTimelineForm();persist();renderWeddingDayTimeline();
+}
+function addWeddingDayTimelineReminder(id){
+ const item=weddingDayTimelineItems().find(x=>String(x.id)===String(id));if(!item)return;
+ if(!state.setup.weddingDate)return alert("כדי ליצור תזכורת, הוסיפי קודם את תאריך החתונה בפרטי החתונה.");
+ const sourceId=`timeline:${item.id}`;
+ const existing=state.reminders.find(r=>r.sourceId===sourceId&&!r.done);
+ if(existing){showActionToast("כבר קיימת תזכורת לשלב הזה. לחצי כאן כדי לראות אותה.","reminders");return}
+ state.reminders.push(normalizeReminder({title:item.title,date:state.setup.weddingDate,time:item.time,note:[item.location,item.responsible?`אחראי/ת: ${item.responsible}`:"",item.notes].filter(Boolean).join(" · "),source:"timeline",sourceId}));
+ persist();renderReminders();showActionToast("התזכורת נוספה. לחצי כאן כדי לראות אותה במסך תזכורות.","reminders");
+}
+function renderWeddingDayTimeline(){
+ const box=byId("weddingDayTimelineList");if(!box)return;
+ const rows=[...weddingDayTimelineItems()].sort((a,b)=>(a.time||"99:99").localeCompare(b.time||"99:99")||String(a.title).localeCompare(String(b.title),"he"));
+ const count=byId("timelineCount");if(count)count.textContent=String(rows.length);
+ box.innerHTML=rows.length?rows.map(item=>`<div class="timeline-row ${item.done?"done":""}">
+   <div class="timeline-time">${esc(item.time||"—")}</div>
+   <div>
+     <div class="timeline-title">${esc(item.title)}</div>
+     <div class="timeline-meta">${item.location?`<span>מיקום: ${esc(item.location)}</span>`:""}${item.responsible?`<span>אחראי/ת: ${esc(item.responsible)}</span>`:""}</div>
+     ${item.notes?`<div class="timeline-note">${esc(item.notes)}</div>`:""}
+   </div>
+   <div class="timeline-actions">
+     <label class="timeline-done-check"><input type="checkbox" ${item.done?"checked":""} onchange="toggleWeddingDayTimelineItem('${item.id}',this.checked)">בוצע</label>
+     <button class="btn ghost small" onclick="editWeddingDayTimelineItem('${item.id}')">עריכה</button>
+     <button class="btn ghost small" onclick="addWeddingDayTimelineReminder('${item.id}')">תזכורת</button>
+     <button class="btn ghost small" onclick="deleteWeddingDayTimelineItem('${item.id}')">מחיקה</button>
+   </div>
+ </div>`).join(""):`<div class="timeline-empty"><strong>עדיין אין שלבים בלו״ז</strong><div class="timeline-helper">הוסיפו למעלה את ההתארגנות, הצילומים, היציאה לאולם, קבלת הפנים, החופה וכל שלב נוסף.</div></div>`;
+}
+
 function paymentMethodHe(value){
  return value==="transfer"?"העברה בנקאית":value==="credit"?"אשראי":value==="cash"?"מזומן":value==="checks"?"צ׳קים":value==="bit"?"Bit / PayBox":value==="other"?"אחר":"לא הוגדר";
 }
@@ -7012,6 +7156,7 @@ function exportWeddingSummaryExcel(){
  add("מתנות",state.gifts.map(g=>({נותן_ת:g.giver||"",סוג:giftTypeHe(g.type),סכום:g.type==="physical"?0:(+g.amount||0),הערה:g.note||"",טופל:g.depositStatus==="secured"?"כן":"לא",תודה_נשלחה:g.thankYouSent?"כן":"לא"})));
  add("מוזמנים",state.guests.map(g=>({שם:g.name||"",טלפון:g.phone||"",קבוצה:g.group||"",מספר_אנשים:+g.seats||1,סטטוס:statusHe(g.status),שולחן:g.status==="confirmed"?guestTableName(g.tableId):"",הערת_הושבה:g.seatingNote||""})));
  add("צ'ק ליסט",state.checklist.flatMap(group=>(group.items||[]).map(item=>({קטגוריה:group.title,משימה:item.text,הושלמה:item.done?"כן":"לא"}))));
+ add("לו״ז יום החתונה",weddingDayTimelineItems().map(item=>({שעה:item.time||"",שלב:item.title||"",מיקום:item.location||"",אחראי_ת:item.responsible||"",הערות:item.notes||"",בוצע:item.done?"כן":"לא"})));
  XLSX.writeFile(wb,weddingSummaryFileBase()+".xlsx");
 }
 function weddingSummaryPrintTable(headers,rows){
@@ -7025,7 +7170,7 @@ function exportWeddingSummaryPdf(){
  const gifts=state.gifts.map(g=>[g.giver,giftTypeHe(g.type),g.type==="physical"?"—":`${(+g.amount||0).toLocaleString()} ₪`,g.note||""]);
  const expenses=state.expenses.map(e=>[e.category||"",e.desc||"",`${(+e.amount||0).toLocaleString()} ₪`]);
  const guestRows=state.guests.map(g=>[g.name,g.group||"",String(+g.seats||1),statusHe(g.status),g.status==="confirmed"?guestTableName(g.tableId):""]);
- w.document.write(`<!doctype html><html dir="rtl" lang="he"><head><meta charset="utf-8"><title>${esc(title)}</title><style>@page{size:A4;margin:15mm}body{font-family:Arial,sans-serif;color:#3e302a;line-height:1.5}h1{font-size:28px;margin:0 0 4px}h2{font-size:18px;margin:26px 0 8px;border-bottom:1px solid #dbc8bf;padding-bottom:5px}.sub{color:#866f65;margin-bottom:20px}.cards{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}.card{border:1px solid #dbc8bf;border-radius:10px;padding:10px}.card span{font-size:10px;color:#866f65;display:block}.card strong{font-size:16px}table{width:100%;border-collapse:collapse;font-size:11px;margin-top:8px}th,td{border-bottom:1px solid #e7dad4;padding:6px;text-align:right;vertical-align:top}th{background:#faf3ef}.notes{white-space:pre-wrap;border:1px solid #dbc8bf;border-radius:10px;padding:12px;min-height:60px}.pagebreak{break-before:page}@media print{button{display:none}}</style></head><body><h1>${esc(title)}</h1><div class="sub">${esc(state.setup.weddingDate?formatDateHe(state.setup.weddingDate):"")}</div><div class="cards"><div class="card"><span>הוצאות שנסגרו</span><strong>${m.committed.toLocaleString()} ₪</strong></div><div class="card"><span>שולם</span><strong>${m.paid.toLocaleString()} ₪</strong></div><div class="card"><span>הכנסות ממתנות</span><strong>${income.toLocaleString()} ₪</strong></div><div class="card"><span>מאזן</span><strong>${(income-m.committed).toLocaleString()} ₪</strong></div></div><h2>מקום וספקים</h2>${weddingSummaryPrintTable(["קטגוריה","שם","עלות","שולם","נותר"],vendors)}<h2>הוצאות נוספות</h2>${weddingSummaryPrintTable(["קטגוריה","תיאור","סכום"],expenses)}<h2>מתנות</h2>${weddingSummaryPrintTable(["נותן/ת","סוג","סכום","הערה"],gifts)}<div class="pagebreak"></div><h2>מוזמנים</h2>${weddingSummaryPrintTable(["שם","קבוצה","אנשים","סטטוס","שולחן"],guestRows)}<h2>סיכום אורחים</h2><p>סה״כ ברשימה: ${guests.total} · אישרו: ${guests.confirmed} · לא מגיעים: ${guests.declined} · טרם ענו: ${guests.pending}</p><h2>הערות אישיות</h2><div class="notes">${esc(state.weddingSummaryNotes||"אין הערות אישיות.")}</div><p style="margin-top:28px;color:#9a8378;font-size:10px">הופק באמצעות WedWise</p><script>window.onload=()=>setTimeout(()=>window.print(),250)<\/script></body></html>`);
+ w.document.write(`<!doctype html><html dir="rtl" lang="he"><head><meta charset="utf-8"><title>${esc(title)}</title><style>@page{size:A4;margin:15mm}body{font-family:Arial,sans-serif;color:#3e302a;line-height:1.5}h1{font-size:28px;margin:0 0 4px}h2{font-size:18px;margin:26px 0 8px;border-bottom:1px solid #dbc8bf;padding-bottom:5px}.sub{color:#866f65;margin-bottom:20px}.cards{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}.card{border:1px solid #dbc8bf;border-radius:10px;padding:10px}.card span{font-size:10px;color:#866f65;display:block}.card strong{font-size:16px}table{width:100%;border-collapse:collapse;font-size:11px;margin-top:8px}th,td{border-bottom:1px solid #e7dad4;padding:6px;text-align:right;vertical-align:top}th{background:#faf3ef}.notes{white-space:pre-wrap;border:1px solid #dbc8bf;border-radius:10px;padding:12px;min-height:60px}.pagebreak{break-before:page}@media print{button{display:none}}</style></head><body><h1>${esc(title)}</h1><div class="sub">${esc(state.setup.weddingDate?formatDateHe(state.setup.weddingDate):"")}</div><div class="cards"><div class="card"><span>הוצאות שנסגרו</span><strong>${m.committed.toLocaleString()} ₪</strong></div><div class="card"><span>שולם</span><strong>${m.paid.toLocaleString()} ₪</strong></div><div class="card"><span>הכנסות ממתנות</span><strong>${income.toLocaleString()} ₪</strong></div><div class="card"><span>מאזן</span><strong>${(income-m.committed).toLocaleString()} ₪</strong></div></div><h2>מקום וספקים</h2>${weddingSummaryPrintTable(["קטגוריה","שם","עלות","שולם","נותר"],vendors)}<h2>הוצאות נוספות</h2>${weddingSummaryPrintTable(["קטגוריה","תיאור","סכום"],expenses)}<h2>מתנות</h2>${weddingSummaryPrintTable(["נותן/ת","סוג","סכום","הערה"],gifts)}<div class="pagebreak"></div><h2>מוזמנים</h2>${weddingSummaryPrintTable(["שם","קבוצה","אנשים","סטטוס","שולחן"],guestRows)}<h2>סיכום אורחים</h2><p>סה״כ ברשימה: ${guests.total} · אישרו: ${guests.confirmed} · לא מגיעים: ${guests.declined} · טרם ענו: ${guests.pending}</p><h2>לו״ז יום החתונה</h2>${weddingSummaryPrintTable(["שעה","שלב","מיקום","אחראי/ת"],weddingDayTimelineItems().map(item=>[item.time||"",item.title||"",item.location||"",item.responsible||""]))}<h2>הערות אישיות</h2><div class="notes">${esc(state.weddingSummaryNotes||"אין הערות אישיות.")}</div><p style="margin-top:28px;color:#9a8378;font-size:10px">הופק באמצעות WedWise</p><script>window.onload=()=>setTimeout(()=>window.print(),250)<\/script></body></html>`);
  w.document.close();
 }
 
@@ -7190,7 +7335,7 @@ showStorageNoticeIfNeeded();syncMobileNavigation("dashboard");initAuthentication
 </script>
 
 <script>
-const WEDWISE_REPAIR_KEY="ww240_pwa_repaired";
+const WEDWISE_REPAIR_KEY="ww243_pwa_repaired";
 window.addEventListener("load",async()=>{
  if(!("serviceWorker" in navigator)||!/^https?:$/.test(location.protocol))return;
  try{
@@ -7199,7 +7344,7 @@ window.addEventListener("load",async()=>{
      if("caches" in window){const names=await caches.keys();await Promise.all(names.filter(n=>n.startsWith("wedwise-")).map(n=>caches.delete(n)))}
      localStorage.setItem(WEDWISE_REPAIR_KEY,"1");location.reload();return;
    }
-   const reg=await navigator.serviceWorker.register("./sw.js?v=240",{updateViaCache:"none"});await reg.update().catch(()=>{});
+   const reg=await navigator.serviceWorker.register("./sw.js?v=243",{updateViaCache:"none"});await reg.update().catch(()=>{});
  }catch(e){console.warn("PWA init",e)}
 });
 </script>
