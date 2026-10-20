@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>WedWise v2.4.3 - Wedding Planning Workspace</title>
+<title>WedWise v2.4.4 - Wedding Planning Workspace</title>
 <style>
 
 :root{
@@ -2321,10 +2321,40 @@ h1,h2,h3,.ww19-wordmark,.ww19-card-title,.ww19-hero-label{
 @media(max-width:720px){.quote-item{grid-template-columns:1fr 90px}.quote-item>*:nth-child(n+3){grid-column:auto}.reminder-row{grid-template-columns:24px 1fr}.reminder-row>.row{grid-column:2}}
 
 
-/* WedWise v2.4.3 — attendants checklist + wedding-day timeline */
+/* WedWise v2.4.4 — attendants checklist + wedding-day timeline */
 .wedding-day-timeline-page{max-width:980px;margin:0 auto}.timeline-form-card,.timeline-list-card{background:#fffaf7;border:1px solid #ead5cb;border-radius:24px;padding:18px;box-shadow:0 10px 28px rgba(98,61,45,.06);margin-bottom:16px}.timeline-form-grid{display:grid;grid-template-columns:150px 1.4fr 1fr 1fr;gap:12px}.timeline-form-actions{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-top:12px}.timeline-list{display:grid;gap:10px}.timeline-row{display:grid;grid-template-columns:74px minmax(0,1fr) auto;gap:13px;align-items:start;padding:13px;border:1px solid #eadfd8;border-radius:18px;background:#fffdfb}.timeline-row.done{opacity:.62}.timeline-row.done .timeline-title{text-decoration:line-through}.timeline-time{background:#f7e6de;color:#8f5844;border-radius:14px;padding:9px 7px;text-align:center;font-weight:700;font-size:15px;min-height:42px;display:grid;place-items:center}.timeline-title{font-size:15px;font-weight:700;color:#4d382f;margin-bottom:4px}.timeline-meta{display:flex;gap:8px;flex-wrap:wrap;color:#94786c;font-size:10px}.timeline-note{margin-top:6px;color:#715b52;font-size:11px;line-height:1.5}.timeline-actions{display:flex;gap:6px;flex-wrap:wrap;justify-content:flex-end}.timeline-empty{border:1px dashed #ddc1b5;border-radius:18px;padding:30px;text-align:center;color:#947b70;background:#fff9f6}.timeline-count{display:inline-flex;align-items:center;justify-content:center;min-width:30px;height:30px;padding:0 10px;border-radius:999px;background:#f4e1d8;color:#8d5c49;font-size:11px;font-weight:700}.timeline-helper{font-size:10px;color:#9a8074;margin-top:4px}.timeline-done-check{display:flex;align-items:center;gap:6px;font-size:10px;color:#7d675d;white-space:nowrap}.timeline-done-check input{width:17px;height:17px;accent-color:#b97960}
 @media(max-width:850px){.timeline-form-grid{grid-template-columns:1fr 1fr}.timeline-row{grid-template-columns:62px minmax(0,1fr)}.timeline-actions{grid-column:1/-1;justify-content:flex-start;padding-inline-start:75px}.timeline-time{font-size:13px}.timeline-form-card,.timeline-list-card{padding:15px;border-radius:20px}}
 @media(max-width:480px){.timeline-form-grid{grid-template-columns:1fr}.timeline-row{grid-template-columns:56px minmax(0,1fr);gap:9px;padding:11px}.timeline-actions{padding-inline-start:65px}.timeline-actions .btn{font-size:9px;padding:7px 9px}.timeline-meta{gap:5px}.timeline-time{padding:7px 4px}}
+
+/* WedWise v2.4.4 — setup date and priority refinements */
+.setup-flow .grid > .field{min-width:0}
+.setup-date-field{min-width:0}
+.date-mode-pills{margin:2px 0 10px}
+.setup-date-input-wrap,.date-range-grid{width:100%;min-width:0}
+.setup-date-field input[type="date"],
+.setup-date-field input[type="month"],
+.date-range-grid input[type="date"]{
+  display:block;
+  width:100%;
+  max-width:100%;
+  min-width:0;
+  box-sizing:border-box;
+  -webkit-appearance:none;
+  appearance:none;
+  text-align:right;
+}
+.date-range-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.date-range-grid>div{min-width:0}
+.date-range-label{display:block;color:var(--muted);font-size:11px;margin:0 2px 5px}
+.priority-pills{margin:6px 0 12px}
+.priority-other-input{margin-top:2px}
+@media(max-width:650px){
+  .date-range-grid{grid-template-columns:1fr}
+  .setup-date-field input[type="date"],
+  .setup-date-field input[type="month"],
+  .date-range-grid input[type="date"]{font-size:16px}
+}
+
 </style>
 
 <meta name="theme-color" content="#f7e8e2">
@@ -3172,9 +3202,24 @@ aside .brand-lockup-centered .brand small{
           <input id="estimatedGuests" type="number" min="0">
         </div>
 
-        <div class="field">
-          <label>תאריך משוער</label>
-          <input id="weddingDate" type="date">
+        <div class="field setup-date-field">
+          <label>מועד החתונה</label>
+          <div id="dateModePills" class="ww21-style-pills date-mode-pills">
+            <label><input type="radio" name="weddingDateMode" value="exact" checked onchange="updateWeddingDateModeUI()"><span>תאריך מדויק</span></label>
+            <label><input type="radio" name="weddingDateMode" value="month" onchange="updateWeddingDateModeUI()"><span>חודש</span></label>
+            <label><input type="radio" name="weddingDateMode" value="range" onchange="updateWeddingDateModeUI()"><span>טווח תאריכים</span></label>
+          </div>
+          <div id="weddingExactDateField" class="setup-date-input-wrap">
+            <input id="weddingDate" type="date" aria-label="תאריך חתונה מדויק">
+          </div>
+          <div id="weddingMonthField" class="setup-date-input-wrap" style="display:none">
+            <input id="preferredMonth" type="month" aria-label="חודש מועדף">
+          </div>
+          <div id="weddingRangeField" class="date-range-grid" style="display:none">
+            <div><span class="date-range-label">מתאריך</span><input id="weddingDateFrom" type="date"></div>
+            <div><span class="date-range-label">עד תאריך</span><input id="weddingDateTo" type="date"></div>
+          </div>
+          <div class="field-hint">לא חייבים לדעת תאריך מדויק בשלב הזה.</div>
         </div>
 
         <div class="field">
@@ -3269,6 +3314,7 @@ aside .brand-lockup-centered .brand small{
               <option value="midweek">אמצע שבוע</option>
               <option value="thursday">חמישי</option>
               <option value="friday">שישי</option>
+              <option value="saturday">שבת</option>
             </select>
           </div>
 
@@ -3279,23 +3325,11 @@ aside .brand-lockup-centered .brand small{
               <option value="evening">ערב</option>
               <option value="afternoon">צהריים</option>
               <option value="friday_noon">שישי צהריים</option>
+              <option value="friday_afternoon">שישי אחה״צ</option>
             </select>
           </div>
 
-          <div class="field">
-            <label>גמישות בתאריך</label>
-            <select id="dateFlexibility" onchange="updateDateFlexibilityUI()">
-              <option value="">לא משנה</option>
-              <option value="fixed">תאריך קבוע</option>
-              <option value="month">חודש מסוים</option>
-              <option value="flexible">גמישים</option>
-            </select>
-          </div>
 
-          <div class="field" id="preferredMonthField" style="display:none">
-            <label>חודש מועדף</label>
-            <input id="preferredMonth" type="month">
-          </div>
         </div>
 
         <div class="must-have-grid">
@@ -3322,9 +3356,21 @@ aside .brand-lockup-centered .brand small{
 
     <div class="card setup-final-card">
       <div class="field" style="margin-bottom:0">
-        <label>מה הכי חשוב לכם?</label>
-        <input id="priorities">
-        <div class="field-hint">אפשר לכתוב במילים חופשיות. WedWise תשתמש בזה כדי לדייק את ההמלצות.</div>
+        <label>מה הכי חשוב לכם? <span class="optional-label">אפשר לבחור כמה</span></label>
+        <div id="priorityPills" class="ww21-style-pills priority-pills">
+          <label><input type="checkbox" value="אוכל"><span>אוכל</span></label>
+          <label><input type="checkbox" value="מחיר ותקציב"><span>מחיר ותקציב</span></label>
+          <label><input type="checkbox" value="מיקום"><span>מיקום</span></label>
+          <label><input type="checkbox" value="עיצוב ואווירה"><span>עיצוב ואווירה</span></label>
+          <label><input type="checkbox" value="שירות"><span>שירות</span></label>
+          <label><input type="checkbox" value="חניה"><span>חניה</span></label>
+          <label><input type="checkbox" value="נגישות"><span>נגישות</span></label>
+          <label><input type="checkbox" value="כשרות"><span>כשרות</span></label>
+          <label><input type="checkbox" value="רחבת ריקודים ומסיבה"><span>רחבת ריקודים ומסיבה</span></label>
+          <label><input type="checkbox" value="פרטיות באירוע"><span>פרטיות באירוע</span></label>
+        </div>
+        <input id="prioritiesOther" class="priority-other-input" placeholder="משהו נוסף שחשוב לכם? (אופציונלי)">
+        <div class="field-hint">WedWise תשתמש בבחירות האלה כדי לדייק את ההמלצות.</div>
       </div>
 
       <div class="setup-actions">
@@ -4999,12 +5045,24 @@ document.querySelectorAll("nav button").forEach(b=>b.onclick=()=>go(b.dataset.ta
 
 function selectedRegions(){return [...document.querySelectorAll("#regionPills input:checked")].map(x=>x.value)}
 function selectedStyles(){return [...document.querySelectorAll("#stylePills input:checked")].map(x=>x.value)}
+function selectedPriorities(){return [...document.querySelectorAll("#priorityPills input:checked")].map(x=>x.value)}
+function selectedWeddingDateMode(){return document.querySelector('input[name="weddingDateMode"]:checked')?.value||"exact"}
 function saveSetup(){
  const styles=selectedStyles();
+ const priorityOptions=selectedPriorities();
+ const priorityOther=prioritiesOther.value.trim();
+ const weddingDateMode=selectedWeddingDateMode();
+ const exactDate=weddingDateMode==="exact"?weddingDate.value:"";
+ const month=weddingDateMode==="month"?preferredMonth.value:"";
+ const rangeFrom=weddingDateMode==="range"?weddingDateFrom.value:"";
+ const rangeTo=weddingDateMode==="range"?weddingDateTo.value:"";
  state.setup={
    coupleNames:coupleNames.value.trim(),
    estimatedGuests:+estimatedGuests.value||0,
-   weddingDate:weddingDate.value,
+   weddingDate:exactDate,
+   weddingDateMode,
+   weddingDateFrom:rangeFrom,
+   weddingDateTo:rangeTo,
    regions:selectedRegions(),
    styles,
    style:styles.join(", "),
@@ -5014,11 +5072,13 @@ function saveSetup(){
    maxPricePerGuest:+maxPricePerGuest.value||0,
    preferredDay:preferredDay.value,
    eventTime:eventTime.value,
-   dateFlexibility:dateFlexibility.value,
-   preferredMonth:preferredMonth.value,
+   dateFlexibility:weddingDateMode==="exact"?"fixed":weddingDateMode==="month"?"month":weddingDateMode==="range"?"flexible":"",
+   preferredMonth:month,
    accessibilityRequired:accessibilityRequired.checked,
    parkingRequired:parkingRequired.checked,
-   priorities:priorities.value.trim()
+   priorityOptions,
+   priorityOther,
+   priorities:[...priorityOptions,priorityOther].filter(Boolean).join(", ")
  };
  persist();updateDashboard();go("venues");
 }
@@ -5026,28 +5086,32 @@ function loadSetup(){
  coupleNames.value=state.setup.coupleNames||"";
  estimatedGuests.value=state.setup.estimatedGuests||"";
  weddingDate.value=state.setup.weddingDate||"";
+ preferredMonth.value=state.setup.preferredMonth||"";
+ weddingDateFrom.value=state.setup.weddingDateFrom||"";
+ weddingDateTo.value=state.setup.weddingDateTo||"";
+ const savedMode=state.setup.weddingDateMode||(state.setup.weddingDate?"exact":state.setup.preferredMonth?"month":(state.setup.weddingDateFrom||state.setup.weddingDateTo)?"range":"exact");
+ document.querySelectorAll('input[name="weddingDateMode"]').forEach(x=>x.checked=x.value===savedMode);
  indoorOutdoor.value=state.setup.indoorOutdoor||"";
  kosherPreference.value=state.setup.kosherPreference||"";
  weddingBudgetInput.value=state.setup.budget||"";
  maxPricePerGuest.value=state.setup.maxPricePerGuest||"";
  preferredDay.value=state.setup.preferredDay||"";
  eventTime.value=state.setup.eventTime||"";
- dateFlexibility.value=state.setup.dateFlexibility||"";
- preferredMonth.value=state.setup.preferredMonth||"";
  accessibilityRequired.checked=!!state.setup.accessibilityRequired;
  parkingRequired.checked=!!state.setup.parkingRequired;
- priorities.value=state.setup.priorities||"";
  document.querySelectorAll("#regionPills input").forEach(x=>x.checked=(state.setup.regions||[]).includes(x.value));
  const savedStyles=Array.isArray(state.setup.styles)?state.setup.styles:(state.setup.style?[state.setup.style]:[]);
  document.querySelectorAll("#stylePills input").forEach(x=>x.checked=savedStyles.includes(x.value));
- updateDateFlexibilityUI();
+ const knownPriorityValues=["אוכל","מחיר ותקציב","מיקום","עיצוב ואווירה","שירות","חניה","נגישות","כשרות","רחבת ריקודים ומסיבה","פרטיות באירוע"];
+ const savedPriorityOptions=Array.isArray(state.setup.priorityOptions)?state.setup.priorityOptions:knownPriorityValues.filter(v=>String(state.setup.priorities||"").includes(v));
+ document.querySelectorAll("#priorityPills input").forEach(x=>x.checked=savedPriorityOptions.includes(x.value));
+ prioritiesOther.value=state.setup.priorityOther||(!savedPriorityOptions.length?(state.setup.priorities||""):"");
+ updateWeddingDateModeUI();
 
  const hasAdvanced=
    !!state.setup.maxPricePerGuest ||
    !!state.setup.preferredDay ||
    !!state.setup.eventTime ||
-   !!state.setup.dateFlexibility ||
-   !!state.setup.preferredMonth ||
    !!state.setup.accessibilityRequired ||
    !!state.setup.parkingRequired;
 
@@ -5055,19 +5119,23 @@ function loadSetup(){
  if(details)details.open=hasAdvanced;
 }
 
-function updateDateFlexibilityUI(){
- const field=document.getElementById("preferredMonthField");
- if(!field)return;
- field.style.display=dateFlexibility.value==="month"?"block":"none";
- if(dateFlexibility.value!=="month")preferredMonth.value="";
+function updateWeddingDateModeUI(){
+ const mode=selectedWeddingDateMode();
+ const exact=document.getElementById("weddingExactDateField");
+ const month=document.getElementById("weddingMonthField");
+ const range=document.getElementById("weddingRangeField");
+ if(exact)exact.style.display=mode==="exact"?"block":"none";
+ if(month)month.style.display=mode==="month"?"block":"none";
+ if(range)range.style.display=mode==="range"?"grid":"none";
 }
+function updateDateFlexibilityUI(){updateWeddingDateModeUI()}
 
 
 
 
 function openQuickDate(){const modal=document.getElementById("quickDateModal"),input=document.getElementById("quickWeddingDate");if(input)input.value=state.setup.weddingDate||"";modal?.classList.add("open");modal?.setAttribute("aria-hidden","false");document.body.style.overflow="hidden"}
 function closeQuickDate(){const modal=document.getElementById("quickDateModal");modal?.classList.remove("open");modal?.setAttribute("aria-hidden","true");document.body.style.overflow=""}
-function saveQuickDate(){const value=document.getElementById("quickWeddingDate")?.value||"";if(!value)return;state.setup.weddingDate=value;persist();if(document.getElementById("weddingDate"))weddingDate.value=value;updateDashboard();closeQuickDate()}
+function saveQuickDate(){const value=document.getElementById("quickWeddingDate")?.value||"";if(!value)return;state.setup.weddingDate=value;state.setup.weddingDateMode="exact";state.setup.dateFlexibility="fixed";state.setup.preferredMonth="";state.setup.weddingDateFrom="";state.setup.weddingDateTo="";persist();if(document.getElementById("weddingDate"))weddingDate.value=value;document.querySelectorAll('input[name="weddingDateMode"]').forEach(x=>x.checked=x.value==="exact");updateWeddingDateModeUI();updateDashboard();closeQuickDate()}
 
 function kosherPreferenceLabel(value){
  if(value==="mehadrin")return "כשר למהדרין";
@@ -5080,6 +5148,7 @@ function preferredDayLabel(value){
  if(value==="midweek")return "אמצע שבוע";
  if(value==="thursday")return "חמישי";
  if(value==="friday")return "שישי";
+ if(value==="saturday")return "שבת";
  return "";
 }
 
@@ -5087,14 +5156,25 @@ function eventTimeLabel(value){
  if(value==="evening")return "ערב";
  if(value==="afternoon")return "צהריים";
  if(value==="friday_noon")return "שישי צהריים";
+ if(value==="friday_afternoon")return "שישי אחה״צ";
+ return "";
+}
+
+function formatSetupDateValue(value){if(!value)return "";const p=String(value).split("-");return p.length===3?`${p[2]}.${p[1]}.${p[0]}`:value}
+function setupWeddingTimingLabel(){
+ if(state.setup.weddingDate)return formatSetupDateValue(state.setup.weddingDate);
+ if(state.setup.preferredMonth){const p=String(state.setup.preferredMonth).split("-");return p.length===2?`${p[1]}/${p[0]}`:state.setup.preferredMonth}
+ if(state.setup.weddingDateFrom||state.setup.weddingDateTo){const a=formatSetupDateValue(state.setup.weddingDateFrom),b=formatSetupDateValue(state.setup.weddingDateTo);return a&&b?`${a}–${b}`:(a||b)}
  return "";
 }
 
 function setupSummaryText(){
  const regions=(state.setup.regions||[]).join(", ");
+ const timing=setupWeddingTimingLabel();
  const parts=[
    regions?("אזורים: "+regions):"",
    state.setup.estimatedGuests?("אורחים: "+state.setup.estimatedGuests):"",
+   timing?("מועד: "+timing):"",
    (state.setup.styles||[]).length?("סגנון: "+state.setup.styles.join(", ")):(state.setup.style?("סגנון: "+state.setup.style):""),
    state.setup.kosherPreference?("כשרות: "+kosherPreferenceLabel(state.setup.kosherPreference)):"",
    state.setup.maxPricePerGuest?("עד "+state.setup.maxPricePerGuest+" ₪ למנה"):"",
@@ -5223,6 +5303,8 @@ async function searchRecommendedVenues(forceRefresh=false){
      eventTime:state.setup.eventTime||"",
      dateFlexibility:state.setup.dateFlexibility||"",
      preferredMonth:state.setup.preferredMonth||"",
+     weddingDateFrom:state.setup.weddingDateFrom||"",
+     weddingDateTo:state.setup.weddingDateTo||"",
      accessibilityRequired:!!state.setup.accessibilityRequired,
      parkingRequired:!!state.setup.parkingRequired,
      priorities:state.setup.priorities||"",
@@ -7335,7 +7417,7 @@ showStorageNoticeIfNeeded();syncMobileNavigation("dashboard");initAuthentication
 </script>
 
 <script>
-const WEDWISE_REPAIR_KEY="ww243_pwa_repaired";
+const WEDWISE_REPAIR_KEY="ww244_pwa_repaired";
 window.addEventListener("load",async()=>{
  if(!("serviceWorker" in navigator)||!/^https?:$/.test(location.protocol))return;
  try{
@@ -7344,7 +7426,7 @@ window.addEventListener("load",async()=>{
      if("caches" in window){const names=await caches.keys();await Promise.all(names.filter(n=>n.startsWith("wedwise-")).map(n=>caches.delete(n)))}
      localStorage.setItem(WEDWISE_REPAIR_KEY,"1");location.reload();return;
    }
-   const reg=await navigator.serviceWorker.register("./sw.js?v=243",{updateViaCache:"none"});await reg.update().catch(()=>{});
+   const reg=await navigator.serviceWorker.register("./sw.js?v=244",{updateViaCache:"none"});await reg.update().catch(()=>{});
  }catch(e){console.warn("PWA init",e)}
 });
 </script>
