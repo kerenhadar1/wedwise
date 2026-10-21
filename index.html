@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>WedWise v2.4.6 - Wedding Planning Workspace</title>
+<title>WedWise v2.5.3 - Wedding Planning Workspace</title>
 <style>
 
 :root{
@@ -2321,12 +2321,12 @@ h1,h2,h3,.ww19-wordmark,.ww19-card-title,.ww19-hero-label{
 @media(max-width:720px){.quote-item{grid-template-columns:1fr 90px}.quote-item>*:nth-child(n+3){grid-column:auto}.reminder-row{grid-template-columns:24px 1fr}.reminder-row>.row{grid-column:2}}
 
 
-/* WedWise v2.4.6 — attendants checklist + wedding-day timeline */
+/* WedWise v2.5.0 — attendants checklist + wedding-day timeline */
 .wedding-day-timeline-page{max-width:980px;margin:0 auto}.timeline-form-card,.timeline-list-card{background:#fffaf7;border:1px solid #ead5cb;border-radius:24px;padding:18px;box-shadow:0 10px 28px rgba(98,61,45,.06);margin-bottom:16px}.timeline-form-grid{display:grid;grid-template-columns:150px 1.4fr 1fr 1fr;gap:12px}.timeline-form-actions{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-top:12px}.timeline-list{display:grid;gap:10px}.timeline-row{display:grid;grid-template-columns:74px minmax(0,1fr) auto;gap:13px;align-items:start;padding:13px;border:1px solid #eadfd8;border-radius:18px;background:#fffdfb}.timeline-row.done{opacity:.62}.timeline-row.done .timeline-title{text-decoration:line-through}.timeline-time{background:#f7e6de;color:#8f5844;border-radius:14px;padding:9px 7px;text-align:center;font-weight:700;font-size:15px;min-height:42px;display:grid;place-items:center}.timeline-title{font-size:15px;font-weight:700;color:#4d382f;margin-bottom:4px}.timeline-meta{display:flex;gap:8px;flex-wrap:wrap;color:#94786c;font-size:10px}.timeline-note{margin-top:6px;color:#715b52;font-size:11px;line-height:1.5}.timeline-actions{display:flex;gap:6px;flex-wrap:wrap;justify-content:flex-end}.timeline-empty{border:1px dashed #ddc1b5;border-radius:18px;padding:30px;text-align:center;color:#947b70;background:#fff9f6}.timeline-count{display:inline-flex;align-items:center;justify-content:center;min-width:30px;height:30px;padding:0 10px;border-radius:999px;background:#f4e1d8;color:#8d5c49;font-size:11px;font-weight:700}.timeline-helper{font-size:10px;color:#9a8074;margin-top:4px}.timeline-done-check{display:flex;align-items:center;gap:6px;font-size:10px;color:#7d675d;white-space:nowrap}.timeline-done-check input{width:17px;height:17px;accent-color:#b97960}
 @media(max-width:850px){.timeline-form-grid{grid-template-columns:1fr 1fr}.timeline-row{grid-template-columns:62px minmax(0,1fr)}.timeline-actions{grid-column:1/-1;justify-content:flex-start;padding-inline-start:75px}.timeline-time{font-size:13px}.timeline-form-card,.timeline-list-card{padding:15px;border-radius:20px}}
 @media(max-width:480px){.timeline-form-grid{grid-template-columns:1fr}.timeline-row{grid-template-columns:56px minmax(0,1fr);gap:9px;padding:11px}.timeline-actions{padding-inline-start:65px}.timeline-actions .btn{font-size:9px;padding:7px 9px}.timeline-meta{gap:5px}.timeline-time{padding:7px 4px}}
 
-/* WedWise v2.4.6 — setup date and priority refinements */
+/* WedWise v2.5.0 — setup date and priority refinements */
 .setup-flow .grid > .field{min-width:0}
 .setup-date-field{min-width:0}
 .date-mode-pills{margin:2px 0 10px}
@@ -2353,6 +2353,58 @@ h1,h2,h3,.ww19-wordmark,.ww19-card-title,.ww19-hero-label{
   .setup-date-field input[type="date"],
   .setup-date-field input[type="month"],
   .date-range-grid input[type="date"]{font-size:16px}
+}
+
+
+/* v2.5.0 - native contacts picker */
+.native-contact-modal{position:fixed;inset:0;z-index:9999;display:none;align-items:flex-end;justify-content:center;background:rgba(40,31,28,.42);backdrop-filter:blur(5px);padding:12px}
+.native-contact-modal.open{display:flex}
+.native-contact-sheet{width:min(680px,100%);max-height:min(82vh,760px);background:#fffaf7;border:1px solid #ead5cb;border-radius:26px 26px 18px 18px;box-shadow:0 24px 70px rgba(50,33,28,.24);display:flex;flex-direction:column;overflow:hidden}
+.native-contact-head{padding:18px 18px 12px;border-bottom:1px solid #eddcd4;display:flex;justify-content:space-between;gap:12px;align-items:flex-start}
+.native-contact-head h3{margin:0 0 4px;font-size:23px}.native-contact-head p{margin:0;color:var(--muted);font-size:12px}
+.native-contact-close{border:0;background:#f3e7e1;width:34px;height:34px;border-radius:50%;font-size:18px;cursor:pointer;color:#72584e}
+.native-contact-tools{padding:12px 16px;border-bottom:1px solid #eee2dc;display:grid;grid-template-columns:1fr auto;gap:9px;align-items:center}
+.native-contact-tools input{margin:0}.native-contact-select-all{white-space:nowrap;border:1px solid #e5d0c6;background:#fff;padding:10px 12px;border-radius:13px;cursor:pointer;color:#75584c;font-weight:700}
+.native-contact-list{overflow:auto;padding:8px 14px 12px;display:grid;gap:2px;-webkit-overflow-scrolling:touch}
+.native-contact-row{display:grid;grid-template-columns:auto 1fr;gap:11px;align-items:center;padding:11px 6px;border-bottom:1px solid #f0e5df;cursor:pointer}
+.native-contact-row:last-child{border-bottom:0}.native-contact-row input{width:20px;height:20px;margin:0;accent-color:#c78169}
+.native-contact-row strong{display:block;font-size:14px}.native-contact-row small{display:block;color:var(--muted);font-size:11px;margin-top:2px;direction:ltr;text-align:right}
+.native-contact-empty{text-align:center;color:var(--muted);padding:28px 14px}
+.native-contact-actions{padding:12px 16px calc(12px + env(safe-area-inset-bottom));border-top:1px solid #eadbd4;display:flex;gap:9px;background:#fffaf7}
+.native-contact-actions .btn{flex:1}
+.native-contact-loading{padding:34px 18px;text-align:center;color:var(--muted)}
+@media(min-width:700px){.native-contact-modal{align-items:center}.native-contact-sheet{border-radius:24px}}
+
+
+/* WedWise v2.5.3 — compact venue cards + mobile date fields */
+.venue-accordion{
+  margin-top:12px;border:1px solid var(--line);border-radius:18px;background:rgba(255,253,249,.88);overflow:hidden;
+}
+.venue-accordion>summary{
+  list-style:none;cursor:pointer;padding:15px 16px;display:flex;align-items:center;justify-content:space-between;gap:12px;
+  font-weight:700;color:var(--text);user-select:none;
+}
+.venue-accordion>summary::-webkit-details-marker{display:none}
+.venue-accordion>summary::after{content:"＋";font-size:22px;font-weight:400;color:var(--accent);line-height:1}
+.venue-accordion[open]>summary::after{content:"−"}
+.venue-accordion[open]>summary{border-bottom:1px solid var(--line);background:rgba(250,241,234,.55)}
+.venue-accordion-body{padding:16px}
+.venue-accordion-summary-note{font-size:12px;color:var(--muted);font-weight:500;margin-inline-start:auto}
+.venue-date-picker-row{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:10px;align-items:end;margin-top:10px}
+.venue-date-picker-row .field{margin:0;min-width:0}
+.venue-date-picker-row input[type="date"],
+.venue-accordion input[type="date"]{width:100%;max-width:100%;min-width:0;box-sizing:border-box;display:block}
+.venue-available-dates textarea{min-height:92px}
+@media(max-width:850px){
+  .venue-accordion{border-radius:16px}
+  .venue-accordion>summary{padding:14px}
+  .venue-accordion-body{padding:14px}
+  .venue-accordion .detail-grid,.venue-accordion .detail-grid.two{grid-template-columns:minmax(0,1fr)!important}
+  .venue-accordion .field{grid-column:1!important;min-width:0;width:100%}
+  .venue-accordion input,.venue-accordion select,.venue-accordion textarea{max-width:100%;min-width:0;width:100%;box-sizing:border-box}
+  .venue-accordion input[type="date"]{-webkit-appearance:none;appearance:none;display:block;min-height:48px;padding-inline:12px}
+  .venue-date-picker-row{grid-template-columns:minmax(0,1fr);gap:8px}
+  .venue-date-picker-row .btn{width:100%}
 }
 
 </style>
@@ -4181,6 +4233,7 @@ aside .brand-lockup-centered .brand small{
 </main>
 </div>
 
+<script src="./native-bridge.js"></script>
 <script>
 const defaultChecklist=[
  {title:"תכנון ראשוני והחלטות יסוד",open:true,items:[
@@ -4715,6 +4768,9 @@ async function loginWithPassword(){
    btn.textContent="כניסה";
  }
 }
+function authRedirectUrl(){
+ return /^https?:$/.test(location.protocol)?location.origin+location.pathname:"https://kerenhadar1.github.io/wedwise/";
+}
 async function signUpWithPassword(){
  const {email,password}=loginCredentials();
  if(!validateCredentials(email,password))return;
@@ -4726,7 +4782,7 @@ async function signUpWithPassword(){
    setLoginMessage("");
 
    const client=await ensureCloudClient();
-   const redirectTo=location.origin+location.pathname;
+   const redirectTo=authRedirectUrl();
    const {data,error}=await client.auth.signUp({
      email,
      password,
@@ -4764,7 +4820,7 @@ async function resetPassword(){
  try{
    setLoginMessage("");
    const client=await ensureCloudClient();
-   const redirectTo=location.origin+location.pathname;
+   const redirectTo=authRedirectUrl();
    const {error}=await client.auth.resetPasswordForEmail(email,{redirectTo});
    if(error)throw error;
    document.getElementById("emailSentText").textContent=
@@ -5696,6 +5752,18 @@ function openVenueDetail(id){
 
 function closeVenueDetail(){state.activeVenueId=null;venueDetailPanel.style.display="none";renderVenues()}
 
+function addVenueAvailableDate(){
+ const picker=document.getElementById("vdAvailableDatePicker");
+ const box=document.getElementById("vdAvailableDates");
+ if(!picker?.value||!box)return;
+ const pretty=formatDateHe(picker.value)||picker.value;
+ const current=box.value.trim();
+ const lines=current?current.split(/\n+/).map(x=>x.trim()).filter(Boolean):[];
+ if(!lines.includes(pretty))lines.push(pretty);
+ box.value=lines.join("\n");
+ picker.value="";
+}
+
 function renderVenueDetail(){
  const v=state.venues.find(x=>x.id===state.activeVenueId);if(!v){venueDetailPanel.style.display="none";return}
  ensureVenueDetails(v);
@@ -5716,100 +5784,98 @@ function renderVenueDetail(){
    <div class="metric-card"><span class="muted small">התקדמות בדיקה</span><strong>${qDone}/${v.questions.length}</strong><div class="mini-note">שאלות שנבדקו · חוזה ${cDone}/${v.contractChecks.length}</div></div>
  </div>
 
- <div class="detail-subsection"><h3>סטטוס ותיאום</h3>
-  <div class="detail-grid">
-   <div class="field"><label>סטטוס</label><select id="vdStatus">${venueStatusOptions.map(x=>`<option value="${x[0]}" ${v.status===x[0]?"selected":""}>${x[1]}</option>`).join("")}</select></div>
-   <div class="field"><label>תאריך ביקור / פגישה</label><input id="vdVisitDate" type="date" value="${esc(v.visitDate||"")}"></div>
-   <div class="field"><label>איש קשר</label><input id="vdContactPerson" value="${esc(v.contactPerson||"")}"></div>
-   <div class="field"><label>טלפון</label><input id="vdContactPhone" value="${esc(v.contactPhone||"")}"></div>
-   <div class="field" style="grid-column:span 2"><label>תאריכים פנויים שקיבלתם</label><textarea id="vdAvailableDates">${esc(v.availableDates||"")}</textarea></div>
+ <details class="venue-accordion" open>
+  <summary><span>מחיר בסיסי</span><span class="venue-accordion-summary-note">${v.price?Number(v.price).toLocaleString()+" ₪ למנה":"הוסיפי מחיר למנה"}</span></summary>
+  <div class="venue-accordion-body">
+   <div class="detail-grid">
+    <div class="field"><label>מחיר למנה</label><input id="vdPrice" type="number" inputmode="decimal" value="${v.price||""}"></div>
+    <div class="field"><label>מינימום אורחים</label><input id="vdMinGuests" type="number" inputmode="numeric" value="${v.minGuests||""}"></div>
+    <div class="field"><label>דמי מקום / עלות קבועה</label><input id="vdVenueFee" type="number" inputmode="decimal" value="${v.venueFee||""}"></div>
+    <div class="field"><label>תוספות כלליות צפויות</label><input id="vdExtraCosts" type="number" inputmode="decimal" value="${v.extraCosts||""}"></div>
+   </div>
+   <div class="cost-highlight"><strong>עלות משוערת: ${estimate?estimate.toLocaleString()+" ₪":"עדיין אין מספיק נתונים"}</strong><div class="mini-note">לפי הגבוה מבין מספר האורחים שלכם לבין מינימום האורחים של המקום, כולל תוספות שסומנו לחישוב.</div></div>
   </div>
- </div>
+ </details>
 
- <div class="detail-subsection"><h3>מחיר והצעה</h3>
-  <div class="detail-grid">
-   <div class="field"><label>מחיר למנה</label><input id="vdPrice" type="number" value="${v.price||""}"></div>
-   <div class="field"><label>מינימום אורחים</label><input id="vdMinGuests" type="number" value="${v.minGuests||""}"></div>
-   <div class="field"><label>דמי מקום / עלות קבועה</label><input id="vdVenueFee" type="number" value="${v.venueFee||""}"></div>
-   <div class="field"><label>תוספות צפויות</label><input id="vdExtraCosts" type="number" value="${v.extraCosts||""}"></div>
-   <div class="field" style="grid-column:span 2"><label>מה כלול בהצעה?</label><textarea id="vdOfferSummary" placeholder="למשל: בר, תאורה, הגברה, עיצוב בסיסי...">${esc(v.offerSummary||"")}</textarea></div>
+ <details class="venue-accordion">
+  <summary><span>סטטוס, פגישה ותאריכים</span><span class="venue-accordion-summary-note">${v.visitDate?`פגישה: ${esc(formatDateHe(v.visitDate))}`:""}</span></summary>
+  <div class="venue-accordion-body">
+   <div class="detail-grid">
+    <div class="field"><label>סטטוס</label><select id="vdStatus">${venueStatusOptions.map(x=>`<option value="${x[0]}" ${v.status===x[0]?"selected":""}>${x[1]}</option>`).join("")}</select></div>
+    <div class="field"><label>תאריך ביקור / פגישה</label><input id="vdVisitDate" type="date" value="${esc(v.visitDate||"")}"></div>
+    <div class="field"><label>איש קשר</label><input id="vdContactPerson" value="${esc(v.contactPerson||"")}"></div>
+    <div class="field"><label>טלפון</label><input id="vdContactPhone" type="tel" value="${esc(v.contactPhone||"")}"></div>
+   </div>
+   <div class="field venue-available-dates" style="margin-top:12px"><label>תאריכים פנויים שקיבלתם</label><textarea id="vdAvailableDates" placeholder="אפשר לכתוב למשל: ימי חמישי במאי, או להוסיף תאריכים מלוח השנה">${esc(v.availableDates||"")}</textarea></div>
+   <div class="venue-date-picker-row">
+    <div class="field"><label>הוספת תאריך מלוח השנה</label><input id="vdAvailableDatePicker" type="date"></div>
+    <button type="button" class="btn secondary" onclick="addVenueAvailableDate()">+ הוספת תאריך</button>
+   </div>
   </div>
-  <div class="quote-upload-box">
-   <div class="between"><div><strong>הצעת מחיר וקובץ</strong><div class="muted small">קריאה אוטומטית של מחיר בסיס ותוספות, עם אפשרות לתקן כל נתון.</div></div><label class="btn secondary small" for="vdQuoteFile">${v.quoteFileName?"החלפת קובץ":"העלאת הצעה"}</label></div>
-   <input id="vdQuoteFile" type="file" accept=".pdf,.docx,.txt,application/pdf,application/vnd.openxmlformats-officedocument.wordprocessingml.document,text/plain" onchange="handleVenueQuoteFile(this.files&&this.files[0],${v.id});this.value=''">
-   <div id="venueQuoteDetailStatus" class="quote-upload-status"></div>
-   ${v.quoteFileName?`<div style="margin-top:8px"><span class="quote-file-chip">📄 ${esc(v.quoteFileName)}</span>${v.quoteFilePath?` <button class="btn ghost small" onclick="openVenueQuoteFile(${v.id})">פתיחת הקובץ</button>`:""}</div>`:""}
-   <div class="quote-items">${v.quoteItems.length?v.quoteItems.map(q=>quoteItemEditor(q,"saved",v.id)).join(""):'<div class="muted small">לא נוספו עדיין תוספות מפורטות.</div>'}</div>
-   <button class="btn ghost small" style="margin-top:8px" onclick="addVenueQuoteItem(${v.id})">+ הוספת תוספת ידנית</button>
-   <div class="quote-total-strip"><span>תוספות שנבחרו לחישוב</span><strong>${quoteItemsCost(v).toLocaleString()} ₪</strong></div>
+ </details>
+
+ <details class="venue-accordion">
+  <summary><span>הצעת מחיר ותוספות</span><span class="venue-accordion-summary-note">${v.quoteItems.length?`${v.quoteItems.length} תוספות`:"אופציונלי"}</span></summary>
+  <div class="venue-accordion-body">
+   <div class="field"><label>מה כלול בהצעה?</label><textarea id="vdOfferSummary" placeholder="למשל: בר, תאורה, הגברה, עיצוב בסיסי...">${esc(v.offerSummary||"")}</textarea></div>
+   <div class="quote-upload-box">
+    <div class="between"><div><strong>הצעת מחיר וקובץ</strong><div class="muted small">קריאה אוטומטית של מחיר בסיס ותוספות, עם אפשרות לתקן כל נתון.</div></div><label class="btn secondary small" for="vdQuoteFile">${v.quoteFileName?"החלפת קובץ":"העלאת הצעה"}</label></div>
+    <input id="vdQuoteFile" type="file" accept=".pdf,.docx,.txt,application/pdf,application/vnd.openxmlformats-officedocument.wordprocessingml.document,text/plain" onchange="handleVenueQuoteFile(this.files&&this.files[0],${v.id});this.value=''">
+    <div id="venueQuoteDetailStatus" class="quote-upload-status"></div>
+    ${v.quoteFileName?`<div style="margin-top:8px"><span class="quote-file-chip">📄 ${esc(v.quoteFileName)}</span>${v.quoteFilePath?` <button class="btn ghost small" onclick="openVenueQuoteFile(${v.id})">פתיחת הקובץ</button>`:""}</div>`:""}
+    <div class="quote-items">${v.quoteItems.length?v.quoteItems.map(q=>quoteItemEditor(q,"saved",v.id)).join(""):'<div class="muted small">לא נוספו עדיין תוספות מפורטות.</div>'}</div>
+    <button class="btn ghost small" style="margin-top:8px" onclick="addVenueQuoteItem(${v.id})">+ הוספת תוספת ידנית</button>
+    <div class="quote-total-strip"><span>תוספות שנבחרו לחישוב</span><strong>${quoteItemsCost(v).toLocaleString()} ₪</strong></div>
+   </div>
   </div>
+ </details>
 
-  <div class="cost-highlight"><strong>עלות משוערת לפי הנתונים כרגע: ${estimate?estimate.toLocaleString()+" ₪":"עדיין אין מספיק נתונים"}</strong><div class="mini-note">החישוב משתמש בגבוה מבין מספר האורחים שלכם לבין מינימום האורחים של המקום.</div></div>
- </div>
-
- <div class="detail-subsection">
-  <div class="between">
-    <div>
-      <div class="section-mini-label">תשלומים למקום</div>
-      <h3>מקדמה ולוח תשלומים</h3>
-    </div>
-    <span class="badge">${v.status==="chosen"?"המקום שנבחר":"אפשר למלא גם לפני הבחירה"}</span>
-  </div>
-
-  <div class="detail-grid" style="margin-top:12px">
+ <details class="venue-accordion">
+  <summary><span>מקדמה ולוח תשלומים</span><span class="venue-accordion-summary-note">נותר ${contractRemaining(v,venueEstimatedCost(v)).toLocaleString()} ₪</span></summary>
+  <div class="venue-accordion-body">
+   <div class="between"><div><div class="section-mini-label">תשלומים למקום</div></div><span class="badge">${v.status==="chosen"?"המקום שנבחר":"אפשר למלא גם לפני הבחירה"}</span></div>
+   <div class="detail-grid" style="margin-top:12px">
     <div class="field"><label>אופן תשלום</label><select onchange="activeVenueFinanceUpdate('paymentMethod',this.value)">${paymentMethodOptions(v.paymentMethod)}</select></div>
     <div class="field"><label>גובה מקדמה</label><input type="number" min="0" value="${v.depositAmount||""}" onchange="activeVenueFinanceUpdate('depositAmount',this.value)"></div>
     <div class="field"><label>סטטוס מקדמה</label><select onchange="activeVenueFinanceUpdate('depositPaid',this.value==='paid')"><option value="pending" ${!v.depositPaid?"selected":""}>טרם שולמה</option><option value="paid" ${v.depositPaid?"selected":""}>שולמה</option></select></div>
+   </div>
+   <div class="venue-finance-summary"><div><span>עלות משוערת / שסוכמה</span><strong>${venueEstimatedCost(v).toLocaleString()} ₪</strong></div><div><span>שולם עד עכשיו</span><strong>${venuePaidAmount(v).toLocaleString()} ₪</strong></div><div><span>נותר לשלם</span><strong>${contractRemaining(v,venueEstimatedCost(v)).toLocaleString()} ₪</strong></div></div>
+   <div class="small muted">לוח תשלומים · המקדמה מנוהלת בנפרד.</div>
+   <div class="payment-schedule-list">${venuePaymentRows(v)}</div>
+   <div class="add-payment-row"><div class="field"><label>תיאור</label><input id="vdPayLabel" placeholder="למשל: תשלום שני"></div><div class="field"><label>מועד</label><input id="vdPayDate" type="date"></div><div class="field"><label>סכום</label><input id="vdPayAmount" type="number" min="0"></div><button class="btn secondary" onclick="addVenuePayment()">+ הוספה</button></div>
   </div>
+ </details>
 
-  <div class="venue-finance-summary">
-    <div><span>עלות משוערת / שסוכמה</span><strong>${venueEstimatedCost(v).toLocaleString()} ₪</strong></div>
-    <div><span>שולם עד עכשיו</span><strong>${venuePaidAmount(v).toLocaleString()} ₪</strong></div>
-    <div><span>נותר לשלם</span><strong>${contractRemaining(v,venueEstimatedCost(v)).toLocaleString()} ₪</strong></div>
-  </div>
-
-  <div class="small muted">לוח תשלומים · המקדמה מנוהלת בנפרד.</div>
-  <div class="payment-schedule-list">${venuePaymentRows(v)}</div>
-  <div class="add-payment-row">
-    <div class="field"><label>תיאור</label><input id="vdPayLabel" placeholder="למשל: תשלום שני"></div>
-    <div class="field"><label>מועד</label><input id="vdPayDate" type="date"></div>
-    <div class="field"><label>סכום</label><input id="vdPayAmount" type="number" min="0"></div>
-    <button class="btn secondary" onclick="addVenuePayment()">+ הוספה</button>
-  </div>
-</div>
-
-<div class="detail-subsection"><h3>התאמה פרקטית</h3>
-  <div class="detail-grid">
+ <details class="venue-accordion">
+  <summary><span>התאמה פרקטית</span><span class="venue-accordion-summary-note">חופה, חניה, נגישות וקישורים</span></summary>
+  <div class="venue-accordion-body"><div class="detail-grid">
    <div class="field"><label>פנים / חוץ</label><select id="vdIndoorOutdoor"><option value="" ${!v.indoorOutdoor?"selected":""}>לא ידוע</option><option value="indoor" ${v.indoorOutdoor==="indoor"?"selected":""}>פנים</option><option value="outdoor" ${v.indoorOutdoor==="outdoor"?"selected":""}>חוץ</option><option value="both" ${v.indoorOutdoor==="both"?"selected":""}>משולב</option></select></div>
    <div class="field"><label>חופה</label><select id="vdChuppah"><option value="" ${!v.chuppah?"selected":""}>לא ידוע</option><option value="outdoor" ${v.chuppah==="outdoor"?"selected":""}>בחוץ</option><option value="indoor" ${v.chuppah==="indoor"?"selected":""}>בפנים</option><option value="both" ${v.chuppah==="both"?"selected":""}>אפשר לבחור</option></select></div>
    <div class="field"><label>חניה</label><select id="vdParking"><option value="" ${v.parking===null||v.parking===undefined?"selected":""}>לא ידוע</option><option value="yes" ${v.parking===true?"selected":""}>יש / נוחה</option><option value="no" ${v.parking===false?"selected":""}>אין / מוגבלת</option></select></div>
    <div class="field"><label>נגישות</label><select id="vdAccessibility"><option value="" ${!v.accessibility?"selected":""}>לא בדקנו</option><option value="good" ${v.accessibility==="good"?"selected":""}>טובה</option><option value="partial" ${v.accessibility==="partial"?"selected":""}>חלקית</option><option value="poor" ${v.accessibility==="poor"?"selected":""}>בעייתית</option></select></div>
    <div class="field"><label>קישור / אתר</label><input id="vdWebsite" value="${esc(v.website||"")}"></div>
-   <div class="field"><label>קישורים נוספים / תמונות</label><textarea id="vdLinks" placeholder="אפשר להדביק קישורי Instagram, אלבום תמונות, הצעת מחיר בענן...">${esc(v.links||"")}</textarea></div>
-  </div>
- </div>
+   <div class="field"><label>קישורים נוספים / תמונות</label><textarea id="vdLinks" placeholder="Instagram, אלבום תמונות, הצעה בענן...">${esc(v.links||"")}</textarea></div>
+  </div></div>
+ </details>
 
- <div class="detail-subsection"><h3>התרשמות אחרי ביקור</h3>
-  <div class="detail-grid">
-   ${ratingField('vdFood','אוכל',v.food)}${ratingField('vdAtmosphere','אווירה',v.atmosphere)}${ratingField('vdLocation','מיקום',v.location)}${ratingField('vdDesign','עיצוב',v.design)}${ratingField('vdService','שירות',v.service)}
-   <div class="field"><label>הציון שלי 1-10</label><input id="vdMyOverall" type="number" min="1" max="10" value="${v.myOverall||""}"></div>
-   <div class="field"><label>ציון בן הזוג 1-10</label><input id="vdPartnerOverall" type="number" min="1" max="10" value="${v.partnerOverall||""}"></div>
+ <details class="venue-accordion">
+  <summary><span>התרשמות אחרי ביקור</span><span class="venue-accordion-summary-note">ציונים והערות אישיות</span></summary>
+  <div class="venue-accordion-body">
+   <div class="detail-grid">${ratingField('vdFood','אוכל',v.food)}${ratingField('vdAtmosphere','אווירה',v.atmosphere)}${ratingField('vdLocation','מיקום',v.location)}${ratingField('vdDesign','עיצוב',v.design)}${ratingField('vdService','שירות',v.service)}<div class="field"><label>הציון שלי 1-10</label><input id="vdMyOverall" type="number" min="1" max="10" value="${v.myOverall||""}"></div><div class="field"><label>ציון בן הזוג 1-10</label><input id="vdPartnerOverall" type="number" min="1" max="10" value="${v.partnerOverall||""}"></div></div>
+   <div class="detail-grid two"><div class="field"><label>מה אהבנו?</label><textarea id="vdPros">${esc(v.pros||"")}</textarea></div><div class="field"><label>מה פחות?</label><textarea id="vdCons">${esc(v.cons||"")}</textarea></div></div>
+   <div class="field"><label>הערות חופשיות</label><textarea id="vdNotes">${esc(v.notes||"")}</textarea></div>
   </div>
-  <div class="detail-grid two">
-   <div class="field"><label>מה אהבנו?</label><textarea id="vdPros">${esc(v.pros||"")}</textarea></div>
-   <div class="field"><label>מה פחות?</label><textarea id="vdCons">${esc(v.cons||"")}</textarea></div>
-  </div>
-  <div class="field"><label>הערות חופשיות</label><textarea id="vdNotes">${esc(v.notes||"")}</textarea></div>
- </div>
+ </details>
 
- <div class="detail-subsection"><div class="between"><h3>שאלות לפגישה</h3><div class="row"><span class="badge">${qDone}/${v.questions.length}</span><button class="btn secondary small" onclick="addVenueChecklistItem('questions')">+ שאלה</button></div></div>
-  <div class="question-list">${v.questions.map((q,i)=>`<label class="question-item ${q.done?"done":""}"><input type="checkbox" ${q.done?"checked":""} onchange="toggleVenueChecklistItem('questions',${i})"><span>${esc(q.text)}</span></label>`).join("")}</div>
- </div>
+ <details class="venue-accordion">
+  <summary><span>שאלות לפגישה</span><span class="venue-accordion-summary-note">${qDone}/${v.questions.length} הושלמו</span></summary>
+  <div class="venue-accordion-body"><div class="between"><span></span><button class="btn secondary small" onclick="addVenueChecklistItem('questions')">+ שאלה</button></div><div class="question-list">${v.questions.map((q,i)=>`<label class="question-item ${q.done?"done":""}"><input type="checkbox" ${q.done?"checked":""} onchange="toggleVenueChecklistItem('questions',${i})"><span>${esc(q.text)}</span></label>`).join("")}</div></div>
+ </details>
 
- <div class="detail-subsection"><div class="between"><h3>בדיקות לפני חתימה על חוזה</h3><div class="row"><span class="badge">${cDone}/${v.contractChecks.length}</span><button class="btn secondary small" onclick="addVenueChecklistItem('contractChecks')">+ בדיקה</button></div></div>
-  <div class="question-list">${v.contractChecks.map((q,i)=>`<label class="question-item ${q.done?"done":""}"><input type="checkbox" ${q.done?"checked":""} onchange="toggleVenueChecklistItem('contractChecks',${i})"><span>${esc(q.text)}</span></label>`).join("")}</div>
-  <div class="field" style="margin-top:12px"><label>הערות לחוזה</label><textarea id="vdContractNotes">${esc(v.contractNotes||"")}</textarea></div>
- </div>
+ <details class="venue-accordion">
+  <summary><span>חוזה ובדיקות לפני חתימה</span><span class="venue-accordion-summary-note">${cDone}/${v.contractChecks.length} הושלמו</span></summary>
+  <div class="venue-accordion-body"><div class="between"><span></span><button class="btn secondary small" onclick="addVenueChecklistItem('contractChecks')">+ בדיקה</button></div><div class="question-list">${v.contractChecks.map((q,i)=>`<label class="question-item ${q.done?"done":""}"><input type="checkbox" ${q.done?"checked":""} onchange="toggleVenueChecklistItem('contractChecks',${i})"><span>${esc(q.text)}</span></label>`).join("")}</div><div class="field" style="margin-top:12px"><label>הערות לחוזה</label><textarea id="vdContractNotes">${esc(v.contractNotes||"")}</textarea></div></div>
+ </details>
 
  <div class="row" style="margin-top:18px"><button class="btn primary" onclick="saveVenueDetail()">שמרי את כרטיס המקום</button><button class="btn secondary" onclick="closeVenueDetail()">סגירה</button></div>`;
 }
@@ -5858,11 +5924,11 @@ function ratingField(id,label,value){return `<div class="field"><label>${label} 
 
 function saveVenueDetail(){
  const v=state.venues.find(x=>x.id===state.activeVenueId);if(!v)return;
- v.status=byId("vdStatus")?.value||v.status;if(v.status==="chosen")state.venues.forEach(x=>{if(x.id!==v.id&&x.status==="chosen")x.status="finalist"});v.visitDate=vdVisitDate.value;v.contactPerson=vdContactPerson.value.trim();v.contactPhone=vdContactPhone.value.trim();v.availableDates=vdAvailableDates.value.trim();
- v.price=+vdPrice.value||0;v.minGuests=+vdMinGuests.value||0;v.venueFee=+vdVenueFee.value||0;v.extraCosts=+vdExtraCosts.value||0;v.offerSummary=vdOfferSummary.value.trim();
- v.indoorOutdoor=vdIndoorOutdoor.value;v.chuppah=vdChuppah.value;v.parking=vdParking.value==="yes"?true:vdParking.value==="no"?false:null;v.accessibility=vdAccessibility.value;v.website=vdWebsite.value.trim();v.links=vdLinks.value.trim();
- v.food=clamp10(vdFood.value);v.atmosphere=clamp10(vdAtmosphere.value);v.location=clamp10(vdLocation.value);v.design=clamp10(vdDesign.value);v.service=clamp10(vdService.value);v.myOverall=clamp10(vdMyOverall.value);v.partnerOverall=clamp10(vdPartnerOverall.value);
- v.pros=vdPros.value.trim();v.cons=vdCons.value.trim();v.notes=vdNotes.value.trim();v.contractNotes=vdContractNotes.value.trim();
+ v.status=byId("vdStatus")?.value||v.status;if(v.status==="chosen")state.venues.forEach(x=>{if(x.id!==v.id&&x.status==="chosen")x.status="finalist"});v.visitDate=byId("vdVisitDate")?.value||"";v.contactPerson=byId("vdContactPerson")?.value.trim()||"";v.contactPhone=byId("vdContactPhone")?.value.trim()||"";v.availableDates=byId("vdAvailableDates")?.value.trim()||"";
+ v.price=+byId("vdPrice")?.value||0;v.minGuests=+byId("vdMinGuests")?.value||0;v.venueFee=+byId("vdVenueFee")?.value||0;v.extraCosts=+byId("vdExtraCosts")?.value||0;v.offerSummary=byId("vdOfferSummary")?.value.trim()||"";
+ v.indoorOutdoor=byId("vdIndoorOutdoor")?.value||"";v.chuppah=byId("vdChuppah")?.value||"";const parkingValue=byId("vdParking")?.value||"";v.parking=parkingValue==="yes"?true:parkingValue==="no"?false:null;v.accessibility=byId("vdAccessibility")?.value||"";v.website=byId("vdWebsite")?.value.trim()||"";v.links=byId("vdLinks")?.value.trim()||"";
+ v.food=clamp10(byId("vdFood")?.value);v.atmosphere=clamp10(byId("vdAtmosphere")?.value);v.location=clamp10(byId("vdLocation")?.value);v.design=clamp10(byId("vdDesign")?.value);v.service=clamp10(byId("vdService")?.value);v.myOverall=clamp10(byId("vdMyOverall")?.value);v.partnerOverall=clamp10(byId("vdPartnerOverall")?.value);
+ v.pros=byId("vdPros")?.value.trim()||"";v.cons=byId("vdCons")?.value.trim()||"";v.notes=byId("vdNotes")?.value.trim()||"";v.contractNotes=byId("vdContractNotes")?.value.trim()||"";
  if(v.status==="chosen")state.venues.forEach(x=>{if(x.id!==v.id&&x.status==="chosen")x.status="finalist"});
  persist();renderVenues();renderVenueDetail();renderComparisonImpressionEditor();renderComparison();updateDashboard();
  const saved=document.createElement('div');saved.className='status good';saved.textContent='כרטיס המקום נשמר';venueDetailPanel.prepend(saved);setTimeout(()=>saved.remove(),1800)
@@ -6785,11 +6851,59 @@ function addImportedGuests(rows){
  });
  persist();renderGuests();updateDashboard();alert(`${added} מוזמנים נוספו${skipped?` · ${skipped} כפילויות/שורות ריקות דולגו`:""}`);
 }
+let nativeContactRows=[];
+let nativeContactSelected=new Set();
+function nativeContactKey(row,index){return String(row.id||row.phone||`${row.name}-${index}`)}
+function openNativeContactsModal(rows){
+ nativeContactRows=(rows||[]).filter(r=>r?.name);
+ nativeContactSelected=new Set();
+ const search=byId("nativeContactsSearch");if(search)search.value="";
+ const modal=byId("nativeContactsModal");if(modal){modal.classList.add("open");modal.setAttribute("aria-hidden","false");}
+ renderNativeContactsList();
+}
+function closeNativeContactsModal(){const modal=byId("nativeContactsModal");if(modal){modal.classList.remove("open");modal.setAttribute("aria-hidden","true");}}
+function filteredNativeContacts(){
+ const q=String(byId("nativeContactsSearch")?.value||"").trim().toLowerCase();
+ if(!q)return nativeContactRows.map((r,index)=>({r,index}));
+ return nativeContactRows.map((r,index)=>({r,index})).filter(({r})=>`${r.name||""} ${r.phone||""}`.toLowerCase().includes(q));
+}
+function renderNativeContactsList(){
+ const box=byId("nativeContactsList");if(!box)return;
+ const rows=filteredNativeContacts();
+ if(!rows.length){box.innerHTML='<div class="native-contact-empty">לא נמצאו אנשי קשר תואמים.</div>';return}
+ box.innerHTML=rows.map(({r,index})=>{const key=nativeContactKey(r,index),checked=nativeContactSelected.has(key)?"checked":"";return `<label class="native-contact-row"><input type="checkbox" ${checked} onchange="toggleNativeContact('${encodeURIComponent(key)}',this.checked)"><span><strong>${esc(r.name)}</strong><small>${esc(r.phone||"ללא מספר טלפון")}</small></span></label>`}).join("");
+ const btn=byId("nativeContactsAddBtn");if(btn)btn.textContent=nativeContactSelected.size?`הוספת ${nativeContactSelected.size} נבחרים`:"הוספת נבחרים";
+}
+function toggleNativeContact(encodedKey,checked){const key=decodeURIComponent(encodedKey);if(checked)nativeContactSelected.add(key);else nativeContactSelected.delete(key);renderNativeContactsList();}
+function toggleAllNativeContacts(){
+ const rows=filteredNativeContacts();const allSelected=rows.length&&rows.every(({r,index})=>nativeContactSelected.has(nativeContactKey(r,index)));
+ rows.forEach(({r,index})=>{const key=nativeContactKey(r,index);if(allSelected)nativeContactSelected.delete(key);else nativeContactSelected.add(key)});renderNativeContactsList();
+}
+function confirmNativeContacts(){
+ const picked=nativeContactRows.filter((r,index)=>nativeContactSelected.has(nativeContactKey(r,index)));
+ if(!picked.length)return alert("בחרי לפחות איש קשר אחד.");
+ closeNativeContactsModal();addImportedGuests(picked.map(r=>({name:r.name,phone:r.phone||"",seats:1,group:""})));
+}
 async function importPhoneContacts(){
+ if(window.WedWiseNativeContacts?.isAvailable?.()){
+  const modal=byId("nativeContactsModal"),box=byId("nativeContactsList");
+  if(modal){modal.classList.add("open");modal.setAttribute("aria-hidden","false");}
+  if(box)box.innerHTML='<div class="native-contact-loading"><span class="spinner"></span><div style="margin-top:10px">טוענת את אנשי הקשר...</div></div>';
+  try{
+   const rows=await window.WedWiseNativeContacts.listContacts();
+   if(!rows?.length){closeNativeContactsModal();return alert("לא נמצאו אנשי קשר עם מספר טלפון, או שלא ניתנה הרשאה.")}
+   openNativeContactsModal(rows);return;
+  }catch(e){
+   console.error("Native contacts",e);closeNativeContactsModal();
+   if(e?.code==="OS-PLUG-CONT-0020")return alert("כדי לבחור מוזמנים יש לאפשר ל-WedWise גישה לאנשי הקשר בהגדרות האייפון.");
+   if(e?.code==="OS-PLUG-CONT-0006")return;
+   alert("לא הצלחתי לפתוח את אנשי הקשר. אפשר לנסות שוב או לייבא קובץ VCF.");return;
+  }
+ }
  if(navigator.contacts?.select){
   try{const contacts=await navigator.contacts.select(["name","tel"],{multiple:true});addImportedGuests((contacts||[]).map(c=>({name:Array.isArray(c.name)?c.name[0]:c.name||"",phone:Array.isArray(c.tel)?c.tel[0]:c.tel||"",seats:1,group:""})));return}catch(e){if(e?.name==="AbortError")return}
  }
- alert("בדפדפן הזה אין גישה ישירה לאנשי הקשר. אפשר לבחור קובץ אנשי קשר מסוג VCF שיוצא מאפליקציית אנשי הקשר.");byId("guestVcardInput")?.click();
+ alert("בדפדפן הזה אין גישה ישירה לאנשי הקשר. באפליקציית WedWise המותקנת באייפון הכפתור יפתח את אנשי הקשר; בדפדפן אפשר לייבא VCF.");byId("guestVcardInput")?.click();
 }
 async function importGuestVcard(file){
  if(!file)return;const txt=await file.text();const cards=txt.split(/BEGIN:VCARD/i).slice(1);const rows=[];
@@ -7452,7 +7566,7 @@ showStorageNoticeIfNeeded();syncMobileNavigation("dashboard");initAuthentication
 </script>
 
 <script>
-const WEDWISE_REPAIR_KEY="ww246_pwa_repaired";
+const WEDWISE_REPAIR_KEY="ww253_pwa_repaired";
 window.addEventListener("load",async()=>{
  if(!("serviceWorker" in navigator)||!/^https?:$/.test(location.protocol))return;
  try{
@@ -7461,10 +7575,32 @@ window.addEventListener("load",async()=>{
      if("caches" in window){const names=await caches.keys();await Promise.all(names.filter(n=>n.startsWith("wedwise-")).map(n=>caches.delete(n)))}
      localStorage.setItem(WEDWISE_REPAIR_KEY,"1");location.reload();return;
    }
-   const reg=await navigator.serviceWorker.register("./sw.js?v=246",{updateViaCache:"none"});await reg.update().catch(()=>{});
+   const reg=await navigator.serviceWorker.register("./sw.js?v=253",{updateViaCache:"none"});await reg.update().catch(()=>{});
  }catch(e){console.warn("PWA init",e)}
 });
 </script>
+
+
+<div id="nativeContactsModal" class="native-contact-modal" aria-hidden="true" onclick="if(event.target===this)closeNativeContactsModal()">
+  <div class="native-contact-sheet" role="dialog" aria-modal="true" aria-labelledby="nativeContactsTitle">
+    <div class="native-contact-head">
+      <div>
+        <h3 id="nativeContactsTitle">בחירה מאנשי הקשר</h3>
+        <p>בחרי את האנשים שתרצי להוסיף לרשימת המוזמנים.</p>
+      </div>
+      <button class="native-contact-close" onclick="closeNativeContactsModal()" aria-label="סגירה">×</button>
+    </div>
+    <div class="native-contact-tools">
+      <input id="nativeContactsSearch" placeholder="חיפוש לפי שם או מספר..." oninput="renderNativeContactsList()">
+      <button class="native-contact-select-all" onclick="toggleAllNativeContacts()">בחרי הכל</button>
+    </div>
+    <div id="nativeContactsList" class="native-contact-list"></div>
+    <div class="native-contact-actions">
+      <button class="btn secondary" onclick="closeNativeContactsModal()">ביטול</button>
+      <button id="nativeContactsAddBtn" class="btn primary" onclick="confirmNativeContacts()">הוספת נבחרים</button>
+    </div>
+  </div>
+</div>
 
 </body>
 </html>
