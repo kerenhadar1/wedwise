@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>WedWise v2.4.4 - Wedding Planning Workspace</title>
+<title>WedWise v2.4.6 - Wedding Planning Workspace</title>
 <style>
 
 :root{
@@ -2321,12 +2321,12 @@ h1,h2,h3,.ww19-wordmark,.ww19-card-title,.ww19-hero-label{
 @media(max-width:720px){.quote-item{grid-template-columns:1fr 90px}.quote-item>*:nth-child(n+3){grid-column:auto}.reminder-row{grid-template-columns:24px 1fr}.reminder-row>.row{grid-column:2}}
 
 
-/* WedWise v2.4.4 — attendants checklist + wedding-day timeline */
+/* WedWise v2.4.6 — attendants checklist + wedding-day timeline */
 .wedding-day-timeline-page{max-width:980px;margin:0 auto}.timeline-form-card,.timeline-list-card{background:#fffaf7;border:1px solid #ead5cb;border-radius:24px;padding:18px;box-shadow:0 10px 28px rgba(98,61,45,.06);margin-bottom:16px}.timeline-form-grid{display:grid;grid-template-columns:150px 1.4fr 1fr 1fr;gap:12px}.timeline-form-actions{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-top:12px}.timeline-list{display:grid;gap:10px}.timeline-row{display:grid;grid-template-columns:74px minmax(0,1fr) auto;gap:13px;align-items:start;padding:13px;border:1px solid #eadfd8;border-radius:18px;background:#fffdfb}.timeline-row.done{opacity:.62}.timeline-row.done .timeline-title{text-decoration:line-through}.timeline-time{background:#f7e6de;color:#8f5844;border-radius:14px;padding:9px 7px;text-align:center;font-weight:700;font-size:15px;min-height:42px;display:grid;place-items:center}.timeline-title{font-size:15px;font-weight:700;color:#4d382f;margin-bottom:4px}.timeline-meta{display:flex;gap:8px;flex-wrap:wrap;color:#94786c;font-size:10px}.timeline-note{margin-top:6px;color:#715b52;font-size:11px;line-height:1.5}.timeline-actions{display:flex;gap:6px;flex-wrap:wrap;justify-content:flex-end}.timeline-empty{border:1px dashed #ddc1b5;border-radius:18px;padding:30px;text-align:center;color:#947b70;background:#fff9f6}.timeline-count{display:inline-flex;align-items:center;justify-content:center;min-width:30px;height:30px;padding:0 10px;border-radius:999px;background:#f4e1d8;color:#8d5c49;font-size:11px;font-weight:700}.timeline-helper{font-size:10px;color:#9a8074;margin-top:4px}.timeline-done-check{display:flex;align-items:center;gap:6px;font-size:10px;color:#7d675d;white-space:nowrap}.timeline-done-check input{width:17px;height:17px;accent-color:#b97960}
 @media(max-width:850px){.timeline-form-grid{grid-template-columns:1fr 1fr}.timeline-row{grid-template-columns:62px minmax(0,1fr)}.timeline-actions{grid-column:1/-1;justify-content:flex-start;padding-inline-start:75px}.timeline-time{font-size:13px}.timeline-form-card,.timeline-list-card{padding:15px;border-radius:20px}}
 @media(max-width:480px){.timeline-form-grid{grid-template-columns:1fr}.timeline-row{grid-template-columns:56px minmax(0,1fr);gap:9px;padding:11px}.timeline-actions{padding-inline-start:65px}.timeline-actions .btn{font-size:9px;padding:7px 9px}.timeline-meta{gap:5px}.timeline-time{padding:7px 4px}}
 
-/* WedWise v2.4.4 — setup date and priority refinements */
+/* WedWise v2.4.6 — setup date and priority refinements */
 .setup-flow .grid > .field{min-width:0}
 .setup-date-field{min-width:0}
 .date-mode-pills{margin:2px 0 10px}
@@ -2926,6 +2926,14 @@ aside .brand-lockup-centered .brand small{
  .wedding-summary-export-card,.wedding-summary-cta{align-items:stretch;flex-direction:column}
 }
 @media(max-width:480px){.wedding-summary-hero{grid-template-columns:1fr}.summary-stat-grid{grid-template-columns:1fr 1fr}.wedding-summary-hero strong{font-size:19px}}
+</style>
+
+<style id="wedwise-fixes-v246">
+/* Keep the countdown value visible on Safari/iPhone and desktop. */
+.ww24-home-hero .ww19-countdown{position:relative!important;z-index:6!important;overflow:visible!important;min-height:78px!important}
+.ww24-home-hero #dashCountdownDays{display:inline-block!important;visibility:visible!important;opacity:1!important;min-width:1.15em!important;max-width:none!important;overflow:visible!important;color:#fff!important;text-shadow:0 2px 14px rgba(63,34,20,.38)!important}
+.ww24-home-hero #dashCountdownCaption{display:inline-block!important;visibility:visible!important;opacity:1!important;color:#fffaf6!important}
+@media(max-width:390px){.ww24-home-hero .ww19-countdown{min-height:62px!important}.ww24-home-hero #dashCountdownDays{font-size:62px!important}}
 </style>
 </head>
 <body>
@@ -5208,7 +5216,7 @@ function sourceLabel(domain){
   "instagram.com":"Instagram",
   "facebook.com":"Facebook",
   "easy.co.il":"Easy",
-  "urbanbridesmag.co.il":"Urban Brides"
+  "urbanbridesmag.co.il":"כלות אורבניות"
  };
  return map[domain]||domain;
 }
@@ -5239,7 +5247,7 @@ function renderRecommendations(){
      <div class="smart-rank">${i+1}</div>
      <div style="padding-left:38px">
        <h3 style="margin-bottom:4px">${esc(v.name)}</h3>
-       <div class="muted small">${esc(region)} · ${esc(rating)} · ${esc(cap)}${webPrice}</div>${(v.trustedSourceCount||v.weddingReviewCount)?`<div class="rec-meta"><span>${v.trustedSourceCount||0} מקורות המלצה אמינים</span>${v.weddingReviewCount?`<span>${Number(v.weddingReviewCount).toLocaleString()} מדרגים באתרי חתונות</span>`:""}</div>`:""}
+       <div class="muted small">${esc(region)} · ${esc(rating)} · ${esc(cap)}${webPrice}</div>${(v.trustedSourceCount||v.weddingReviewCount||v.urbanReviewCount)?`<div class="rec-meta"><span>${v.trustedSourceCount||0} מקורות מידע</span>${v.urbanReviewCount?`<span>${Number(v.urbanReviewCount).toLocaleString()} המלצות בכלות אורבניות</span>`:""}${v.weddingReviewCount?`<span>${Number(v.weddingReviewCount).toLocaleString()} מדרגים באתרי חתונות</span>`:""}</div>`:""}
      </div>
 
      <div class="score-row">
@@ -5288,7 +5296,7 @@ async function searchRecommendedVenues(forceRefresh=false){
  const refreshBtn=document.getElementById("smartRefreshBtn");if(refreshBtn)refreshBtn.disabled=true;
  btn.textContent=forceRefresh?"מרעננת...":"מחפשת...";
  status.className="status";
- status.innerHTML=`<span class="search-loading"><span class="spinner"></span><span>מחפשת מקומות מתאימים ב-Google ובכלות אורבניות ובודקת דירוגים. זה יכול לקחת כמה שניות.</span></span>`;
+ status.innerHTML=`<span class="search-loading"><span class="spinner"></span><span>מחפשת מקומות ספציפיים ב-Google ובכלות אורבניות ובודקת התאמה וביקורות. זה יכול לקחת כמה שניות.</span></span>`;
  recommendationResults.innerHTML="";
 
  try{
@@ -5372,7 +5380,8 @@ function saveRecommendation(index){
      detectedCapacity:r.detectedCapacity??null,
      sources:r.sourceDomains||[],
      urbanBridesUrl:r.urbanBridesUrl||"",
-     urbanBridesTitle:r.urbanBridesTitle||""
+     urbanBridesTitle:r.urbanBridesTitle||"",
+     urbanReviewCount:r.urbanReviewCount||0
    }
  });
 
@@ -6407,7 +6416,7 @@ function renderVendorRecommendations(){
    const price=v.detectedPrice?` · מחיר שנמצא: כ-${Number(v.detectedPrice).toLocaleString()} ₪`:"";
    return `<div class="smart-card vendor-recommendation-card ${i===0?"top":""}">
      <div class="smart-rank">${i+1}</div>
-     <div style="padding-left:38px"><h3 style="margin-bottom:4px">${esc(v.name)}</h3><div class="muted small">${esc(v.address||"אזור לא צוין")}${v.rating?` · ${v.rating}/5 (${Number(v.reviewCount||0).toLocaleString()} ביקורות)`:""}${price}</div>${(v.trustedSourceCount||v.weddingReviewCount)?`<div class="rec-meta"><span>${v.trustedSourceCount||0} מקורות המלצה אמינים</span>${v.weddingReviewCount?`<span>${Number(v.weddingReviewCount).toLocaleString()} מדרגים באתרי חתונות</span>`:""}</div>`:""}</div>
+     <div style="padding-left:38px"><h3 style="margin-bottom:4px">${esc(v.name)}</h3><div class="muted small">${esc(v.address||"אזור לא צוין")}${v.rating?` · ${v.rating}/5 (${Number(v.reviewCount||0).toLocaleString()} ביקורות)`:""}${price}</div>${(v.trustedSourceCount||v.weddingReviewCount||v.urbanReviewCount)?`<div class="rec-meta"><span>${v.trustedSourceCount||0} מקורות מידע</span>${v.urbanReviewCount?`<span>${Number(v.urbanReviewCount).toLocaleString()} המלצות בכלות אורבניות</span>`:""}${v.weddingReviewCount?`<span>${Number(v.weddingReviewCount).toLocaleString()} מדרגים באתרי חתונות</span>`:""}</div>`:""}</div>
      <div class="score-row">
        <div class="score-box"><strong>${v.overallScore??"-"}%</strong><span>ציון כולל</span></div>
        <div class="score-box"><strong>${v.matchScore??"-"}%</strong><span>התאמה לחיפוש</span></div>
@@ -7392,21 +7401,47 @@ function updateDashboard(){
  if(byId("dashPlanningStatus"))dashPlanningStatus.textContent="כך נראית ההתקדמות שלכם עד עכשיו";
  renderDashboardStages(metrics);renderDashboardUpcoming();
  const dateTrigger=byId("dashDateLine"),dateText=byId("dashDateText"),heroLabel=byId("dashHeroLabel");
- if(state.setup.weddingDate){
-   const target=new Date(state.setup.weddingDate+"T12:00:00"),now=new Date(),diff=Math.ceil((target-now)/(1000*60*60*24));
+ const countdownDays=byId("dashCountdownDays"),countdownCaption=byId("dashCountdownCaption");
+ const now=new Date();
+ const dayDiff=(date)=>Math.ceil((date-now)/(1000*60*60*24));
+ const setCountdown=(value,caption="ימים")=>{if(countdownDays)countdownDays.textContent=value;if(countdownCaption)countdownCaption.textContent=caption};
+ const mode=state.setup.weddingDateMode||(state.setup.weddingDate?"exact":state.setup.preferredMonth?"month":(state.setup.weddingDateFrom||state.setup.weddingDateTo)?"range":"exact");
+ if(mode==="exact"&&state.setup.weddingDate){
+   const target=new Date(state.setup.weddingDate+"T12:00:00"),diff=dayDiff(target);
    const formatted=target.toLocaleDateString("he-IL",{day:"numeric",month:"long",year:"numeric"});
    const weekday=target.toLocaleDateString("he-IL",{weekday:"long"});
    if(dateText)dateText.textContent=formatted+" · "+weekday;
    if(dateTrigger)dateTrigger.setAttribute("aria-label","שינוי תאריך: "+formatted);
    if(heroLabel)heroLabel.textContent="החתונה שלנו בעוד";
-   if(diff>0){dashCountdownDays.textContent=diff.toLocaleString();dashCountdownCaption.textContent="ימים"}
-   else if(diff===0){dashCountdownDays.textContent="היום";dashCountdownCaption.textContent="זה היום שלכם"}
-   else{dashCountdownDays.textContent="♡";dashCountdownCaption.textContent="מזל טוב!"}
+   if(diff>0)setCountdown(diff.toLocaleString(),"ימים");
+   else if(diff===0)setCountdown("היום","זה היום שלכם");
+   else setCountdown("♡","מזל טוב!");
+ }else if(mode==="month"&&state.setup.preferredMonth){
+   const [y,m]=state.setup.preferredMonth.split("-").map(Number);
+   const first=new Date(y,m-1,1,12),last=new Date(y,m,0,12);
+   const a=Math.max(0,dayDiff(first)),b=Math.max(0,dayDiff(last));
+   const monthLabel=first.toLocaleDateString("he-IL",{month:"long",year:"numeric"});
+   if(dateText)dateText.textContent=monthLabel;
+   if(dateTrigger)dateTrigger.setAttribute("aria-label","שינוי חודש משוער: "+monthLabel);
+   if(heroLabel)heroLabel.textContent="החתונה שלנו בעוד";
+   if(b>0)setCountdown(a===b?a.toLocaleString():`${a.toLocaleString()}–${b.toLocaleString()}`,"ימים משוערים");
+   else setCountdown("♡","מזל טוב!");
+ }else if(mode==="range"&&(state.setup.weddingDateFrom||state.setup.weddingDateTo)){
+   const from=state.setup.weddingDateFrom?new Date(state.setup.weddingDateFrom+"T12:00:00"):null;
+   const to=state.setup.weddingDateTo?new Date(state.setup.weddingDateTo+"T12:00:00"):null;
+   const vals=[from,to].filter(Boolean).map(dayDiff).map(x=>Math.max(0,x)).sort((a,b)=>a-b);
+   const a=vals[0]??0,b=vals[vals.length-1]??a;
+   const rangeLabel=[state.setup.weddingDateFrom?formatSetupDateValue(state.setup.weddingDateFrom):"",state.setup.weddingDateTo?formatSetupDateValue(state.setup.weddingDateTo):""].filter(Boolean).join("–");
+   if(dateText)dateText.textContent=rangeLabel||"טווח תאריכים משוער";
+   if(dateTrigger)dateTrigger.setAttribute("aria-label","שינוי טווח תאריכים");
+   if(heroLabel)heroLabel.textContent="החתונה שלנו בעוד";
+   if(b>0)setCountdown(a===b?a.toLocaleString():`${a.toLocaleString()}–${b.toLocaleString()}`,"ימים משוערים");
+   else setCountdown("♡","מזל טוב!");
  }else{
    if(dateText)dateText.textContent="הוסיפו תאריך לספירה לאחור";
    if(dateTrigger)dateTrigger.setAttribute("aria-label","הוספת תאריך לחתונה");
    if(heroLabel)heroLabel.textContent="החתונה שלנו";
-   dashCountdownDays.textContent="—";dashCountdownCaption.textContent="ימים";
+   setCountdown("—","ימים");
  }
  if(byId("resumePlanningLabel"))resumePlanningLabel.textContent=planningStarted()?"המשך לשלב הבא":"להתחיל לתכנן";
  if(byId("resumePlanningStageLabel"))resumePlanningStageLabel.textContent=planningStage.label;
@@ -7417,7 +7452,7 @@ showStorageNoticeIfNeeded();syncMobileNavigation("dashboard");initAuthentication
 </script>
 
 <script>
-const WEDWISE_REPAIR_KEY="ww244_pwa_repaired";
+const WEDWISE_REPAIR_KEY="ww246_pwa_repaired";
 window.addEventListener("load",async()=>{
  if(!("serviceWorker" in navigator)||!/^https?:$/.test(location.protocol))return;
  try{
@@ -7426,7 +7461,7 @@ window.addEventListener("load",async()=>{
      if("caches" in window){const names=await caches.keys();await Promise.all(names.filter(n=>n.startsWith("wedwise-")).map(n=>caches.delete(n)))}
      localStorage.setItem(WEDWISE_REPAIR_KEY,"1");location.reload();return;
    }
-   const reg=await navigator.serviceWorker.register("./sw.js?v=244",{updateViaCache:"none"});await reg.update().catch(()=>{});
+   const reg=await navigator.serviceWorker.register("./sw.js?v=246",{updateViaCache:"none"});await reg.update().catch(()=>{});
  }catch(e){console.warn("PWA init",e)}
 });
 </script>
