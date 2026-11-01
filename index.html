@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>WedWise v2.5.3 - Wedding Planning Workspace</title>
+<title>WedWise v2.5.6 - Wedding Planning Workspace</title>
 <style>
 
 :root{
@@ -2377,6 +2377,7 @@ h1,h2,h3,.ww19-wordmark,.ww19-card-title,.ww19-hero-label{
 
 
 /* WedWise v2.5.3 — compact venue cards + mobile date fields */
+/* v2.5.6: venue accordion state is preserved across quote-item edits */
 .venue-accordion{
   margin-top:12px;border:1px solid var(--line);border-radius:18px;background:rgba(255,253,249,.88);overflow:hidden;
 }
@@ -2407,6 +2408,25 @@ h1,h2,h3,.ww19-wordmark,.ww19-card-title,.ww19-hero-label{
   .venue-date-picker-row .btn{width:100%}
 }
 
+
+
+/* WedWise v2.5.5 - preparation place */
+.prep-search-card{margin-bottom:16px}
+.prep-type-pills{margin-top:4px}
+.prep-results{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;margin-top:14px}
+.prep-result-card,.prep-saved-card{border:1px solid var(--line);border-radius:20px;background:#fffdf9;padding:18px;box-shadow:var(--shadow-soft)}
+.prep-result-card h3,.prep-saved-card h3{margin:0 0 4px}
+.prep-meta{display:flex;gap:7px;flex-wrap:wrap;margin:9px 0}
+.prep-meta span{font-size:11px;background:#f8f2ed;border:1px solid #eee0d6;border-radius:999px;padding:5px 8px;color:var(--muted)}
+.prep-saved-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;margin-top:14px}
+.prep-card-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+.prep-details{margin-top:12px;border-top:1px solid var(--line);padding-top:10px}
+.prep-details summary{cursor:pointer;font-weight:700;color:#69574f;list-style:none;display:flex;justify-content:space-between;gap:10px}
+.prep-details summary::-webkit-details-marker{display:none}
+.prep-details summary::after{content:"＋";color:var(--accent);font-size:19px}.prep-details[open] summary::after{content:"−"}
+.prep-chosen{border-color:#cda98e;box-shadow:0 12px 28px rgba(158,111,87,.11)}
+.prep-search-summary{display:flex;justify-content:space-between;gap:12px;align-items:center;flex-wrap:wrap}
+@media(max-width:850px){.prep-results,.prep-saved-grid{grid-template-columns:1fr}.prep-result-card,.prep-saved-card{padding:15px}.prep-card-actions .btn,.prep-card-actions a.btn{flex:1 1 auto;text-align:center}.prep-details .detail-grid,.prep-details .detail-grid.two{grid-template-columns:1fr!important}}
 </style>
 
 <meta name="theme-color" content="#f7e8e2">
@@ -3075,6 +3095,7 @@ aside .brand-lockup-centered .brand small{
 
   <div class="mobile-more-grid">
     <button onclick="mobileGo('dashboard')"><span>⌂</span><div><strong>בית</strong><small>תמונת מצב והשלב הנוכחי</small></div></button>
+    <button onclick="mobileGo('prepPlace')"><span>⌑</span><div><strong>מקום התארגנות</strong><small>וילה, דירה או מלון לפני החתונה</small></div></button>
     <button onclick="mobileGo('budget')"><span>◔</span><div><strong>תקציב</strong><small>מה נסגר, שולם ונשאר</small></div></button>
     <button onclick="mobileGo('reminders')"><span>◷</span><div><strong>תזכורות</strong><small>תשלומים ומשימות שצריך לזכור</small></div></button>
     <button onclick="mobileGo('weddingDayTimeline')"><span>◴</span><div><strong>לו״ז יום החתונה</strong><small>שעות, מקומות ואחריות ביום עצמו</small></div></button>
@@ -3126,6 +3147,10 @@ aside .brand-lockup-centered .brand small{
       <button data-target="venues">
         <span class="nav-icon" aria-hidden="true">⌖</span>
         <span>מקומות</span>
+      </button>
+      <button data-target="prepPlace">
+        <span class="nav-icon" aria-hidden="true">⌑</span>
+        <span>מקום התארגנות</span>
       </button>
       <button data-target="compare">
         <span class="nav-icon" aria-hidden="true">⇄</span>
@@ -3457,7 +3482,10 @@ aside .brand-lockup-centered .brand small{
         <h2 style="margin-bottom:5px">המלצות חכמות</h2>
         <div class="muted small">החיפוש משתמש בפרטי החתונה שלכם, אוסף מידע ממספר מקורות ומציג התאמה, איכות ורמת ביטחון לכל מקום.</div>
       </div>
-      <span class="badge protected-search-badge">🔒 חיפוש מוגן</span>
+      <div class="row">
+        <span class="badge protected-search-badge">🔒 חיפוש מוגן</span>
+        <button id="venueResultsToggleBtn" type="button" class="btn ghost small" style="display:none" onclick="toggleVenueRecommendationResults()" aria-expanded="true">סגירת תוצאות</button>
+      </div>
     </div>
 
     <div id="smartSearchStatus" class="status" style="margin-top:14px">
@@ -3506,6 +3534,59 @@ aside .brand-lockup-centered .brand small{
     <span class="muted small">פתחי כרטיס מקום אחרי שיחה או ביקור כדי להשלים את הנתונים האמיתיים.</span>
   </div>
   <div id="venueList" class="grid three" style="margin-top:12px"></div>
+</section>
+
+
+<section id="prepPlace" class="section">
+  <div class="between">
+    <div>
+      <div class="section-mini-label">שלב אופציונלי</div>
+      <h1>מקום התארגנות</h1>
+      <div class="subtitle">אם תרצו להתארגן מחוץ לבית, אפשר לחפש וילה, דירה או מלון, לשמור כמה אפשרויות ולרכז את כל הפרטים במקום אחד.</div>
+    </div>
+    <button type="button" class="btn secondary" onclick="togglePrepManualForm()">+ הוספה ידנית</button>
+  </div>
+
+  <div class="card prep-search-card">
+    <div class="prep-search-summary">
+      <div><h2 style="margin-bottom:4px">חיפוש מקום להתארגנות</h2><div class="muted small">החיפוש מחזיר מקומות ספציפיים לפי הסוג והמיקום שבחרתם.</div></div>
+      <div class="row"><button id="prepSearchBtn" class="btn primary" onclick="searchPrepPlaces(false)">✨ חיפוש מקומות</button><button id="prepRefreshBtn" class="btn ghost" onclick="searchPrepPlaces(true)">↻ רענון</button></div>
+    </div>
+    <div class="field" style="margin-top:16px">
+      <label>סוג מקום</label>
+      <div id="prepTypePills" class="ww21-style-pills prep-type-pills">
+        <label><input type="radio" name="prepPlaceType" value="any" checked><span>לא משנה</span></label>
+        <label><input type="radio" name="prepPlaceType" value="villa"><span>וילה</span></label>
+        <label><input type="radio" name="prepPlaceType" value="apartment"><span>דירה</span></label>
+        <label><input type="radio" name="prepPlaceType" value="hotel"><span>מלון</span></label>
+      </div>
+    </div>
+    <div class="grid two">
+      <div class="field"><label>מיקום / אזור</label><input id="prepSearchLocation" placeholder="למשל: תל אביב, השרון, קיסריה"></div>
+      <div class="field"><label>תאריך ההתארגנות <span class="optional-label">אופציונלי</span></label><input id="prepSearchDate" type="date"></div>
+    </div>
+    <div class="field"><label>מה עוד חשוב? <span class="optional-label">אופציונלי</span></label><input id="prepSearchPreferences" placeholder="למשל: הרבה אור טבעי, חניה, מרפסת, מקום ל-6 מלוות"></div>
+    <div id="prepSearchStatus" class="status">בחרי סוג ומיקום ולחצי על חיפוש.</div>
+    <div id="prepSearchFreshness" class="ww21-search-freshness"></div>
+    <div id="prepRecommendationResults" class="prep-results"></div>
+  </div>
+
+  <div id="prepManualForm" class="card" style="display:none;margin-bottom:16px">
+    <h2>הוספת מקום התארגנות</h2>
+    <div class="grid two">
+      <div class="field"><label>שם המקום</label><input id="prepManualName"></div>
+      <div class="field"><label>סוג</label><select id="prepManualType"><option value="villa">וילה</option><option value="apartment">דירה</option><option value="hotel">מלון</option><option value="other">אחר</option></select></div>
+      <div class="field"><label>מיקום / כתובת</label><input id="prepManualAddress"></div>
+      <div class="field"><label>אתר / קישור</label><input id="prepManualWebsite"></div>
+      <div class="field"><label>טלפון</label><input id="prepManualPhone" type="tel"></div>
+      <div class="field"><label>מחיר משוער</label><input id="prepManualPrice" type="number" min="0"></div>
+    </div>
+    <div class="field"><label>הערות</label><textarea id="prepManualNotes"></textarea></div>
+    <div class="row"><button class="btn primary" onclick="addPrepPlaceManually()">שמירה</button><button class="btn secondary" onclick="togglePrepManualForm(false)">ביטול</button></div>
+  </div>
+
+  <div class="between" style="margin-top:22px"><h2 style="margin:0">המקומות ששמרתם</h2><span class="muted small">אפשר לשמור כמה אופציות ולבחור אחת בהמשך.</span></div>
+  <div id="prepSavedPlaces" class="prep-saved-grid"></div>
 </section>
 
 <section id="compare" class="section">
@@ -4676,22 +4757,22 @@ function showStorageNoticeIfNeeded(){const n=document.getElementById("mobileStor
 function emptyStateSnapshot(){return{
  setup:{},venues:[],checklist:mergeChecklistWithDefaults(null),expenses:[],guests:[],seatingTables:[],gifts:[],recommendations:[],
  compareWeights:{price:20,food:20,atmosphere:15,location:15,design:10,service:10,parking:5,couple:5},
- vendors:[],vendorRecommendations:{},activeVendorCategory:"photographer",vendorCompareWeights:{},reminders:[],inspirationAlbums:[],weddingDayTimeline:[],weddingSummaryNotes:""
+ vendors:[],vendorRecommendations:{},activeVendorCategory:"photographer",vendorCompareWeights:{},reminders:[],inspirationAlbums:[],weddingDayTimeline:[],weddingSummaryNotes:"",prepPlaces:[],prepRecommendations:[],prepSearch:{type:"any",location:"",date:"",preferences:""}
 }}
 function snapshotFromState(){return{
  setup:state.setup,venues:state.venues,checklist:state.checklist,expenses:state.expenses,guests:state.guests,
  seatingTables:state.seatingTables,gifts:state.gifts,recommendations:state.recommendations,compareWeights:state.compareWeights,
  vendors:state.vendors,vendorRecommendations:state.vendorRecommendations,activeVendorCategory:state.activeVendorCategory,
- vendorCompareWeights:state.vendorCompareWeights,reminders:state.reminders,inspirationAlbums:state.inspirationAlbums,weddingDayTimeline:state.weddingDayTimeline,weddingSummaryNotes:state.weddingSummaryNotes
+ vendorCompareWeights:state.vendorCompareWeights,reminders:state.reminders,inspirationAlbums:state.inspirationAlbums,weddingDayTimeline:state.weddingDayTimeline,weddingSummaryNotes:state.weddingSummaryNotes,prepPlaces:state.prepPlaces,prepRecommendations:state.prepRecommendations,prepSearch:state.prepSearch
 }}
-function snapshotHasData(s){return Boolean(s?.setup?.coupleNames||s?.setup?.weddingDate||s?.setup?.estimatedGuests||s?.venues?.length||s?.vendors?.length||s?.expenses?.length||s?.guests?.length||s?.gifts?.length||s?.inspirationAlbums?.length||s?.weddingDayTimeline?.length||s?.weddingSummaryNotes)}
+function snapshotHasData(s){return Boolean(s?.setup?.coupleNames||s?.setup?.weddingDate||s?.setup?.estimatedGuests||s?.venues?.length||s?.vendors?.length||s?.expenses?.length||s?.guests?.length||s?.gifts?.length||s?.inspirationAlbums?.length||s?.weddingDayTimeline?.length||s?.weddingSummaryNotes||s?.prepPlaces?.length)}
 function localSnapshotForCurrentUser(){return{
  setup:storageJSON("ww3_setup",{}),venues:storageJSON("ww3_venues",[]),checklist:mergeChecklistWithDefaults(storageJSON("ww3_checklist",null)),
  expenses:storageJSON("ww3_expenses",[]),guests:storageJSON("ww3_guests",[]),seatingTables:storageJSON("ww15_seating_tables",[]),
  gifts:storageJSON("ww15_gifts",[]),recommendations:storageJSON("ww5_recommendations",[]),
  compareWeights:storageJSON("ww7_compare_weights",null)||{price:20,food:20,atmosphere:15,location:15,design:10,service:10,parking:5,couple:5},
  vendors:storageJSON("ww11_vendors",[]),vendorRecommendations:storageJSON("ww11_vendor_recommendations",{}),
- activeVendorCategory:storageGet("ww11_vendor_category","photographer")||"photographer",vendorCompareWeights:storageJSON("ww11_vendor_weights",{}),reminders:storageJSON("ww23_reminders",[]),inspirationAlbums:storageJSON("ww234_inspiration_albums",[]),weddingDayTimeline:storageJSON("ww241_wedding_day_timeline",[]),weddingSummaryNotes:storageGet("ww240_wedding_summary_notes","")||""
+ activeVendorCategory:storageGet("ww11_vendor_category","photographer")||"photographer",vendorCompareWeights:storageJSON("ww11_vendor_weights",{}),reminders:storageJSON("ww23_reminders",[]),inspirationAlbums:storageJSON("ww234_inspiration_albums",[]),weddingDayTimeline:storageJSON("ww241_wedding_day_timeline",[]),weddingSummaryNotes:storageGet("ww240_wedding_summary_notes","")||"",prepPlaces:storageJSON("ww255_prep_places",[]),prepRecommendations:storageJSON("ww255_prep_recommendations",[]),prepSearch:storageJSON("ww255_prep_search",{type:"any",location:"",date:"",preferences:""})
 }}
 function persistLocalSnapshot(){
  storageSet("ww3_setup",JSON.stringify(state.setup));storageSet("ww3_venues",JSON.stringify(state.venues));
@@ -4700,7 +4781,7 @@ function persistLocalSnapshot(){
  storageSet("ww15_gifts",JSON.stringify(state.gifts));storageSet("ww5_recommendations",JSON.stringify(state.recommendations));
  storageSet("ww7_compare_weights",JSON.stringify(state.compareWeights));storageSet("ww11_vendors",JSON.stringify(state.vendors));
  storageSet("ww11_vendor_recommendations",JSON.stringify(state.vendorRecommendations));storageSet("ww11_vendor_category",state.activeVendorCategory);
- storageSet("ww11_vendor_weights",JSON.stringify(state.vendorCompareWeights));storageSet("ww23_reminders",JSON.stringify(state.reminders));storageSet("ww234_inspiration_albums",JSON.stringify(state.inspirationAlbums));storageSet("ww241_wedding_day_timeline",JSON.stringify(state.weddingDayTimeline));storageSet("ww240_wedding_summary_notes",state.weddingSummaryNotes||"");
+ storageSet("ww11_vendor_weights",JSON.stringify(state.vendorCompareWeights));storageSet("ww23_reminders",JSON.stringify(state.reminders));storageSet("ww234_inspiration_albums",JSON.stringify(state.inspirationAlbums));storageSet("ww241_wedding_day_timeline",JSON.stringify(state.weddingDayTimeline));storageSet("ww240_wedding_summary_notes",state.weddingSummaryNotes||"");storageSet("ww255_prep_places",JSON.stringify(state.prepPlaces));storageSet("ww255_prep_recommendations",JSON.stringify(state.prepRecommendations));storageSet("ww255_prep_search",JSON.stringify(state.prepSearch));
 }
 function setSyncStatus(kind,text){const el=document.getElementById("moreSyncStatus");if(el){el.textContent=text;el.className="ww22-sync-status "+(kind||"")}}
 function applyUserUi(){
@@ -4858,13 +4939,13 @@ function applySnapshot(snapshot){
   state.seatingTables=Array.isArray(s.seatingTables)?s.seatingTables:[];state.gifts=Array.isArray(s.gifts)?s.gifts:[];
   state.recommendations=Array.isArray(s.recommendations)?s.recommendations:[];state.compareWeights=s.compareWeights||{price:20,food:20,atmosphere:15,location:15,design:10,service:10,parking:5,couple:5};
   state.vendors=Array.isArray(s.vendors)?s.vendors:[];state.vendorRecommendations=s.vendorRecommendations||{};
-  state.activeVendorCategory=s.activeVendorCategory||"photographer";state.vendorCompareWeights=s.vendorCompareWeights||{};state.reminders=Array.isArray(s.reminders)?s.reminders:[];state.inspirationAlbums=Array.isArray(s.inspirationAlbums)?s.inspirationAlbums:[];state.weddingDayTimeline=Array.isArray(s.weddingDayTimeline)?s.weddingDayTimeline:[];state.weddingSummaryNotes=String(s.weddingSummaryNotes||"");
+  state.activeVendorCategory=s.activeVendorCategory||"photographer";state.vendorCompareWeights=s.vendorCompareWeights||{};state.reminders=Array.isArray(s.reminders)?s.reminders:[];state.inspirationAlbums=Array.isArray(s.inspirationAlbums)?s.inspirationAlbums:[];state.weddingDayTimeline=Array.isArray(s.weddingDayTimeline)?s.weddingDayTimeline:[];state.weddingSummaryNotes=String(s.weddingSummaryNotes||"");state.prepPlaces=Array.isArray(s.prepPlaces)?s.prepPlaces:[];state.prepRecommendations=Array.isArray(s.prepRecommendations)?s.prepRecommendations:[];state.prepSearch=s.prepSearch||{type:"any",location:"",date:"",preferences:""};
   state.venues.forEach(ensureVenueDetails);state.vendors.forEach(ensureVendorDetails);persistLocalSnapshot();renderAllForUser();
  }finally{cloudApplying=false}
 }
 function renderAllForUser(){
  loadSetup();loadComparisonWeights();renderVenues();renderRecommendations();renderComparisonImpressionEditor();renderVendorSection();
- renderVendorCompare();renderChecklist();renderBudget();renderGuests();renderGifts();renderReminders();renderInspiration();renderWeddingDayTimeline();renderWeddingSummary();updateDashboard();syncMobileNavigation(currentSectionId());
+ renderVendorCompare();renderPrepPlaces();renderChecklist();renderBudget();renderGuests();renderGifts();renderReminders();renderInspiration();renderWeddingDayTimeline();renderWeddingSummary();updateDashboard();syncMobileNavigation(currentSectionId());
 }
 async function loadAuthenticatedUser(user){
  cloudUser=user;
@@ -4975,7 +5056,7 @@ window.addEventListener("online",()=>{if(cloudUser)scheduleCloudSave()});
 const state={
  setup:{},venues:[],checklist:mergeChecklistWithDefaults(null),expenses:[],guests:[],seatingTables:[],gifts:[],recommendations:[],
  compareWeights:{price:20,food:20,atmosphere:15,location:15,design:10,service:10,parking:5,couple:5},
- vendors:[],vendorRecommendations:{},activeVendorCategory:"photographer",vendorCompareWeights:{},reminders:[],inspirationAlbums:[],weddingDayTimeline:[],weddingSummaryNotes:"",activeVenueId:null
+ vendors:[],vendorRecommendations:{},activeVendorCategory:"photographer",vendorCompareWeights:{},reminders:[],inspirationAlbums:[],weddingDayTimeline:[],weddingSummaryNotes:"",prepPlaces:[],prepRecommendations:[],prepSearch:{type:"any",location:"",date:"",preferences:""},activeVenueId:null
 };
 function persist(){if(!cloudUser||!currentUserId)return;persistLocalSnapshot();scheduleCloudSave()}
 function esc(s){return String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[c]))}
@@ -5266,6 +5347,7 @@ function isSavedVenue(name){
 
 function sourceLabel(domain){
  const map={
+  "google.com":"Google",
   "mit4mit.co.il":"Mit4Mit",
   "mitchatnim.co.il":"מתחתנים",
   "iplan.co.il":"iPlan",
@@ -5277,12 +5359,34 @@ function sourceLabel(domain){
  return map[domain]||domain;
 }
 
+let venueResultsCollapsed=false;
+
+function setVenueRecommendationResultsCollapsed(collapsed){
+ venueResultsCollapsed=!!collapsed;
+ const box=document.getElementById("recommendationResults");
+ const btn=document.getElementById("venueResultsToggleBtn");
+ if(!box||!btn)return;
+ const hasResults=Array.isArray(state.recommendations)&&state.recommendations.length>0;
+ btn.style.display=hasResults?"":"none";
+ box.style.display=hasResults&&!venueResultsCollapsed?"":"none";
+ if(hasResults){
+   btn.textContent=venueResultsCollapsed?`הצגת תוצאות (${state.recommendations.length})`:"סגירת תוצאות";
+   btn.setAttribute("aria-expanded",String(!venueResultsCollapsed));
+ }
+}
+
+function toggleVenueRecommendationResults(){
+ setVenueRecommendationResultsCollapsed(!venueResultsCollapsed);
+}
+
 function renderRecommendations(){
  const box=document.getElementById("recommendationResults");
  if(!box)return;
 
  if(!state.recommendations.length){
    box.innerHTML="";
+   venueResultsCollapsed=false;
+   setVenueRecommendationResultsCollapsed(false);
    return;
  }
 
@@ -5336,6 +5440,7 @@ function renderRecommendations(){
      </div>
    </div>`;
  }).join("");
+ setVenueRecommendationResultsCollapsed(venueResultsCollapsed);
 }
 
 async function searchRecommendedVenues(forceRefresh=false){
@@ -5349,6 +5454,8 @@ async function searchRecommendedVenues(forceRefresh=false){
  }
 
  btn.disabled=true;
+ venueResultsCollapsed=false;
+ const resultsToggleBtn=document.getElementById("venueResultsToggleBtn");if(resultsToggleBtn)resultsToggleBtn.style.display="none";
  const refreshBtn=document.getElementById("smartRefreshBtn");if(refreshBtn)refreshBtn.disabled=true;
  btn.textContent=forceRefresh?"מרעננת...":"מחפשת...";
  status.className="status";
@@ -5766,6 +5873,8 @@ function addVenueAvailableDate(){
 
 function renderVenueDetail(){
  const v=state.venues.find(x=>x.id===state.activeVenueId);if(!v){venueDetailPanel.style.display="none";return}
+ const sameVenueDetail=venueDetailPanel.dataset.venueId===String(v.id);
+ const openVenueSections=sameVenueDetail?Array.from(venueDetailPanel.querySelectorAll("details.venue-accordion[open] > summary")).map(s=>(s.querySelector("span")?.textContent||s.textContent||"").trim()):null;
  ensureVenueDetails(v);
  const estimate=venueEstimatedCost(v);
  const billed=Math.max(+state.setup.estimatedGuests||0,+v.minGuests||0);
@@ -5878,6 +5987,14 @@ function renderVenueDetail(){
  </details>
 
  <div class="row" style="margin-top:18px"><button class="btn primary" onclick="saveVenueDetail()">שמרי את כרטיס המקום</button><button class="btn secondary" onclick="closeVenueDetail()">סגירה</button></div>`;
+ venueDetailPanel.dataset.venueId=String(v.id);
+ if(openVenueSections){
+   const openSet=new Set(openVenueSections);
+   venueDetailPanel.querySelectorAll("details.venue-accordion").forEach(d=>{
+     const title=(d.querySelector("summary span")?.textContent||d.querySelector("summary")?.textContent||"").trim();
+     d.open=openSet.has(title);
+   });
+ }
 }
 
 
@@ -6396,6 +6513,48 @@ function vendorPaymentRows(v){
    <button onclick="deleteVendorPayment(${v.id},'${p.id}')" aria-label="מחיקת תשלום">×</button>
  </div>`).join("");
 }
+
+
+
+function prepTypeLabel(type){return ({villa:"וילה",apartment:"דירה",hotel:"מלון",other:"אחר",any:"לא משנה"})[type]||"מקום"}
+function ensurePrepPlace(p){
+ if(!p||typeof p!=="object")return p;
+ if(!p.id)p.id=Date.now()+Math.random();
+ if(!p.type)p.type="other";if(!p.address)p.address="";if(!p.website)p.website="";if(!p.phone)p.phone="";if(!p.price)p.price=0;
+ if(!p.contact)p.contact="";if(!p.availability)p.availability="";if(!p.checkIn)p.checkIn="";if(!p.checkOut)p.checkOut="";if(p.overnight===undefined)p.overnight="unknown";if(p.parking===undefined)p.parking="unknown";if(!p.capacity)p.capacity="";if(!p.notes)p.notes="";if(!p.rating)p.rating=0; if(!p.reviewCount)p.reviewCount=0;if(!p.status)p.status="saved";if(!p.recommendation)p.recommendation=null;return p;
+}
+function selectedPrepType(){return document.querySelector('input[name="prepPlaceType"]:checked')?.value||"any"}
+function loadPrepSearchControls(){
+ const s=state.prepSearch||{type:"any",location:"",date:"",preferences:""};
+ const radio=document.querySelector(`input[name="prepPlaceType"][value="${CSS.escape(s.type||"any")}"]`)||document.querySelector('input[name="prepPlaceType"][value="any"]');if(radio)radio.checked=true;
+ const loc=byId("prepSearchLocation"),date=byId("prepSearchDate"),prefs=byId("prepSearchPreferences");
+ if(loc&&document.activeElement!==loc)loc.value=s.location||((state.setup.regions||[])[0]||"");
+ if(date&&document.activeElement!==date)date.value=s.date||state.setup.weddingDate||"";
+ if(prefs&&document.activeElement!==prefs)prefs.value=s.preferences||"";
+}
+function prepPlaceSaved(name){const n=String(name||"").trim().toLowerCase();return state.prepPlaces.some(p=>String(p.name||"").trim().toLowerCase()===n)}
+function togglePrepManualForm(force){const f=byId("prepManualForm");if(!f)return;const open=typeof force==="boolean"?force:f.style.display==="none"||!f.style.display;f.style.display=open?"block":"none";if(open)setTimeout(()=>byId("prepManualName")?.focus(),60)}
+async function searchPrepPlaces(forceRefresh=false){
+ const btn=byId("prepSearchBtn"),refresh=byId("prepRefreshBtn"),status=byId("prepSearchStatus");if(!btn||!status)return;
+ const location=String(byId("prepSearchLocation")?.value||"").trim();if(!location)return alert("הכניסי מיקום או אזור לחיפוש");
+ state.prepSearch={type:selectedPrepType(),location,date:byId("prepSearchDate")?.value||"",preferences:String(byId("prepSearchPreferences")?.value||"").trim()};persist();
+ btn.disabled=true;if(refresh)refresh.disabled=true;btn.textContent="מחפשת...";status.className="status";status.innerHTML='<span class="search-loading"><span class="spinner"></span><span>מחפשת מקומות התארגנות ספציפיים באזור שבחרת...</span></span>';byId("prepRecommendationResults").innerHTML="";
+ try{
+  const response=await protectedSearchFetch({entityType:"prepPlace",prepType:state.prepSearch.type,prepLocation:location,prepDate:state.prepSearch.date,prepPreferences:state.prepSearch.preferences,regions:state.setup.regions||[],forceRefresh:!!forceRefresh});
+  let data={};try{data=await response.json()}catch(e){}
+  if(!response.ok||!data.success)throw new Error(data.error||`החיפוש נכשל (${response.status})`);
+  state.prepRecommendations=Array.isArray(data.prepPlaces)?data.prepPlaces:[];persist();renderPrepRecommendations();status.className="status good";status.textContent=state.prepRecommendations.length?`נמצאו ${state.prepRecommendations.length} מקומות להתארגנות`:`לא נמצאו כרגע תוצאות. נסי מיקום אחר או סוג אחר.`;renderSearchFreshness("prepSearchFreshness",data.cache);
+ }catch(err){console.error(err);status.className="status error";status.textContent="לא הצלחתי להשלים את החיפוש: "+(err?.message||"שגיאה לא ידועה")}
+ finally{btn.disabled=false;if(refresh)refresh.disabled=false;btn.textContent="✨ חיפוש מקומות"}
+}
+function renderPrepRecommendations(){const box=byId("prepRecommendationResults");if(!box)return;const rows=state.prepRecommendations||[];if(!rows.length){box.innerHTML="";return}box.innerHTML=rows.map((p,i)=>{const saved=prepPlaceSaved(p.name),sources=(p.sourceDomains||[]).slice(0,4),reasons=(p.reasons||[]).slice(0,4),checks=(p.thingsToCheck||[]).slice(0,4);return `<div class="prep-result-card"><div class="between"><div><div class="muted small">${esc(prepTypeLabel(p.prepType||state.prepSearch.type))}</div><h3>${esc(p.name)}</h3></div>${p.overallScore?`<span class="badge">WedWise ${p.overallScore}%</span>`:""}</div><div class="muted small">${esc(p.address||"כתובת לא נמצאה")}</div><div class="prep-meta">${p.rating?`<span>Google ${p.rating}/5</span>`:""}${p.reviewCount?`<span>${Number(p.reviewCount).toLocaleString()} ביקורות</span>`:""}${sources.map(d=>`<span>${esc(sourceLabel(d))}</span>`).join("")}</div>${reasons.length?`<ul class="evidence-list small">${reasons.map(x=>`<li>${esc(x)}</li>`).join("")}</ul>`:""}${checks.length?`<ul class="check-list small">${checks.map(x=>`<li>${esc(x)}</li>`).join("")}</ul>`:""}<div class="prep-card-actions"><button class="btn ${saved?"secondary":"primary"}" ${saved?"disabled":""} onclick="savePrepRecommendation(${i})">${saved?"✓ נשמר":"שמירת מקום"}</button>${p.website?`<a class="btn ghost" href="${esc(p.website)}" target="_blank" rel="noopener">אתר</a>`:""}${p.urbanBridesUrl?`<a class="btn ghost" href="${esc(p.urbanBridesUrl)}" target="_blank" rel="noopener">כלות אורבניות</a>`:""}</div></div>`}).join("")}
+function savePrepRecommendation(i){const r=(state.prepRecommendations||[])[i];if(!r||prepPlaceSaved(r.name))return;state.prepPlaces.push(ensurePrepPlace({id:Date.now()+Math.random(),name:r.name||"",type:r.prepType&&r.prepType!=="any"?r.prepType:(state.prepSearch.type!=="any"?state.prepSearch.type:"other"),address:r.address||state.prepSearch.location||"",website:r.website||"",phone:r.phone||"",rating:r.rating||0,reviewCount:r.reviewCount||0,recommendation:r,notes:""}));persist();renderPrepPlaces();renderPrepRecommendations()}
+function addPrepPlaceManually(){const name=String(byId("prepManualName")?.value||"").trim();if(!name)return alert("הכניסי שם מקום");state.prepPlaces.push(ensurePrepPlace({id:Date.now()+Math.random(),name,type:byId("prepManualType")?.value||"other",address:String(byId("prepManualAddress")?.value||"").trim(),website:String(byId("prepManualWebsite")?.value||"").trim(),phone:String(byId("prepManualPhone")?.value||"").trim(),price:+byId("prepManualPrice")?.value||0,notes:String(byId("prepManualNotes")?.value||"").trim()}));["prepManualName","prepManualAddress","prepManualWebsite","prepManualPhone","prepManualPrice","prepManualNotes"].forEach(id=>{const e=byId(id);if(e)e.value=""});persist();togglePrepManualForm(false);renderPrepPlaces()}
+function updatePrepPlace(id,key,value){const p=state.prepPlaces.find(x=>String(x.id)===String(id));if(!p)return;ensurePrepPlace(p);if(["price"].includes(key))p[key]=Math.max(0,+value||0);else p[key]=value;persist();renderPrepPlaces()}
+function choosePrepPlace(id){state.prepPlaces.forEach(p=>{ensurePrepPlace(p);p.status=String(p.id)===String(id)?"chosen":(p.status==="chosen"?"saved":p.status)});persist();renderPrepPlaces()}
+function deletePrepPlace(id){if(!confirm("למחוק את מקום ההתארגנות הזה?"))return;state.prepPlaces=state.prepPlaces.filter(p=>String(p.id)!==String(id));persist();renderPrepPlaces();renderPrepRecommendations()}
+function prepSelectOptions(value){return `<option value="villa" ${value==="villa"?"selected":""}>וילה</option><option value="apartment" ${value==="apartment"?"selected":""}>דירה</option><option value="hotel" ${value==="hotel"?"selected":""}>מלון</option><option value="other" ${value==="other"?"selected":""}>אחר</option>`}
+function renderPrepPlaces(){loadPrepSearchControls();renderPrepRecommendations();const box=byId("prepSavedPlaces");if(!box)return;state.prepPlaces.forEach(ensurePrepPlace);if(!state.prepPlaces.length){box.innerHTML='<div class="card muted">עדיין לא שמרתם מקומות להתארגנות. אפשר לחפש ברשת או להוסיף מקום ידנית.</div>';return}box.innerHTML=state.prepPlaces.map(p=>`<div class="prep-saved-card ${p.status==="chosen"?"prep-chosen":""}"><div class="between"><div><div class="muted small">${esc(prepTypeLabel(p.type))}</div><h3>${esc(p.name)}</h3><div class="muted small">${esc(p.address||"")}</div></div>${p.status==="chosen"?'<span class="completion-chip">✓ נבחר</span>':""}</div><div class="prep-meta">${p.rating?`<span>Google ${p.rating}/5</span>`:""}${p.reviewCount?`<span>${Number(p.reviewCount).toLocaleString()} ביקורות</span>`:""}${p.price?`<span>${Number(p.price).toLocaleString()} ₪</span>`:""}</div><div class="prep-card-actions">${p.status!=="chosen"?`<button class="btn primary" onclick="choosePrepPlace('${p.id}')">בחרנו במקום</button>`:""}${p.website?`<a class="btn ghost" href="${esc(p.website)}" target="_blank" rel="noopener">אתר</a>`:""}${p.phone?`<a class="btn ghost" href="tel:${esc(p.phone)}">טלפון</a>`:""}<button class="btn danger" onclick="deletePrepPlace('${p.id}')">מחיקה</button></div><details class="prep-details"><summary>פרטים וניהול</summary><div class="detail-grid" style="margin-top:12px"><div class="field"><label>סוג</label><select onchange="updatePrepPlace('${p.id}','type',this.value)">${prepSelectOptions(p.type)}</select></div><div class="field"><label>כתובת / מיקום</label><input value="${esc(p.address)}" onchange="updatePrepPlace('${p.id}','address',this.value)"></div><div class="field"><label>טלפון</label><input type="tel" value="${esc(p.phone)}" onchange="updatePrepPlace('${p.id}','phone',this.value)"></div><div class="field"><label>אתר / קישור</label><input value="${esc(p.website)}" onchange="updatePrepPlace('${p.id}','website',this.value)"></div><div class="field"><label>מחיר</label><input type="number" min="0" value="${p.price||""}" onchange="updatePrepPlace('${p.id}','price',this.value)"></div><div class="field"><label>לכמה אנשים נוח להתארגן?</label><input value="${esc(p.capacity)}" onchange="updatePrepPlace('${p.id}','capacity',this.value)"></div><div class="field"><label>שעת כניסה</label><input type="time" value="${esc(p.checkIn)}" onchange="updatePrepPlace('${p.id}','checkIn',this.value)"></div><div class="field"><label>שעת יציאה</label><input type="time" value="${esc(p.checkOut)}" onchange="updatePrepPlace('${p.id}','checkOut',this.value)"></div><div class="field"><label>אפשר לישון במקום?</label><select onchange="updatePrepPlace('${p.id}','overnight',this.value)"><option value="unknown" ${p.overnight==="unknown"?"selected":""}>לא ידוע</option><option value="yes" ${p.overnight==="yes"?"selected":""}>כן</option><option value="no" ${p.overnight==="no"?"selected":""}>לא</option></select></div><div class="field"><label>חניה</label><select onchange="updatePrepPlace('${p.id}','parking',this.value)"><option value="unknown" ${p.parking==="unknown"?"selected":""}>לא ידוע</option><option value="yes" ${p.parking==="yes"?"selected":""}>יש</option><option value="no" ${p.parking==="no"?"selected":""}>אין / מוגבלת</option></select></div><div class="field"><label>איש קשר</label><input value="${esc(p.contact)}" onchange="updatePrepPlace('${p.id}','contact',this.value)"></div><div class="field"><label>זמינות / תנאים שקיבלנו</label><input value="${esc(p.availability)}" onchange="updatePrepPlace('${p.id}','availability',this.value)"></div></div><div class="field"><label>הערות</label><textarea onchange="updatePrepPlace('${p.id}','notes',this.value)">${esc(p.notes)}</textarea></div></details></div>`).join("")}
 
 function vendorConfig(category=state.activeVendorCategory){return VENDOR_CATEGORIES[category]||VENDOR_CATEGORIES.photographer}
 function vendorCategoryLabel(category){return vendorConfig(category).label}
@@ -7566,7 +7725,7 @@ showStorageNoticeIfNeeded();syncMobileNavigation("dashboard");initAuthentication
 </script>
 
 <script>
-const WEDWISE_REPAIR_KEY="ww253_pwa_repaired";
+const WEDWISE_REPAIR_KEY="ww256_pwa_repaired";
 window.addEventListener("load",async()=>{
  if(!("serviceWorker" in navigator)||!/^https?:$/.test(location.protocol))return;
  try{
@@ -7575,7 +7734,7 @@ window.addEventListener("load",async()=>{
      if("caches" in window){const names=await caches.keys();await Promise.all(names.filter(n=>n.startsWith("wedwise-")).map(n=>caches.delete(n)))}
      localStorage.setItem(WEDWISE_REPAIR_KEY,"1");location.reload();return;
    }
-   const reg=await navigator.serviceWorker.register("./sw.js?v=253",{updateViaCache:"none"});await reg.update().catch(()=>{});
+   const reg=await navigator.serviceWorker.register("./sw.js?v=256",{updateViaCache:"none"});await reg.update().catch(()=>{});
  }catch(e){console.warn("PWA init",e)}
 });
 </script>
