@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>WedWise v2.5.6 - Wedding Planning Workspace</title>
+<title>WedWise v2.5.8 - Wedding Planning Workspace</title>
 <style>
 
 :root{
@@ -2378,6 +2378,7 @@ h1,h2,h3,.ww19-wordmark,.ww19-card-title,.ww19-hero-label{
 
 /* WedWise v2.5.3 — compact venue cards + mobile date fields */
 /* v2.5.6: venue accordion state is preserved across quote-item edits */
+/* v2.5.8: free-form note moved into practical-fit section */
 .venue-accordion{
   margin-top:12px;border:1px solid var(--line);border-radius:18px;background:rgba(255,253,249,.88);overflow:hidden;
 }
@@ -3494,6 +3495,13 @@ aside .brand-lockup-centered .brand small{
     <div id="venueSearchFreshness" class="ww21-search-freshness"></div>
 
     <div id="recommendationResults" class="reco-results"></div>
+  </div>
+
+  <div id="venueResultsReopenBar" class="card" style="display:none;margin-bottom:16px;padding:12px 16px">
+    <div class="between">
+      <div class="muted small">תוצאות החיפוש מוסתרות כדי שתוכלי להתמקד במקומות ששמרת.</div>
+      <button type="button" class="btn secondary small" onclick="setVenueRecommendationResultsCollapsed(false)">הצגת תוצאות החיפוש</button>
+    </div>
   </div>
 
   <div id="venueForm" class="card" style="display:none;margin-bottom:16px">
@@ -5365,13 +5373,20 @@ function setVenueRecommendationResultsCollapsed(collapsed){
  venueResultsCollapsed=!!collapsed;
  const box=document.getElementById("recommendationResults");
  const btn=document.getElementById("venueResultsToggleBtn");
- if(!box||!btn)return;
+ const panel=document.getElementById("liveSearchPanel");
+ const reopen=document.getElementById("venueResultsReopenBar");
+ if(!box||!btn||!panel||!reopen)return;
  const hasResults=Array.isArray(state.recommendations)&&state.recommendations.length>0;
+ if(!hasResults)venueResultsCollapsed=false;
  btn.style.display=hasResults?"":"none";
- box.style.display=hasResults&&!venueResultsCollapsed?"":"none";
+ panel.style.display=hasResults&&venueResultsCollapsed?"none":"";
+ reopen.style.display=hasResults&&venueResultsCollapsed?"":"none";
+ box.style.display=hasResults?"":"none";
  if(hasResults){
-   btn.textContent=venueResultsCollapsed?`הצגת תוצאות (${state.recommendations.length})`:"סגירת תוצאות";
+   btn.textContent="סגירת תוצאות";
    btn.setAttribute("aria-expanded",String(!venueResultsCollapsed));
+   const reopenBtn=reopen.querySelector("button");
+   if(reopenBtn)reopenBtn.textContent=`הצגת תוצאות החיפוש (${state.recommendations.length})`;
  }
 }
 
@@ -5455,6 +5470,7 @@ async function searchRecommendedVenues(forceRefresh=false){
 
  btn.disabled=true;
  venueResultsCollapsed=false;
+ setVenueRecommendationResultsCollapsed(false);
  const resultsToggleBtn=document.getElementById("venueResultsToggleBtn");if(resultsToggleBtn)resultsToggleBtn.style.display="none";
  const refreshBtn=document.getElementById("smartRefreshBtn");if(refreshBtn)refreshBtn.disabled=true;
  btn.textContent=forceRefresh?"מרעננת...":"מחפשת...";
@@ -5606,6 +5622,7 @@ function ensureVenueDetails(v){
  if(v.myOverall===undefined)v.myOverall=v.overall||0;
  if(v.partnerOverall===undefined)v.partnerOverall=0;
  if(v.offerSummary===undefined)v.offerSummary="";
+ if(v.generalNotes===undefined)v.generalNotes="";
  if(v.links===undefined)v.links="";
  if(v.contractNotes===undefined)v.contractNotes="";
  if(v.paymentMethod===undefined)v.paymentMethod="";
@@ -5663,6 +5680,12 @@ function venueEstimatedCost(v){
  const billed=Math.max(+state.setup.estimatedGuests||0,+v.minGuests||0);
  if(!v.price&&!v.venueFee&&!v.extraCosts&&!v.quoteItems.some(q=>q.selected&&q.amount))return 0;
  return billed*(+v.price||0)+(+v.venueFee||0)+(+v.extraCosts||0)+quoteItemsCost(v);
+}
+function venueEffectivePricePerGuest(v){
+ ensureVenueDetails(v);
+ const billed=Math.max(+state.setup.estimatedGuests||0,+v.minGuests||0);
+ const total=venueEstimatedCost(v);
+ return billed>0&&total>0?Math.round(total/billed):0;
 }
 function fieldValue(id){return String(byId(id)?.value||"").trim()}
 function fieldNumber(id){return Math.max(0,+byId(id)?.value||0)}
@@ -5824,14 +5847,15 @@ function renderVenues(){
    const maps=encodeURIComponent(v.name+" "+(v.region||""));
    const rec=v.recommendation||null;
    const estimate=venueEstimatedCost(v);
+   const effectivePerGuest=venueEffectivePricePerGuest(v);
    const couple=[+v.myOverall||0,+v.partnerOverall||0].filter(Boolean);const coupleAvg=couple.length?(couple.reduce((a,b)=>a+b,0)/couple.length).toFixed(1):"-";
    return `
   <div class="card venue-card ${state.activeVenueId===v.id?"selected-card":""}">
     <div class="between"><h3>${esc(v.name)}</h3><span class="status-badge ${venueStatusClass(v.status)}">${venueStatusLabel(v.status)}</span></div>
     <div class="muted small">${esc(v.region||"")}</div>
     ${rec?`<div class="rec-meta"><span class="saved-mark">WedWise ${rec.overallScore??"-"}%</span>${rec.rating?`<span>Google ${rec.rating}/5</span>`:""}${rec.reviewCount?`<span>${Number(rec.reviewCount).toLocaleString()} ביקורות</span>`:""}</div>`:""}
-    <div class="venue-meta">${v.price?v.price.toLocaleString()+" ₪ למנה":"מחיר טרם הוזן"}${v.minGuests?" · מינימום "+v.minGuests:""}</div>
-    ${estimate?`<div class="cost-highlight small"><strong>עלות משוערת: ${estimate.toLocaleString()} ₪</strong><div class="mini-note">לפי ${Math.max(+state.setup.estimatedGuests||0,+v.minGuests||0)} אורחים לחיוב + תוספות שהזנת</div></div>`:""}
+    <div class="venue-meta">${v.price?v.price.toLocaleString()+" ₪ מחיר בסיס למנה":"מחיר בסיס טרם הוזן"}${v.minGuests?" · מינימום "+v.minGuests:""}</div>
+    ${estimate?`<div class="cost-highlight small"><strong>${effectivePerGuest?`מחיר משוקלל לאורח: ${effectivePerGuest.toLocaleString()} ₪ · `:""}עלות משוערת: ${estimate.toLocaleString()} ₪</strong><div class="mini-note">כולל תוספות שסומנו לחישוב, דמי מקום ותוספות כלליות · לפי ${Math.max(+state.setup.estimatedGuests||0,+v.minGuests||0)} אורחים לחיוב</div></div>`:""}
     <div class="small" style="margin-top:10px">אוכל ${v.food||"-"}/10 · אווירה ${v.atmosphere||"-"}/10 · שירות ${v.service||"-"}/10 · ציון זוגי ${coupleAvg}</div>
     <div class="row" style="margin-top:12px">
       <button class="btn primary" onclick="openVenueDetail(${v.id})">פתחי כרטיס מקום</button>
@@ -5878,6 +5902,7 @@ function renderVenueDetail(){
  ensureVenueDetails(v);
  const estimate=venueEstimatedCost(v);
  const billed=Math.max(+state.setup.estimatedGuests||0,+v.minGuests||0);
+ const effectivePerGuest=venueEffectivePricePerGuest(v);
  const qDone=v.questions.filter(x=>x.done).length;
  const cDone=v.contractChecks.filter(x=>x.done).length;
  const cap=(v.recommendation?.detectedCapacity||v.detectedCapacity||0);
@@ -5888,7 +5913,8 @@ function renderVenueDetail(){
  </div>
 
  <div class="detail-grid" style="margin-top:16px">
-   <div class="metric-card"><span class="muted small">עלות משוערת</span><strong>${estimate?estimate.toLocaleString()+" ₪":"-"}</strong><div class="mini-note">${billed?`לפי ${billed} אורחים לחיוב`:"הזיני מחיר ומספר אורחים"}</div></div>
+   <div class="metric-card"><span class="muted small">מחיר משוקלל לאורח</span><strong>${effectivePerGuest?effectivePerGuest.toLocaleString()+" ₪":"-"}</strong><div class="mini-note">כולל התוספות שסומנו, דמי מקום ותוספות כלליות</div></div>
+   <div class="metric-card"><span class="muted small">עלות משוערת כוללת</span><strong>${estimate?estimate.toLocaleString()+" ₪":"-"}</strong><div class="mini-note">${billed?`לפי ${billed} אורחים לחיוב`:"הזיני מחיר ומספר אורחים"}</div></div>
    <div class="metric-card"><span class="muted small">ציון WedWise מהאינטרנט</span><strong>${v.recommendation?.overallScore??"-"}%</strong><div class="mini-note">משמש לסינון ראשוני בלבד</div></div>
    <div class="metric-card"><span class="muted small">התקדמות בדיקה</span><strong>${qDone}/${v.questions.length}</strong><div class="mini-note">שאלות שנבדקו · חוזה ${cDone}/${v.contractChecks.length}</div></div>
  </div>
@@ -5902,7 +5928,7 @@ function renderVenueDetail(){
     <div class="field"><label>דמי מקום / עלות קבועה</label><input id="vdVenueFee" type="number" inputmode="decimal" value="${v.venueFee||""}"></div>
     <div class="field"><label>תוספות כלליות צפויות</label><input id="vdExtraCosts" type="number" inputmode="decimal" value="${v.extraCosts||""}"></div>
    </div>
-   <div class="cost-highlight"><strong>עלות משוערת: ${estimate?estimate.toLocaleString()+" ₪":"עדיין אין מספיק נתונים"}</strong><div class="mini-note">לפי הגבוה מבין מספר האורחים שלכם לבין מינימום האורחים של המקום, כולל תוספות שסומנו לחישוב.</div></div>
+   <div class="cost-highlight"><strong>${effectivePerGuest?`מחיר משוקלל לאורח: ${effectivePerGuest.toLocaleString()} ₪ · `:""}עלות משוערת: ${estimate?estimate.toLocaleString()+" ₪":"עדיין אין מספיק נתונים"}</strong><div class="mini-note">לפי הגבוה מבין מספר האורחים שלכם לבין מינימום האורחים של המקום. המחיר המשוקלל כולל תוספות שסומנו לחישוב, דמי מקום ותוספות כלליות.</div></div>
   </div>
  </details>
 
@@ -5964,6 +5990,7 @@ function renderVenueDetail(){
    <div class="field"><label>נגישות</label><select id="vdAccessibility"><option value="" ${!v.accessibility?"selected":""}>לא בדקנו</option><option value="good" ${v.accessibility==="good"?"selected":""}>טובה</option><option value="partial" ${v.accessibility==="partial"?"selected":""}>חלקית</option><option value="poor" ${v.accessibility==="poor"?"selected":""}>בעייתית</option></select></div>
    <div class="field"><label>קישור / אתר</label><input id="vdWebsite" value="${esc(v.website||"")}"></div>
    <div class="field"><label>קישורים נוספים / תמונות</label><textarea id="vdLinks" placeholder="Instagram, אלבום תמונות, הצעה בענן...">${esc(v.links||"")}</textarea></div>
+   <div class="field" style="grid-column:1/-1"><label>הערה חופשית</label><textarea id="vdGeneralNotes" placeholder="למשל: דברים שחשוב לזכור, שאלות שצריך לברר, מידע על החניה, החופה, הנגישות או כל פרט פרקטי אחר">${esc(v.generalNotes||"")}</textarea></div>
   </div></div>
  </details>
 
@@ -6042,7 +6069,7 @@ function ratingField(id,label,value){return `<div class="field"><label>${label} 
 function saveVenueDetail(){
  const v=state.venues.find(x=>x.id===state.activeVenueId);if(!v)return;
  v.status=byId("vdStatus")?.value||v.status;if(v.status==="chosen")state.venues.forEach(x=>{if(x.id!==v.id&&x.status==="chosen")x.status="finalist"});v.visitDate=byId("vdVisitDate")?.value||"";v.contactPerson=byId("vdContactPerson")?.value.trim()||"";v.contactPhone=byId("vdContactPhone")?.value.trim()||"";v.availableDates=byId("vdAvailableDates")?.value.trim()||"";
- v.price=+byId("vdPrice")?.value||0;v.minGuests=+byId("vdMinGuests")?.value||0;v.venueFee=+byId("vdVenueFee")?.value||0;v.extraCosts=+byId("vdExtraCosts")?.value||0;v.offerSummary=byId("vdOfferSummary")?.value.trim()||"";
+ v.price=+byId("vdPrice")?.value||0;v.minGuests=+byId("vdMinGuests")?.value||0;v.venueFee=+byId("vdVenueFee")?.value||0;v.extraCosts=+byId("vdExtraCosts")?.value||0;v.offerSummary=byId("vdOfferSummary")?.value.trim()||"";v.generalNotes=byId("vdGeneralNotes")?.value.trim()||"";
  v.indoorOutdoor=byId("vdIndoorOutdoor")?.value||"";v.chuppah=byId("vdChuppah")?.value||"";const parkingValue=byId("vdParking")?.value||"";v.parking=parkingValue==="yes"?true:parkingValue==="no"?false:null;v.accessibility=byId("vdAccessibility")?.value||"";v.website=byId("vdWebsite")?.value.trim()||"";v.links=byId("vdLinks")?.value.trim()||"";
  v.food=clamp10(byId("vdFood")?.value);v.atmosphere=clamp10(byId("vdAtmosphere")?.value);v.location=clamp10(byId("vdLocation")?.value);v.design=clamp10(byId("vdDesign")?.value);v.service=clamp10(byId("vdService")?.value);v.myOverall=clamp10(byId("vdMyOverall")?.value);v.partnerOverall=clamp10(byId("vdPartnerOverall")?.value);
  v.pros=byId("vdPros")?.value.trim()||"";v.cons=byId("vdCons")?.value.trim()||"";v.notes=byId("vdNotes")?.value.trim()||"";v.contractNotes=byId("vdContractNotes")?.value.trim()||"";
@@ -7725,7 +7752,7 @@ showStorageNoticeIfNeeded();syncMobileNavigation("dashboard");initAuthentication
 </script>
 
 <script>
-const WEDWISE_REPAIR_KEY="ww256_pwa_repaired";
+const WEDWISE_REPAIR_KEY="ww258_pwa_repaired";
 window.addEventListener("load",async()=>{
  if(!("serviceWorker" in navigator)||!/^https?:$/.test(location.protocol))return;
  try{
@@ -7734,7 +7761,7 @@ window.addEventListener("load",async()=>{
      if("caches" in window){const names=await caches.keys();await Promise.all(names.filter(n=>n.startsWith("wedwise-")).map(n=>caches.delete(n)))}
      localStorage.setItem(WEDWISE_REPAIR_KEY,"1");location.reload();return;
    }
-   const reg=await navigator.serviceWorker.register("./sw.js?v=256",{updateViaCache:"none"});await reg.update().catch(()=>{});
+   const reg=await navigator.serviceWorker.register("./sw.js?v=258",{updateViaCache:"none"});await reg.update().catch(()=>{});
  }catch(e){console.warn("PWA init",e)}
 });
 </script>
