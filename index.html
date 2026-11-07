@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>WedWise v2.5.8 - Wedding Planning Workspace</title>
+<title>WedWise v2.6.0 - Wedding Planning Workspace</title>
 <style>
 
 :root{
@@ -2379,6 +2379,7 @@ h1,h2,h3,.ww19-wordmark,.ww19-card-title,.ww19-hero-label{
 /* WedWise v2.5.3 — compact venue cards + mobile date fields */
 /* v2.5.6: venue accordion state is preserved across quote-item edits */
 /* v2.5.8: free-form note moved into practical-fit section */
+/* v2.6.0: clearer venue comparison price rating */
 .venue-accordion{
   margin-top:12px;border:1px solid var(--line);border-radius:18px;background:rgba(255,253,249,.88);overflow:hidden;
 }
@@ -3611,12 +3612,13 @@ aside .brand-lockup-centered .brand small{
     </div>
 
     <div class="grid three" style="margin-top:14px">
-      <div class="field"><label>עלות כוללת (%)</label><input id="wPrice" type="number" min="0" max="100" step="5" value="20" oninput="onWeightChange()"></div>
-      <div class="field"><label>אוכל (%)</label><input id="wFood" type="number" min="0" max="100" step="5" value="20" oninput="onWeightChange()"></div>
+      <div class="field"><label>מחיר (%)</label><input id="wPrice" type="number" min="0" max="100" step="5" value="20" oninput="onWeightChange()"></div>
+      <div class="field"><label>התאמת התאריך הפנוי (%)</label><input id="wDate" type="number" min="0" max="100" step="5" value="15" oninput="onWeightChange()"></div>
+      <div class="field"><label>אוכל (%)</label><input id="wFood" type="number" min="0" max="100" step="5" value="15" oninput="onWeightChange()"></div>
       <div class="field"><label>אווירה (%)</label><input id="wAtmosphere" type="number" min="0" max="100" step="5" value="15" oninput="onWeightChange()"></div>
-      <div class="field"><label>מיקום (%)</label><input id="wLocation" type="number" min="0" max="100" step="5" value="15" oninput="onWeightChange()"></div>
+      <div class="field"><label>מיקום (%)</label><input id="wLocation" type="number" min="0" max="100" step="5" value="10" oninput="onWeightChange()"></div>
       <div class="field"><label>עיצוב (%)</label><input id="wDesign" type="number" min="0" max="100" step="5" value="10" oninput="onWeightChange()"></div>
-      <div class="field"><label>שירות (%)</label><input id="wService" type="number" min="0" max="100" step="5" value="10" oninput="onWeightChange()"></div>
+      <div class="field"><label>שירות (%)</label><input id="wService" type="number" min="0" max="100" step="5" value="5" oninput="onWeightChange()"></div>
       <div class="field"><label>חניה (%)</label><input id="wParking" type="number" min="0" max="100" step="5" value="5" oninput="onWeightChange()"></div>
       <div class="field"><label>התרשמות זוגית כללית (%)</label><input id="wCouple" type="number" min="0" max="100" step="5" value="5" oninput="onWeightChange()"></div>
     </div>
@@ -3628,7 +3630,7 @@ aside .brand-lockup-centered .brand small{
 
     <div class="weight-help">
       מקום לא יקבל יתרון רק בגלל שחסרים בו נתונים. WedWise מציגה בנפרד את <strong>שלמות המידע</strong>, ורק מקום שלפחות 60% מהחשיבות שהגדרתם כבר מולאה יכול להופיע כ"מוביל".
-      עלות מחושבת באופן יחסי בין המקומות שבהם הוזן מחיר; אם יש מחיר רק למקום אחד, העלות מקבלת ציון ניטרלי ולא 10/10 אוטומטי.
+      העלות המשוערת עדיין מוצגת לפי ההצעה והתוספות, אבל לציון ההשוואה אתם מדרגים <strong>כמה המחיר מתאים לתקציב שלכם</strong>. גם <strong>התאריך הפנוי</strong> מדורג בנפרד, כך שמקום שאהבתם אבל פנוי רק בתאריך פחות טוב יקבל לכך ביטוי בציון.
     </div>
   </div>
 
@@ -3652,6 +3654,8 @@ aside .brand-lockup-centered .brand small{
           <th>מקום</th>
           <th>סטטוס</th>
           <th>עלות משוערת</th>
+          <th>מחיר</th>
+          <th>התאמת תאריך</th>
           <th>אוכל</th>
           <th>אווירה</th>
           <th>מיקום</th>
@@ -4764,7 +4768,7 @@ function showStorageNoticeIfNeeded(){const n=document.getElementById("mobileStor
 
 function emptyStateSnapshot(){return{
  setup:{},venues:[],checklist:mergeChecklistWithDefaults(null),expenses:[],guests:[],seatingTables:[],gifts:[],recommendations:[],
- compareWeights:{price:20,food:20,atmosphere:15,location:15,design:10,service:10,parking:5,couple:5},
+ compareWeights:{price:20,date:15,food:15,atmosphere:15,location:10,design:10,service:5,parking:5,couple:5},
  vendors:[],vendorRecommendations:{},activeVendorCategory:"photographer",vendorCompareWeights:{},reminders:[],inspirationAlbums:[],weddingDayTimeline:[],weddingSummaryNotes:"",prepPlaces:[],prepRecommendations:[],prepSearch:{type:"any",location:"",date:"",preferences:""}
 }}
 function snapshotFromState(){return{
@@ -4778,7 +4782,7 @@ function localSnapshotForCurrentUser(){return{
  setup:storageJSON("ww3_setup",{}),venues:storageJSON("ww3_venues",[]),checklist:mergeChecklistWithDefaults(storageJSON("ww3_checklist",null)),
  expenses:storageJSON("ww3_expenses",[]),guests:storageJSON("ww3_guests",[]),seatingTables:storageJSON("ww15_seating_tables",[]),
  gifts:storageJSON("ww15_gifts",[]),recommendations:storageJSON("ww5_recommendations",[]),
- compareWeights:storageJSON("ww7_compare_weights",null)||{price:20,food:20,atmosphere:15,location:15,design:10,service:10,parking:5,couple:5},
+ compareWeights:normalizeCompareWeights(storageJSON("ww7_compare_weights",null)),
  vendors:storageJSON("ww11_vendors",[]),vendorRecommendations:storageJSON("ww11_vendor_recommendations",{}),
  activeVendorCategory:storageGet("ww11_vendor_category","photographer")||"photographer",vendorCompareWeights:storageJSON("ww11_vendor_weights",{}),reminders:storageJSON("ww23_reminders",[]),inspirationAlbums:storageJSON("ww234_inspiration_albums",[]),weddingDayTimeline:storageJSON("ww241_wedding_day_timeline",[]),weddingSummaryNotes:storageGet("ww240_wedding_summary_notes","")||"",prepPlaces:storageJSON("ww255_prep_places",[]),prepRecommendations:storageJSON("ww255_prep_recommendations",[]),prepSearch:storageJSON("ww255_prep_search",{type:"any",location:"",date:"",preferences:""})
 }}
@@ -4945,7 +4949,7 @@ function applySnapshot(snapshot){
   state.setup=s.setup||{};state.venues=Array.isArray(s.venues)?s.venues:[];state.checklist=mergeChecklistWithDefaults(s.checklist||null);
   state.expenses=Array.isArray(s.expenses)?s.expenses:[];state.guests=Array.isArray(s.guests)?s.guests:[];
   state.seatingTables=Array.isArray(s.seatingTables)?s.seatingTables:[];state.gifts=Array.isArray(s.gifts)?s.gifts:[];
-  state.recommendations=Array.isArray(s.recommendations)?s.recommendations:[];state.compareWeights=s.compareWeights||{price:20,food:20,atmosphere:15,location:15,design:10,service:10,parking:5,couple:5};
+  state.recommendations=Array.isArray(s.recommendations)?s.recommendations:[];state.compareWeights=normalizeCompareWeights(s.compareWeights);
   state.vendors=Array.isArray(s.vendors)?s.vendors:[];state.vendorRecommendations=s.vendorRecommendations||{};
   state.activeVendorCategory=s.activeVendorCategory||"photographer";state.vendorCompareWeights=s.vendorCompareWeights||{};state.reminders=Array.isArray(s.reminders)?s.reminders:[];state.inspirationAlbums=Array.isArray(s.inspirationAlbums)?s.inspirationAlbums:[];state.weddingDayTimeline=Array.isArray(s.weddingDayTimeline)?s.weddingDayTimeline:[];state.weddingSummaryNotes=String(s.weddingSummaryNotes||"");state.prepPlaces=Array.isArray(s.prepPlaces)?s.prepPlaces:[];state.prepRecommendations=Array.isArray(s.prepRecommendations)?s.prepRecommendations:[];state.prepSearch=s.prepSearch||{type:"any",location:"",date:"",preferences:""};
   state.venues.forEach(ensureVenueDetails);state.vendors.forEach(ensureVendorDetails);persistLocalSnapshot();renderAllForUser();
@@ -5063,7 +5067,7 @@ async function initAuthentication(){
 window.addEventListener("online",()=>{if(cloudUser)scheduleCloudSave()});
 const state={
  setup:{},venues:[],checklist:mergeChecklistWithDefaults(null),expenses:[],guests:[],seatingTables:[],gifts:[],recommendations:[],
- compareWeights:{price:20,food:20,atmosphere:15,location:15,design:10,service:10,parking:5,couple:5},
+ compareWeights:{price:20,date:15,food:15,atmosphere:15,location:10,design:10,service:5,parking:5,couple:5},
  vendors:[],vendorRecommendations:{},activeVendorCategory:"photographer",vendorCompareWeights:{},reminders:[],inspirationAlbums:[],weddingDayTimeline:[],weddingSummaryNotes:"",prepPlaces:[],prepRecommendations:[],prepSearch:{type:"any",location:"",date:"",preferences:""},activeVenueId:null
 };
 function persist(){if(!cloudUser||!currentUserId)return;persistLocalSnapshot();scheduleCloudSave()}
@@ -5623,6 +5627,8 @@ function ensureVenueDetails(v){
  if(v.partnerOverall===undefined)v.partnerOverall=0;
  if(v.offerSummary===undefined)v.offerSummary="";
  if(v.generalNotes===undefined)v.generalNotes="";
+ if(v.priceFit===undefined)v.priceFit=0;
+ if(v.dateFit===undefined)v.dateFit=0;
  if(v.links===undefined)v.links="";
  if(v.contractNotes===undefined)v.contractNotes="";
  if(v.paymentMethod===undefined)v.paymentMethod="";
@@ -6114,8 +6120,22 @@ function renderComparisonImpressionEditor(){
        </div>
        <span class="status-badge ${venueStatusClass(v.status)}">${venueStatusLabel(v.status)}</span>
      </div>
+     <div class="rec-meta" style="margin-top:10px">
+       ${venueEstimatedCost(v)?`<span>עלות משוערת: ${venueEstimatedCost(v).toLocaleString()} ₪</span>`:""}
+       ${venueEffectivePricePerGuest(v)?`<span>משוקלל לאורח: ${venueEffectivePricePerGuest(v).toLocaleString()} ₪</span>`:""}
+     </div>
 
      <div class="impression-fields">
+       <div class="field">
+         <label>מחיר</label>
+         <select onchange="updateComparisonImpression(${v.id},'priceFit',this.value)">${impressionSelectOptions(v.priceFit)}</select>
+         <div class="mini-note">1 = יקר מאוד · 10 = מחיר מצוין לנו</div>
+       </div>
+       <div class="field">
+         <label>התאמת התאריך הפנוי</label>
+         <select onchange="updateComparisonImpression(${v.id},'dateFit',this.value)">${impressionSelectOptions(v.dateFit)}</select>
+         <div class="mini-note">1 = תאריך בעייתי · 10 = תאריך אידיאלי</div>
+       </div>
        <div class="field">
          <label>אוכל</label>
          <select onchange="updateComparisonImpression(${v.id},'food',this.value)">${impressionSelectOptions(v.food)}</select>
@@ -6155,7 +6175,8 @@ function renderComparisonImpressionEditor(){
      </div>
 
      <div class="impression-note">
-       הציונים נשמרים מיד ונכנסים אוטומטית להשוואה. מחיר ועלויות ממלאים בכרטיס המקום, כי הם מחושבים לפי ההצעה שקיבלתם.
+       ${v.availableDates?`<div style="margin-bottom:5px"><strong>תאריכים פנויים שקיבלתם:</strong> ${esc(v.availableDates)}</div>`:""}
+       הציונים נשמרים מיד ונכנסים אוטומטית להשוואה. את העלות בפועל ממשיכים לעדכן בכרטיס המקום; כאן מדרגים כמה המחיר והתאריך באמת מתאימים לכם.
      </div>
    </div>
  `).join("");
@@ -6180,15 +6201,25 @@ function updateComparisonParking(id,value){
  renderVenues();
 }
 
-const DEFAULT_COMPARE_WEIGHTS={price:20,food:20,atmosphere:15,location:15,design:10,service:10,parking:5,couple:5};
+const DEFAULT_COMPARE_WEIGHTS={price:20,date:15,food:15,atmosphere:15,location:10,design:10,service:5,parking:5,couple:5};
+const LEGACY_COMPARE_WEIGHTS={price:20,food:20,atmosphere:15,location:15,design:10,service:10,parking:5,couple:5};
+function normalizeCompareWeights(w){
+ if(!w||typeof w!=="object")return {...DEFAULT_COMPARE_WEIGHTS};
+ if(w.date===undefined){
+   const legacyDefault=Object.keys(LEGACY_COMPARE_WEIGHTS).every(k=>(+w[k]||0)===LEGACY_COMPARE_WEIGHTS[k]);
+   return legacyDefault?{...DEFAULT_COMPARE_WEIGHTS}:{...w,date:0};
+ }
+ return {...DEFAULT_COMPARE_WEIGHTS,...w};
+}
 
 function weightInput(id){
  return document.getElementById(id);
 }
 
 function loadComparisonWeights(){
- const w=state.compareWeights||DEFAULT_COMPARE_WEIGHTS;
- const map={wPrice:"price",wFood:"food",wAtmosphere:"atmosphere",wLocation:"location",wDesign:"design",wService:"service",wParking:"parking",wCouple:"couple"};
+ state.compareWeights=normalizeCompareWeights(state.compareWeights);
+ const w=state.compareWeights;
+ const map={wPrice:"price",wDate:"date",wFood:"food",wAtmosphere:"atmosphere",wLocation:"location",wDesign:"design",wService:"service",wParking:"parking",wCouple:"couple"};
  Object.entries(map).forEach(([id,key])=>{
    const el=weightInput(id);
    if(el)el.value=w[key]??DEFAULT_COMPARE_WEIGHTS[key];
@@ -6199,6 +6230,7 @@ function loadComparisonWeights(){
 function weights(){
  return {
    price:+weightInput("wPrice").value||0,
+   date:+weightInput("wDate").value||0,
    food:+weightInput("wFood").value||0,
    atmosphere:+weightInput("wAtmosphere").value||0,
    location:+weightInput("wLocation").value||0,
@@ -6256,39 +6288,13 @@ function scoreVenues(){
  */
  const venues=[...state.venues];
 
- const knownCosts=venues
-   .map(v=>venueEstimatedCost(v))
-   .filter(c=>c>0);
-
- const uniqueCosts=[...new Set(knownCosts)];
- const minC=knownCosts.length?Math.min(...knownCosts):0;
- const maxC=knownCosts.length?Math.max(...knownCosts):0;
-
- function costScore(cost){
-   if(!cost)return null;
-
-   /*
-     One known price cannot be compared against anything,
-     so use a neutral 5/10 rather than awarding 10/10.
-   */
-   if(uniqueCosts.length<2||maxC===minC)return 5;
-
-   /*
-     Relative cost score:
-     cheapest = 10/10, most expensive = 4/10.
-     This keeps price meaningful without letting a small price
-     difference overwhelm all qualitative criteria.
-   */
-   const ratio=(cost-minC)/(maxC-minC);
-   return 10-(ratio*6);
- }
-
  const rows=venues.map(v=>{
    const cost=venueEstimatedCost(v);
    const couple=coupleScore(v);
 
    const criteria={
-     price:costScore(cost),
+     price:(+v.priceFit||0)>0?+v.priceFit:null,
+     date:(+v.dateFit||0)>0?+v.dateFit:null,
      food:(+v.food||0)>0?+v.food:null,
      atmosphere:(+v.atmosphere||0)>0?+v.atmosphere:null,
      location:(+v.location||0)>0?+v.location:null,
@@ -6348,7 +6354,7 @@ function renderComparison(){
  if(result.invalidWeights){
    best.style.display="block";
    best.innerHTML=`<div class="status error">סך אחוזי החשיבות חייב להיות 100% לפני שמחשבים השוואה.</div>`;
-   body.innerHTML='<tr><td colspan="12" class="muted">עדכני את אחוזי החשיבות כך שיסתכמו ל-100%.</td></tr>';
+   body.innerHTML='<tr><td colspan="14" class="muted">עדכני את אחוזי החשיבות כך שיסתכמו ל-100%.</td></tr>';
    return;
  }
 
@@ -6356,7 +6362,7 @@ function renderComparison(){
 
  if(!rows.length){
    best.style.display="none";
-   body.innerHTML='<tr><td colspan="12" class="muted">עדיין לא שמרת מקומות להשוואה.</td></tr>';
+   body.innerHTML='<tr><td colspan="14" class="muted">עדיין לא שמרת מקומות להשוואה.</td></tr>';
    return;
  }
 
@@ -6371,6 +6377,8 @@ function renderComparison(){
      <td><strong>${esc(v.name)}</strong></td>
      <td><span class="status-badge ${venueStatusClass(v.status)}">${venueStatusLabel(v.status)}</span></td>
      <td>${v.estimatedCost?v.estimatedCost.toLocaleString()+" ₪":"-"}</td>
+     <td>${v.priceFit?v.priceFit+"/10":"-"}</td>
+     <td>${v.dateFit?v.dateFit+"/10":"-"}</td>
      <td>${v.food||"-"}</td>
      <td>${v.atmosphere||"-"}</td>
      <td>${v.location||"-"}</td>
@@ -7752,7 +7760,7 @@ showStorageNoticeIfNeeded();syncMobileNavigation("dashboard");initAuthentication
 </script>
 
 <script>
-const WEDWISE_REPAIR_KEY="ww258_pwa_repaired";
+const WEDWISE_REPAIR_KEY="ww260_pwa_repaired";
 window.addEventListener("load",async()=>{
  if(!("serviceWorker" in navigator)||!/^https?:$/.test(location.protocol))return;
  try{
@@ -7761,7 +7769,7 @@ window.addEventListener("load",async()=>{
      if("caches" in window){const names=await caches.keys();await Promise.all(names.filter(n=>n.startsWith("wedwise-")).map(n=>caches.delete(n)))}
      localStorage.setItem(WEDWISE_REPAIR_KEY,"1");location.reload();return;
    }
-   const reg=await navigator.serviceWorker.register("./sw.js?v=258",{updateViaCache:"none"});await reg.update().catch(()=>{});
+   const reg=await navigator.serviceWorker.register("./sw.js?v=260",{updateViaCache:"none"});await reg.update().catch(()=>{});
  }catch(e){console.warn("PWA init",e)}
 });
 </script>
